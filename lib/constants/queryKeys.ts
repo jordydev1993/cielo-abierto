@@ -25,6 +25,9 @@ export const queryKeys = {
     byNnya: (nnyaId: string) => [...queryKeys.legajos.all, 'nnya', nnyaId] as const,
     detail: (id: string) => [...queryKeys.legajos.all, id] as const,
   },
+  nnyaTutores: {
+    byNnya: (nnyaId: string) => ['nnya_tutores', nnyaId] as const,
+  },
   alertas: {
     all: ['alertas'] as const,
     pendientes: () => [...queryKeys.alertas.all, 'pendientes'] as const,

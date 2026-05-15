@@ -38,7 +38,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (data?.roles) {
         const roles = data.roles as unknown as { nombre: string }
-        setRole(roles.nombre as AppRole)
+        // 'Direccion' es un rol real de la institución — se trata como Admin
+        const nombre = roles.nombre === 'Direccion' ? 'Admin' : roles.nombre
+        setRole(nombre as AppRole)
       }
     }
 
