@@ -38,10 +38,10 @@ function Sidebar() {
   ]
 
   return (
-    <aside className="w-60 bg-white border-r border-slate-200 flex flex-col shrink-0">
-      <div className="px-4 py-5 border-b border-slate-100">
-        <h1 className="font-semibold text-slate-900 text-sm">Cielo Abierto</h1>
-        <p className="text-xs text-slate-400 mt-0.5">Residencia NNyA</p>
+    <aside className="w-60 bg-surface-container-lowest border-r border-outline-variant flex flex-col shrink-0">
+      <div className="px-4 py-5 border-b border-outline-variant">
+        <h1 className="font-heading font-bold text-primary text-sm tracking-tight">Cielo Abierto</h1>
+        <p className="text-xs text-on-surface-variant mt-0.5">Residencia NNyA</p>
       </div>
 
       <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
@@ -52,25 +52,25 @@ function Sidebar() {
               key={href}
               href={href}
               className={cn(
-                'flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors',
+                'flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors',
                 active
-                  ? 'bg-slate-100 text-slate-900 font-medium'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-secondary-container text-on-secondary-container font-semibold'
+                  : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
               )}
             >
-              <Icon className={cn('h-4 w-4 shrink-0', active ? 'text-slate-900' : 'text-slate-400')} />
+              <Icon className={cn('h-4 w-4 shrink-0', active ? 'text-primary' : 'text-outline')} />
               {label}
             </Link>
           )
         })}
       </nav>
 
-      <div className="px-3 py-3 border-t border-slate-100">
+      <div className="px-3 py-3 border-t border-outline-variant">
         <button
           onClick={() => signOut()}
-          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 w-full transition-colors"
+          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container w-full transition-colors"
         >
-          <LogOut className="h-4 w-4 text-slate-400" />
+          <LogOut className="h-4 w-4 text-outline" />
           Cerrar sesión
         </button>
       </div>
@@ -82,7 +82,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <QueryProvider>
       <AuthProvider>
-        <div className="flex min-h-screen bg-slate-50">
+        <div className="flex min-h-screen bg-surface">
           <Sidebar />
           <main className="flex-1 overflow-auto">
             {children}

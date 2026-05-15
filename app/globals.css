@@ -2,24 +2,54 @@
 @plugin "tailwindcss-animate";
 
 @theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* Primary – Serene Teal */
+  --color-primary: #005768;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #aeecff;
+  --color-on-primary-container: #001f26;
+  --color-primary-fixed: #aeecff;
+  --color-primary-fixed-dim: #7cd0eb;
 
-  --color-border: oklch(90% 0.01 264);
-  --color-ring: oklch(20% 0 0);
-  --color-destructive: oklch(57% 0.21 29);
-}
+  /* Secondary */
+  --color-secondary: #505f76;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #d0e1fb;
+  --color-on-secondary-container: #0d1d2f;
+  --color-secondary-fixed: #d3e4fe;
 
-:root {
-  --background: oklch(100% 0 0);
-  --foreground: oklch(14% 0 0);
+  /* Tertiary – Warm Accent */
+  --color-tertiary: #724515;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-fixed: #ffdcc0;
+
+  /* Error */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #410002;
+
+  /* Surfaces */
+  --color-surface: #f7f9fb;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f2f4f6;
+  --color-surface-container: #eceef0;
+  --color-surface-container-high: #e6e8ea;
+
+  /* Text */
+  --color-on-surface: #191c1e;
+  --color-on-surface-variant: #3f484b;
+  --color-outline: #70797c;
+  --color-outline-variant: #bfc8cb;
+
+  /* Fonts */
+  --font-sans: 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui;
+  --font-heading: 'Manrope', ui-sans-serif, system-ui;
+  --font-label: 'Inter', ui-sans-serif, system-ui;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
 }
 
 * {

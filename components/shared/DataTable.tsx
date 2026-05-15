@@ -39,7 +39,7 @@ export function DataTable<T>({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-16 text-slate-400 text-sm">
+      <div className="flex items-center justify-center py-16 text-outline text-sm">
         Cargando...
       </div>
     )
@@ -61,7 +61,7 @@ export function DataTable<T>({
             <TableRow>
               <TableCell
                 colSpan={columns.length + (showActions ? 1 : 0)}
-                className="text-center text-slate-400 py-12"
+                className="text-center text-outline py-12"
               >
                 {emptyMessage}
               </TableCell>
@@ -109,7 +109,7 @@ export function DataTable<T>({
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between px-1">
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-on-surface-variant">
             {(page - 1) * pageSize + 1}–{Math.min(page * pageSize, data.length)} de {data.length}
           </p>
           <div className="flex gap-1">
