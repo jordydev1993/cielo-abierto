@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;600&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#2a7081",
+                    "on-tertiary-fixed": "#2d1600",
+                    "inverse-primary": "#8fd0e3",
+                    "background": "#f7f9fb",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#bfc8cb",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary": "#724515",
+                    "outline": "#70797c",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-primary-container": "#bcefff",
+                    "secondary-container": "#d0e1fb",
+                    "secondary": "#505f76",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "tertiary-fixed": "#ffdcc0",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#191c1e",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "error": "#ba1a1a",
+                    "primary": "#005768",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-tint": "#1e6777",
+                    "on-primary-fixed": "#001f26",
+                    "primary-fixed": "#aeecff",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "inverse-surface": "#2d3133",
+                    "surface-dim": "#d8dadc",
+                    "on-background": "#191c1e",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-bright": "#f7f9fb",
+                    "on-secondary-container": "#54647a",
+                    "surface": "#f7f9fb",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-surface-variant": "#3f484b",
+                    "tertiary-container": "#8e5c2b",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-secondary-fixed": "#0b1c30",
+                    "tertiary-fixed-dim": "#fab980",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "container-max": "1280px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "title-sm": ["manrope"],
+                    "label-caps": ["inter"],
+                    "body-md": ["atkinsonHyperlegibleNext"],
+                    "display-lg": ["manrope"],
+                    "body-lg": ["atkinsonHyperlegibleNext"],
+                    "headline-lg-mobile": ["manrope"],
+                    "headline-md": ["manrope"]
+            },
+            "fontSize": {
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col py-md z-50 overflow-y-auto bg-surface-container-low border-r border-outline-variant w-64">
+<div class="px-lg mb-xl">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">balance</span>
+</div>
+<div>
+<h1 class="font-title-sm text-title-sm font-bold text-primary">Poder Judicial</h1>
+<p class="text-xs text-on-surface-variant">Protección NNyA</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md py-md px-lg text-on-surface-variant hover:bg-surface-container-high transition-all mx-2 my-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg text-on-surface-variant hover:bg-surface-container-high transition-all mx-2 my-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-caps text-label-caps">Directorio NNyA</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg bg-primary-container text-on-primary-container font-bold mx-2 my-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="font-label-caps text-label-caps">Expedientes</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg text-on-surface-variant hover:bg-surface-container-high transition-all mx-2 my-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>
+<span class="font-label-caps text-label-caps">Roles</span>
+</a>
+<a class="flex items-center gap-md py-md px-lg text-on-surface-variant hover:bg-surface-container-high transition-all mx-2 my-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="policy">policy</span>
+<span class="font-label-caps text-label-caps">Auditoría</span>
+</a>
+</nav>
+<div class="px-md mt-auto space-y-4">
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-primary text-on-primary rounded-xl font-bold shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Nuevo Legajo
+            </button>
+<div class="border-t border-outline-variant pt-md">
+<a class="flex items-center gap-md py-2 px-md text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm">Configuración</span>
+</a>
+<a class="flex items-center gap-md py-2 px-md text-error hover:bg-error-container/20 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm">Cerrar Sesión</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="flex justify-between items-center w-full px-lg h-16 sticky top-0 z-40 bg-surface/90 backdrop-blur-md border-b border-outline-variant ml-64 max-w-[calc(100%-16rem)]">
+<div class="flex items-center gap-xl">
+<h2 class="font-display-lg text-display-lg text-primary">SGP-NNyA</h2>
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full focus:ring-2 focus:ring-primary-container text-sm" placeholder="Buscar legajo, nombre o DNI..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="flex items-center gap-md ml-md">
+<div class="text-right hidden lg:block">
+<p class="text-xs font-bold">Admin Judicial</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Juzgado Civil N°4</p>
+</div>
+<img alt="Foto de perfil del administrador judicial" class="w-10 h-10 rounded-full object-cover border-2 border-primary-fixed" data-alt="A professional headshot of a female judicial administrator with a confident and serene expression. She is wearing business attire in a modern, brightly lit legal office environment. The lighting is soft and high-key, emphasizing institutional trust and professionalism with a palette of soft teals and neutral grays." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCSO-XiZ2VsDmNefGWUpiIfRSEltPbUaZCaq2oKsPe9od74x8EV1skk4HlH7T1NE0YzoRvUwztLWzXS77_w_E58QkmKoiEznosKCH5qQ59sdT1XtojbGvdopmVTxd1Cg7RBbY18x7XGFHDyAGTHZ5IQ9NFAHwoMHl3XAu5rQ4OQV3oJBF97Uv3sCNRNZqo_PWdFlNVuKL3yfbM6dCAkJUDA8TRZJ1-zSZlxd8r-V7SE_kn8P6Y46TIi2UGEPf40_S4I7Gds37BsAE"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 p-lg">
+<div class="max-w-container-max mx-auto space-y-lg">
+<!-- Header Section -->
+<div class="flex items-end justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Gestión de Legajos Judiciales</h3>
+<p class="text-on-surface-variant mt-1">Supervisión y control de expedientes de Niñas, Niños y Adolescentes.</p>
+</div>
+<div class="flex gap-md">
+<button class="flex items-center gap-2 px-4 py-2 bg-white border border-outline-variant text-primary rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="file_download">file_download</span>
+                        Exportar Reporte
+                    </button>
+</div>
+</div>
+<!-- Bento Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+<div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-primary-container" data-icon="folder_special">folder_special</span>
+<span class="text-xs font-bold text-primary px-2 py-1 bg-primary-fixed rounded-full">+4%</span>
+</div>
+<div class="mt-4">
+<p class="text-xs font-label-caps text-on-surface-variant uppercase">Total de Legajos</p>
+<p class="text-3xl font-display-lg mt-1">1,284</p>
+</div>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-tertiary" data-icon="new_releases">new_releases</span>
+</div>
+<div class="mt-4">
+<p class="text-xs font-label-caps text-on-surface-variant uppercase">Aperturas este mes</p>
+<p class="text-3xl font-display-lg mt-1">42</p>
+</div>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-secondary" data-icon="rule_folder">rule_folder</span>
+</div>
+<div class="mt-4">
+<p class="text-xs font-label-caps text-on-surface-variant uppercase">Legajos en Revisión</p>
+<p class="text-3xl font-display-lg mt-1 text-primary-container">18</p>
+</div>
+</div>
+<div class="bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-error" data-icon="assignment_turned_in">assignment_turned_in</span>
+</div>
+<div class="mt-4">
+<p class="text-xs font-label-caps text-on-surface-variant uppercase">Cierres/Egreso</p>
+<p class="text-3xl font-display-lg mt-1">29</p>
+</div>
+</div>
+</div>
+<!-- Filters and Table Card -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden">
+<!-- Filter Bar -->
+<div class="p-md border-b border-outline-variant flex flex-wrap items-center justify-between gap-md bg-surface-container-lowest">
+<div class="flex items-center gap-md">
+<div class="flex gap-2 p-1 bg-surface-container rounded-lg">
+<button class="px-4 py-1.5 bg-white text-primary text-sm font-bold rounded-md shadow-sm">Todos</button>
+<button class="px-4 py-1.5 text-on-surface-variant text-sm hover:bg-white/50 rounded-md transition-colors">Activos</button>
+<button class="px-4 py-1.5 text-on-surface-variant text-sm hover:bg-white/50 rounded-md transition-colors">En Revisión</button>
+<button class="px-4 py-1.5 text-on-surface-variant text-sm hover:bg-white/50 rounded-md transition-colors">Cerrados</button>
+</div>
+<select class="bg-surface-container-low border-none rounded-lg text-sm text-on-surface-variant px-4 py-2 focus:ring-primary focus:ring-1">
+<option>Equipo Responsable: Todos</option>
+<option>Equipo Intervención A</option>
+<option>Equipo Intervención B</option>
+<option>Secretaría de Niñez</option>
+</select>
+</div>
+<button class="flex items-center gap-2 text-sm text-primary font-semibold hover:underline">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                        Filtros Avanzados
+                    </button>
+</div>
+<!-- Main Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-lg py-4 font-label-caps text-label-caps text-on-surface-variant">NNyA</th>
+<th class="px-lg py-4 font-label-caps text-label-caps text-on-surface-variant">Legajo</th>
+<th class="px-lg py-4 font-label-caps text-label-caps text-on-surface-variant">Fecha Apertura</th>
+<th class="px-lg py-4 font-label-caps text-label-caps text-on-surface-variant">Estado</th>
+<th class="px-lg py-4 font-label-caps text-label-caps text-on-surface-variant">Responsable</th>
+<th class="px-lg py-4 font-label-caps text-label-caps text-on-surface-variant text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold">ML</div>
+<div>
+<p class="font-semibold text-on-surface">Martínez, Lucía</p>
+<p class="text-xs text-on-surface-variant">DNI 45.XXX.XX9</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 font-body-md text-secondary">EXP-2023-00412</td>
+<td class="px-lg py-4 text-on-surface-variant">14/03/2023</td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant text-[11px] font-bold uppercase tracking-wider rounded-full">Activo</span>
+</td>
+<td class="px-lg py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="psychology">psychology</span>
+<span class="text-sm">Equipo Intervención A</span>
+</div>
+</td>
+<td class="px-lg py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Ver Detalles"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Editar"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Historial"><span class="material-symbols-outlined" data-icon="history">history</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary font-bold">JS</div>
+<div>
+<p class="font-semibold text-on-surface">Juárez, Santiago</p>
+<p class="text-xs text-on-surface-variant">DNI 52.XXX.XX1</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 font-body-md text-secondary">EXP-2024-00085</td>
+<td class="px-lg py-4 text-on-surface-variant">02/01/2024</td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wider rounded-full">En Revisión</span>
+</td>
+<td class="px-lg py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="diversity_3">diversity_3</span>
+<span class="text-sm">Secretaría de Niñez</span>
+</div>
+</td>
+<td class="px-lg py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="history">history</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-outline font-bold">OR</div>
+<div>
+<p class="font-semibold text-on-surface">Ortega, Rocío</p>
+<p class="text-xs text-on-surface-variant">DNI 48.XXX.XX2</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-4 font-body-md text-secondary">EXP-2022-01290</td>
+<td class="px-lg py-4 text-on-surface-variant">20/11/2022</td>
+<td class="px-lg py-4">
+<span class="px-3 py-1 bg-outline-variant text-on-surface-variant text-[11px] font-bold uppercase tracking-wider rounded-full">Cerrado</span>
+</td>
+<td class="px-lg py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="psychology">psychology</span>
+<span class="text-sm">Equipo Intervención B</span>
+</div>
+</td>
+<td class="px-lg py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="history">history</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-md bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between">
+<p class="text-xs text-on-surface-variant">Mostrando 1 a 10 de 1,284 legajos</p>
+<div class="flex items-center gap-1">
+<button class="p-1 border border-outline-variant rounded hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-3 py-1 bg-primary text-on-primary text-xs font-bold rounded">1</button>
+<button class="px-3 py-1 hover:bg-surface-container text-xs rounded transition-colors">2</button>
+<button class="px-3 py-1 hover:bg-surface-container text-xs rounded transition-colors">3</button>
+<button class="p-1 border border-outline-variant rounded hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Privacy Shield Banner -->
+<div class="bg-primary-container text-on-primary-container p-lg rounded-xl flex flex-col md:flex-row items-center gap-lg">
+<div class="bg-white/10 p-4 rounded-full">
+<span class="material-symbols-outlined text-3xl" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h4 class="font-bold text-title-sm">Protocolo de Privacidad y Confidencialidad</h4>
+<p class="text-sm opacity-90 mt-1 max-w-3xl">Este sistema contiene información altamente sensible sobre Niñas, Niños y Adolescentes. Queda estrictamente prohibida la reproducción o divulgación de estos datos sin autorización judicial expresa. El acceso a cada registro es monitoreado y auditado por el equipo de ciberseguridad del Poder Judicial.</p>
+</div>
+<button class="px-6 py-2.5 bg-white text-primary font-bold rounded-lg shadow-md hover:bg-on-primary-container hover:text-white transition-all">
+                    Leer Protocolo
+                </button>
+</div>
+</div>
+</main>
+<!-- FAB (Suppressed on this listing view according to Shell Logic if strictly adhering to "Focused Journey", but typically kept on Main Dashboards. Here we keep it for "Nuevo Legajo" as requested for 'Botón destacado') -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50 md:hidden">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</body></html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Inter:wght@400;600;700&amp;family=Atkinson+Hyperlegible+Next:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e0e3e5",
+                    "surface-container": "#eceef0",
+                    "tertiary-fixed-dim": "#fab980",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-secondary-fixed": "#0b1c30",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-surface": "#191c1e",
+                    "inverse-primary": "#8fd0e3",
+                    "on-surface-variant": "#3f484b",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#2a7081",
+                    "on-tertiary-fixed": "#2d1600",
+                    "inverse-surface": "#2d3133",
+                    "tertiary": "#724515",
+                    "primary-fixed": "#aeecff",
+                    "surface": "#f7f9fb",
+                    "outline": "#70797c",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-secondary-container": "#54647a",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "surface-container-high": "#e6e8ea",
+                    "tertiary-fixed": "#ffdcc0",
+                    "primary": "#005768",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "background": "#f7f9fb",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#d8dadc",
+                    "surface-tint": "#1e6777",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#bcefff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#d0e1fb",
+                    "on-primary-fixed": "#001f26",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#f7f9fb",
+                    "outline-variant": "#bfc8cb",
+                    "secondary": "#505f76",
+                    "on-background": "#191c1e",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#8e5c2b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "xl": "40px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Manrope"],
+                    "label-caps": ["Inter"],
+                    "body-md": ["Atkinson Hyperlegible Next"],
+                    "title-sm": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-lg": ["Atkinson Hyperlegible Next"]
+            },
+            "fontSize": {
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .blur-shield {
+            filter: blur(4px);
+            transition: filter 0.3s ease;
+        }
+        .blur-shield:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="hidden md:flex flex-col h-full w-64 bg-surface-container-low border-r border-outline-variant p-md gap-sm z-50">
+<div class="flex items-center gap-md px-sm py-md">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</div>
+<div>
+<h1 class="font-headline-md text-[18px] leading-tight font-bold text-primary">Protección NNyA</h1>
+<p class="font-label-caps text-[10px] text-on-surface-variant">SISTEMA JUDICIAL</p>
+</div>
+</div>
+<nav class="flex-1 mt-md space-y-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps uppercase">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-label-caps uppercase">Expedientes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-label-caps uppercase">Intervenciones</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-caps uppercase">Informes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-label-caps uppercase">Turnos</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-bold rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-label-caps uppercase">Alertas</span>
+</a>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant space-y-1">
+<button class="w-full mb-sm bg-primary text-white py-md rounded-xl flex items-center justify-center gap-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="font-bold">Nueva Intervención</span>
+</button>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-caps uppercase">Configuración</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-caps uppercase">Ayuda</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- TopAppBar -->
+<header class="h-16 flex justify-between items-center w-full px-lg bg-surface border-b border-outline-variant z-40">
+<div class="flex items-center gap-md">
+<button class="md:hidden p-sm hover:bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<nav class="flex items-center gap-sm text-on-surface-variant text-sm">
+<span>Alertas</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-semibold">Nueva Alerta Crítica</span>
+</nav>
+</div>
+<div class="flex items-center gap-lg">
+<div class="hidden md:flex items-center bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48" placeholder="Buscar expediente..." type="text"/>
+</div>
+<div class="flex items-center gap-md">
+<button class="relative p-sm hover:bg-surface-container-high transition-colors rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-sm pl-md border-l border-outline-variant">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold leading-none">Dra. M. Rodríguez</p>
+<p class="text-xs text-on-surface-variant">Coordinadora</p>
+</div>
+<img alt="Avatar" class="w-10 h-10 rounded-full border-2 border-primary-fixed" data-alt="A professional portrait of a Hispanic woman in her late 30s with a warm but serious expression, wearing business casual attire. The background is a blurred, high-end office environment with soft natural lighting. The aesthetic is clean, professional, and trustworthy, perfectly aligning with the institutional and secure atmosphere of the design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1jT75G9HaRZLFbfSgRe_iSE15Rf61TC3XBahJep02MTR1bYRM1KI39l36s7gp6yZ5V76SdN5YXQicHlldTaiMc47-6NdPoxOf9-IkLPIE6XGYJOymAH86Fg0u_5PsWynoCFHuYLeruaj9oAoADr8t87g3HXAd7KZAg8y6Xd7q6m0QoOrHku3kyJK0pnAfpY7D0hIKJ8AiXGuVuJYhZ6bFtOBVP6txJ-NgGcfMJ58zJNE3EEyOnJCjKrTD3R3wWuzhvbXGkg5J7DU"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<section class="flex-1 overflow-y-auto p-lg bg-background">
+<div class="max-w-container-max mx-auto space-y-lg pb-xl">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h2 class="font-display-lg text-display-lg text-primary">Registrar Nueva Alerta</h2>
+<p class="text-on-surface-variant max-w-2xl mt-xs">Formulario de emergencia para situaciones críticas. Complete los datos con precisión para activar el protocolo de respuesta inmediata.</p>
+</div>
+<div class="flex items-center gap-sm bg-error-container text-on-error-container px-md py-sm rounded-lg border border-error/20">
+<span class="material-symbols-outlined animate-pulse" data-icon="priority_high">priority_high</span>
+<span class="font-bold text-sm">PROTOCOLO DE URGENCIA ACTIVO</span>
+</div>
+</div>
+<!-- Main Grid Form -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Left Column: Child Identification -->
+<div class="lg:col-span-5 space-y-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-primary flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+                                    Identificación del NNyA
+                                </h3>
+<div class="relative mb-lg">
+<input class="w-full bg-surface-container-low border-none rounded-lg px-xl py-md focus:ring-2 focus:ring-primary/20 text-on-surface" placeholder="Buscar por Nombre o DNI..." type="text"/>
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">search</span>
+</div>
+<!-- Selected Profile Card -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md flex items-start gap-lg">
+<img alt="Niño seleccionado" class="w-20 h-20 rounded-lg object-cover" data-alt="A portrait of a young boy looking thoughtfully away from the camera, captured in soft, natural daylight. The image has a calm and respectful tone, avoiding dramatization while maintaining human warmth. The color palette is muted and neutral, consistent with a professional medical or social services interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi4G_Q8p6hgnDIX3BCKcbZXGn1WKQw3Mkoz_Tpi4Yl0x1Ml8spqpvac_pwaaoTBRnxIUteTecIWMhgIgC_l2evA-qxeMWGUpkCTMhZangTjITwXQ8FS575dBPPChO1ynsj91OQKs2zK9eSVYOYlN-58ubDajvNHKgyse4kXVLJt4rsYKIBGYyM9F-1q5hr-b_dFNM3RtfRtg-niFPgr4CBumeAHLsl2rWJVxT83t45YoKEADDVwtwK2PJ3dMcLK0h5avKLvaeYyjQ"/>
+<div class="flex-1 space-y-xs">
+<div class="flex items-center justify-between">
+<p class="font-bold text-body-lg">Mateo Sebastián Gómez</p>
+<span class="bg-primary/10 text-primary px-sm py-1 rounded-full text-[10px] font-bold uppercase">Expediente Activo</span>
+</div>
+<p class="text-sm text-on-surface-variant">DNI: <span class="blur-shield">45.***.123</span></p>
+<p class="text-sm text-on-surface-variant">Edad: 8 años</p>
+<p class="text-sm text-on-surface-variant">Exp: #J-2023-4491-A</p>
+<button class="text-primary text-xs font-bold hover:underline mt-sm flex items-center gap-xs">
+                                            Ver Historial Completo
+                                            <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-primary flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined" data-icon="attachment">attachment</span>
+                                    Documentación de Respaldo
+                                </h3>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-xl flex flex-col items-center justify-center gap-sm hover:bg-surface-container transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-4xl text-outline group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<div class="text-center">
+<p class="font-bold text-sm">Arrastre archivos aquí o haga clic</p>
+<p class="text-xs text-on-surface-variant">PDF, JPG o PNG (Max. 10MB)</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Alert Details -->
+<div class="lg:col-span-7 space-y-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-primary flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined" data-icon="emergency">emergency</span>
+                                    Detalles de la Alerta
+                                </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="space-y-sm">
+<label class="font-label-caps text-on-surface-variant">Tipo de Alerta</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg p-md focus:ring-2 focus:ring-primary/20">
+<option>Seleccionar categoría...</option>
+<option>Vulneración de Derechos</option>
+<option>Abandono/Falta de Cuidados</option>
+<option>Incidente en Residencia</option>
+<option>Desaparición/Fuga</option>
+<option>Emergencia Médica</option>
+</select>
+</div>
+<div class="space-y-sm">
+<label class="font-label-caps text-on-surface-variant">Fecha y Hora del Evento</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-md focus:ring-2 focus:ring-primary/20" type="datetime-local"/>
+</div>
+<div class="md:col-span-2 space-y-sm">
+<label class="font-label-caps text-on-surface-variant">Nivel de Prioridad</label>
+<div class="grid grid-cols-3 gap-md">
+<button class="flex flex-col items-center gap-sm p-md rounded-xl border border-outline-variant hover:bg-surface-container transition-all">
+<div class="w-4 h-4 rounded-full bg-yellow-400"></div>
+<span class="font-bold text-xs">Media</span>
+</button>
+<button class="flex flex-col items-center gap-sm p-md rounded-xl border-2 border-orange-500 bg-orange-50 transition-all">
+<div class="w-4 h-4 rounded-full bg-orange-500"></div>
+<span class="font-bold text-xs text-orange-800">Alta</span>
+</button>
+<button class="flex flex-col items-center gap-sm p-md rounded-xl border border-outline-variant hover:bg-surface-container transition-all">
+<div class="w-4 h-4 rounded-full bg-error"></div>
+<span class="font-bold text-xs">Crítica</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-primary flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                                    Descripción del Incidente
+                                </h3>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg p-md focus:ring-2 focus:ring-primary/20" placeholder="Relato detallado de los hechos observados o informados..." rows="4"></textarea>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-primary flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+                                    Medidas Inmediatas Tomadas
+                                </h3>
+<div class="space-y-md">
+<label class="flex items-start gap-md p-md bg-surface-container-low rounded-lg cursor-pointer">
+<input class="mt-1 rounded text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<p class="font-bold text-sm">Resguardo Físico</p>
+<p class="text-xs text-on-surface-variant">El NNyA ha sido puesto a resguardo en zona segura.</p>
+</div>
+</label>
+<label class="flex items-start gap-md p-md bg-surface-container-low rounded-lg cursor-pointer">
+<input class="mt-1 rounded text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<p class="font-bold text-sm">Aviso a Autoridades Judiciales</p>
+<p class="text-xs text-on-surface-variant">Se notificó al juzgado de turno o defensoría.</p>
+</div>
+</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg p-md focus:ring-2 focus:ring-primary/20 text-sm mt-sm" placeholder="Otras medidas específicas..." rows="2"></textarea>
+</div>
+</div>
+</div>
+</div>
+<!-- Security Banner -->
+<div class="bg-primary/5 border border-primary/10 rounded-xl p-md flex items-center justify-center gap-md text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary" data-icon="lock" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lock</span>
+<p>Los datos cargados son confidenciales y están protegidos por encriptación <span class="font-bold">AES-256</span> conforme a la ley de Protección de Datos Personales.</p>
+</div>
+</div>
+</section>
+<!-- Bottom Action Bar -->
+<footer class="bg-surface border-t border-outline-variant px-lg py-md flex flex-col sm:flex-row justify-between items-center gap-md">
+<button class="w-full sm:w-auto px-lg py-sm text-secondary font-bold hover:bg-surface-container transition-colors rounded-lg">
+                    Cancelar
+                </button>
+<div class="flex flex-col sm:flex-row gap-md w-full sm:w-auto">
+<button class="px-lg py-md border border-primary text-primary font-bold rounded-xl hover:bg-primary/5 transition-all active:scale-98">
+                        Guardar Borrador
+                    </button>
+<button class="px-xl py-md bg-error text-white font-bold rounded-xl shadow-lg shadow-error/20 hover:bg-error/90 transition-all active:scale-95 flex items-center justify-center gap-md">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+                        Activar Alerta
+                    </button>
+</div>
+</footer>
+</main>
+</div>
+<!-- Contextual FAB (Suppressed on this form page per mandate) -->
+</body></html>

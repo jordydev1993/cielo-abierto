@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Medicamentos - Protección NNyA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "background": "#f7f9fb",
+                      "on-primary-fixed": "#001f26",
+                      "surface-container-high": "#e6e8ea",
+                      "surface-container-highest": "#e0e3e5",
+                      "tertiary": "#724515",
+                      "on-secondary": "#ffffff",
+                      "surface-variant": "#e0e3e5",
+                      "secondary-container": "#d0e1fb",
+                      "tertiary-container": "#8e5c2b",
+                      "on-secondary-fixed": "#0b1c30",
+                      "error": "#ba1a1a",
+                      "secondary": "#505f76",
+                      "on-tertiary-container": "#ffe1ca",
+                      "secondary-fixed": "#d3e4fe",
+                      "surface-tint": "#1e6777",
+                      "on-surface": "#191c1e",
+                      "on-tertiary-fixed": "#2d1600",
+                      "surface-container-low": "#f2f4f6",
+                      "on-primary-container": "#bcefff",
+                      "on-primary-fixed-variant": "#004e5d",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "tertiary-fixed": "#ffdcc0",
+                      "primary": "#005768",
+                      "on-surface-variant": "#3f484b",
+                      "primary-fixed": "#aeecff",
+                      "surface-container": "#eceef0",
+                      "on-secondary-container": "#54647a",
+                      "inverse-primary": "#8fd0e3",
+                      "primary-container": "#2a7081",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "inverse-on-surface": "#eff1f3",
+                      "tertiary-fixed-dim": "#fab980",
+                      "surface": "#f7f9fb",
+                      "primary-fixed-dim": "#8fd0e3",
+                      "surface-dim": "#d8dadc",
+                      "surface-bright": "#f7f9fb",
+                      "on-tertiary-fixed-variant": "#683c0d",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#bfc8cb",
+                      "on-background": "#191c1e",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#2d3133",
+                      "on-tertiary": "#ffffff",
+                      "outline": "#70797c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "xl": "40px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "unit": "4px",
+                      "container-max": "1280px",
+                      "gutter": "24px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["manrope"],
+                      "label-caps": ["inter"],
+                      "body-md": ["atkinsonHyperlegibleNext"],
+                      "body-lg": ["atkinsonHyperlegibleNext"],
+                      "headline-md": ["manrope"],
+                      "display-lg": ["manrope"],
+                      "title-sm": ["manrope"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .data-privacy-blur {
+            filter: blur(4px);
+            transition: filter 0.2s ease;
+        }
+        .data-privacy-blur:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex">
+<!-- SideNavBar Anchor -->
+<aside class="hidden md:flex flex-col h-screen w-72 bg-surface-container-low border-r border-outline-variant p-md gap-sm fixed left-0 top-0 z-40">
+<div class="flex items-center gap-md px-sm py-md mb-md">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Sistema Judicial</h1>
+<p class="text-on-surface-variant font-body-md">Gestión de Protección</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Panel Principal</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span>Expedientes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-bold rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="diversity_3" style="font-variation-settings: 'FILL' 1;">diversity_3</span>
+<span>Recursos</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span>Procedimientos</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Configuración</span>
+</a>
+</nav>
+<button class="mt-4 w-full bg-primary-container text-on-primary-container font-bold py-md px-lg rounded-lg flex items-center justify-center gap-md hover:opacity-90 transition-all shadow-sm">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>Nuevo Expediente</span>
+</button>
+<div class="mt-auto border-t border-outline-variant pt-md">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-72 min-w-0">
+<!-- TopNavBar Anchor -->
+<header class="bg-surface-container-lowest sticky top-0 z-50 border-b border-outline-variant flex justify-between items-center w-full px-lg h-16">
+<div class="flex items-center gap-lg flex-1">
+<h2 class="font-headline-md text-headline-md font-bold text-primary">Protección NNyA</h2>
+<div class="relative w-full max-w-md hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 h-10 text-body-md focus:ring-2 focus:ring-primary/20" placeholder="Buscar pacientes o medicamentos..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+</button>
+<button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-xs"></div>
+<div class="flex items-center gap-sm">
+<img alt="Avatar del profesional" class="w-9 h-9 rounded-full object-cover border border-outline-variant" data-alt="A professional female doctor with a serene and confident expression, wearing a white lab coat and a stethoscope. The background is a brightly lit, minimalist medical office with soft teal accents, conveying institutional trust and professionalism. The lighting is soft and high-key, aligning with a modern light-mode user interface aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrMNtkiVQH3snFNILxrur66NeL5kQkmH-OEU3Pb9gYubf6rAd_-UY-z6E0rOzJqEcBx4UutTtlUCAGshLCgIVB2rfl0v0jr7VvWmQ1E93GIBp9krVO3AJg0NW6R5svV8bPt7VRTIxE-QR9ySIclj-gyJwNjjShdf2O_RhEjassnj4MZU7ugf-MlWZIVYgGb18IKQD3Np0P2434NkRWXkYXkCdCNvUcA_dCKtO3ulmtB2NMYrQ8W1eI3DlthrKoeKAd7-pkjbP5LxI"/>
+</div>
+</div>
+</header>
+<div class="p-lg space-y-lg max-w-container-max mx-auto">
+<!-- Confidentiality Banner -->
+<div class="bg-primary-container/10 border border-primary-container rounded-xl p-md flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-container" data-icon="shield_person" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+<p class="text-on-surface-variant text-body-md">
+<strong class="text-primary-container">Protocolo de Confidencialidad:</strong> Usted está accediendo a datos sensibles de NNyA. Toda consulta queda registrada y el uso de esta información está regulado por la Ley de Protección Integral.
+                </p>
+</div>
+<!-- Page Title & Primary Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+<div>
+<h1 class="font-display-lg text-display-lg text-primary">Gestión de Medicamentos</h1>
+<p class="text-on-surface-variant font-body-lg">Control y seguimiento de tratamientos farmacológicos.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-sm px-lg py-md border border-outline text-on-surface hover:bg-surface-container rounded-lg font-bold transition-all">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                        Exportar Reporte
+                    </button>
+<button class="flex items-center gap-sm px-lg py-md bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-all shadow-md">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+                        Nueva Carga
+                    </button>
+</div>
+</div>
+<!-- Metric Cards - Bento Grid Style -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex items-center gap-lg">
+<div class="w-14 h-14 rounded-full bg-error-container/30 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[32px]" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant">STOCK CRÍTICO</p>
+<p class="font-display-lg text-display-lg text-error">12</p>
+<p class="text-body-md text-on-surface-variant">Insumos por debajo del 15%</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex items-center gap-lg">
+<div class="w-14 h-14 rounded-full bg-secondary-container/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[32px]" data-icon="medication_liquid" style="font-variation-settings: 'FILL' 1;">medication_liquid</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant">TRATAMIENTOS ACTIVOS</p>
+<p class="font-display-lg text-display-lg text-primary">148</p>
+<p class="text-body-md text-on-surface-variant">En seguimiento presencial</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex items-center gap-lg">
+<div class="w-14 h-14 rounded-full bg-tertiary-fixed/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[32px]" data-icon="local_shipping" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant">PRÓXIMAS ENTREGAS</p>
+<p class="font-display-lg text-display-lg text-tertiary">24</p>
+<p class="text-body-md text-on-surface-variant">Programadas para las 48hs</p>
+</div>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md flex flex-wrap items-center gap-md">
+<div class="flex-1 min-w-[240px]">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-body-md focus:ring-1 focus:ring-primary outline-none" placeholder="Buscador de pacientes (Nombre o ID)..." type="text"/>
+</div>
+</div>
+<div class="flex gap-md items-center">
+<span class="text-body-md font-bold text-on-surface-variant">Filtrar por:</span>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-2 text-body-md focus:ring-1 focus:ring-primary outline-none">
+<option>Categoría: Todas</option>
+<option>Psicotrópicos</option>
+<option>Antibióticos</option>
+<option>Crónicos</option>
+<option>Urgencia</option>
+</select>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-2 text-body-md focus:ring-1 focus:ring-primary outline-none">
+<option>Estado: Todos</option>
+<option>Activo</option>
+<option>Suspendido</option>
+<option>Finalizado</option>
+</select>
+</div>
+<button class="p-2 text-primary hover:bg-primary/5 rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+</div>
+<!-- Main Data Table Container -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-lg py-md text-label-caps font-label-caps text-on-surface-variant">NNyA</th>
+<th class="px-lg py-md text-label-caps font-label-caps text-on-surface-variant">Medicamento</th>
+<th class="px-lg py-md text-label-caps font-label-caps text-on-surface-variant">Dosis/Frecuencia</th>
+<th class="px-lg py-md text-label-caps font-label-caps text-on-surface-variant">Fecha de Inicio</th>
+<th class="px-lg py-md text-label-caps font-label-caps text-on-surface-variant">Profesional Responsable</th>
+<th class="px-lg py-md text-label-caps font-label-caps text-on-surface-variant">Estado</th>
+<th class="px-lg py-md text-label-caps font-label-caps text-on-surface-variant">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<div class="data-privacy-blur">
+<p class="font-title-sm text-title-sm text-on-surface">Martín Rodríguez</p>
+<p class="text-body-md text-on-surface-variant">ID: 22.940.XXX</p>
+</div>
+<span class="material-symbols-outlined text-primary text-sm cursor-help" data-icon="visibility" title="Click para ver datos">visibility</span>
+</div>
+</td>
+<td class="px-lg py-lg">
+<p class="font-bold text-on-surface">Risperidona</p>
+<p class="text-body-md text-on-surface-variant">2mg - Comprimidos</p>
+</td>
+<td class="px-lg py-lg">
+<span class="bg-surface-container px-sm py-xs rounded text-body-md font-bold text-on-surface">1 comp / 12 hs</span>
+</td>
+<td class="px-lg py-lg text-body-md text-on-surface">15 May 2024</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">DA</div>
+<span class="text-body-md">Dra. Ana García</span>
+</div>
+</td>
+<td class="px-lg py-lg">
+<span class="bg-primary/10 text-primary px-md py-xs rounded-full text-xs font-bold uppercase tracking-wider">Activo</span>
+</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<button class="p-xs hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-xs hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="history">history</span></button>
+<button class="p-xs hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="block">block</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<div class="data-privacy-blur">
+<p class="font-title-sm text-title-sm text-on-surface">Sofía Méndez</p>
+<p class="text-body-md text-on-surface-variant">ID: 25.118.XXX</p>
+</div>
+<span class="material-symbols-outlined text-primary text-sm cursor-help" data-icon="visibility">visibility</span>
+</div>
+</td>
+<td class="px-lg py-lg">
+<p class="font-bold text-on-surface">Amoxicilina</p>
+<p class="text-body-md text-on-surface-variant">500mg - Suspensión</p>
+</td>
+<td class="px-lg py-lg">
+<span class="bg-surface-container px-sm py-xs rounded text-body-md font-bold text-on-surface">5ml / 8 hs</span>
+</td>
+<td class="px-lg py-lg text-body-md text-on-surface">10 Oct 2024</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">JP</div>
+<span class="text-body-md">Dr. Jorge Pérez</span>
+</div>
+</td>
+<td class="px-lg py-lg">
+<span class="bg-error/10 text-error px-md py-xs rounded-full text-xs font-bold uppercase tracking-wider">Suspendido</span>
+</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<button class="p-xs hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-xs hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="history">history</span></button>
+<button class="p-xs hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="check_circle">check_circle</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<div class="data-privacy-blur">
+<p class="font-title-sm text-title-sm text-on-surface">Lucas Varela</p>
+<p class="text-body-md text-on-surface-variant">ID: 21.002.XXX</p>
+</div>
+<span class="material-symbols-outlined text-primary text-sm cursor-help" data-icon="visibility">visibility</span>
+</div>
+</td>
+<td class="px-lg py-lg">
+<p class="font-bold text-on-surface">Metilfenidato</p>
+<p class="text-body-md text-on-surface-variant">10mg - Liberación Prolongada</p>
+</td>
+<td class="px-lg py-lg">
+<span class="bg-surface-container px-sm py-xs rounded text-body-md font-bold text-on-surface">1 comp / mañana</span>
+</td>
+<td class="px-lg py-lg text-body-md text-on-surface">02 Ago 2024</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">LM</div>
+<span class="text-body-md">Lic. Laura Morales</span>
+</div>
+</td>
+<td class="px-lg py-lg">
+<span class="bg-primary/10 text-primary px-md py-xs rounded-full text-xs font-bold uppercase tracking-wider">Activo</span>
+</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<button class="p-xs hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-xs hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="history">history</span></button>
+<button class="p-xs hover:text-error transition-colors"><span class="material-symbols-outlined" data-icon="block">block</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-surface-container-low px-lg py-md flex items-center justify-between border-t border-outline-variant">
+<p class="text-body-md text-on-surface-variant">Mostrando 1 a 3 de 148 registros</p>
+<div class="flex items-center gap-sm">
+<button class="p-sm rounded-lg hover:bg-surface-container transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-bold">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container transition-colors font-bold">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container transition-colors font-bold">3</button>
+<span class="px-xs text-on-surface-variant">...</span>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container transition-colors font-bold">15</button>
+<button class="p-sm rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Help / Resources -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg pt-lg">
+<div class="p-lg bg-surface-container-low border border-outline-variant rounded-xl flex items-start gap-md">
+<div class="text-primary mt-1">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+</div>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface mb-xs">Guía de Farmacovigilancia</h4>
+<p class="text-body-md text-on-surface-variant">Consulte los protocolos actualizados de reporte de efectos adversos según la normativa de Salud Pública.</p>
+<a class="inline-block mt-md text-primary font-bold hover:underline" href="#">Ver documento PDF</a>
+</div>
+</div>
+<div class="p-lg bg-surface-container-low border border-outline-variant rounded-xl flex items-start gap-md">
+<div class="text-tertiary mt-1">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+</div>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface mb-xs">Soporte Técnico Especializado</h4>
+<p class="text-body-md text-on-surface-variant">Para problemas con la carga de stocks o firmas digitales de recetas, contacte a la mesa de ayuda.</p>
+<a class="inline-block mt-md text-tertiary font-bold hover:underline" href="#">Iniciar chat de consulta</a>
+</div>
+</div>
+</div>
+</div>
+<footer class="mt-xl py-lg px-lg border-t border-outline-variant text-center bg-surface-container-low">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase">
+                © 2024 Poder Judicial de la Provincia - Dirección General de Protección NNyA
+            </p>
+</footer>
+</main>
+<!-- Floating Action Button - Only for Mobile Context -->
+<button class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center z-50">
+<span class="material-symbols-outlined text-[32px]" data-icon="add">add</span>
+</button>
+</body></html>

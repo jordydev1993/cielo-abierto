@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fb",
+                        "on-tertiary-container": "#ffe1ca",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-tint": "#1e6777",
+                        "on-background": "#191c1e",
+                        "on-tertiary-fixed": "#2d1600",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "tertiary-container": "#8e5c2b",
+                        "primary-container": "#2a7081",
+                        "surface": "#f7f9fb",
+                        "primary-fixed": "#aeecff",
+                        "outline": "#70797c",
+                        "inverse-on-surface": "#eff1f3",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#bcefff",
+                        "secondary": "#505f76",
+                        "on-surface-variant": "#3f484b",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary": "#724515",
+                        "on-primary-fixed": "#001f26",
+                        "primary": "#005768",
+                        "on-surface": "#191c1e",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-fixed-dim": "#fab980",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary-fixed": "#0b1c30",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-secondary-container": "#54647a",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "outline-variant": "#bfc8cb",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-fixed": "#ffdcc0",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#8fd0e3",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "on-primary-fixed-variant": "#004e5d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "unit": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xl": "40px",
+                        "md": "16px",
+                        "container-max": "1280px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "title-sm": ["manrope"],
+                        "label-caps": ["inter"],
+                        "display-lg": ["manrope"],
+                        "headline-md": ["manrope"],
+                        "body-md": ["atkinsonHyperlegibleNext"],
+                        "body-lg": ["atkinsonHyperlegibleNext"],
+                        "headline-lg-mobile": ["manrope"]
+                    },
+                    "fontSize": {
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar Anchor -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 bg-surface-container-low border-r border-outline-variant z-50 fixed">
+<div class="flex items-center gap-md p-lg">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md text-primary">Secure Nexus</h1>
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-70">Judicial Records</p>
+</div>
+</div>
+<nav class="flex-1 px-md py-sm space-y-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">safety_divider</span>
+<span class="font-body-md text-body-md">NNyA Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md text-body-md">Case Records</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md text-body-md">User Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-body-md text-body-md">Audit Logs</span>
+</a>
+</nav>
+<div class="p-md space-y-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span class="font-body-md text-body-md">Privacy Policy</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 flex flex-col md:ml-64">
+<!-- TopNavBar Anchor -->
+<header class="flex justify-between items-center px-lg py-sm w-full z-40 bg-surface border-b border-outline-variant sticky top-0">
+<div class="flex items-center gap-lg">
+<span class="text-title-sm font-title-sm font-bold text-primary">Portal NNyA</span>
+<div class="hidden md:flex items-center bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-64" placeholder="Search records..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-sm rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="p-sm rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-secondary-fixed-dim overflow-hidden border border-outline-variant ml-sm">
+<img alt="Administrator Profile" data-alt="A professional headshot of a middle-aged female administrator with a calm and confident expression. She is wearing a soft grey blazer against a neutral, brightly lit office background. The lighting is soft and natural, emphasizing a professional and trustworthy persona consistent with an institutional social services environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdZ_c06ioR10v8CYu3Z3WPMBy_XR8cuocXxxQS0aGEKG-yXQHBny41Si40cc4h7jeZb9wxyW0leVf00F7L821P2Lnk1GkXEr6wG_b2YTq1tVS58BYIU5oLy-S5zqO5SNpgW9_jQS0ojH53fr5nKtN5IMKY5V7tMUQxN4ge-AKPl4wO6Q04KGafsDhS8WxGGmnPK1XpnT0EmCSpVBiHEv7dDZkP1fTCQBHSrDwfwm5iMllDoSeWh2L0MPRB37L2S2cmj8OA2tduTGQ"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="max-w-[1280px] mx-auto w-full px-lg py-xl">
+<!-- Header Section -->
+<div class="mb-xl">
+<h2 class="font-display-lg text-display-lg text-on-background mb-xs">Crear Nuevo Legajo</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Inicie el proceso de registro para un nuevo niño, niña o adolescente en el sistema.</p>
+</div>
+<!-- Stepper -->
+<div class="mb-xl flex items-center justify-between max-w-4xl mx-auto px-lg">
+<div class="flex flex-col items-center gap-sm relative z-10">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</div>
+<span class="font-label-caps text-label-caps text-primary">Datos Personales</span>
+</div>
+<div class="flex-1 h-[2px] bg-outline-variant mx-4 -mt-8"></div>
+<div class="flex flex-col items-center gap-sm relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">2</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Vínculos Familiares</span>
+</div>
+<div class="flex-1 h-[2px] bg-outline-variant mx-4 -mt-8"></div>
+<div class="flex flex-col items-center gap-sm relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">3</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Situación Habitacional</span>
+</div>
+<div class="flex-1 h-[2px] bg-outline-variant mx-4 -mt-8"></div>
+<div class="flex flex-col items-center gap-sm relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">4</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Revisión Final</span>
+</div>
+</div>
+<!-- Form Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden max-w-4xl mx-auto">
+<div class="p-lg border-b border-outline-variant flex items-center justify-between bg-surface-bright">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">person</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Paso 1: Identificación y Datos Personales</h3>
+</div>
+<div class="flex items-center gap-xs px-sm py-xs bg-primary-fixed-dim text-on-primary-fixed-variant rounded-full">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-label-caps text-[10px] tracking-widest">SISTEMA SEGURO</span>
+</div>
+</div>
+<div class="p-xl">
+<form class="space-y-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Field: First Name -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="first_name">Nombre(s) <span class="text-error">*</span></label>
+<input class="bg-surface-container-low border-none rounded-lg p-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container outline-none transition-all" id="first_name" name="first_name" placeholder="Ingrese nombres completos" type="text"/>
+</div>
+<!-- Field: Last Name -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="last_name">Apellido(s) <span class="text-error">*</span></label>
+<input class="bg-surface-container-low border-none rounded-lg p-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container outline-none transition-all" id="last_name" name="last_name" placeholder="Ingrese apellidos completos" type="text"/>
+</div>
+<!-- Field: DNI/ID -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="dni">DNI / Documento de Identidad <span class="text-error">*</span></label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg p-md font-body-md text-on-surface blur-[4px] hover:blur-none transition-all duration-300 focus:blur-none focus:ring-2 focus:ring-primary-container outline-none" id="dni" name="dni" placeholder="00.000.000" type="text"/>
+<button class="absolute right-md top-1/2 -translate-y-1/2 text-outline" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<p class="text-[11px] text-outline mt-xs">El documento se oculta automáticamente por privacidad.</p>
+</div>
+<!-- Field: Date of Birth -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="dob">Fecha de Nacimiento <span class="text-error">*</span></label>
+<div class="flex gap-md">
+<input class="flex-1 bg-surface-container-low border-none rounded-lg p-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container outline-none transition-all" id="dob" name="dob" type="date"/>
+<div class="w-24 bg-secondary-container rounded-lg flex flex-col items-center justify-center p-xs">
+<span class="font-label-caps text-[10px] text-on-secondary-container">EDAD</span>
+<span class="font-headline-md text-headline-md text-on-secondary-container">--</span>
+</div>
+</div>
+</div>
+<!-- Field: Gender -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="gender">Género <span class="text-error">*</span></label>
+<select class="bg-surface-container-low border-none rounded-lg p-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container outline-none transition-all appearance-none" id="gender" name="gender">
+<option disabled="" selected="" value="">Seleccione una opción</option>
+<option value="masculino">Masculino</option>
+<option value="femenino">Femenino</option>
+<option value="no_binario">No Binario / Otro</option>
+<option value="prefiero_no_decir">Prefiero no decir</option>
+</select>
+</div>
+<!-- Field: Nationality -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="nationality">Nacionalidad <span class="text-error">*</span></label>
+<input class="bg-surface-container-low border-none rounded-lg p-md font-body-md text-on-surface focus:ring-2 focus:ring-primary-container outline-none transition-all" id="nationality" name="nationality" placeholder="Ej: Argentina" type="text"/>
+</div>
+</div>
+<!-- Data Privacy Shield Warning -->
+<div class="mt-lg p-md bg-surface-container rounded-lg border border-outline-variant flex gap-md items-start">
+<span class="material-symbols-outlined text-primary mt-xs">shield_person</span>
+<div class="space-y-xs">
+<p class="font-body-md text-body-md font-semibold text-on-surface">Protección de Datos Sensibles</p>
+<p class="font-body-md text-body-md text-on-surface-variant">La información ingresada en este formulario está protegida bajo protocolos de confidencialidad judicial. El sistema registrará su usuario como responsable de esta entrada.</p>
+</div>
+</div>
+</form>
+</div>
+<div class="p-lg bg-surface-bright border-t border-outline-variant flex justify-between items-center">
+<button class="px-xl py-md rounded-lg font-title-sm text-title-sm text-primary hover:bg-surface-container-high transition-colors">
+                        Cancelar
+                    </button>
+<div class="flex gap-md">
+<button class="px-xl py-md rounded-lg font-title-sm text-title-sm bg-primary text-white hover:opacity-90 active:scale-95 duration-200 flex items-center gap-sm">
+                            Siguiente
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Information -->
+<div class="max-w-4xl mx-auto mt-lg grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="p-md bg-white border border-outline-variant rounded-lg flex gap-md items-center">
+<span class="material-symbols-outlined text-secondary">info</span>
+<span class="text-body-md text-on-surface-variant">Campos marcados con <span class="text-error">*</span> son obligatorios.</span>
+</div>
+<div class="p-md bg-white border border-outline-variant rounded-lg flex gap-md items-center">
+<span class="material-symbols-outlined text-secondary">save</span>
+<span class="text-body-md text-on-surface-variant">Borrador guardado automáticamente.</span>
+</div>
+<div class="p-md bg-white border border-outline-variant rounded-lg flex gap-md items-center">
+<span class="material-symbols-outlined text-secondary">lock</span>
+<span class="text-body-md text-on-surface-variant">Conexión cifrada de extremo a extremo.</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Success Message Snackbar (Hidden by default) -->
+<div class="fixed bottom-lg right-lg hidden">
+<div class="bg-inverse-surface text-inverse-on-surface px-lg py-md rounded-xl shadow-lg flex items-center gap-md">
+<span class="material-symbols-outlined text-primary-fixed">check_circle</span>
+<span class="font-body-md text-body-md">Datos validados correctamente</span>
+</div>
+</div>
+</body></html>

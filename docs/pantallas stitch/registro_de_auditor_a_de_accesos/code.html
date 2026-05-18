@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#8e5c2b",
+                    "error": "#ba1a1a",
+                    "on-surface": "#191c1e",
+                    "surface-container-low": "#f2f4f6",
+                    "outline-variant": "#bfc8cb",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#001f26",
+                    "surface-dim": "#d8dadc",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-error": "#ffffff",
+                    "on-background": "#191c1e",
+                    "on-secondary-fixed": "#0b1c30",
+                    "primary-fixed": "#aeecff",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "inverse-surface": "#2d3133",
+                    "primary-container": "#2a7081",
+                    "surface-container": "#eceef0",
+                    "surface-bright": "#f7f9fb",
+                    "on-surface-variant": "#3f484b",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#2d1600",
+                    "surface-tint": "#1e6777",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "outline": "#70797c",
+                    "secondary-container": "#d0e1fb",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "inverse-primary": "#8fd0e3",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-primary-container": "#bcefff",
+                    "inverse-on-surface": "#eff1f3",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-secondary-container": "#54647a",
+                    "tertiary-fixed-dim": "#fab980",
+                    "tertiary": "#724515",
+                    "secondary": "#505f76",
+                    "primary": "#005768",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "sm": "8px",
+                    "unit": "4px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["manrope"],
+                    "label-caps": ["inter"],
+                    "title-sm": ["manrope"],
+                    "headline-md": ["manrope"],
+                    "body-lg": ["atkinsonHyperlegibleNext"],
+                    "display-lg": ["manrope"],
+                    "body-md": ["atkinsonHyperlegibleNext"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .blur-shield {
+            filter: blur(4px);
+            transition: filter 0.2s ease;
+        }
+        .blur-shield:hover {
+            filter: blur(0px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-on-surface-variant">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Portal NNyA</span>
+<div class="ml-xl hidden md:flex items-center bg-surface-container-low px-md py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-64 p-0" placeholder="Buscar registros..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden ml-2 border border-outline">
+<img alt="Avatar del Administrador" class="object-cover h-full w-full" data-alt="A professional headshot of a mature government administrator in a clean-lit office environment. The lighting is bright and professional, adhering to a light-mode aesthetic with soft shadows. The style is minimalist and clean, using a palette of neutral grays and soft teals to convey institutional trust and security." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhStFQg-243wmL0IQw8CBE5TLRhvCWrrwwcXjXvyp3kDbU959Pcu_XrZOqBABQYyYTwOOj_VUJZkVJr-jt0sHXr0ybKxKlfiZO23BczhGPgmji7X1zRTfK2ie9Me_FvYC96HTuQ8n-Drw99r9r5tY5OfXrfH-vKufROYJ-RvMMHoAMxnavwsGYiAhR6WiDoZVy2DXrOfB4TKqc1tR3lrhtfB9Gd8ntAmfwE9N8D7Jiwh3K4WeD0ZeVmd9wIfGtZxE6FXa9MY4ObuI"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col p-md gap-sm bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-on-surface-variant">
+<div class="mb-lg px-2">
+<h2 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed font-bold">Administración</h2>
+<p class="font-title-sm text-title-sm text-on-surface-variant opacity-70">Control de Acceso</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-title-sm text-title-sm">Panel Principal</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-sm" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-title-sm text-title-sm">Gestión de Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-title-sm text-title-sm">Usuarios</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-title-sm text-title-sm">Legajos Judiciales</span>
+</a>
+<a class="flex items-center gap-md px-md py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-title-sm text-title-sm">Reportes</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md">
+<button class="w-full flex items-center gap-md px-md py-3 text-error hover:bg-error-container/10 rounded-lg transition-all">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-title-sm text-title-sm">Cerrar Sesión</span>
+</button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 mt-16 p-lg max-w-container-max mx-auto">
+<!-- Header Section -->
+<header class="mb-lg">
+<div class="flex justify-between items-end">
+<div>
+<nav class="flex items-center gap-2 text-on-surface-variant mb-2 font-body-md text-body-md">
+<span>Seguridad</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-semibold">Auditoría de Cambios</span>
+</nav>
+<h1 class="font-display-lg text-display-lg text-on-surface">Historial de Permisos</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">
+                        Registro inmutable de modificaciones en niveles de acceso, roles y permisos críticos sobre legajos de menores judicializados.
+                    </p>
+</div>
+<div class="flex gap-md">
+<button class="flex items-center gap-2 px-md py-2 border border-outline text-primary rounded-lg font-title-sm text-title-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">download</span>
+                        Exportar PDF
+                    </button>
+<button class="flex items-center gap-2 px-lg py-2 bg-primary text-on-primary rounded-lg font-title-sm text-title-sm hover:opacity-90 transition-opacity shadow-sm">
+<span class="material-symbols-outlined">filter_list</span>
+                        Filtros Avanzados
+                    </button>
+</div>
+</div>
+</header>
+<!-- Stats Overview (Asymmetric Layout) -->
+<div class="grid grid-cols-12 gap-gutter mb-lg">
+<div class="col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex items-center justify-between">
+<div class="space-y-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Actividad Últimas 24h</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">14 Modificaciones Críticas</h3>
+</div>
+<div class="h-16 w-32 flex items-end gap-1">
+<div class="w-full bg-primary-container h-1/4 rounded-sm"></div>
+<div class="w-full bg-primary-container h-2/4 rounded-sm"></div>
+<div class="w-full bg-primary-container h-4/4 rounded-sm"></div>
+<div class="w-full bg-primary h-3/4 rounded-sm"></div>
+<div class="w-full bg-primary-container h-1/4 rounded-sm"></div>
+<div class="w-full bg-primary-container h-2/4 rounded-sm"></div>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-highest/30 border border-outline-variant rounded-xl p-lg flex flex-col justify-center">
+<div class="flex items-center gap-md text-error">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<div>
+<p class="font-label-caps text-label-caps uppercase">Alertas de Elevación</p>
+<p class="font-headline-md text-headline-md font-bold">2</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Audit Log Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-lg py-md text-left font-label-caps text-label-caps text-on-surface-variant">FECHA</th>
+<th class="px-lg py-md text-left font-label-caps text-label-caps text-on-surface-variant">ADMINISTRADOR</th>
+<th class="px-lg py-md text-left font-label-caps text-label-caps text-on-surface-variant">ACCIÓN</th>
+<th class="px-lg py-md text-left font-label-caps text-label-caps text-on-surface-variant">USUARIO AFECTADO</th>
+<th class="px-lg py-md text-left font-label-caps text-label-caps text-on-surface-variant">DETALLES</th>
+<th class="px-lg py-md text-right font-label-caps text-label-caps text-on-surface-variant">PROTOCOLO</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-lg py-md align-top">
+<p class="font-title-sm text-title-sm text-on-surface">12 Oct 2023</p>
+<p class="font-body-md text-body-md text-on-surface-variant">09:42 AM</p>
+</td>
+<td class="px-lg py-md align-top">
+<div class="flex items-center gap-md">
+<div class="h-8 w-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">AR</div>
+<div>
+<p class="font-title-sm text-title-sm text-on-surface">Lic. Ana Rossi</p>
+<p class="font-body-md text-body-md text-on-surface-variant">ID: 4429</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md align-top">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed">
+                                    CAMBIO DE ROL
+                                </span>
+</td>
+<td class="px-lg py-md align-top">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">person</span>
+<span class="font-body-lg text-body-lg text-on-surface blur-shield">Dr. Mario Gímenez</span>
+</div>
+</td>
+<td class="px-lg py-md align-top max-w-xs">
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                                    Elevación de "Consulta" a "Editor de Legajo" para causa 144/2023. Justificado por subrogancia.
+                                </p>
+</td>
+<td class="px-lg py-md align-top text-right">
+<button class="text-primary hover:underline font-title-sm text-title-sm">Ver Hash</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-lg py-md align-top">
+<p class="font-title-sm text-title-sm text-on-surface">11 Oct 2023</p>
+<p class="font-body-md text-body-md text-on-surface-variant">16:15 PM</p>
+</td>
+<td class="px-lg py-md align-top">
+<div class="flex items-center gap-md">
+<div class="h-8 w-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">JM</div>
+<div>
+<p class="font-title-sm text-title-sm text-on-surface">Juan M. Sosa</p>
+<p class="font-body-md text-body-md text-on-surface-variant">ID: 1102</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md align-top">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-error-container text-on-error-container">
+                                    REVOCACIÓN
+                                </span>
+</td>
+<td class="px-lg py-md align-top">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">person</span>
+<span class="font-body-lg text-body-lg text-on-surface blur-shield">Lic. Clara Benítez</span>
+</div>
+</td>
+<td class="px-lg py-md align-top max-w-xs">
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                                    Baja de accesos por cese de funciones en Secretaría de Niñez. Bloqueo total de sistema.
+                                </p>
+</td>
+<td class="px-lg py-md align-top text-right">
+<button class="text-primary hover:underline font-title-sm text-title-sm">Ver Hash</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-lg py-md align-top">
+<p class="font-title-sm text-title-sm text-on-surface">11 Oct 2023</p>
+<p class="font-body-md text-body-md text-on-surface-variant">11:05 AM</p>
+</td>
+<td class="px-lg py-md align-top">
+<div class="flex items-center gap-md">
+<div class="h-8 w-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">AR</div>
+<div>
+<p class="font-title-sm text-title-sm text-on-surface">Lic. Ana Rossi</p>
+<p class="font-body-md text-body-md text-on-surface-variant">ID: 4429</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md align-top">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary-container text-on-secondary-container">
+                                    NUEVO ACCESO
+                                </span>
+</td>
+<td class="px-lg py-md align-top">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">person</span>
+<span class="font-body-lg text-body-lg text-on-surface blur-shield">Oficial P. Valente</span>
+</div>
+</td>
+<td class="px-lg py-md align-top max-w-xs">
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                                    Alta en sistema como Visualizador de Alertas para Unidad de Búsqueda de Personas.
+                                </p>
+</td>
+<td class="px-lg py-md align-top text-right">
+<button class="text-primary hover:underline font-title-sm text-title-sm">Ver Hash</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-lg py-md align-top">
+<p class="font-title-sm text-title-sm text-on-surface">10 Oct 2023</p>
+<p class="font-body-md text-body-md text-on-surface-variant">14:22 PM</p>
+</td>
+<td class="px-lg py-md align-top">
+<div class="flex items-center gap-md">
+<div class="h-8 w-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">JM</div>
+<div>
+<p class="font-title-sm text-title-sm text-on-surface">Juan M. Sosa</p>
+<p class="font-body-md text-body-md text-on-surface-variant">ID: 1102</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md align-top">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-outline-variant text-on-surface-variant">
+                                    MOD. PERFIL
+                                </span>
+</td>
+<td class="px-lg py-md align-top">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">person</span>
+<span class="font-body-lg text-body-lg text-on-surface blur-shield">Dr. Esteban Solís</span>
+</div>
+</td>
+<td class="px-lg py-md align-top max-w-xs">
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                                    Actualización de firma digital y extensión de permisos de visualización hasta Dic 2023.
+                                </p>
+</td>
+<td class="px-lg py-md align-top text-right">
+<button class="text-primary hover:underline font-title-sm text-title-sm">Ver Hash</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-lg py-md bg-surface-container-low border-t border-outline-variant flex items-center justify-between">
+<p class="font-body-md text-body-md text-on-surface-variant">Mostrando 1-10 de 1,244 registros de auditoría</p>
+<div class="flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container-high rounded disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="px-3 py-1 bg-primary text-on-primary rounded-md font-bold text-xs">1</button>
+<button class="px-3 py-1 hover:bg-surface-container-high rounded-md text-xs">2</button>
+<button class="px-3 py-1 hover:bg-surface-container-high rounded-md text-xs">3</button>
+<span class="px-2 text-on-surface-variant">...</span>
+<button class="px-3 py-1 hover:bg-surface-container-high rounded-md text-xs">125</button>
+<button class="p-1 hover:bg-surface-container-high rounded">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Security Footer Information -->
+<div class="mt-xl p-lg border-l-4 border-primary bg-primary-container/10 rounded-r-xl">
+<div class="flex items-start gap-md">
+<span class="material-symbols-outlined text-primary text-[32px]">shield_locked</span>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface font-bold">Integridad de la Información</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                        Cada registro en esta vista está firmado digitalmente y almacenado en una cadena de custodia inmutable. De acuerdo con la Ley de Protección de Datos de Menores, el acceso a este historial queda estrictamente restringido a administradores de Nivel 4 y auditores judiciales externos. Cualquier intento de manipulación disparará un cierre de emergencia del módulo.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

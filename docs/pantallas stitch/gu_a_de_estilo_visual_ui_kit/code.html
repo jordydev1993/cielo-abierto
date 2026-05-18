@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Guía de Estilo Visual | Sistema NNyA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-tint": "#1e6777",
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#eff1f3",
+                      "surface-container-high": "#e6e8ea",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "surface-container-low": "#f2f4f6",
+                      "error-container": "#ffdad6",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#bfc8cb",
+                      "on-primary-fixed-variant": "#004e5d",
+                      "on-surface": "#191c1e",
+                      "tertiary-fixed": "#ffdcc0",
+                      "secondary": "#505f76",
+                      "surface-container-highest": "#e0e3e5",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed": "#aeecff",
+                      "tertiary-fixed-dim": "#fab980",
+                      "surface": "#f7f9fb",
+                      "tertiary-container": "#8e5c2b",
+                      "on-primary-fixed": "#001f26",
+                      "on-secondary-fixed": "#0b1c30",
+                      "primary-fixed-dim": "#8fd0e3",
+                      "primary": "#005768",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "tertiary": "#724515",
+                      "on-secondary-container": "#54647a",
+                      "secondary-container": "#d0e1fb",
+                      "on-tertiary-fixed-variant": "#683c0d",
+                      "inverse-surface": "#2d3133",
+                      "surface-variant": "#e0e3e5",
+                      "surface-container": "#eceef0",
+                      "on-tertiary-fixed": "#2d1600",
+                      "on-tertiary-container": "#ffe1ca",
+                      "surface-dim": "#d8dadc",
+                      "outline": "#70797c",
+                      "on-error-container": "#93000a",
+                      "on-surface-variant": "#3f484b",
+                      "primary-container": "#2a7081",
+                      "inverse-primary": "#8fd0e3",
+                      "background": "#f7f9fb",
+                      "surface-bright": "#f7f9fb",
+                      "on-primary-container": "#bcefff",
+                      "on-background": "#191c1e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "xs": "4px",
+                      "xl": "40px",
+                      "lg": "24px",
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "unit": "4px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Inter", "sans-serif"],
+                      "title-sm": ["Manrope", "sans-serif"],
+                      "body-lg": ["Atkinson Hyperlegible Next", "sans-serif"],
+                      "display-lg": ["Manrope", "sans-serif"],
+                      "headline-lg-mobile": ["Manrope", "sans-serif"],
+                      "headline-md": ["Manrope", "sans-serif"],
+                      "body-md": ["Atkinson Hyperlegible Next", "sans-serif"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+            color: #191c1e;
+        }
+        .privacy-blur {
+            filter: blur(8px);
+            transition: filter 0.3s ease;
+        }
+        .privacy-blur:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased">
+<!-- Sidebar Shell -->
+<aside class="fixed left-0 top-0 bottom-0 z-40 h-full w-64 flex flex-col bg-surface border-r border-outline-variant">
+<div class="p-lg flex flex-col gap-xs">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">NNyA System</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant opacity-70">Judicial Management</p>
+</div>
+<div class="px-md mt-lg flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="contact_phone">contact_phone</span>
+<span class="font-label-caps text-label-caps">Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-label-caps text-label-caps">Cases</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span class="font-label-caps text-label-caps">Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="font-label-caps text-label-caps">Audit</span>
+</a>
+</div>
+<div class="mt-auto p-md border-t border-outline-variant">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-label-caps text-label-caps">Help</span>
+</a>
+</div>
+</aside>
+<!-- Header Shell -->
+<header class="fixed top-0 right-0 left-64 z-30 flex justify-between items-center px-lg h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-md flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-xl pr-md py-sm focus:ring-2 focus:ring-primary/20 text-body-md font-body-md" placeholder="Buscar expedientes o profesionales..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg ml-lg">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shield_person">shield_person</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden border border-outline-variant">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a female administrative officer in a modern workspace. She has a serene and confident expression, wearing professional attire. The lighting is soft and even, typical of a high-end corporate environment, with a shallow depth of field focusing on her professional demeanor. The color palette reflects the serene teal and neutral tones of the NNyA system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB36BPSjm2A99o0JkyPNlNP0TxNQj0v2cb0vhxljtof_10q307Dtj8PhT49wug3GSPnYvqhtQ9BrIZy5V8GK1nLTJ_a9wRk4AR8PUpum3iyQyrVRXFOyVLIy5CdQVLH--PC8jk6k3MpTx6yvAl8OLmMVCtF_L7fbqqY4FxCtQ5YqkEjDQTYZqv9oMd3pLlQbNah7c6YPbTAeQPJntADvOsnNOhK9U0esBKaWbv4tjyPplrjqP9BzWHMPA_y5QcuUTul6O5m_why8sQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 mt-16 p-xl max-w-[1280px] mx-auto">
+<header class="mb-xl">
+<h2 class="font-display-lg text-display-lg text-primary">Guía de Estilo Visual</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-sm">Documentación de componentes y tokens de diseño para el Sistema de Gestión Judicial NNyA.</p>
+</header>
+<div class="grid grid-cols-12 gap-lg">
+<!-- 1. Colores y Tipografía -->
+<section class="col-span-12 bg-white rounded-xl border border-outline-variant p-lg overflow-hidden">
+<div class="flex items-center justify-between mb-lg border-b border-outline-variant pb-md">
+<h3 class="font-headline-md text-headline-md text-primary">1. Colores y Tipografía</h3>
+<span class="font-label-caps text-label-caps px-sm py-xs bg-surface-container text-on-surface-variant rounded">Visual Tokens</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+<!-- Palette -->
+<div class="space-y-md">
+<p class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-widest">Paleta Cromática Principal</p>
+<div class="grid grid-cols-4 gap-sm">
+<div class="flex flex-col gap-xs">
+<div class="h-16 w-full rounded bg-primary"></div>
+<span class="font-label-caps text-label-caps">Primary</span>
+</div>
+<div class="flex flex-col gap-xs">
+<div class="h-16 w-full rounded bg-primary-container"></div>
+<span class="font-label-caps text-label-caps">Container</span>
+</div>
+<div class="flex flex-col gap-xs">
+<div class="h-16 w-full rounded bg-secondary-container"></div>
+<span class="font-label-caps text-label-caps">Secondary</span>
+</div>
+<div class="flex flex-col gap-xs">
+<div class="h-16 w-full rounded bg-surface"></div>
+<span class="font-label-caps text-label-caps">Surface</span>
+</div>
+</div>
+</div>
+<!-- Type Scale -->
+<div class="space-y-md">
+<p class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-widest">Escala Tipográfica</p>
+<div class="space-y-sm">
+<div class="flex items-baseline justify-between gap-md border-b border-surface-container-low pb-xs">
+<span class="font-display-lg text-display-lg">Display Large</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Manrope 32pt Bold</span>
+</div>
+<div class="flex items-baseline justify-between gap-md border-b border-surface-container-low pb-xs">
+<span class="font-headline-md text-headline-md">Headline Medium</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Manrope 24pt Semi</span>
+</div>
+<div class="flex items-baseline justify-between gap-md border-b border-surface-container-low pb-xs">
+<span class="font-body-lg text-body-lg">Body Large Regular</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Atkinson 16pt</span>
+</div>
+<div class="flex items-baseline justify-between gap-md border-b border-surface-container-low pb-xs">
+<span class="font-label-caps text-label-caps uppercase">Label Caps</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Inter 12pt Bold</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Botones y Acciones -->
+<section class="col-span-12 lg:col-span-6 bg-white rounded-xl border border-outline-variant p-lg">
+<div class="flex items-center justify-between mb-lg border-b border-outline-variant pb-md">
+<h3 class="font-headline-md text-headline-md text-primary">2. Botones y Acciones</h3>
+</div>
+<div class="grid grid-cols-2 gap-lg">
+<div class="space-y-md">
+<p class="font-label-caps text-label-caps text-on-surface-variant">Estilos Base</p>
+<button class="w-full flex items-center justify-center gap-sm bg-primary text-on-primary font-title-sm text-title-sm px-lg py-md rounded-lg hover:bg-surface-tint active:scale-95 transition-all">
+                            Primario
+                        </button>
+<button class="w-full flex items-center justify-center gap-sm border-2 border-primary text-primary font-title-sm text-title-sm px-lg py-md rounded-lg hover:bg-primary-container/10 active:scale-95 transition-all">
+                            Secundario
+                        </button>
+<button class="w-full flex items-center justify-center gap-sm text-primary font-title-sm text-title-sm px-lg py-md rounded-lg hover:bg-surface-container-low active:scale-95 transition-all">
+                            Terciario
+                        </button>
+</div>
+<div class="space-y-md">
+<p class="font-label-caps text-label-caps text-on-surface-variant">Estados e Iconos</p>
+<button class="w-full flex items-center justify-center gap-sm bg-primary text-on-primary font-title-sm text-title-sm px-lg py-md rounded-lg opacity-50 cursor-not-allowed">
+                            Deshabilitado
+                        </button>
+<button class="w-full flex items-center justify-center gap-sm bg-tertiary-container text-on-tertiary-container font-title-sm text-title-sm px-lg py-md rounded-lg hover:opacity-90 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                            Acción Nueva
+                        </button>
+<div class="flex gap-sm justify-center">
+<button class="h-12 w-12 flex items-center justify-center rounded-full bg-surface-container-high text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="h-12 w-12 flex items-center justify-center rounded-full bg-surface-container-high text-error hover:bg-error hover:text-on-error transition-all">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Etiquetas de Estado (Badges) -->
+<section class="col-span-12 lg:col-span-6 bg-white rounded-xl border border-outline-variant p-lg">
+<div class="flex items-center justify-between mb-lg border-b border-outline-variant pb-md">
+<h3 class="font-headline-md text-headline-md text-primary">3. Etiquetas de Estado</h3>
+</div>
+<div class="grid grid-cols-2 gap-lg">
+<div class="space-y-md">
+<p class="font-label-caps text-label-caps text-on-surface-variant">Severidad Crítica</p>
+<span class="inline-flex items-center px-md py-sm rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps uppercase border border-error/20">
+<span class="material-symbols-outlined text-[14px] mr-xs" data-icon="priority_high">priority_high</span>
+                            Crítico
+                        </span>
+<span class="inline-flex items-center px-md py-sm rounded-full bg-tertiary-container text-on-tertiary-container font-label-caps text-label-caps uppercase border border-tertiary/20">
+<span class="material-symbols-outlined text-[14px] mr-xs" data-icon="warning">warning</span>
+                            Urgente
+                        </span>
+</div>
+<div class="space-y-md">
+<p class="font-label-caps text-label-caps text-on-surface-variant">Estados Operativos</p>
+<span class="inline-flex items-center px-md py-sm rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[14px] mr-xs" data-icon="pending">pending</span>
+                            En Trámite
+                        </span>
+<span class="inline-flex items-center px-md py-sm rounded-full bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[14px] mr-xs" data-icon="check_circle">check_circle</span>
+                            Finalizado
+                        </span>
+</div>
+</div>
+</section>
+<!-- 4. Componentes de Formulario -->
+<section class="col-span-12 bg-white rounded-xl border border-outline-variant p-lg">
+<div class="flex items-center justify-between mb-lg border-b border-outline-variant pb-md">
+<h3 class="font-headline-md text-headline-md text-primary">4. Componentes de Formulario</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<div class="space-y-md">
+<label class="block font-label-caps text-label-caps text-on-surface-variant">Nombre Completo</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm focus:ring-2 focus:ring-primary/20 focus:border-primary text-body-md font-body-md transition-all" placeholder="Ej. Juan Pérez" type="text"/>
+<p class="text-[12px] text-on-surface-variant opacity-70">Nombre tal cual figura en el DNI.</p>
+</div>
+<div class="space-y-md">
+<label class="block font-label-caps text-label-caps text-on-surface-variant">Dependencia Judicial</label>
+<select class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-md py-sm focus:ring-2 focus:ring-primary/20 focus:border-primary text-body-md font-body-md transition-all">
+<option>Juzgado de Familia N°1</option>
+<option>Defensoría del Menor</option>
+<option>Tribunal de Casación</option>
+</select>
+</div>
+<div class="space-y-md">
+<label class="block font-label-caps text-label-caps text-on-surface-variant">Buscar Profesional</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-primary" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border border-primary/30 rounded-lg pl-xl pr-md py-sm focus:ring-2 focus:ring-primary/20 focus:border-primary text-body-md font-body-md transition-all" placeholder="DNI o Apellido..." type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Elementos de Tabla y Datos -->
+<section class="col-span-12 bg-white rounded-xl border border-outline-variant p-lg">
+<div class="flex items-center justify-between mb-lg border-b border-outline-variant pb-md">
+<h3 class="font-headline-md text-headline-md text-primary">5. Elementos de Tabla y Datos Personales</h3>
+<div class="flex items-center gap-sm bg-surface-container px-md py-sm rounded-lg">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="lock">lock</span>
+<span class="font-label-caps text-label-caps">Privacidad Activada</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant">Expediente</th>
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant">Persona Protegida</th>
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant">Estado</th>
+<th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant">Última Actuación</th>
+<th class="text-right py-md px-md font-label-caps text-label-caps text-on-surface-variant">Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-surface-container hover:bg-surface-container-low transition-colors group">
+<td class="py-md px-md font-title-sm text-title-sm text-primary">#EXP-2023-9912</td>
+<td class="py-md px-md">
+<div class="flex items-center gap-sm">
+<div class="privacy-blur font-body-md text-body-md px-sm py-xs bg-surface-container-highest rounded cursor-help" title="Hover para revelar">M. Alejandra González</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant opacity-50" data-icon="visibility_off">visibility_off</span>
+</div>
+</td>
+<td class="py-md px-md">
+<span class="px-sm py-xs rounded bg-error-container text-on-error-container font-label-caps text-[10px] uppercase font-bold tracking-tight">Crítico</span>
+</td>
+<td class="py-md px-md font-body-md text-on-surface-variant">Hace 2 horas - Elevación</td>
+<td class="py-md px-md text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-sm hover:bg-primary-container rounded">
+<span class="material-symbols-outlined text-primary" data-icon="open_in_new">open_in_new</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-surface-container hover:bg-surface-container-low transition-colors group">
+<td class="py-md px-md font-title-sm text-title-sm text-primary">#EXP-2024-0410</td>
+<td class="py-md px-md">
+<div class="flex items-center gap-sm">
+<div class="privacy-blur font-body-md text-body-md px-sm py-xs bg-surface-container-highest rounded cursor-help">T. Julián Benítez</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant opacity-50" data-icon="visibility_off">visibility_off</span>
+</div>
+</td>
+<td class="py-md px-md">
+<span class="px-sm py-xs rounded bg-secondary-container text-on-secondary-container font-label-caps text-[10px] uppercase font-bold tracking-tight">Pendiente</span>
+</td>
+<td class="py-md px-md font-body-md text-on-surface-variant">Ayer 15:45 - Informe</td>
+<td class="py-md px-md text-right">
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-sm hover:bg-primary-container rounded">
+<span class="material-symbols-outlined text-primary" data-icon="open_in_new">open_in_new</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 6. Timeline y Visualizaciones -->
+<section class="col-span-12 bg-white rounded-xl border border-outline-variant p-lg">
+<div class="flex items-center justify-between mb-lg border-b border-outline-variant pb-md">
+<h3 class="font-headline-md text-headline-md text-primary">6. Seguimiento Cronológico (Timeline)</h3>
+</div>
+<div class="relative py-md ml-lg">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-outline-variant"></div>
+<div class="relative pl-xl mb-xl">
+<div class="absolute left-[-6px] top-0 h-3 w-3 rounded-full bg-primary border-4 border-white ring-2 ring-primary"></div>
+<p class="font-label-caps text-label-caps text-primary">Estado Actual</p>
+<h4 class="font-title-sm text-title-sm">Elevación a Juicio Oral</h4>
+<p class="font-body-md text-on-surface-variant mt-xs">Presentado por Dr. Martens en el Juzgado de Garantías N°4. El documento digital cuenta con firma certificada.</p>
+</div>
+<div class="relative pl-xl mb-xl opacity-60">
+<div class="absolute left-[-6px] top-0 h-3 w-3 rounded-full bg-outline-variant border-4 border-white"></div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">15 OCT 2023</p>
+<h4 class="font-title-sm text-title-sm">Cierre de Instrucción</h4>
+<p class="font-body-md text-on-surface-variant mt-xs">Se completaron todas las pericias psicológicas obligatorias según protocolo NNYA-04.</p>
+</div>
+<div class="relative pl-xl">
+<div class="absolute left-[-6px] top-0 h-3 w-3 rounded-full bg-outline-variant border-4 border-white"></div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">10 SEP 2023</p>
+<h4 class="font-title-sm text-title-sm">Apertura de Expediente</h4>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Visual Identity -->
+<footer class="mt-xl py-lg border-t border-outline-variant flex justify-between items-center text-on-surface-variant">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="verified_user">verified_user</span>
+<div>
+<p class="font-title-sm text-title-sm text-primary">Identidad Visual NNyA</p>
+<p class="text-[12px] opacity-70">Manual de Estilo v2.4.0 • 2024</p>
+</div>
+</div>
+<div class="flex gap-lg">
+<div class="text-right">
+<p class="font-label-caps text-label-caps uppercase tracking-wider">Accesibilidad</p>
+<p class="text-[12px]">WCAG 2.1 AA Compliant</p>
+</div>
+<div class="text-right">
+<p class="font-label-caps text-label-caps uppercase tracking-wider">Seguridad</p>
+<p class="text-[12px]">Data Protection Layer Active</p>
+</div>
+</div>
+</footer>
+</main>
+<!-- FAB for New Actions (Shell Logic) -->
+<button class="fixed bottom-lg right-lg h-16 w-16 flex items-center justify-center bg-primary text-on-primary rounded-full shadow-lg hover:scale-105 active:scale-95 transition-transform z-50">
+<span class="material-symbols-outlined text-[32px]" data-icon="add_moderator">add_moderator</span>
+</button>
+</body></html>

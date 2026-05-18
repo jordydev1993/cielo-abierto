@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "surface-bright": "#f7f9fb",
+                  "on-tertiary-container": "#ffe1ca",
+                  "primary-fixed-dim": "#8fd0e3",
+                  "on-secondary": "#ffffff",
+                  "on-secondary-fixed-variant": "#38485d",
+                  "surface-tint": "#1e6777",
+                  "on-background": "#191c1e",
+                  "on-tertiary-fixed": "#2d1600",
+                  "error": "#ba1a1a",
+                  "on-tertiary-fixed-variant": "#683c0d",
+                  "tertiary-container": "#8e5c2b",
+                  "primary-container": "#2a7081",
+                  "surface": "#f7f9fb",
+                  "primary-fixed": "#aeecff",
+                  "outline": "#70797c",
+                  "inverse-on-surface": "#eff1f3",
+                  "error-container": "#ffdad6",
+                  "on-primary-container": "#bcefff",
+                  "secondary": "#505f76",
+                  "on-surface-variant": "#3f484b",
+                  "inverse-surface": "#2d3133",
+                  "surface-container-lowest": "#ffffff",
+                  "background": "#f7f9fb",
+                  "on-primary": "#ffffff",
+                  "on-error": "#ffffff",
+                  "tertiary": "#724515",
+                  "on-primary-fixed": "#001f26",
+                  "primary": "#005768",
+                  "on-surface": "#191c1e",
+                  "surface-container-highest": "#e0e3e5",
+                  "tertiary-fixed-dim": "#fab980",
+                  "surface-container-high": "#e6e8ea",
+                  "secondary-container": "#d0e1fb",
+                  "on-secondary-fixed": "#0b1c30",
+                  "secondary-fixed": "#d3e4fe",
+                  "on-secondary-container": "#54647a",
+                  "surface-variant": "#e0e3e5",
+                  "secondary-fixed-dim": "#b7c8e1",
+                  "outline-variant": "#bfc8cb",
+                  "surface-dim": "#d8dadc",
+                  "tertiary-fixed": "#ffdcc0",
+                  "on-error-container": "#93000a",
+                  "on-tertiary": "#ffffff",
+                  "inverse-primary": "#8fd0e3",
+                  "surface-container-low": "#f2f4f6",
+                  "surface-container": "#eceef0",
+                  "on-primary-fixed-variant": "#004e5d"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "xs": "4px",
+                  "unit": "4px",
+                  "sm": "8px",
+                  "gutter": "24px",
+                  "xl": "40px",
+                  "md": "16px",
+                  "container-max": "1280px",
+                  "lg": "24px"
+          },
+          "fontFamily": {
+                  "title-sm": ["manrope"],
+                  "label-caps": ["inter"],
+                  "display-lg": ["manrope"],
+                  "headline-md": ["manrope"],
+                  "body-md": ["atkinsonHyperlegibleNext"],
+                  "body-lg": ["atkinsonHyperlegibleNext"],
+                  "headline-lg-mobile": ["manrope"]
+          },
+          "fontSize": {
+                  "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                  "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                  "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                  "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                  "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                  "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                  "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body { font-family: 'Atkinson Hyperlegible Next', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-surface-bright text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar Implementation -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center px-lg py-sm w-full z-40 docked full-width top-0">
+<div class="flex items-center gap-md">
+<span class="text-title-sm font-title-sm font-bold text-primary dark:text-inverse-primary">Portal NNyA</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex items-center bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-64" placeholder="Buscar legajos..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-xs rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary">notifications</span>
+</button>
+<button class="p-xs rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary">help_outline</span>
+</button>
+<button class="p-xs rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Administrator Profile" data-alt="A professional headshot of a female administrator in a clean office environment. She is wearing professional attire, and the lighting is soft and natural. The background is slightly blurred to emphasize focus on the subject. The overall aesthetic is minimalist, serene, and professional, following the light-mode theme of the portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3xKnGdxoTyK1AnF2YPXAhEuEOHx07fT53FNNAAfhxlnaGRlTlBm1_XkG-Nty6At09kZzhRwhMyuDn8A7MVqIdqskn_fYvkDpBhmMCLAwNKzNp1oQn-yD9KmL2wWBgni_SqnYNWzTAYmq8OXg9ppA8wULoTJ1fQb7Tz-AjLuyiQHzjKBIflBo1OBmV31hFOEQX59FaYWnWmIKZorj90LU2hPi_qeR0HkRc6E_3LTA_qunuTQ7yP3w4Ze-4X-Md4j3ZdSPoVK6lya8"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar Implementation -->
+<aside class="hidden md:flex flex-col h-full w-64 bg-surface-container-low dark:bg-surface-container-highest border-r border-outline-variant dark:border-outline p-md gap-sm">
+<div class="mb-lg px-xs">
+<h2 class="text-headline-md font-headline-md text-primary dark:text-inverse-primary">Secure Nexus</h2>
+<p class="text-body-md text-on-surface-variant opacity-70">Judicial Records</p>
+</div>
+<nav class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container dark:bg-secondary dark:text-on-secondary font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined">safety_divider</span>
+<span class="font-body-md text-body-md">NNyA Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md text-body-md">Case Records</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md text-body-md">User Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-body-md text-body-md">Audit Logs</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs pt-lg border-t border-outline-variant">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span class="font-body-md text-body-md">Privacy Policy</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-surface-bright">
+<div class="max-w-[1280px] mx-auto p-lg lg:p-xl">
+<!-- Header & Stepper -->
+<div class="mb-xl">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<h1 class="text-display-lg font-display-lg text-primary mb-xs">Crear Nuevo Legajo</h1>
+<p class="text-body-lg text-on-surface-variant">Gestión de Niñas, Niños y Adolescentes</p>
+</div>
+<div class="flex items-center gap-sm bg-white border border-outline-variant rounded-full px-lg py-sm">
+<span class="text-label-caps font-label-caps text-secondary uppercase">Estado:</span>
+<span class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full text-[12px] font-bold">BORRADOR</span>
+</div>
+</div>
+<!-- Stepper Component -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md relative">
+<div class="flex items-center gap-md group">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-white font-bold">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-caps font-label-caps text-on-surface-variant">PASO 1</span>
+<span class="text-body-md font-semibold text-on-surface">Datos Personales</span>
+</div>
+<div class="hidden md:block flex-1 h-px bg-outline-variant ml-md"></div>
+</div>
+<div class="flex items-center gap-md group">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-white font-bold ring-4 ring-primary-fixed">
+                2
+              </div>
+<div class="flex flex-col">
+<span class="text-label-caps font-label-caps text-primary">PASO 2</span>
+<span class="text-body-md font-bold text-on-surface">Vínculos Familiares</span>
+</div>
+<div class="hidden md:block flex-1 h-px bg-outline-variant ml-md"></div>
+</div>
+<div class="flex items-center gap-md group opacity-50">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant font-bold">
+                3
+              </div>
+<div class="flex flex-col">
+<span class="text-label-caps font-label-caps text-on-surface-variant">PASO 3</span>
+<span class="text-body-md font-semibold text-on-surface">Documentación</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Content Canvas -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Family Form Column -->
+<div class="lg:col-span-7 flex flex-col gap-lg">
+<section class="bg-white border border-outline-variant rounded-xl p-lg overflow-hidden relative">
+<div class="flex items-center gap-sm mb-lg border-b border-outline-variant pb-md">
+<span class="material-symbols-outlined text-primary">person_add</span>
+<h3 class="text-headline-md font-headline-md">Agregar Familiar o Tutor</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="flex flex-col gap-xs">
+<label class="text-label-caps font-label-caps text-on-surface-variant ml-xs">PARENTESCO / VÍNCULO</label>
+<select class="bg-surface-container-low border-none rounded-lg p-md text-body-md focus:ring-2 focus:ring-primary-container">
+<option disabled="" selected="">Seleccionar relación</option>
+<option>Madre</option>
+<option>Padre</option>
+<option>Tutor Legal</option>
+<option>Hermano/a</option>
+<option>Abuelo/a</option>
+<option>Otro familiar</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-caps font-label-caps text-on-surface-variant ml-xs">NOMBRE COMPLETO</label>
+<input class="bg-surface-container-low border-none rounded-lg p-md text-body-md focus:ring-2 focus:ring-primary-container" placeholder="Ej: Maria Gonzalez" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-caps font-label-caps text-on-surface-variant ml-xs">DNI / IDENTIFICACIÓN</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg p-md pr-12 text-body-md focus:ring-2 focus:ring-primary-container" placeholder="00.000.000" type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-md">visibility_off</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-caps font-label-caps text-on-surface-variant ml-xs">TELÉFONO DE CONTACTO</label>
+<input class="bg-surface-container-low border-none rounded-lg p-md text-body-md focus:ring-2 focus:ring-primary-container" placeholder="+54 9 11 0000-0000" type="tel"/>
+</div>
+<div class="md:col-span-2 flex flex-col gap-xs">
+<label class="text-label-caps font-label-caps text-on-surface-variant ml-xs">DOMICILIO PARTICULAR</label>
+<input class="bg-surface-container-low border-none rounded-lg p-md text-body-md focus:ring-2 focus:ring-primary-container" placeholder="Calle, Número, Localidad" type="text"/>
+</div>
+</div>
+<div class="mt-xl flex justify-end">
+<button class="flex items-center gap-sm px-lg py-md bg-white border border-primary text-primary font-semibold rounded-lg hover:bg-surface-container-low transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined">add</span>
+                  Agregar otro familiar
+                </button>
+</div>
+</section>
+</div>
+<!-- List Column (Summary) -->
+<div class="lg:col-span-5">
+<section class="bg-white border border-outline-variant rounded-xl h-full flex flex-col">
+<div class="p-lg border-b border-outline-variant bg-surface-container-lowest">
+<h3 class="text-title-sm font-title-sm text-on-surface">Vínculos Registrados</h3>
+<p class="text-body-md text-on-surface-variant">Resumen de personas relacionadas al caso</p>
+</div>
+<div class="flex-1 p-lg overflow-y-auto max-h-[500px]">
+<div class="space-y-md">
+<!-- Family Member Card -->
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<div class="flex items-center gap-sm">
+<p class="font-semibold text-on-surface">Marta Rodriguez</p>
+<span class="text-[10px] bg-tertiary-fixed text-on-tertiary-fixed px-xs py-0.5 rounded font-bold uppercase">Madre</span>
+</div>
+<p class="text-body-md text-on-surface-variant">DNI: ••••••456 | +54 9 11 4444...</p>
+</div>
+</div>
+<div class="flex gap-xs opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-xs hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-xs hover:bg-error-container hover:text-error rounded text-on-surface-variant"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</div>
+<!-- Family Member Card -->
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<div>
+<div class="flex items-center gap-sm">
+<p class="font-semibold text-on-surface">Carlos Menéndez</p>
+<span class="text-[10px] bg-primary-fixed text-on-primary-fixed px-xs py-0.5 rounded font-bold uppercase">Tutor Legal</span>
+</div>
+<p class="text-body-md text-on-surface-variant">DNI: ••••••789 | +54 9 11 2222...</p>
+</div>
+</div>
+<div class="flex gap-xs opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-xs hover:bg-surface-container-highest rounded text-on-surface-variant"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-xs hover:bg-error-container hover:text-error rounded text-on-surface-variant"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</div>
+<!-- Empty State Placeholder (Visual only) -->
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-lg flex flex-col items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-display-lg mb-sm">family_restroom</span>
+<p class="text-body-md italic text-center">No hay más registros vinculados</p>
+</div>
+</div>
+</div>
+<div class="p-lg bg-surface-container-lowest border-t border-outline-variant mt-auto">
+<div class="flex items-center justify-between text-body-md">
+<span class="text-on-surface-variant">Total registrados:</span>
+<span class="font-bold text-primary">2 personas</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Navigation Buttons -->
+<div class="mt-xl pt-lg border-t border-outline-variant flex justify-between items-center">
+<button class="flex items-center gap-sm px-xl py-md bg-white border border-outline-variant text-on-surface-variant font-semibold rounded-lg hover:bg-surface-container-low transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined">arrow_back</span>
+            Anterior
+          </button>
+<button class="flex items-center gap-sm px-xl py-md bg-primary text-white font-semibold rounded-lg hover:opacity-90 transition-all active:scale-95 duration-200 shadow-sm">
+            Siguiente
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant flex justify-around items-center py-sm px-md z-40">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Inicio</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary font-bold">
+<span class="material-symbols-outlined">safety_divider</span>
+<span class="text-[10px]">Directorio</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-[10px]">Legajos</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px]">Perfil</span>
+</button>
+</nav>
+</body></html>

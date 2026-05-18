@@ -108,21 +108,14 @@ Para cada error que encontrés, indicá:
 - [ ] Ingresá con `cami@cielo-abierto.test` / `CieloAbierto2026!`
 - [ ] **Esperado:** sidebar muestra Inicio, NNyA, Legajos, Tutores, Alertas — pero NO Usuarios ni Roles
 
-1. Login
-Resultado: OK
-Qué hice: Ingresé a la aplicación con el usuario:
- Email: cami@cielo-abierto.test
-Contraseña: CieloAbierto2026!
-Qué esperaba: Que el sistema permitiera iniciar sesión y mostrará únicamente los módulos habilitados para el rol Equipo Técnico: 
-Inicio
-NNyA
-Legajos
-Tutores
- Y que NO aparecieran:
- Usuarios
-Roles
-Qué pasó: El login funcionó correctamente y los permisos visuales se aplicaron correctamente.
-![alt text]({F4EDB85B-DA77-4C1B-97DC-9956501E4FE2}.png)
+Para cada error que encontrés, indicá:
+1. **Qué hiciste** (ej: "hice click en Guardar en el form de NNyA") 
+    Abrí https://cielo-abierto-two.vercel.app
+    Ingresá con `cami@cielo-abierto.test` / `CieloAbierto2026!`
+    **Esperado:** sidebar muestra Inicio, NNyA, Legajos, Tutores, Alertas — pero NO Usuarios ni Roles
+2. **Qué esperabas** (ej: "que se guardara y volviera a la lista")
+3. **Qué pasó** (ej: "la página se quedó cargando")
+4. **Captura de pantalla** (si podés)
 
 
 ### 2. Verificación de restricciones

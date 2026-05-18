@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#bfc8cb",
+                        "surface": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#fab980",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "primary-fixed": "#aeecff",
+                        "primary-container": "#2a7081",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary": "#005768",
+                        "on-primary-fixed": "#001f26",
+                        "inverse-surface": "#2d3133",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-fixed": "#d3e4fe",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "on-tertiary-container": "#ffe1ca",
+                        "surface-dim": "#d8dadc",
+                        "outline": "#70797c",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "on-tertiary-fixed": "#2d1600",
+                        "tertiary": "#724515",
+                        "tertiary-fixed": "#ffdcc0",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#54647a",
+                        "on-background": "#191c1e",
+                        "inverse-primary": "#8fd0e3",
+                        "on-surface-variant": "#3f484b",
+                        "on-primary-container": "#bcefff",
+                        "surface-tint": "#1e6777",
+                        "on-surface": "#191c1e",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#8e5c2b",
+                        "surface-bright": "#f7f9fb",
+                        "secondary": "#505f76",
+                        "on-primary-fixed-variant": "#004e5d",
+                        "background": "#f7f9fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "container-max": "1280px",
+                        "lg": "24px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "title-sm": ["manrope"],
+                        "label-caps": ["inter"],
+                        "headline-md": ["manrope"],
+                        "display-lg": ["manrope"],
+                        "headline-lg-mobile": ["manrope"],
+                        "body-md": ["atkinsonHyperlegibleNext"],
+                        "body-lg": ["atkinsonHyperlegibleNext"]
+                    },
+                    "fontSize": {
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Atkinson Hyperlegible Next', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .privacy-blur { filter: blur(4px); transition: filter 0.3s ease; }
+        .privacy-blur:hover { filter: blur(0); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full p-md gap-sm bg-surface-container-low border-r border-outline-variant w-64 z-50">
+<div class="flex items-center gap-md mb-xl">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md text-primary leading-tight">Secure Nexus</h1>
+<p class="text-label-caps text-on-surface-variant">Judicial Records</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined">safety_divider</span>
+<span class="font-body-md text-body-md">NNyA Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md text-body-md">Case Records</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md text-body-md">User Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-body-md text-body-md">Audit Logs</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs border-t border-outline-variant pt-md">
+<button class="w-full bg-primary text-on-primary py-sm px-md rounded-lg font-title-sm text-title-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined">add_circle</span>
+                    Register New Case
+                </button>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg mt-md" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span class="font-body-md text-body-md">Privacy Policy</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+</aside>
+<div class="flex-1 flex flex-col overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-lg py-sm w-full z-40 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-gutter">
+<span class="text-title-sm font-title-sm font-bold text-primary">Portal NNyA</span>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-md py-xs bg-surface-container-low border-none rounded-full text-body-md w-64 focus:ring-2 focus:ring-primary-container" placeholder="Buscar por nombre o ID..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">notifications</button>
+<button class="material-symbols-outlined p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">help_outline</button>
+<button class="material-symbols-outlined p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">settings</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-xs"></div>
+<div class="flex items-center gap-sm">
+<div class="text-right hidden sm:block">
+<p class="text-body-md font-semibold leading-none">Admin User</p>
+<p class="text-label-caps text-on-surface-variant">Supervisión</p>
+</div>
+<img alt="Administrator Profile" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A high-quality, professional headshot of a middle-aged woman with a serene and confident expression. She is wearing professional office attire, including a dark blazer and a light blouse. The background is a clean, softly blurred modern office setting with neutral colors, emphasizing a professional and secure atmosphere consistent with an administrative role in a judicial system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpZyD7UUqzYminGV2ODZjVV7v00orhw49Mp7LJaRs9oiaXdbKx_mPQz7wsCD6u2Fjr9KBWwQNttZCTft1MszzBVrphhOG3II4j1tKnJmWxUR5FQdMH0dfkKukEOHQ-HYoPkScnzWiP384WmUM1KPZ3KHNKphqT6MgPG3XxCS2Aoj3kPgAd7sEq0h2RZYZ10iiIpiEyBGRDB7u_fevUjfFy70G2sNmgtcx4bycX9n_guxTkOq_i96Lr2qC8Fvs7GuIX1WX_1tcvtsk"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto p-gutter lg:p-xl space-y-gutter bg-surface">
+<!-- Header & Description -->
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-gutter">
+<div>
+<h2 class="text-display-lg font-display-lg text-primary">Centro de Alertas Críticas</h2>
+<p class="text-body-lg text-on-surface-variant max-w-2xl">Supervisión en tiempo real de eventos urgentes. Este panel centraliza las incidencias que requieren intervención inmediata por parte del equipo técnico y judicial.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-sm px-md py-sm bg-surface-container-highest border border-outline-variant rounded-lg text-body-md font-semibold hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+                                Filtros
+                            </button>
+<button class="flex items-center gap-sm px-md py-sm bg-primary text-on-primary rounded-lg text-body-md font-semibold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">download</span>
+                                Reporte Diario
+                            </button>
+</div>
+</div>
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-xl">
+<div class="bg-surface-container-lowest border border-error p-gutter rounded-xl">
+<div class="flex justify-between items-start mb-md">
+<div class="p-sm bg-error-container text-on-error-container rounded-lg">
+<span class="material-symbols-outlined">report</span>
+</div>
+<span class="text-label-caps text-on-surface-variant">Últimas 24h</span>
+</div>
+<h3 class="text-label-caps text-on-surface-variant">Alertas Activas</h3>
+<p class="text-display-lg font-display-lg text-error">12</p>
+<p class="text-body-md text-on-surface-variant mt-xs">Prioridad Crítica / Urgente</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-gutter rounded-xl">
+<div class="flex justify-between items-start mb-md">
+<div class="p-sm bg-secondary-container text-on-secondary-container rounded-lg">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+<span class="text-label-caps text-on-surface-variant">En curso</span>
+</div>
+<h3 class="text-label-caps text-on-surface-variant">En Proceso de Resolución</h3>
+<p class="text-display-lg font-display-lg text-secondary">08</p>
+<p class="text-body-md text-on-surface-variant mt-xs">Intervención técnica activa</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-gutter rounded-xl">
+<div class="flex justify-between items-start mb-md">
+<div class="p-sm bg-tertiary-container text-on-tertiary-container rounded-lg">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<span class="text-label-caps text-on-surface-variant">Sin asignar</span>
+</div>
+<h3 class="text-label-caps text-on-surface-variant">Pendientes de Revisión</h3>
+<p class="text-display-lg font-display-lg text-tertiary">05</p>
+<p class="text-body-md text-on-surface-variant mt-xs">Nuevos eventos detectados</p>
+</div>
+</div>
+<!-- Main Dashboard Area (Asymmetric Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Alerts Table (List) -->
+<div class="lg:col-span-2 space-y-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-gutter py-md border-b border-outline-variant flex justify-between items-center">
+<h4 class="text-title-sm font-title-sm text-primary">Listado de Incidencias</h4>
+<div class="flex gap-md">
+<button class="text-body-md text-primary font-semibold hover:underline">Ver Histórico</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-gutter py-md text-label-caps text-on-surface-variant">Prioridad</th>
+<th class="px-gutter py-md text-label-caps text-on-surface-variant">NNyA</th>
+<th class="px-gutter py-md text-label-caps text-on-surface-variant">Tipo de Alerta</th>
+<th class="px-gutter py-md text-label-caps text-on-surface-variant">Transcurrido</th>
+<th class="px-gutter py-md text-label-caps text-on-surface-variant">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: Urgent -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="px-gutter py-md">
+<span class="inline-flex items-center gap-xs px-sm py-xs bg-error-container text-on-error-container text-label-caps rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                                                        Urgent
+                                                    </span>
+</td>
+<td class="px-gutter py-md">
+<div class="flex flex-col">
+<span class="text-body-md font-semibold privacy-blur">García, Sofía M.</span>
+<span class="text-label-caps text-on-surface-variant">ID: 48.291.XXX</span>
+</div>
+</td>
+<td class="px-gutter py-md">
+<span class="text-body-md font-medium text-on-surface">Egreso No Autorizado</span>
+</td>
+<td class="px-gutter py-md">
+<span class="text-body-md text-error font-semibold">12 min</span>
+</td>
+<td class="px-gutter py-md">
+<button class="p-xs text-on-surface-variant hover:text-primary material-symbols-outlined">more_vert</button>
+</td>
+</tr>
+<!-- Row 2: High -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer bg-surface-container-lowest">
+<td class="px-gutter py-md">
+<span class="inline-flex items-center px-sm py-xs bg-tertiary-container text-on-tertiary-container text-label-caps rounded-full">
+                                                        High
+                                                    </span>
+</td>
+<td class="px-gutter py-md">
+<div class="flex flex-col">
+<span class="text-body-md font-semibold privacy-blur">Rodríguez, Mateo</span>
+<span class="text-label-caps text-on-surface-variant">ID: 52.110.XXX</span>
+</div>
+</td>
+<td class="px-gutter py-md">
+<span class="text-body-md font-medium text-on-surface">Emergencia Médica</span>
+</td>
+<td class="px-gutter py-md">
+<span class="text-body-md text-on-surface-variant">45 min</span>
+</td>
+<td class="px-gutter py-md">
+<button class="p-xs text-on-surface-variant hover:text-primary material-symbols-outlined">more_vert</button>
+</td>
+</tr>
+<!-- Row 3: Medium -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="px-gutter py-md">
+<span class="inline-flex items-center px-sm py-xs bg-secondary-container text-on-secondary-container text-label-caps rounded-full">
+                                                        Medium
+                                                    </span>
+</td>
+<td class="px-gutter py-md">
+<div class="flex flex-col">
+<span class="text-body-md font-semibold privacy-blur">López, Valentina</span>
+<span class="text-label-caps text-on-surface-variant">ID: 49.002.XXX</span>
+</div>
+</td>
+<td class="px-gutter py-md">
+<span class="text-body-md font-medium text-on-surface">Vencimiento Judicial</span>
+</td>
+<td class="px-gutter py-md">
+<span class="text-body-md text-on-surface-variant">2h 15min</span>
+</td>
+<td class="px-gutter py-md">
+<button class="p-xs text-on-surface-variant hover:text-primary material-symbols-outlined">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Alert Detail Sidebar (Integrated) -->
+<div class="space-y-gutter">
+<div class="bg-surface-container-lowest border border-primary-container/30 rounded-xl overflow-hidden shadow-sm">
+<div class="bg-primary-container text-on-primary-container px-gutter py-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined">info</span>
+<h4 class="text-title-sm font-title-sm">Detalle de Alerta</h4>
+</div>
+<span class="text-label-caps bg-on-primary-container text-primary-container px-xs py-[2px] rounded">#AL-2904</span>
+</div>
+<div class="p-gutter space-y-md">
+<div>
+<h5 class="text-label-caps text-on-surface-variant mb-xs">Descripción del Incidente</h5>
+<p class="text-body-md text-on-surface">Se reporta ausencia del adolescente durante el recuento de las 18:00hs en el Centro Habitacional Norte. Sin contacto telefónico previo.</p>
+</div>
+<div class="p-md bg-surface-container rounded-lg border-l-4 border-primary">
+<h5 class="text-label-caps text-primary mb-xs">Protocolo Recomendado</h5>
+<ul class="text-body-md text-on-surface-variant space-y-xs list-disc pl-md">
+<li>Notificación inmediata a Supervisión de Guardia.</li>
+<li>Verificación perimetral interna y externa.</li>
+<li>Llamado a referentes familiares registrados.</li>
+</ul>
+</div>
+<div>
+<h5 class="text-label-caps text-on-surface-variant mb-md">Acciones Tomadas</h5>
+<div class="space-y-md relative before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[1px] before:bg-outline-variant">
+<div class="flex gap-md relative">
+<div class="w-3.5 h-3.5 rounded-full bg-primary mt-1 shrink-0 z-10"></div>
+<div>
+<p class="text-body-md font-semibold">Alerta disparada por sistema</p>
+<p class="text-label-caps text-on-surface-variant">18:05 - Automático</p>
+</div>
+</div>
+<div class="flex gap-md relative">
+<div class="w-3.5 h-3.5 rounded-full bg-outline mt-1 shrink-0 z-10"></div>
+<div>
+<p class="text-body-md font-semibold">Responsable Notificado</p>
+<p class="text-label-caps text-on-surface-variant">18:12 - Lic. Martínez</p>
+</div>
+</div>
+<div class="flex gap-md relative">
+<div class="w-3.5 h-3.5 rounded-full border-2 border-outline bg-surface mt-1 shrink-0 z-10"></div>
+<div>
+<p class="text-body-md text-on-surface-variant italic">Esperando confirmación de búsqueda...</p>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-md grid grid-cols-2 gap-sm">
+<button class="px-md py-sm bg-surface-container-high text-on-surface-variant rounded-lg font-semibold text-body-md hover:bg-surface-variant">Derivar Caso</button>
+<button class="px-md py-sm bg-primary text-on-primary rounded-lg font-semibold text-body-md hover:opacity-90">Resolver</button>
+</div>
+</div>
+</div>
+<!-- Contextual Map/Location placeholder -->
+<div class="relative h-48 rounded-xl overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist digital map of a city layout showing street grids and key institutional markers. The map is styled with a soft color palette of light grays and serene teals, avoiding visual clutter. It includes a subtle pulse indicator over a specific location to signify a point of interest for monitoring. The overall aesthetic is professional, data-centric, and secure." data-location="Buenos Aires" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7V-McA989a6_EP53EYQlPguaR0XZZnX9KpbXgsa7JtJPUWCFZkKe7mi_JfMP5yiqPoVyNjNmJiu5lGdQ1nBoLqo9OF9okp_HiUcSieWmHMhCfEfBFi9u7q_aKR7hnZAqUYz9m1UNYQA-7X-Y4dZT0LZfkGQZi-aSzOJOrVPvDwMnFfHI84T-PrstWQTrBiQHpC4mfASG5a9lNAEmK8Igc5GwF-9qnb9ZDtmw-nLp9nAgnZkcyoT-B3MZo2avn_AH_JMnBAcjOH5E"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-highest/60 to-transparent flex items-end p-md">
+<div class="flex items-center gap-xs text-on-surface font-semibold bg-surface-container-lowest/80 px-sm py-xs rounded-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-body-md">Sede Habitacional Norte</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sistema NNyA - Asistencia del Personal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600;700&amp;family=Inter:wght@600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#2d1600",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bfc8cb",
+                        "secondary": "#505f76",
+                        "primary-container": "#2a7081",
+                        "primary-fixed": "#aeecff",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "on-tertiary-container": "#ffe1ca",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-primary": "#8fd0e3",
+                        "primary": "#005768",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#004e5d",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-fixed-dim": "#fab980",
+                        "surface-tint": "#1e6777",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-container": "#bcefff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-bright": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "outline": "#70797c",
+                        "background": "#f7f9fb",
+                        "tertiary-container": "#8e5c2b",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "on-secondary-container": "#54647a",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary-fixed": "#001f26",
+                        "on-surface-variant": "#3f484b",
+                        "on-surface": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-dim": "#d8dadc",
+                        "inverse-surface": "#2d3133",
+                        "surface-container": "#eceef0",
+                        "tertiary-fixed": "#ffdcc0",
+                        "surface": "#f7f9fb",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary": "#724515"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "40px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["manrope"],
+                        "body-lg": ["atkinsonHyperlegibleNext"],
+                        "title-sm": ["manrope"],
+                        "headline-lg-mobile": ["manrope"],
+                        "body-md": ["atkinsonHyperlegibleNext"],
+                        "label-caps": ["inter"],
+                        "headline-md": ["manrope"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .privacy-blur {
+            filter: blur(4px);
+            transition: filter 0.2s ease;
+        }
+        .privacy-blur:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- TopNavBar -->
+<header class="bg-surface-bright dark:bg-on-background docked full-width top-0 sticky z-40 border-b border-outline-variant dark:border-outline flat no shadows flex items-center justify-between px-md md:px-lg h-16 w-full">
+<div class="flex items-center gap-md">
+<span class="font-display-lg text-display-lg font-bold text-primary dark:text-primary-fixed-dim">Sistema NNyA</span>
+<div class="hidden md:flex ml-lg gap-md">
+<nav class="flex items-center gap-md">
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary py-2 font-body-md" href="#">Gestión</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-inverse-surface transition-all duration-200 px-3 py-2 rounded-lg font-body-md" href="#">Reportes</a>
+</nav>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-all material-symbols-outlined" data-icon="notifications">notifications</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-all material-symbols-outlined" data-icon="security">security</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-all material-symbols-outlined" data-icon="help">help</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Foto de perfil del profesional interviniente" data-alt="A professional headshot of a female social worker in her 40s, looking directly at the camera with a warm and professional smile. She is in a bright, modern office with soft daylight coming from the side. The overall aesthetic is clean, minimalist, and serene, using a professional color palette of soft blues and whites to convey trust and institutional authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjPn21smeRICITQTrKv48WfANaNyZNloM1rzZRZTFjRf4cKWVRjTGbgQYYfC5B9Hv_0TA4U7SXQAy5fSgEexQ_kALywF3KH4a4B6Uh6b0hHVk-gKBuIKwUAvGzfYfkNp20Kb9WDcC9PP3qEOhd-DqKt3G5cu3qwXXAtvVl2xYtWRcQvTe3O5p1XA8k2F7QCDTPu4x9sTmAEIe1ATFWWOhJVRdZGziscde9fgemy79vMrir2o_YLX_9oKA2TJFsfVlu4ownI44QKjI"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-on-background h-screen w-64 fixed left-0 top-16 hidden md:flex flex-col border-r border-outline-variant dark:border-outline flat no shadows py-lg justify-between z-30">
+<div class="flex flex-col gap-xs">
+<div class="px-md mb-lg">
+<h2 class="text-primary dark:text-primary-fixed-dim font-bold text-headline-md font-display-lg">Gestión Integral</h2>
+<p class="text-on-surface-variant font-body-md text-body-md opacity-80">Área Técnica de Protección</p>
+</div>
+<nav class="flex flex-col gap-xs">
+<a class="flex items-center gap-md bg-secondary-container dark:bg-primary-container text-on-secondary-container dark:text-on-primary-container rounded-lg p-md mx-sm active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-title-sm text-title-sm">Panel Principal</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-outline-variant p-md mx-sm hover:bg-surface-container dark:hover:bg-inverse-surface rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-title-sm text-title-sm">Legajos Judiciales</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-outline-variant p-md mx-sm hover:bg-surface-container dark:hover:bg-inverse-surface rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-title-sm text-title-sm">Informes Técnicos</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-outline-variant p-md mx-sm hover:bg-surface-container dark:hover:bg-inverse-surface rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-title-sm text-title-sm">Seguimiento Clínico</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-outline-variant p-md mx-sm hover:bg-surface-container dark:hover:bg-inverse-surface rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-title-sm text-title-sm">Alertas Críticas</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-outline-variant p-md mx-sm hover:bg-surface-container dark:hover:bg-inverse-surface rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-title-sm text-title-sm">Configuración</span>
+</a>
+</nav>
+<div class="mt-xl px-md">
+<button class="w-full py-md bg-primary text-on-primary rounded-xl font-bold flex items-center justify-center gap-sm shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                        Nuevo Legajo
+                    </button>
+</div>
+</div>
+<div class="px-sm">
+<a class="flex items-center gap-md text-error p-md mx-sm hover:bg-error-container rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-title-sm text-title-sm">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 p-lg">
+<div class="max-w-container-max mx-auto flex flex-col gap-lg">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<nav class="flex text-on-surface-variant text-label-caps gap-sm mb-sm">
+<span>Administración</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span>Asistencia</span>
+</nav>
+<h1 class="font-display-lg text-display-lg text-primary">Asistencia del Personal</h1>
+<p class="text-on-surface-variant font-body-md">Registro diario y mensual de entradas y salidas para el equipo técnico.</p>
+</div>
+<div class="flex gap-md">
+<button class="px-md py-sm bg-surface-container-lowest border border-outline-variant text-primary rounded-lg font-bold flex items-center gap-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="file_download">file_download</span>
+                            Exportar Reporte
+                        </button>
+<button class="px-md py-sm bg-primary text-on-primary rounded-lg font-bold flex items-center gap-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                            Registrar Entrada
+                        </button>
+</div>
+</div>
+<!-- Summary Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md">
+<div class="md:col-span-1 bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+<div class="flex items-center justify-between mb-sm">
+<span class="text-on-surface-variant text-label-caps">Presentes Hoy</span>
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+</div>
+<div class="flex items-baseline gap-sm">
+<span class="font-display-lg text-display-lg text-primary">24</span>
+<span class="text-on-surface-variant text-body-md">/ 28 agentes</span>
+</div>
+</div>
+<div class="md:col-span-1 bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+<div class="flex items-center justify-between mb-sm">
+<span class="text-on-surface-variant text-label-caps">En Licencia</span>
+<span class="material-symbols-outlined text-tertiary" data-icon="calendar_month">calendar_month</span>
+</div>
+<div class="flex items-baseline gap-sm">
+<span class="font-display-lg text-display-lg text-tertiary">3</span>
+<span class="text-on-surface-variant text-body-md">técnicos</span>
+</div>
+</div>
+<div class="md:col-span-1 bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+<div class="flex items-center justify-between mb-sm">
+<span class="text-on-surface-variant text-label-caps">Inasistencias</span>
+<span class="material-symbols-outlined text-error" data-icon="event_busy">event_busy</span>
+</div>
+<div class="flex items-baseline gap-sm">
+<span class="font-display-lg text-display-lg text-error">1</span>
+<span class="text-on-surface-variant text-body-md">sin justificar</span>
+</div>
+</div>
+<div class="md:col-span-1 bg-primary-container text-on-primary-container rounded-xl p-md">
+<div class="flex items-center justify-between mb-sm">
+<span class="text-label-caps opacity-90">Puntualidad</span>
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</div>
+<div class="flex items-baseline gap-sm">
+<span class="font-display-lg text-display-lg">92%</span>
+<span class="opacity-80 text-body-md">Promedio mes</span>
+</div>
+</div>
+</div>
+<!-- Calendar and List Container -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Calendar View -->
+<section class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center justify-between mb-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface">Calendario Institucional</h3>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-1 hover:bg-surface-container rounded-full" data-icon="chevron_left">chevron_left</button>
+<span class="font-title-sm text-title-sm">Octubre 2023</span>
+<button class="material-symbols-outlined p-1 hover:bg-surface-container rounded-full" data-icon="chevron_right">chevron_right</button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-xs mb-sm">
+<div class="text-center py-2 text-label-caps text-on-surface-variant">Lun</div>
+<div class="text-center py-2 text-label-caps text-on-surface-variant">Mar</div>
+<div class="text-center py-2 text-label-caps text-on-surface-variant">Mié</div>
+<div class="text-center py-2 text-label-caps text-on-surface-variant">Jue</div>
+<div class="text-center py-2 text-label-caps text-on-surface-variant">Vie</div>
+<div class="text-center py-2 text-label-caps text-on-surface-variant text-error">Sáb</div>
+<div class="text-center py-2 text-label-caps text-on-surface-variant text-error">Dom</div>
+</div>
+<div class="grid grid-cols-7 gap-xs">
+<!-- Placeholder dates -->
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container-low opacity-50">25</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container-low opacity-50">26</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container-low opacity-50">27</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container-low opacity-50">28</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container-low opacity-50">29</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container-low opacity-50">30</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">1</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">2</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">3</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-primary-container text-on-primary-container ring-2 ring-primary relative">
+                                4
+                                <div class="absolute bottom-2 h-1 w-1 bg-on-primary-container rounded-full"></div>
+</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">5</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">6</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container">7</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container">8</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">9</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">10</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">11</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg relative">
+                                12
+                                <div class="absolute top-1 right-1 h-2 w-2 bg-tertiary rounded-full"></div>
+</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg">13</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container">14</div>
+<div class="aspect-square flex flex-col items-center justify-center border border-outline-variant rounded-lg bg-surface-container">15</div>
+</div>
+<div class="mt-lg flex flex-wrap gap-md">
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="h-3 w-3 rounded-full bg-primary-container border border-primary"></span>
+                                Día Seleccionado
+                            </div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="h-3 w-3 rounded-full bg-tertiary"></span>
+                                Feriado / Institucional
+                            </div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="h-3 w-3 rounded-full bg-surface-container border border-outline-variant"></span>
+                                Fin de Semana
+                            </div>
+</div>
+</section>
+<!-- Agent List View -->
+<section class="lg:col-span-5 flex flex-col gap-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl flex-1 flex flex-col overflow-hidden">
+<div class="p-lg border-b border-outline-variant bg-surface-bright flex items-center justify-between">
+<h3 class="font-title-sm text-title-sm text-on-surface">Detalle por Agente</h3>
+<div class="relative w-48">
+<input class="w-full bg-surface-container-low border-none rounded-lg text-body-md py-1 pl-8 focus:ring-2 focus:ring-primary" placeholder="Buscar..." type="text"/>
+<span class="material-symbols-outlined absolute left-2 top-1.5 text-on-surface-variant text-[18px]">search</span>
+</div>
+</div>
+<div class="overflow-y-auto max-h-[500px]">
+<!-- List Items -->
+<div class="p-md hover:bg-surface-container-low transition-colors flex items-center gap-md border-b border-outline-variant">
+<img class="h-10 w-10 rounded-full object-cover" data-alt="A portrait of a serene female professional in her 30s, featuring soft natural lighting and a clean, institutional background. The image is professional and trust-inspiring, using the core design palette of muted teals and whites to ensure visual consistency with the management software interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtjwhkQ-u8ac7aah7squPyLsnF2M0fDEW0BkQ9R3bz6UxyT9TyMOlbSftSZmRCIsPFEzTpIXg04ZsDmcQedvQTpxfUUIegR3pmIGj-Ttbwy7CGwLGVaf4xK5IP8TS_MwThPsBBe9MaoWN2lfzVXyUP6x8r0kIz1UNVw6VnruzfY-jmVe3ZK2zMKtCRuh9yolDuzX500PJ10YA_m7QW8GRWpcrfBFTxVDNxxqoY6sqTiJLHX3pl6y6_lNzg3GJmJ_Z52h6G5G0jSkY"/>
+<div class="flex-1">
+<div class="font-title-sm text-on-surface">Dra. Elena Martínez</div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="privacy-blur text-xs bg-surface-container px-2 rounded-full">ID: 32.455.***</span>
+<span>Entrada: 08:02</span>
+</div>
+</div>
+<span class="px-sm py-xs bg-primary-container text-on-primary-container text-label-caps rounded-full">Presente</span>
+</div>
+<div class="p-md hover:bg-surface-container-low transition-colors flex items-center gap-md border-b border-outline-variant">
+<img class="h-10 w-10 rounded-full object-cover" data-alt="A male professional with a confident and kind expression, photographed in a high-key lighting setting with a blurred modern office background. The visual style is minimalist and clean, reflecting professionalism and reliability through a soft color palette of grays and blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgvc1m5ohfaJ2IL0mwYX6KJI6LGJ-pVm9bDf3iDVJxoUq_PdDenVHEnuMYqS-nd-dfT3hrHise0cxvPPPTPLl5AiC7jduaippOhPnFvdX-GeUiNbLyXRUCz5cUFhRVnhunYJg_DXQpgUqssJ-FvqwvIrQ1mr_WaCua1ZCB5UiA65y89d4aA99-NRV5ztk7kYiztBEvQvKyDAIG2YarlhROkCSyS05__K-4EDD942YjHuQyN8Vq_mVQSYruuDQQGARXT_iTSZfDcpQ"/>
+<div class="flex-1">
+<div class="font-title-sm text-on-surface">Lic. Ricardo Vega</div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="privacy-blur text-xs bg-surface-container px-2 rounded-full">ID: 28.112.***</span>
+<span>Desde: 02 Oct</span>
+</div>
+</div>
+<span class="px-sm py-xs bg-tertiary-container text-on-tertiary-container text-label-caps rounded-full">Licencia</span>
+</div>
+<div class="p-md hover:bg-surface-container-low transition-colors flex items-center gap-md border-b border-outline-variant">
+<img class="h-10 w-10 rounded-full object-cover" data-alt="A focused female psychologist in a professional setting, looking thoughtful and composed. The photograph is clean with bright white tones and soft shadows, embodying an atmosphere of serenity and institutional trust. The color tones are carefully balanced to match the serene teal accents of the UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB_vFKOmlV1a5831rZZACRZjtfcCdoNbSIdIEKWV0zsUWDuGdEgzS1w4CYu-BZJDqqNnWd6Zri37eP93rFGd0yuyv-b1IVtcxiHx3T89_bP4JwjCYo24KY1XI_31_pndJ0XKC4j0tvau3vnMGwauJbgBO9Z4vCQ7r_TbAXFkqoo1P7k7v-HCLaWwS2Rn76Hf0uui1Tgmv06FJvN1Ef3Kr4nCTaRO6gVIVCYhZYv4z0D12PRfUrftjTNDPFvyiwAL4vkHU43nLFHag"/>
+<div class="flex-1">
+<div class="font-title-sm text-on-surface">Lic. Sofia Lorenz</div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="privacy-blur text-xs bg-surface-container px-2 rounded-full">ID: 35.889.***</span>
+<span>Justificado</span>
+</div>
+</div>
+<span class="px-sm py-xs bg-surface-variant text-on-surface-variant text-label-caps rounded-full">Ausencia J.</span>
+</div>
+<div class="p-md hover:bg-surface-container-low transition-colors flex items-center gap-md">
+<img class="h-10 w-10 rounded-full object-cover" data-alt="A professional man in business casual attire, exhibiting a calm and approachable demeanor. The lighting is soft and even, highlighting a clean-cut aesthetic suitable for a social services administrative system. The image uses a palette that aligns with professional institutional standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYNQcGE7FXOTNSdxEuSaK4J95_EB1BjpdjVjpwQXffOFHAHlwm3kuwImILzF_UkGCN6QS3vcpjWet22eo23Q9X-HkTuLv1XbGZafRxC-vfCQmliZqPZbzr0gTnhbzg2a7XZ9tMwo_efX9fIraxmdglilND7fWunNdyp8M4MkzdhaM3Xh0Luo0KUi_uv2udJDAMBjTNkyPhNflH7YF3ldtnp2e3u2-ssWibXe6vx_gJ0CVGvQaHA_H-SW3Qkgv9VWbZTu8HsbVxsOs"/>
+<div class="flex-1">
+<div class="font-title-sm text-on-surface">Lic. Julian Ríos</div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="privacy-blur text-xs bg-surface-container px-2 rounded-full">ID: 30.224.***</span>
+<span>Sin registro</span>
+</div>
+</div>
+<span class="px-sm py-xs bg-error-container text-on-error-container text-label-caps rounded-full">Pendiente</span>
+</div>
+</div>
+</div>
+<!-- Data Privacy Shield Info -->
+<div class="bg-surface-container-high border border-primary p-md rounded-xl flex items-start gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="shield_person">shield_person</span>
+<div class="flex-1">
+<h4 class="text-body-md font-bold text-on-surface">Protección de Datos Sensibles</h4>
+<p class="text-body-md text-on-surface-variant opacity-90">Los números de identificación están ofuscados por defecto. Pase el cursor sobre ellos para visualizarlos temporalmente.</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Transactional Actions (Bento Grid secondary row) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col gap-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+<h3 class="font-title-sm">Registros Recientes</h3>
+</div>
+<ul class="flex flex-col gap-sm">
+<li class="flex justify-between text-body-md border-b border-outline-variant pb-xs">
+<span class="text-on-surface">Salida: Dr. Martínez</span>
+<span class="text-on-surface-variant">17:15</span>
+</li>
+<li class="flex justify-between text-body-md border-b border-outline-variant pb-xs">
+<span class="text-on-surface">Entrada: Lic. Vega</span>
+<span class="text-on-surface-variant">08:30</span>
+</li>
+</ul>
+<button class="text-primary text-label-caps font-bold text-left hover:underline">Ver historial completo</button>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col gap-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-tertiary" data-icon="notification_important">notification_important</span>
+<h3 class="font-title-sm">Alertas de Personal</h3>
+</div>
+<p class="text-body-md text-on-surface-variant">Existen 2 solicitudes de licencia sin revisar para el próximo período vacacional.</p>
+<button class="bg-surface-container py-2 rounded-lg text-primary text-label-caps font-bold hover:bg-surface-container-high transition-colors">Revisar Solicitudes</button>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg relative overflow-hidden group">
+<div class="absolute inset-0 opacity-5 pointer-events-none">
+<img class="h-full w-full object-cover" data-alt="A background texture of professional data charts and analytics visualizations. The style is very clean and minimalist, using a soft palette of monochromatic teals and grays. The charts are elegant and simple, reinforcing the theme of administrative efficiency and data clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH1WIIZZe3xJ6MZPgoHLCLEQxzHE8Xj_boFgC79_bTfufhyAONafayj3uWyJkZvmE4lMY8Jhem_8Rn4P0NEMUuw2U2U6TpNa4kSbikMo_WC2n47EtjxA-EyJRbB35DJF2WLT7TkJYyGI4rvBYQdXnu-ql8tIRrzjyhzw3QjQ24Dpm01SX-ktXw4MLKwkbK5xErjx5wKRzijN1z048hpVRHrjJjlqCkAebGWlKlyWeZInDRe7zj99bKc-WmP6IylIV9GTQU-QW_vuw"/>
+</div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div>
+<h3 class="font-title-sm mb-xs">Consolidado Mensual</h3>
+<p class="text-body-md text-on-surface-variant">Generar el cierre de asistencia de Octubre.</p>
+</div>
+<button class="mt-md w-full bg-secondary text-on-secondary py-2 rounded-lg font-bold flex items-center justify-center gap-sm hover:opacity-90">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                                Iniciar Cierre
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

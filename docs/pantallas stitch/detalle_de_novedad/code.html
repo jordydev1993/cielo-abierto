@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalle de Novedad | Portal NNyA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#f2f4f6",
+                    "on-primary-fixed": "#001f26",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "on-secondary-container": "#54647a",
+                    "inverse-primary": "#8fd0e3",
+                    "error-container": "#ffdad6",
+                    "background": "#f7f9fb",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#8e5c2b",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#ffdcc0",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "outline-variant": "#bfc8cb",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "primary-fixed": "#aeecff",
+                    "secondary": "#505f76",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-tint": "#1e6777",
+                    "surface-container": "#eceef0",
+                    "surface-container-high": "#e6e8ea",
+                    "tertiary-fixed-dim": "#fab980",
+                    "secondary-container": "#d0e1fb",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-tertiary-fixed": "#2d1600",
+                    "on-secondary-fixed": "#0b1c30",
+                    "surface-dim": "#d8dadc",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-primary-container": "#bcefff",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "primary-container": "#2a7081",
+                    "on-background": "#191c1e",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-surface-variant": "#3f484b",
+                    "tertiary": "#724515",
+                    "surface-bright": "#f7f9fb",
+                    "surface": "#f7f9fb",
+                    "on-surface": "#191c1e",
+                    "primary": "#005768",
+                    "outline": "#70797c",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "container-max": "1280px",
+                    "unit": "4px",
+                    "gutter": "24px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "title-sm": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "label-caps": ["Inter"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-md": ["Atkinson Hyperlegible Next"]
+            },
+            "fontSize": {
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .blur-shield {
+            filter: blur(8px);
+            transition: filter 0.3s ease;
+        }
+        .blur-shield:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-lg">
+<!-- Sidebar (Shared Component) -->
+<aside class="docked left-0 h-full w-64 fixed z-50 bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col h-screen py-lg gap-md hidden md:flex">
+<div class="px-lg mb-lg">
+<h1 class="font-headline-md text-headline-md font-extrabold text-primary dark:text-primary-fixed">Portal NNyA</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Módulo de Educadores</p>
+</div>
+<nav class="flex-1 px-sm space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-title-sm text-title-sm">Panel de Control</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary border-r-4 border-primary dark:border-primary-fixed rounded-r-full mr-4 translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-title-sm text-title-sm">Novedades Diarias</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="notification_important">notification_important</span>
+<span class="font-title-sm text-title-sm">Alertas Tempranas</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-title-sm text-title-sm">Expedientes NNyA</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-title-sm text-title-sm">Configuración</span>
+</a>
+</nav>
+<div class="px-lg mt-auto">
+<button class="w-full bg-primary text-on-primary py-md rounded-lg font-title-sm hover:opacity-90 transition-opacity active:scale-95 flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Registrar Novedad
+            </button>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="md:ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar (Shared Component) -->
+<header class="docked full-width top-0 z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center h-16 px-lg w-full">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary md:hidden" data-icon="menu">menu</span>
+<div class="hidden md:flex items-center bg-surface-container-low px-md py-sm rounded-full w-64 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md ml-xs w-full" placeholder="Buscar..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-sm rounded-full cursor-pointer transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-sm rounded-full cursor-pointer transition-colors" data-icon="help_outline">help_outline</span>
+</div>
+<div class="flex items-center gap-sm border-l border-outline-variant pl-lg">
+<div class="text-right hidden sm:block">
+<p class="font-title-sm text-[14px]">Eduardo Gómez</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">EDUCADOR DE TURNO</p>
+</div>
+<img alt="Avatar del usuario educador" class="h-10 w-10 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a person in a minimalist, bright office environment. The person has a friendly and calm expression, wearing professional attire. The lighting is soft and high-key, reinforcing an institutional and trustworthy atmosphere aligned with a professional portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN_dllP5tCdIewBplizoww3UO3hCkSCGQ5b6-69NEre1RJ4kxZpUNEO3sQkFJAlvju_yXshdrHqqPTtOea6GmhL63m8CDZ_BiPEZmIDad5E9pklu6uVU1vHuAsHJ70VDR06p7nSI0L2zxXwl8ofHtswpUlfMQ5PwvXCSJF4JircEO5cp0HrbCMq-1bE1HoFOGSudqL-JFktevyEC_UaPGslUChfUGjMTYO2CQCdW8o-mzUugOOZjfZijgWWhps1OO3fFxYYHmRiok"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 p-lg max-w-container-max mx-auto w-full">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-sm mb-lg text-on-surface-variant">
+<a class="font-label-caps hover:text-primary transition-colors" href="#">Inicio</a>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<a class="font-label-caps hover:text-primary transition-colors" href="#">Novedades</a>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<span class="font-label-caps text-primary font-bold">Detalle de Registro #NOV-44291</span>
+</nav>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-xl">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Detalle de Novedad</h2>
+<p class="font-body-md text-on-surface-variant mt-xs">Visualizando registro histórico institucional de incidentes.</p>
+</div>
+<div class="flex items-center gap-sm bg-secondary-container text-on-secondary-container px-md py-xs rounded-full border border-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span class="font-label-caps">Registrado</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Main Content (Bento Style) -->
+<div class="lg:col-span-8 space-y-lg">
+<!-- Child Profile Card -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg flex flex-col sm:flex-row items-center gap-lg">
+<div class="h-20 w-20 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[48px]" data-icon="person">person</span>
+</div>
+<div class="text-center sm:text-left flex-1">
+<p class="font-label-caps text-primary mb-xs">Información del Menor</p>
+<h3 class="font-headline-md text-headline-md">Santiago Pérez</h3>
+<div class="flex flex-wrap justify-center sm:justify-start gap-md mt-sm">
+<span class="bg-surface-container-low px-sm py-xs rounded flex items-center gap-xs">
+<span class="font-label-caps text-on-surface-variant">ID Legajo:</span>
+<span class="font-title-sm blur-shield">20-4491223-1</span>
+<span class="material-symbols-outlined text-[14px] cursor-pointer" data-icon="visibility">visibility</span>
+</span>
+</div>
+</div>
+<div class="hidden sm:block">
+<span class="material-symbols-outlined text-outline-variant text-[48px]" data-icon="verified_user">verified_user</span>
+</div>
+</section>
+<!-- Details Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Metadata -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg">
+<h4 class="font-title-sm mb-lg border-b border-outline-variant pb-sm">Metadatos del Evento</h4>
+<div class="space-y-md">
+<div class="flex justify-between">
+<span class="font-label-caps text-on-surface-variant">Categoría</span>
+<span class="font-body-md font-bold text-primary">Salud</span>
+</div>
+<div class="flex justify-between">
+<span class="font-label-caps text-on-surface-variant">Lugar</span>
+<span class="font-body-md">Comedor</span>
+</div>
+<div class="flex justify-between">
+<span class="font-label-caps text-on-surface-variant">Turno</span>
+<span class="font-body-md">Mañana</span>
+</div>
+<div class="flex justify-between">
+<span class="font-label-caps text-on-surface-variant">Fecha / Hora</span>
+<span class="font-body-md">24 Oct 2023 - 08:45 AM</span>
+</div>
+<div class="flex justify-between">
+<span class="font-label-caps text-on-surface-variant">Prioridad</span>
+<span class="font-body-md text-error flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="priority_high" data-weight="fill">priority_high</span>
+                                        Alta
+                                    </span>
+</div>
+</div>
+</div>
+<!-- Audit Trail -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg">
+<h4 class="font-title-sm mb-lg border-b border-outline-variant pb-sm">Auditoría</h4>
+<div class="flex items-center gap-md mb-lg">
+<div class="h-12 w-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+</div>
+<div>
+<p class="font-label-caps text-on-surface-variant">Registrado por</p>
+<p class="font-body-md font-bold">Eduardo Gómez</p>
+<p class="font-label-caps text-[10px]">Carga de Datos: 24 Oct 2023 09:12 AM</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-md rounded-lg">
+<p class="font-label-caps text-on-secondary-fixed-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="history">history</span>
+                                    Última modificación
+                                </p>
+<p class="font-body-md mt-xs">No se registran cambios posteriores.</p>
+</div>
+</div>
+</div>
+<!-- Narrative / Description -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg">
+<h4 class="font-title-sm mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+                            Descripción del Evento
+                        </h4>
+<div class="bg-surface-container-low p-lg rounded-lg border-l-4 border-primary">
+<p class="font-body-lg leading-relaxed text-on-surface">
+                                Presentó cuadro febril leve durante el turno mañana. Se dio aviso a enfermería y se administró paracetamol según protocolo institucional de salud bajo supervisión de la enfermera de turno, Lic. Rodríguez. El menor se mantuvo en reposo en el área de descanso hasta la estabilización de la temperatura (36.8°C a las 10:30 AM). Se notificó a la coordinación de área.
+                            </p>
+</div>
+</section>
+<!-- Attachments -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg">
+<h4 class="font-title-sm mb-lg flex justify-between items-center">
+<span>Documentación Adjunta</span>
+<span class="font-label-caps text-on-surface-variant">2 Archivos</span>
+</h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<div class="flex items-center gap-md p-md border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="h-10 w-10 bg-error-container text-error rounded flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-body-md font-bold truncate">Informe_Medico.pdf</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">2.4 MB • PDF Document</p>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity" data-icon="download">download</span>
+</div>
+<div class="flex items-center gap-md p-md border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="h-10 w-10 bg-secondary-container text-secondary rounded flex items-center justify-center overflow-hidden">
+<img alt="Foto Evidencia" class="object-cover h-full w-full" data-alt="A macro close-up of medical record papers and a clinical thermometer on a clean, professional medical tray. The lighting is clinical and bright, maintaining a serious and professional institutional aesthetic with soft blue and grey tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjtFrrzAY74dkMk0xqRIVqV3HwqNKcaOW0zpXGK3FbsHgwziEmOdsWmKyDDRh9UCVuXozkTK3A7aKdpwG_SrXbnkKdDokMDgoYrSaXgJfjBShuCEgYuhOniBbAx4khSmcoGprf7Wq7xSTOtQ2rRgtufzK9_YGfCjW1WJt2-uJd3ZP5njvJnDIAs_C-Fg9PPqd24fGLgh4wtU-Yp3-HX9Ry1sU-W0Wf8KEg1uBcSov2ikt8Hrmqd71ZEG90Qgpkyj2T6kGtpUUzX_I"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-body-md font-bold truncate">Foto_Evidencia.jpg</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">1.1 MB • Image File</p>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity" data-icon="open_in_full">open_in_full</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar Action Panel -->
+<aside class="lg:col-span-4 space-y-lg sticky top-24">
+<!-- Actions -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<h4 class="font-label-caps text-on-surface-variant mb-lg">Acciones de Registro</h4>
+<div class="space-y-md">
+<button class="w-full flex items-center justify-between px-md py-sm rounded-lg border border-primary text-primary hover:bg-primary/5 transition-colors font-title-sm">
+<span class="flex items-center gap-md">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+                                    Editar Registro
+                                </span>
+</button>
+<button class="w-full flex items-center justify-between px-md py-sm rounded-lg border border-tertiary-container text-tertiary-container hover:bg-tertiary-fixed transition-colors font-title-sm">
+<span class="flex items-center gap-md">
+<span class="material-symbols-outlined text-[20px]" data-icon="warning">warning</span>
+                                    Convertir en Alerta
+                                </span>
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="w-full flex items-center justify-between px-md py-sm rounded-lg bg-surface-container-high hover:bg-surface-dim transition-colors font-title-sm">
+<span class="flex items-center gap-md">
+<span class="material-symbols-outlined text-[20px]" data-icon="file_download">file_download</span>
+                                    Descargar PDF
+                                </span>
+</button>
+<div class="pt-md border-t border-outline-variant">
+<button class="w-full flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-on-surface transition-colors font-body-md">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+                                    Volver al Historial
+                                </button>
+</div>
+</div>
+</div>
+<!-- Privacy Protocol Reminder -->
+<div class="bg-inverse-surface text-inverse-on-surface rounded-xl p-lg relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-sm mb-md text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="shield_lock" data-weight="fill">shield_lock</span>
+<h5 class="font-title-sm">Protocolo de Privacidad</h5>
+</div>
+<p class="font-body-md opacity-90 leading-snug">
+                                Recuerde que la información contenida en este registro es de carácter confidencial y sensible. Su divulgación no autorizada está penada por la Ley de Protección de Datos Personales N° 25.326.
+                            </p>
+<div class="mt-lg flex items-center gap-xs font-label-caps text-primary-fixed">
+<span class="material-symbols-outlined text-[14px]" data-icon="info">info</span>
+                                Acceso auditado por sistema
+                            </div>
+</div>
+<!-- Abstract Background Decoration -->
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" data-icon="gavel">gavel</span>
+</div>
+</div>
+<!-- Timeline Miniature -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg">
+<h4 class="font-label-caps text-on-surface-variant mb-lg uppercase">Próximos Pasos Sugeridos</h4>
+<div class="space-y-lg relative">
+<div class="absolute left-[11px] top-0 bottom-0 w-[2px] bg-outline-variant"></div>
+<div class="relative flex gap-md items-start">
+<div class="z-10 h-6 w-6 rounded-full bg-primary border-4 border-surface-container-lowest"></div>
+<div class="flex-1">
+<p class="font-body-md font-bold">Control de Temperatura</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">Programado para 12:45 PM</p>
+</div>
+</div>
+<div class="relative flex gap-md items-start">
+<div class="z-10 h-6 w-6 rounded-full bg-outline-variant border-4 border-surface-container-lowest"></div>
+<div class="flex-1">
+<p class="font-body-md text-on-surface-variant">Informe de Cierre de Turno</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">Pendiente al finalizar jornada</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<!-- Bottom Nav for Mobile Only -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant flex justify-around py-sm z-50">
+<div class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-label-caps">Inicio</span>
+</div>
+<div class="flex flex-col items-center gap-xs text-primary">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="text-[10px] font-label-caps">Novedades</span>
+</div>
+<div class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="text-[10px] font-label-caps">Expedientes</span>
+</div>
+<div class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-label-caps">Más</span>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal NNyA - Resumen y Confirmación</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fb",
+                        "on-tertiary-container": "#ffe1ca",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-tint": "#1e6777",
+                        "on-background": "#191c1e",
+                        "on-tertiary-fixed": "#2d1600",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "tertiary-container": "#8e5c2b",
+                        "primary-container": "#2a7081",
+                        "surface": "#f7f9fb",
+                        "primary-fixed": "#aeecff",
+                        "outline": "#70797c",
+                        "inverse-on-surface": "#eff1f3",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#bcefff",
+                        "secondary": "#505f76",
+                        "on-surface-variant": "#3f484b",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary": "#724515",
+                        "on-primary-fixed": "#001f26",
+                        "primary": "#005768",
+                        "on-surface": "#191c1e",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-fixed-dim": "#fab980",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-container": "#d0e1fb",
+                        "on-secondary-fixed": "#0b1c30",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-secondary-container": "#54647a",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "outline-variant": "#bfc8cb",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-fixed": "#ffdcc0",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#8fd0e3",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "on-primary-fixed-variant": "#004e5d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "unit": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xl": "40px",
+                        "md": "16px",
+                        "container-max": "1280px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "title-sm": ["Manrope"],
+                        "label-caps": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Atkinson Hyperlegible Next"],
+                        "body-lg": ["Atkinson Hyperlegible Next"],
+                        "headline-lg-mobile": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Atkinson Hyperlegible Next', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0 z-40 flex justify-between items-center px-lg py-sm w-full">
+<div class="flex items-center gap-md">
+<span class="text-title-sm font-title-sm font-bold text-primary dark:text-inverse-primary">Portal NNyA</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined p-sm rounded-full text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors">notifications</button>
+<button class="material-symbols-outlined p-sm rounded-full text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors">help_outline</button>
+<button class="material-symbols-outlined p-sm rounded-full text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors">settings</button>
+</div>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a female administrator in a clean modern office setting. She has a confident and welcoming expression, representing public service leadership. The lighting is soft and natural, emphasizing a trustworthy and institutional atmosphere consistent with a government portal design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9GJosAOkT11qZePnwhXFEvkTo25f2Ua1yfueWvan3xECShyjN-28rbAfLHGx6Pxq0a8qh7p5xtZoeofQIF9P5FlLsmCiYkIgGAbyKpdEGvaR1ztJF0S-93IsCK4AYyFrvK0SaeCnbintA2glR-v8tuyDYVV03mdPzXIXapJJakhyyzcB0lcqYEYT9SY-MWgcsuw6quHNoepkElX9l3bM6CWHYOoOpKJZNWYxAFX63_8-9vldUSnuA_AtwJI4c6KXEU6KS3ewl-pQ"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-surface-container-highest border-r border-outline-variant dark:border-outline hidden md:flex flex-col h-full w-64 p-md gap-sm">
+<div class="flex items-center gap-sm mb-lg px-sm">
+<div class="bg-primary p-xs rounded-lg">
+<span class="material-symbols-outlined text-on-primary">security</span>
+</div>
+<div>
+<h2 class="text-headline-md font-headline-md text-primary dark:text-inverse-primary leading-none">Secure Nexus</h2>
+<p class="text-body-md text-on-surface-variant opacity-75">Judicial Records</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container dark:bg-secondary dark:text-on-secondary font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined">safety_divider</span>
+<span class="font-body-md text-body-md">NNyA Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md text-body-md">Case Records</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md text-body-md">User Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-body-md text-body-md">Audit Logs</span>
+</a>
+</nav>
+<button class="bg-primary text-on-primary px-lg py-md rounded-xl font-semibold flex items-center justify-center gap-sm mb-lg hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined">add</span>
+<span>Register New Case</span>
+</button>
+<div class="border-t border-outline-variant pt-md flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant text-body-md" href="#">
+<span class="material-symbols-outlined text-[18px]">gpp_maybe</span>
+<span>Privacy Policy</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant text-body-md" href="#">
+<span class="material-symbols-outlined text-[18px]">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto bg-surface-bright">
+<div class="max-w-container-max mx-auto px-lg py-xl">
+<!-- Stepper Progress Header -->
+<div class="mb-xl">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<span class="text-label-caps font-label-caps text-primary uppercase">Nueva Alta de Legajo</span>
+<h1 class="text-display-lg font-display-lg text-on-background mt-xs">Final: Resumen y Confirmación</h1>
+</div>
+<div class="flex items-center gap-sm bg-surface-container p-sm rounded-full">
+<div class="flex items-center gap-xs px-md py-xs bg-primary text-on-primary rounded-full">
+<span class="material-symbols-outlined text-[18px]">task_alt</span>
+<span class="text-body-md font-semibold">1</span>
+</div>
+<div class="w-8 h-[2px] bg-primary"></div>
+<div class="flex items-center gap-xs px-md py-xs bg-primary text-on-primary rounded-full">
+<span class="material-symbols-outlined text-[18px]">task_alt</span>
+<span class="text-body-md font-semibold">2</span>
+</div>
+<div class="w-8 h-[2px] bg-primary"></div>
+<div class="flex items-center gap-xs px-md py-xs bg-primary text-on-primary rounded-full">
+<span class="material-symbols-outlined text-[18px]">task_alt</span>
+<span class="text-body-md font-semibold">3</span>
+</div>
+<div class="w-8 h-[2px] bg-primary"></div>
+<div class="flex items-center gap-xs px-md py-xs bg-primary text-on-primary rounded-full">
+<span class="text-body-md font-semibold">4</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Grid Summary Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Main Summary Area (Left/Center) -->
+<div class="lg:col-span-8 space-y-lg">
+<!-- Section: Datos Personales -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">person</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Datos Personales</h3>
+</div>
+<button class="flex items-center gap-xs text-primary font-semibold hover:bg-primary-container/10 px-md py-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+<span>Editar</span>
+</button>
+</div>
+<div class="p-lg grid grid-cols-1 md:grid-cols-2 gap-y-md gap-x-xl">
+<div>
+<p class="text-label-caps text-on-surface-variant">Nombre Completo</p>
+<p class="text-body-lg font-semibold">Martina Solange Benítez</p>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">Documento de Identidad (DNI)</p>
+<div class="flex items-center gap-sm mt-xs">
+<span class="text-body-lg font-semibold blur-[4px]">48.922.311</span>
+<button class="material-symbols-outlined text-[20px] text-on-surface-variant">visibility_off</button>
+</div>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">Fecha de Nacimiento</p>
+<p class="text-body-lg font-semibold">14 de Agosto, 2012 (11 años)</p>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">Nacionalidad</p>
+<p class="text-body-lg font-semibold">Argentina</p>
+</div>
+<div class="md:col-span-2">
+<p class="text-label-caps text-on-surface-variant">Domicilio Actual</p>
+<p class="text-body-lg font-semibold">Av. Juan B. Justo 4432, 4° B, CABA</p>
+</div>
+</div>
+</section>
+<!-- Section: Datos Familiares -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">groups</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Familiares y Referentes</h3>
+</div>
+<button class="flex items-center gap-xs text-primary font-semibold hover:bg-primary-container/10 px-md py-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+<span>Editar</span>
+</button>
+</div>
+<div class="p-lg space-y-md">
+<div class="flex items-center justify-between p-md border border-outline-variant rounded-lg bg-surface">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">person</span>
+</div>
+<div>
+<p class="text-body-lg font-semibold">Elena Rodríguez</p>
+<p class="text-body-md text-on-surface-variant">Madre / Referente Principal</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-md font-semibold">+54 11 4567-8901</p>
+<p class="text-label-caps text-primary">Activo</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-md border border-outline-variant rounded-lg bg-surface">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div>
+<p class="text-body-lg font-semibold">Roberto Benítez</p>
+<p class="text-body-md text-on-surface-variant">Padre</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-md font-semibold">Sin contacto registrado</p>
+<p class="text-label-caps text-on-surface-variant">Ausente</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Ingreso / Judicial -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">gavel</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Motivo de Ingreso y Situación Judicial</h3>
+</div>
+<button class="flex items-center gap-xs text-primary font-semibold hover:bg-primary-container/10 px-md py-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+<span>Editar</span>
+</button>
+</div>
+<div class="p-lg grid grid-cols-1 md:grid-cols-2 gap-y-md gap-x-xl">
+<div>
+<p class="text-label-caps text-on-surface-variant">Tipo de Intervención</p>
+<span class="inline-block mt-xs px-md py-xs bg-tertiary-fixed text-on-tertiary-fixed rounded-full text-body-md font-semibold">Medida de Protección Integral</span>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">Juzgado Interviniente</p>
+<p class="text-body-lg font-semibold">Juzgado Civil N° 14 - Familia</p>
+</div>
+<div class="md:col-span-2">
+<p class="text-label-caps text-on-surface-variant">Descripción del Caso</p>
+<p class="text-body-md mt-xs text-on-surface leading-relaxed italic">
+                                        "Ingreso preventivo por situación de vulnerabilidad detectada en entorno escolar. Se requiere seguimiento de vinculación familiar y evaluación de salud integral."
+                                    </p>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar: Confirmation & Actions (Right) -->
+<div class="lg:col-span-4 space-y-lg">
+<!-- Confirmation Card -->
+<div class="bg-primary text-on-primary rounded-xl p-lg shadow-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-lg opacity-10">
+<span class="material-symbols-outlined text-[120px]">verified_user</span>
+</div>
+<h3 class="text-headline-md font-headline-md mb-md">Confirmar Registro</h3>
+<p class="text-body-md opacity-90 mb-xl">Al confirmar, se generará un número de legajo único en el sistema judicial. Verifique que toda la información sea correcta antes de proceder.</p>
+<div class="space-y-sm">
+<button class="w-full bg-on-primary text-primary py-md rounded-xl font-bold flex items-center justify-center gap-sm hover:bg-primary-fixed transition-all active:scale-95">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span>Confirmar y Crear Legajo</span>
+</button>
+<button class="w-full bg-transparent border border-on-primary/30 text-on-primary py-md rounded-xl font-semibold hover:bg-on-primary/10 transition-all">
+                                    Guardar Borrador
+                                </button>
+</div>
+</div>
+<!-- Info Shield -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md flex gap-md">
+<span class="material-symbols-outlined text-primary-container mt-xs">info</span>
+<div>
+<h4 class="text-body-md font-semibold text-on-surface">Privacidad de Datos</h4>
+<p class="text-body-md text-on-surface-variant">Este legajo contiene información sensible protegida por la Ley 26.061. El acceso quedará registrado en la auditoría del sistema.</p>
+</div>
+</div>
+<!-- Timeline Mini-view -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h4 class="text-label-caps text-on-surface-variant mb-lg">Historial de Creación</h4>
+<div class="space-y-lg relative">
+<div class="absolute left-3 top-2 bottom-2 w-px bg-outline-variant"></div>
+<div class="relative flex gap-lg items-start">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<p class="text-body-md font-semibold leading-none">Datos Personales</p>
+<p class="text-body-md text-on-surface-variant mt-xs">Completado hoy, 09:15</p>
+</div>
+</div>
+<div class="relative flex gap-lg items-start">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<p class="text-body-md font-semibold leading-none">Vínculos Familiares</p>
+<p class="text-body-md text-on-surface-variant mt-xs">Completado hoy, 09:32</p>
+</div>
+</div>
+<div class="relative flex gap-lg items-start">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div>
+<p class="text-body-md font-semibold leading-none">Situación Judicial</p>
+<p class="text-body-md text-on-surface-variant mt-xs">Completado hoy, 10:05</p>
+</div>
+</div>
+<div class="relative flex gap-lg items-start">
+<div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center z-10 shrink-0 outline outline-4 outline-surface">
+<div class="w-2 h-2 rounded-full bg-on-primary-container"></div>
+</div>
+<div>
+<p class="text-body-md font-semibold leading-none text-primary">Revisión Final</p>
+<p class="text-body-md text-on-surface-variant mt-xs">En curso</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Navigation Mobile-friendly -->
+<div class="mt-xl flex flex-col md:flex-row items-center justify-between gap-md border-t border-outline-variant pt-lg">
+<button class="w-full md:w-auto px-xl py-md text-on-surface-variant font-semibold hover:bg-surface-container-high rounded-xl transition-all">
+                        Anterior: Datos Judiciales
+                    </button>
+<div class="flex flex-col md:flex-row gap-md w-full md:w-auto">
+<button class="px-xl py-md text-error font-semibold hover:bg-error-container/20 rounded-xl transition-all">
+                            Cancelar Proceso
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

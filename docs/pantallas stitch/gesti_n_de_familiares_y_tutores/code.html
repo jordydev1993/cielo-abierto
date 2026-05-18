@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#1e6777",
+                    "surface-bright": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "on-primary-fixed": "#001f26",
+                    "inverse-primary": "#8fd0e3",
+                    "secondary": "#505f76",
+                    "primary-fixed": "#aeecff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-surface-variant": "#3f484b",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-surface": "#191c1e",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "primary": "#005768",
+                    "inverse-surface": "#2d3133",
+                    "tertiary-fixed-dim": "#fab980",
+                    "surface-container": "#eceef0",
+                    "on-tertiary-fixed": "#2d1600",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#54647a",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "tertiary-fixed": "#ffdcc0",
+                    "primary-container": "#2a7081",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-fixed": "#d3e4fe",
+                    "secondary-container": "#d0e1fb",
+                    "tertiary": "#724515",
+                    "surface-dim": "#d8dadc",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "outline-variant": "#bfc8cb",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f7f9fb",
+                    "outline": "#70797c",
+                    "background": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#8e5c2b",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-primary-container": "#bcefff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "xs": "4px",
+                    "xl": "40px",
+                    "unit": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Atkinson Hyperlegible Next", "sans-serif"],
+                    "headline-md": ["Manrope", "sans-serif"],
+                    "display-lg": ["Manrope", "sans-serif"],
+                    "body-lg": ["Atkinson Hyperlegible Next", "sans-serif"],
+                    "title-sm": ["Manrope", "sans-serif"],
+                    "label-caps": ["Inter", "sans-serif"],
+                    "headline-lg-mobile": ["Manrope", "sans-serif"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f7f9fb;
+        }
+        .data-privacy-blur {
+            filter: blur(4px);
+            transition: filter 0.2s ease;
+        }
+        .data-privacy-blur:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 sticky top-0 bg-surface-container-low border-r border-outline-variant p-md gap-sm z-50">
+<div class="flex items-center gap-md px-sm py-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md text-primary leading-tight">Secure Nexus</h1>
+<p class="text-label-caps text-on-surface-variant opacity-70">Judicial Records</p>
+</div>
+</div>
+<nav class="flex-grow mt-lg space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">safety_divider</span>
+<span class="font-body-md">NNyA Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md">Case Records</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md">User Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-body-md">Audit Logs</span>
+</a>
+</nav>
+<button class="mt-md bg-primary text-on-primary py-sm px-md rounded-lg flex items-center justify-center gap-sm hover:opacity-90 transition-opacity font-semibold">
+<span class="material-symbols-outlined">add_circle</span>
+                Register New Case
+            </button>
+<div class="mt-auto pt-md border-t border-outline-variant space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span class="font-body-md">Privacy Policy</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-body-md">Support</span>
+</a>
+</div>
+</aside>
+<div class="flex-grow flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-lg py-sm w-full z-40 bg-surface border-b border-outline-variant sticky top-0">
+<div class="flex items-center gap-lg">
+<span class="text-title-sm font-title-sm font-bold text-primary">Portal NNyA</span>
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-xl pr-md py-xs text-body-md w-64 focus:ring-2 focus:ring-primary-container" placeholder="Buscar familiar o ID..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-sm"></div>
+<div class="flex items-center gap-sm">
+<div class="text-right hidden lg:block">
+<p class="text-body-md font-semibold leading-none">Admin Nexus</p>
+<p class="text-label-caps text-on-surface-variant opacity-70">SISTEMA CENTRAL</p>
+</div>
+<img alt="Administrator Profile" class="w-9 h-9 rounded-full border border-outline-variant" data-alt="A professional studio portrait avatar of a high-level administrator for a judicial institution. The character has a neutral, trustworthy expression, wearing modern business attire. The visual style is clean, vector-based, and minimalist, utilizing a primary palette of serene teals and soft greys against a bright white background to convey institutional trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp5wzmj0tVQAgqYCjEfFQgG4DZYYeibkCWL5SaSZhUu5sy9I_N4EHIRbbFgVLA6D4rP4-vpeAxBnfbRhgFkCjM9oh6VGzoRWxOFQ5moa2ojfqFlQCe1A64x8n1yD6w_LLLOXYACbPYHo0xlHUu7za4Ra22UPf9F7vXSNtCHOgsL7SZbrCuJyDobT_TnAqvZXZJVK7QrVXqzgEcwPbaNEO_Py5dn36buBMeM7pyFUnXo5_oVDGCNH16fvpO81XO3lbE71sZ9zPRrMk"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow p-gutter max-w-container-max mx-auto w-full">
+<!-- Header Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+<div>
+<nav class="flex items-center gap-xs text-label-caps text-on-surface-variant mb-xs">
+<span class="hover:underline cursor-pointer">Directorios</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold">Familiares y Tutores</span>
+</nav>
+<h2 class="text-display-lg font-display-lg text-on-surface">Gestión de Familiares y Tutores</h2>
+<p class="text-body-lg text-on-surface-variant max-w-2xl">Administre el registro, vinculación y validación de los responsables legales y familiares vinculados a menores en el sistema judicial.</p>
+</div>
+<button class="bg-primary-container text-on-primary-container px-lg py-md rounded-xl font-semibold flex items-center gap-sm hover:opacity-95 transition-all shadow-sm active:scale-95 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person_add</span>
+                        Alta de Familiar/Tutor
+                    </button>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex items-center gap-lg">
+<div class="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[32px]">groups</span>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">Total Registrados</p>
+<p class="text-display-lg font-bold">1,284</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex items-center gap-lg">
+<div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[32px]">link</span>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">Vínculos Activos</p>
+<p class="text-display-lg font-bold">3,102</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex items-center gap-lg">
+<div class="w-14 h-14 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined text-[32px]">pending_actions</span>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">Pendientes de Validación</p>
+<p class="text-display-lg font-bold">47</p>
+</div>
+</div>
+</div>
+<!-- Filters & Main Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden mb-xl">
+<div class="p-lg border-b border-outline-variant flex flex-col lg:flex-row lg:items-center justify-between gap-md bg-surface-bright">
+<div class="flex flex-wrap items-center gap-sm">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-white border border-outline-variant rounded-lg pl-xl pr-md py-sm text-body-md w-full md:w-80 focus:ring-2 focus:ring-primary-container outline-none transition-all" placeholder="Nombre o DNI..." type="text"/>
+</div>
+<div class="flex items-center gap-sm bg-white border border-outline-variant rounded-lg px-sm py-xs">
+<span class="text-label-caps text-on-surface-variant ml-xs">Vínculo:</span>
+<select class="border-none bg-transparent text-body-md font-semibold py-xs focus:ring-0 cursor-pointer">
+<option>Todos</option>
+<option>Padre/Madre</option>
+<option>Tutor Legal</option>
+<option>Familiar Directo</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="flex items-center gap-xs px-md py-sm text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors font-semibold">
+<span class="material-symbols-outlined">filter_list</span>
+                                Filtros Avanzados
+                            </button>
+<button class="flex items-center gap-xs px-md py-sm text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors font-semibold">
+<span class="material-symbols-outlined">download</span>
+                                Exportar
+                            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-label-caps text-on-surface-variant">
+<th class="px-lg py-md font-semibold">Familiar</th>
+<th class="px-lg py-md font-semibold">Vínculo</th>
+<th class="px-lg py-md font-semibold">NNyA Asociado</th>
+<th class="px-lg py-md font-semibold">Contacto</th>
+<th class="px-lg py-md font-semibold">Estado</th>
+<th class="px-lg py-md font-semibold text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<img alt="Elena Gomez Avatar" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A clean, minimalist vector avatar representation of a female professional with initials EG. The color scheme is soft and neutral, consistent with a high-end judicial management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFWps4-wJAgSstTJbvhz_5kNKjifQWYD1eHOjHkvQhG87hT6UfyExMXUNHynSIsfZ_PXdb5GdbBrehkZ39l_1HYlb2rf7dhZ72WNyrY2Oe0k9XinGEGwlt0VfjgEc2VBTkRbNPykxp9LilUzqdYZRGNcfmBl0p_90NcULqR1U88IIvBmrUIcGM_z3CeKb7qVO9vvEH3UA2LVObRNoelf5IUYtrjbTbQNtMtRLGZ-Dv89siWEEcA-EK8PzSmBWW7RJ9p_9tb6IKvU4"/>
+<div>
+<p class="font-bold text-on-surface">Elena Beatriz Gómez</p>
+<p class="text-body-md text-on-surface-variant data-privacy-blur">DNI: 24.558.XXX</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-surface-container-high text-on-surface-variant rounded-md text-label-caps font-semibold">Madre</span>
+</td>
+<td class="px-lg py-md">
+<div>
+<p class="text-body-md font-semibold text-primary">Julian S. Gómez</p>
+<p class="text-xs text-on-surface-variant">Expte: #4402/23</p>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="text-body-md">
+<p class="flex items-center gap-xs text-on-surface-variant data-privacy-blur"><span class="material-symbols-outlined text-[16px]">mail</span> elena.g@email.com</p>
+<p class="flex items-center gap-xs text-on-surface-variant data-privacy-blur"><span class="material-symbols-outlined text-[16px]">call</span> +54 11 49... 12</p>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-xs text-[#005768]">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-label-caps font-bold">ACTIVO</span>
+</div>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-all text-on-surface-variant" title="Ver Vínculo">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-secondary-container hover:text-on-secondary-container transition-all text-on-surface-variant" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container hover:text-on-error-container transition-all text-on-surface-variant" title="Archivar">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<img alt="Ricardo Lemos Avatar" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A clean, minimalist vector avatar representation of a male professional with initials RL. The color scheme is soft and neutral, consistent with a high-end judicial management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuy97uKjk4e8s8hx_Jb0TdrlgPUqAriPytFyJSb8cR3JobujdVPxgCruBDq2ErcvUW5QALmF6i0wLNvtrc7aolTGr0VnQ6rnUFwc0hY5QeIIqajorDb31rrCGPK-niH1AAbeRA47HrHqBPQsDXMt9rOPEPBebXd8MWBG8hOyZppYtKKLsz7JCMdDJXX13lVQ7wn32fV8rtaWjY2XMYOylA-bbUCYeKtWDDqL3NrLysRtTQjosH64qZQM2CBvyGmrrqebh6oRbVwLo"/>
+<div>
+<p class="font-bold text-on-surface">Ricardo Alberto Lemos</p>
+<p class="text-body-md text-on-surface-variant data-privacy-blur">DNI: 18.232.XXX</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-md text-label-caps font-semibold">Tutor Legal</span>
+</td>
+<td class="px-lg py-md">
+<div>
+<p class="text-body-md font-semibold text-primary">Marta P. Lemos</p>
+<p class="text-xs text-on-surface-variant">Expte: #9112/24</p>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="text-body-md">
+<p class="flex items-center gap-xs text-on-surface-variant data-privacy-blur"><span class="material-symbols-outlined text-[16px]">mail</span> ricardo.lemos@legales.com</p>
+<p class="flex items-center gap-xs text-on-surface-variant data-privacy-blur"><span class="material-symbols-outlined text-[16px]">call</span> +54 11 38... 00</p>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-xs text-on-tertiary-fixed-variant">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-label-caps font-bold">VALIDANDO</span>
+</div>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-all text-on-surface-variant" title="Ver Vínculo">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-secondary-container hover:text-on-secondary-container transition-all text-on-surface-variant" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container hover:text-on-error-container transition-all text-on-surface-variant" title="Archivar">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<img alt="Marcos Duarte Avatar" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A clean, minimalist vector avatar representation of a male professional with initials MD. The color scheme is soft and neutral, consistent with a high-end judicial management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYiw5iGbzVED3PTUQkeBZiSJeAR-l-B789aM9sQTu6qzIWm0V33D_KuefX68Lhu-Sa8OlhpwNGlhts2XXbVqTIM-IpRcQjTfjnQXSm0C4_9rtpWytSeXexUE0t3y4m-6xC3OE0qEiyRhxu5QkLHIUAtdrVJt9swH_GKVAFY6fkPPcj2gKh3vVYwiUmYyIbDrI0yceGN7M107mT35CvwABOsg5pG7JHbIE0z1uA6_nE5qXducmTvboxY_IkhRh4ThZKL4-KN-WNAPs"/>
+<div>
+<p class="font-bold text-on-surface">Marcos Antonio Duarte</p>
+<p class="text-body-md text-on-surface-variant data-privacy-blur">DNI: 30.129.XXX</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-surface-container-high text-on-surface-variant rounded-md text-label-caps font-semibold">Tío</span>
+</td>
+<td class="px-lg py-md">
+<div>
+<p class="text-body-md font-semibold text-primary">Lucas M. Duarte</p>
+<p class="text-xs text-on-surface-variant">Expte: #1255/24</p>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="text-body-md">
+<p class="flex items-center gap-xs text-on-surface-variant data-privacy-blur"><span class="material-symbols-outlined text-[16px]">mail</span> marcos.d@gmail.com</p>
+<p class="flex items-center gap-xs text-on-surface-variant data-privacy-blur"><span class="material-symbols-outlined text-[16px]">call</span> +54 11 55... 41</p>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-xs text-on-surface-variant opacity-60">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="text-label-caps font-bold">INACTIVO</span>
+</div>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-all text-on-surface-variant" title="Ver Vínculo">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-secondary-container hover:text-on-secondary-container transition-all text-on-surface-variant" title="Editar">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-error-container hover:text-on-error-container transition-all text-on-surface-variant" title="Archivar">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-lg py-md bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between">
+<p class="text-body-md text-on-surface-variant">Mostrando 1-10 de 1,284 registros</p>
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-low disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-low">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-low">3</button>
+<span class="px-xs">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-low">129</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-low">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Privacy Banner -->
+<footer class="bg-surface-container-highest border border-outline-variant rounded-xl p-lg flex flex-col md:flex-row items-center gap-lg">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0">
+<span class="material-symbols-outlined text-[32px]">verified_user</span>
+</div>
+<div class="flex-grow text-center md:text-left">
+<h4 class="text-title-sm font-bold text-primary mb-xs">Protocolo de Privacidad y Seguridad - Secure Nexus</h4>
+<p class="text-body-md text-on-surface-variant max-w-3xl">Toda la información contenida en este módulo de gestión de Familiares y Tutores está protegida bajo la Ley de Protección de Datos Personales. El acceso a los datos de contacto y filiación de Niñas, Niños y Adolescentes es estrictamente restringido a personal autorizado y queda registrado en los logs de auditoría del sistema.</p>
+</div>
+<div class="shrink-0">
+<button class="border border-primary text-primary px-lg py-sm rounded-lg font-semibold hover:bg-primary-container hover:text-on-primary-container transition-all">
+                            Ver Certificado de Auditoría
+                        </button>
+</div>
+</footer>
+</main>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Incidentes - Sistema NNyA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-surface": "#191c1e",
+                    "tertiary-fixed-dim": "#fab980",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#2a7081",
+                    "on-secondary-fixed": "#0b1c30",
+                    "surface-tint": "#1e6777",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "outline": "#70797c",
+                    "background": "#f7f9fb",
+                    "tertiary-container": "#8e5c2b",
+                    "inverse-surface": "#2d3133",
+                    "primary": "#005768",
+                    "on-primary-fixed": "#001f26",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary-fixed": "#2d1600",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#8fd0e3",
+                    "surface-container-high": "#e6e8ea",
+                    "primary-fixed": "#aeecff",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary": "#505f76",
+                    "secondary-container": "#d0e1fb",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#3f484b",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f7f9fb",
+                    "on-secondary-container": "#54647a",
+                    "tertiary": "#724515",
+                    "inverse-on-surface": "#eff1f3",
+                    "outline-variant": "#bfc8cb",
+                    "on-background": "#191c1e",
+                    "tertiary-fixed": "#ffdcc0",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#bcefff",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-container": "#eceef0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "xl": "40px",
+                    "container-max": "1280px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-lg": ["atkinsonHyperlegibleNext"],
+                    "title-sm": ["manrope"],
+                    "display-lg": ["manrope"],
+                    "body-md": ["atkinsonHyperlegibleNext"],
+                    "headline-lg-mobile": ["manrope"],
+                    "label-caps": ["inter"],
+                    "headline-md": ["manrope"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #f7f9fb; font-family: 'atkinsonHyperlegibleNext', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .sidebar-active { background-color: #d0e1fb; color: #54647a; font-weight: 700; border-radius: 0.5rem; }
+    </style>
+</head>
+<body class="flex min-h-screen bg-background">
+<!-- SideNavBar (Authority Source: JSON) -->
+<aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container border-r border-outline-variant p-md space-y-sm">
+<div class="mb-xl px-sm">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Sistema NNyA</h1>
+<p class="text-on-surface-variant font-body-md opacity-70">Gestión Institucional</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all rounded-lg font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all rounded-lg font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span>Expedientes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all rounded-lg font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span>Intervenciones</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all rounded-lg font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Informes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all rounded-lg font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+<span>Turnos</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all rounded-lg font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span>Alertas</span>
+</a>
+<!-- Active state for Incidentes -->
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold font-body-md transition-all scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="report_problem" style="font-variation-settings: 'FILL' 1;">report_problem</span>
+<span>Incidentes</span>
+</a>
+</nav>
+<div class="pt-lg border-t border-outline-variant space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-all rounded-lg font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Ajustes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-error hover:bg-error-container/20 transition-all rounded-lg font-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar (Authority Source: JSON) -->
+<header class="sticky top-0 z-10 bg-surface border-b border-outline-variant flex justify-between items-center w-full px-lg py-sm max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-md">
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<span class="font-title-sm text-title-sm text-primary md:hidden">Gestión NNyA</span>
+</div>
+<div class="flex items-center gap-lg">
+<div class="hidden md:flex items-center bg-surface-container-low px-md py-xs rounded-full border border-outline-variant focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-48" placeholder="Búsqueda global..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-on-surface-variant p-sm hover:bg-surface-container-high transition-colors rounded-full" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant p-sm hover:bg-surface-container-high transition-colors rounded-full" data-icon="help">help</button>
+<button class="material-symbols-outlined text-on-surface-variant p-sm hover:bg-surface-container-high transition-colors rounded-full" data-icon="settings">settings</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant ml-sm">
+<img alt="Usuario Administrativo" data-alt="A professional portrait of an administrative user in a corporate setting, looking friendly and focused. The image has a clean, high-key background with soft, natural lighting that aligns with a minimalist, institutional trust aesthetic. The color palette is composed of serene teals and warm whites, maintaining a professional yet approachable mood for a governmental system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz8NXx_3QsDsQMutagu5zx4jYcBniGyWNsbJZBvB61LEaDvOLnHmPBFzl3WPS3yJx2FDzxdr4wIr6O2lJwNk7WzJobPP4XPi0b4ROJ-j2ELVbFjDrm03JUhNYanNl_0mBtA-gw8PIO2MiKWQ5A22GfA-DHWfIIXZLPekoPnjBp2qlMmwIWn_7ZAparlrkOihTUVthoHJdztAELVNjNrRwM1CP43nO9qJ9ryX0qzp8vEIm_TpELhVvoqR_y6z2IQsSGv_wKPjoJCVY"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Body -->
+<div class="p-lg max-w-container-max mx-auto w-full space-y-lg">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Gestión de Incidentes</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Registro y seguimiento de situaciones problemáticas o eventos extraordinarios</p>
+</div>
+<button class="bg-primary text-on-primary flex items-center justify-center gap-sm px-lg py-md rounded-xl font-title-sm hover:opacity-90 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+                    Registrar Nuevo Incidente
+                </button>
+</div>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Card 1 -->
+<div class="bg-surface border border-outline-variant p-lg rounded-xl flex flex-col gap-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total de Incidentes (Mes)</span>
+<span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+</div>
+<div class="flex items-end gap-md">
+<span class="text-display-lg font-display-lg text-on-surface">24</span>
+<span class="flex items-center text-primary text-body-md font-bold mb-1">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+                            +5%
+                        </span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-error-container/30 border border-error/20 p-lg rounded-xl flex flex-col gap-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-error uppercase">Incidentes Críticos Activos</span>
+<span class="material-symbols-outlined text-error" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex items-end gap-md">
+<span class="text-display-lg font-display-lg text-error">3</span>
+<span class="text-on-error-container text-body-md mb-1">Atención inmediata</span>
+</div>
+<div class="absolute -bottom-2 -right-2 opacity-5 text-error">
+<span class="material-symbols-outlined text-[80px]" data-icon="priority_high">priority_high</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface border border-outline-variant p-lg rounded-xl flex flex-col gap-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Resolución Promedio</span>
+<span class="material-symbols-outlined text-secondary" data-icon="schedule">schedule</span>
+</div>
+<div class="flex items-end gap-md">
+<span class="text-display-lg font-display-lg text-on-surface">48<small class="text-body-lg">hs</small></span>
+<span class="text-on-surface-variant text-body-md mb-1 opacity-70">Tiempo de cierre</span>
+</div>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="bg-surface-container-low border border-outline-variant p-lg rounded-xl">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md items-end">
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">NNyA / Expediente</label>
+<div class="flex items-center bg-white border border-outline-variant rounded-lg px-sm focus-within:ring-1 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="border-none bg-transparent focus:ring-0 w-full font-body-md py-sm" placeholder="Buscar por nombre o ID" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Tipo de Incidente</label>
+<select class="bg-white border border-outline-variant rounded-lg px-sm py-sm font-body-md focus:ring-1 focus:ring-primary">
+<option>Todos los tipos</option>
+<option>Conducta</option>
+<option>Salud</option>
+<option>Seguridad</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Gravedad</label>
+<select class="bg-white border border-outline-variant rounded-lg px-sm py-sm font-body-md focus:ring-1 focus:ring-primary">
+<option>Todas las gravedades</option>
+<option>Baja</option>
+<option>Media</option>
+<option>Alta</option>
+<option>Crítica</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Rango de Fechas</label>
+<div class="flex items-center bg-white border border-outline-variant rounded-lg px-sm focus-within:ring-1 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="calendar_today">calendar_today</span>
+<input class="border-none bg-transparent focus:ring-0 w-full font-body-md py-sm" placeholder="Seleccionar fechas" type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Incidents Table -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">NNyA / Expediente</th>
+<th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">Tipo</th>
+<th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">Gravedad</th>
+<th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">Fecha y Hora</th>
+<th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">Responsable</th>
+<th class="px-lg py-md font-label-caps text-label-caps text-on-surface-variant">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex flex-col">
+<span class="font-title-sm text-on-surface">Marta González</span>
+<span class="text-body-md text-on-surface-variant opacity-70">EXP-2023-0459</span>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-md py-1 bg-secondary-container text-on-secondary-container rounded-full text-body-md font-semibold">Salud</span>
+</td>
+<td class="px-lg py-md">
+<span class="flex items-center gap-xs text-error font-bold text-body-md">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                                        Crítica
+                                    </span>
+</td>
+<td class="px-lg py-md font-body-md text-on-surface">15 Oct 2023 - 14:30</td>
+<td class="px-lg py-md font-body-md text-on-surface-variant">Lic. Ricardo P.</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="visibility">visibility</button>
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="edit">edit</button>
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="more_vert">more_vert</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex flex-col">
+<span class="font-title-sm text-on-surface">Juan Pérez</span>
+<span class="text-body-md text-on-surface-variant opacity-70">EXP-2023-0812</span>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-md py-1 bg-primary-container/20 text-on-primary-fixed-variant rounded-full text-body-md font-semibold">Conducta</span>
+</td>
+<td class="px-lg py-md">
+<span class="flex items-center gap-xs text-tertiary font-bold text-body-md">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                                        Media
+                                    </span>
+</td>
+<td class="px-lg py-md font-body-md text-on-surface">14 Oct 2023 - 09:15</td>
+<td class="px-lg py-md font-body-md text-on-surface-variant">Lic. Ana M.</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="visibility">visibility</button>
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="edit">edit</button>
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="more_vert">more_vert</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex flex-col">
+<span class="font-title-sm text-on-surface">Sofía Ramírez</span>
+<span class="text-body-md text-on-surface-variant opacity-70">EXP-2023-1102</span>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-md py-1 bg-surface-variant text-on-surface-variant rounded-full text-body-md font-semibold">Seguridad</span>
+</td>
+<td class="px-lg py-md">
+<span class="flex items-center gap-xs text-secondary font-bold text-body-md">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                        Baja
+                                    </span>
+</td>
+<td class="px-lg py-md font-body-md text-on-surface">12 Oct 2023 - 18:45</td>
+<td class="px-lg py-md font-body-md text-on-surface-variant">Lic. Jorge B.</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="visibility">visibility</button>
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="edit">edit</button>
+<button class="p-sm hover:bg-primary-container/10 text-primary rounded-lg material-symbols-outlined" data-icon="more_vert">more_vert</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-lg py-md bg-surface-container-low flex items-center justify-between border-t border-outline-variant">
+<span class="font-body-md text-on-surface-variant">Mostrando 3 de 24 incidentes</span>
+<div class="flex items-center gap-xs">
+<button class="p-xs hover:bg-surface-container-highest rounded-lg disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-lg text-body-md font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-highest rounded-lg text-body-md">2</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container-highest rounded-lg text-body-md">3</button>
+<button class="p-xs hover:bg-surface-container-highest rounded-lg">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-auto py-lg px-xl border-t border-outline-variant bg-surface-container-low">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="verified_user">verified_user</span>
+<p class="font-body-md text-on-surface-variant max-w-2xl">
+                        Este sistema opera bajo los estrictos lineamientos del Protocolo de Seguridad y Confidencialidad institucional. El tratamiento de datos personales de Niñas, Niños y Adolescentes está protegido por la <span class="font-bold">Ley 25.326 de Protección de Datos Personales</span>.
+                    </p>
+</div>
+<div class="flex items-center gap-lg">
+<span class="font-label-caps text-label-caps text-outline">Versión 2.4.0-STABLE</span>
+<div class="h-6 w-px bg-outline-variant"></div>
+<div class="flex gap-sm">
+<div class="w-2 h-2 rounded-full bg-primary-fixed-dim animate-pulse"></div>
+<span class="text-xs font-bold text-on-surface-variant">SISTEMA EN LÍNEA</span>
+</div>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

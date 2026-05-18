@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,600;0,700;1,400&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#8fd0e3",
+                    "on-secondary-fixed": "#0b1c30",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary-container": "#8e5c2b",
+                    "surface-dim": "#d8dadc",
+                    "surface": "#f7f9fb",
+                    "secondary-container": "#d0e1fb",
+                    "primary": "#005768",
+                    "background": "#f7f9fb",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-variant": "#e0e3e5",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#2d1600",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "inverse-surface": "#2d3133",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-surface": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#2a7081",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-primary-container": "#bcefff",
+                    "surface-container-low": "#f2f4f6",
+                    "on-primary-fixed": "#001f26",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-container": "#eceef0",
+                    "on-background": "#191c1e",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#70797c",
+                    "on-secondary-container": "#54647a",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "on-error": "#ffffff",
+                    "secondary": "#505f76",
+                    "tertiary-fixed-dim": "#fab980",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-surface-variant": "#3f484b",
+                    "tertiary-fixed": "#ffdcc0",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#bfc8cb",
+                    "tertiary": "#724515",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#1e6777",
+                    "primary-fixed": "#aeecff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "xl": "40px",
+                    "md": "16px",
+                    "container-max": "1280px",
+                    "sm": "8px",
+                    "unit": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["manrope"],
+                    "body-md": ["atkinsonHyperlegibleNext"],
+                    "body-lg": ["atkinsonHyperlegibleNext"],
+                    "title-sm": ["manrope"],
+                    "headline-md": ["manrope"],
+                    "label-caps": ["inter"],
+                    "display-lg": ["manrope"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Atkinson Hyperlegible Next', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- TopNavBar Implementation -->
+<header class="fixed top-0 right-0 w-full z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
+<div class="flex justify-between items-center h-16 px-lg max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">Gestión NNyA</span>
+<span class="hidden md:inline font-body-lg text-body-lg text-on-surface-variant">| Sistema de Gestión Judicial NNyA</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="Foto de perfil del operador" class="h-full w-full object-cover" data-alt="A professional headshot of a middle-aged female judicial administrator with a kind and serene expression. She is wearing professional attire in a bright, modern office setting with soft, natural lighting. The visual style is crisp and clean, reflecting trust and institutional stability, using a color palette of soft whites and professional teals." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCul_GG-9E8gvest4xVYH7s6DDxTAgFeK6sC_tgyJ4sFPcsA8Owb1cUmu0MY7c-hLR8xtzi1Ijs4Gz-oH2DYP1IQls67ZzyFdGhPz7uLgj-skKAm-1fTv_sY7RmkC5_WICr2xPGiYhoCAW2F2zn5ZArWxXOQFtSnRg8FI8_mCbJBeUp9B13bgHdbAJIPVyqThXIqFL1Jp2Nlk-dajdMj7eTOIvrdvgtjR4vklONQRVt_O82oZE9cpcQ8HghRk_ZNohK0AC8BOFusqs"/>
+</div>
+</div>
+</div>
+</header>
+<main class="min-h-screen pt-24 pb-12 px-gutter flex flex-col items-center justify-center max-w-7xl mx-auto">
+<div class="text-center mb-12">
+<h1 class="font-display-lg text-display-lg text-primary mb-2">Bienvenido de nuevo, Claudia</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Seleccione el módulo de trabajo para comenzar su jornada. El sistema está configurado según sus permisos multi-rol.
+            </p>
+</div>
+<!-- Bento Grid Selection -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg w-full">
+<!-- Card 1: Gestión Judicial -->
+<a class="group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest p-8 flex flex-col justify-between hover:shadow-lg transition-all duration-300 hover:border-primary/30" href="#">
+<div class="mb-8">
+<div class="w-14 h-14 rounded-lg bg-primary-container/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="balance">balance</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-3">Gestión Judicial</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">
+                        Administración de expedientes, trámites procesales y seguimiento de causas legales. Acceso restringido a personal judicial.
+                    </p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                            Control de plazos
+                        </li>
+<li class="flex items-center gap-2 font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                            Gestión de audiencias
+                        </li>
+</ul>
+</div>
+<div class="flex items-center text-primary font-bold gap-2">
+<span>Ingresar al módulo</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<!-- Visual Background Accent -->
+<div class="absolute -right-8 -bottom-8 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[120px]" data-icon="folder_managed">folder_managed</span>
+</div>
+</a>
+<!-- Card 2: Módulo de Educadores -->
+<a class="group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest p-8 flex flex-col justify-between hover:shadow-lg transition-all duration-300 hover:border-primary/30" href="#">
+<div class="mb-8">
+<div class="w-14 h-14 rounded-lg bg-secondary-container/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-secondary-container text-3xl" data-icon="school">school</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-3">Módulo de Educadores</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">
+                        Seguimiento pedagógico, asistencia y evolución educativa de NNyA en programas de protección integral.
+                    </p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                            Registros de aula
+                        </li>
+<li class="flex items-center gap-2 font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                            Informes trimestrales
+                        </li>
+</ul>
+</div>
+<div class="flex items-center text-primary font-bold gap-2">
+<span>Ingresar al módulo</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[120px]" data-icon="diversity_3">diversity_3</span>
+</div>
+</a>
+<!-- Card 3: Área Técnica e Informes -->
+<a class="group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest p-8 flex flex-col justify-between hover:shadow-lg transition-all duration-300 hover:border-primary/30" href="#">
+<div class="mb-8">
+<div class="w-14 h-14 rounded-lg bg-tertiary-fixed/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="psychology">psychology</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-3">Área Técnica</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">
+                        Elaboración de informes interdisciplinarios, diagnósticos sociales y evaluaciones psicológicas de alta confidencialidad.
+                    </p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                            Entrevistas técnicas
+                        </li>
+<li class="flex items-center gap-2 font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                            Dictámenes periciales
+                        </li>
+</ul>
+</div>
+<div class="flex items-center text-primary font-bold gap-2">
+<span>Ingresar al módulo</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[120px]" data-icon="assignment_turned_in">assignment_turned_in</span>
+</div>
+</a>
+</div>
+<!-- System Status Footer -->
+<div class="mt-16 w-full max-w-3xl glass-card rounded-xl border border-outline-variant p-6 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-700" data-icon="shield_checked" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<p class="font-body-md font-bold text-on-surface">Conexión segura</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase">Servidor central judicial activo</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-caps text-label-caps text-on-surface-variant">Último acceso</p>
+<p class="font-body-md text-on-surface">Hoy, 08:42 AM</p>
+</div>
+</div>
+</main>
+<!-- Support Floating Button -->
+<div class="fixed bottom-lg right-lg group">
+<button class="bg-primary text-on-primary p-4 rounded-full shadow-lg flex items-center gap-2 hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="hidden group-hover:block font-body-md">Mesa de Ayuda</span>
+</button>
+</div>
+</body></html>

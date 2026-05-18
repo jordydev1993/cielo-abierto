@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#bfc8cb",
+                    "surface": "#f7f9fb",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#fab980",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container": "#eceef0",
+                    "primary-fixed": "#aeecff",
+                    "primary-container": "#2a7081",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "primary": "#005768",
+                    "on-primary-fixed": "#001f26",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary-fixed": "#d3e4fe",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-tertiary-container": "#ffe1ca",
+                    "surface-dim": "#d8dadc",
+                    "outline": "#70797c",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "on-tertiary-fixed": "#2d1600",
+                    "tertiary": "#724515",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-container": "#54647a",
+                    "on-background": "#191c1e",
+                    "inverse-primary": "#8fd0e3",
+                    "on-surface-variant": "#3f484b",
+                    "on-primary-container": "#bcefff",
+                    "surface-tint": "#1e6777",
+                    "on-surface": "#191c1e",
+                    "secondary-container": "#d0e1fb",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#8e5c2b",
+                    "surface-bright": "#f7f9fb",
+                    "secondary": "#505f76",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "background": "#f7f9fb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "unit": "4px",
+                    "container-max": "1280px",
+                    "lg": "24px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "title-sm": ["Manrope"],
+                    "label-caps": ["Inter"],
+                    "headline-md": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-md": ["Atkinson Hyperlegible Next"],
+                    "body-lg": ["Atkinson Hyperlegible Next"]
+            },
+            "fontSize": {
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+        }
+        .data-privacy-blur {
+            filter: blur(4px);
+            transition: filter 0.2s ease;
+        }
+        .data-privacy-blur:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full w-64 bg-surface-container-low border-r border-outline-variant p-md gap-sm z-50">
+<div class="flex items-center gap-md px-sm py-md mb-md">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md text-primary leading-tight">Secure Nexus</h1>
+<p class="text-label-caps text-on-surface-variant uppercase">Judicial Records</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">safety_divider</span>
+<span class="font-body-md">NNyA Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md">Case Records</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md">User Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-body-md">Audit Logs</span>
+</a>
+</nav>
+<button class="mb-gutter bg-primary text-on-primary py-sm px-md rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined">add</span>
+                Register New Case
+            </button>
+<div class="border-t border-outline-variant pt-md flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-xs text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span class="text-label-caps">Privacy Policy</span>
+</a>
+<a class="flex items-center gap-md px-md py-xs text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="text-label-caps">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-lg py-sm w-full z-40 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-lg">
+<span class="text-title-sm font-title-sm font-bold text-primary">Portal NNyA</span>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-xl pr-md py-xs bg-surface-container-low border-none rounded-full text-body-md w-64 focus:ring-2 focus:ring-primary-container" placeholder="Buscar historial..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden border border-outline-variant ml-sm">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="Close-up professional portrait of a senior female government official with a friendly yet authoritative expression. She is wearing a professional navy blazer in a modern, brightly lit office environment. The image uses a clean, high-key lighting style to convey institutional trust and transparency, following the serene teal and neutral white palette of the system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQK6M-pKVlwqChZh6Co6uatDGo3cOntJ0IUu6HtvpBXrX4OXKvovDtI9fPGx13PCxRCl95cTGRGN1AxK6TiyQrw7QaxL5yCq8_JdOz0ZP7BVj_kZFFvgL5u1XDBXTMWiDRrO4y6z0TWHxEuZ9aqGA0QaZHqy8Efkh0fosxvU4S_ymvzbphnWLd3zPEODb7jS0ocsvhAsvz-Ig10u7PZvQbmaYudThR5xeFnd7WLPOJ5Z15G1IKzh-LFILzlBCMiR79g4x052SgfUk"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<section class="flex-1 overflow-y-auto p-gutter bg-surface">
+<div class="max-w-[1280px] mx-auto space-y-gutter">
+<!-- Header Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h2 class="text-display-lg font-display-lg text-primary">Historial de Alertas y Resoluciones</h2>
+<p class="text-body-lg text-on-surface-variant">Módulo de auditoría y seguimiento de intervenciones cerradas.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-sm px-md py-sm bg-surface-container-lowest border border-outline-variant text-primary rounded-lg font-semibold hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+                                Filtrar Resultados
+                            </button>
+<button class="flex items-center gap-sm px-md py-sm bg-primary text-on-primary rounded-lg font-semibold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+                                Exportar Reporte
+                            </button>
+</div>
+</div>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Trend Visualization (Bento 2/3) -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h3 class="text-title-sm font-title-sm text-on-surface">Frecuencia de Alertas (Últimos 30 días)</h3>
+<p class="text-label-caps text-on-surface-variant">Análisis de tendencias por categoría de incidente</p>
+</div>
+<select class="bg-surface-container-low border-none text-body-md rounded-lg px-sm py-xs">
+<option>Mensual</option>
+<option>Semanal</option>
+</select>
+</div>
+<!-- Visual Chart Mockup -->
+<div class="h-64 flex items-end justify-between gap-md pt-md">
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container rounded-t-lg opacity-40 group-hover:opacity-100 transition-opacity" style="height: 40%"></div>
+<span class="text-label-caps mt-sm">Educación</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container rounded-t-lg opacity-60 group-hover:opacity-100 transition-opacity" style="height: 75%"></div>
+<span class="text-label-caps mt-sm">Salud</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary rounded-t-lg opacity-80 group-hover:opacity-100 transition-opacity" style="height: 90%"></div>
+<span class="text-label-caps mt-sm">Violencia</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container rounded-t-lg opacity-30 group-hover:opacity-100 transition-opacity" style="height: 25%"></div>
+<span class="text-label-caps mt-sm">Identidad</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container rounded-t-lg opacity-50 group-hover:opacity-100 transition-opacity" style="height: 55%"></div>
+<span class="text-label-caps mt-sm">Vivienda</span>
+</div>
+</div>
+</div>
+<!-- Stats Summary (Bento 1/3) -->
+<div class="flex flex-col gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex-1">
+<span class="material-symbols-outlined text-primary mb-sm">task_alt</span>
+<h4 class="text-label-caps text-on-surface-variant uppercase">Total Resoluciones</h4>
+<div class="text-display-lg font-display-lg text-primary mt-xs">1,248</div>
+<p class="text-body-md text-on-surface-variant mt-sm">+12% respecto al mes anterior</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex-1">
+<span class="material-symbols-outlined text-tertiary mb-sm">gavel</span>
+<h4 class="text-label-caps text-on-surface-variant uppercase">Escalamiento Judicial</h4>
+<div class="text-display-lg font-display-lg text-tertiary mt-xs">18.4%</div>
+<p class="text-body-md text-on-surface-variant mt-sm">Promedio de resolución: 4.2 días</p>
+</div>
+</div>
+</div>
+<!-- Main Audit Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<h3 class="text-title-sm font-title-sm text-on-surface">Registros Auditados</h3>
+<div class="flex items-center gap-md">
+<span class="text-body-md text-on-surface-variant">Mostrando 1-10 de 1,248</span>
+<div class="flex border border-outline-variant rounded-lg overflow-hidden">
+<button class="px-sm py-xs bg-surface-container-low hover:bg-surface-container transition-colors border-r border-outline-variant">
+<span class="material-symbols-outlined text-body-md leading-none">chevron_left</span>
+</button>
+<button class="px-sm py-xs bg-surface-container-low hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-body-md leading-none">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="text-left bg-surface-container-low/30">
+<th class="px-lg py-md text-label-caps text-on-surface-variant uppercase border-b border-outline-variant">Fecha/Hora</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant uppercase border-b border-outline-variant">NNyA (Sensitive Data)</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant uppercase border-b border-outline-variant">Tipo de Incidente</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant uppercase border-b border-outline-variant">Resultado</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant uppercase border-b border-outline-variant">Profesional</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant uppercase border-b border-outline-variant">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/20 transition-colors">
+<td class="px-lg py-md text-body-md">15/10/2023 - 09:42</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<span class="data-privacy-blur text-body-md font-semibold text-primary">M.A. González (14a)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-body-md cursor-pointer" title="Revelar datos">visibility</span>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded text-label-caps">Vulneración de Derechos</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm text-primary font-semibold">
+<span class="material-symbols-outlined text-body-md" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                                Cerrado - Resuelto
+                                            </div>
+</td>
+<td class="px-lg py-md text-body-md text-on-surface-variant">Lic. Laura Benítez</td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline text-body-md font-semibold">Ver Detalles</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/20 transition-colors">
+<td class="px-lg py-md text-body-md">14/10/2023 - 16:15</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<span class="data-privacy-blur text-body-md font-semibold text-primary">S. Rodríguez (08a)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-body-md cursor-pointer">visibility</span>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="bg-tertiary-container text-on-tertiary-container px-sm py-xs rounded text-label-caps">Riesgo Educativo</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm text-tertiary font-semibold">
+<span class="material-symbols-outlined text-body-md">gavel</span>
+                                                Cerrado - Judicializado
+                                            </div>
+</td>
+<td class="px-lg py-md text-body-md text-on-surface-variant">Dr. Ricardo Sotelo</td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline text-body-md font-semibold">Ver Detalles</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/20 transition-colors">
+<td class="px-lg py-md text-body-md">14/10/2023 - 11:20</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<span class="data-privacy-blur text-body-md font-semibold text-primary">F. Méndez (17a)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-body-md cursor-pointer">visibility</span>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded text-label-caps">Salud Mental</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm text-primary font-semibold">
+<span class="material-symbols-outlined text-body-md" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                                Cerrado - Resuelto
+                                            </div>
+</td>
+<td class="px-lg py-md text-body-md text-on-surface-variant">Lic. Ana Clara Ruiz</td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline text-body-md font-semibold">Ver Detalles</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/20 transition-colors">
+<td class="px-lg py-md text-body-md">13/10/2023 - 14:05</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<span class="data-privacy-blur text-body-md font-semibold text-primary">L. Duarte (12a)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-body-md cursor-pointer">visibility</span>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="bg-error-container text-on-error-container px-sm py-xs rounded text-label-caps">Violencia Intrafamiliar</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm text-tertiary font-semibold">
+<span class="material-symbols-outlined text-body-md">forward</span>
+                                                Cerrado - Derivado
+                                            </div>
+</td>
+<td class="px-lg py-md text-body-md text-on-surface-variant">Equipo Territorial E3</td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline text-body-md font-semibold">Ver Detalles</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Footer Audit Notice -->
+<div class="flex items-center gap-md bg-surface-container-high/30 p-md rounded-lg border border-outline-variant/50">
+<span class="material-symbols-outlined text-on-surface-variant">info</span>
+<p class="text-body-md text-on-surface-variant italic">
+                            Todos los accesos a este historial son registrados. La visualización de datos sensibles de NNyA genera una entrada automática en el registro de auditoría del sistema con su firma digital.
+                        </p>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

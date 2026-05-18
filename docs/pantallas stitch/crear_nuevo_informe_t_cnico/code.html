@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;700&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-low": "#f2f4f6",
+                "inverse-on-surface": "#eff1f3",
+                "on-secondary-fixed-variant": "#38485d",
+                "surface": "#f7f9fb",
+                "primary": "#005768",
+                "secondary-fixed": "#d3e4fe",
+                "on-tertiary-fixed": "#2d1600",
+                "on-error": "#ffffff",
+                "secondary-container": "#d0e1fb",
+                "inverse-surface": "#2d3133",
+                "surface-container-high": "#e6e8ea",
+                "secondary-fixed-dim": "#b7c8e1",
+                "on-primary-container": "#bcefff",
+                "on-tertiary-container": "#ffe1ca",
+                "on-secondary": "#ffffff",
+                "surface-container-lowest": "#ffffff",
+                "on-primary": "#ffffff",
+                "background": "#f7f9fb",
+                "tertiary": "#724515",
+                "surface-variant": "#e0e3e5",
+                "surface-container-highest": "#e0e3e5",
+                "on-primary-fixed": "#001f26",
+                "tertiary-container": "#8e5c2b",
+                "surface-dim": "#d8dadc",
+                "primary-container": "#2a7081",
+                "on-surface": "#191c1e",
+                "secondary": "#505f76",
+                "primary-fixed-dim": "#8fd0e3",
+                "tertiary-fixed-dim": "#fab980",
+                "surface-tint": "#1e6777",
+                "outline": "#70797c",
+                "tertiary-fixed": "#ffdcc0",
+                "on-background": "#191c1e",
+                "on-surface-variant": "#3f484b",
+                "error": "#ba1a1a",
+                "outline-variant": "#bfc8cb",
+                "surface-bright": "#f7f9fb",
+                "surface-container": "#eceef0",
+                "inverse-primary": "#8fd0e3",
+                "on-tertiary": "#ffffff",
+                "on-tertiary-fixed-variant": "#683c0d",
+                "on-secondary-container": "#54647a",
+                "on-secondary-fixed": "#0b1c30",
+                "primary-fixed": "#aeecff",
+                "on-error-container": "#93000a",
+                "on-primary-fixed-variant": "#004e5d",
+                "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "xs": "4px",
+                "sm": "8px",
+                "gutter": "24px",
+                "xl": "40px",
+                "container-max": "1280px",
+                "lg": "24px",
+                "md": "16px",
+                "unit": "4px"
+            },
+            "fontFamily": {
+                "headline-md": ["Manrope"],
+                "headline-lg-mobile": ["Manrope"],
+                "body-md": ["Atkinson Hyperlegible Next"],
+                "title-sm": ["Manrope"],
+                "label-caps": ["Inter"],
+                "display-lg": ["Manrope"],
+                "body-lg": ["Atkinson Hyperlegible Next"]
+            },
+            "fontSize": {
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .data-shield-blur {
+            filter: blur(4px);
+            transition: filter 0.2s ease;
+        }
+        .data-shield-blur:hover {
+            filter: blur(0px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar - JSON Implemented -->
+<aside class="docked left-0 h-full w-64 flex-col bg-surface-container-lowest border-r border-outline-variant flex flex-col h-full py-lg px-md hidden md:flex">
+<div class="flex items-center gap-sm mb-xl">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary leading-tight">Protección NNyA</h1>
+<p class="text-xs text-on-surface-variant">Sistema de Gestión Judicial</p>
+</div>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span class="font-body-md">Expedientes</span>
+</a>
+<!-- Active Item: Informes -->
+<a class="flex items-center gap-md px-md py-sm text-primary font-bold bg-surface-container-low transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body-md">Informes</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md">Configuración</span>
+</a>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant">
+<button class="w-full py-sm px-md bg-primary text-on-primary rounded-lg font-bold flex items-center justify-center gap-sm scale-100 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>Nuevo Expediente</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- TopAppBar - JSON Implemented -->
+<header class="bg-surface border-b border-outline-variant docked top-0 w-full z-10">
+<div class="flex justify-between items-center h-16 px-gutter max-w-container-max mx-auto w-full">
+<div class="flex items-center gap-lg flex-1">
+<span class="font-headline-md text-headline-md font-bold text-primary md:hidden">GJ</span>
+<div class="relative w-full max-w-md focus-within:ring-2 focus-within:ring-primary/20 transition-all rounded-lg">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg focus:ring-0 text-body-md" placeholder="Buscar expediente o NNyA..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md ml-lg">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-sm"></div>
+<div class="flex items-center gap-sm">
+<div class="text-right hidden sm:block">
+<p class="font-title-sm text-sm text-on-surface leading-none">Dr. Alejandro Rossi</p>
+<p class="text-xs text-on-surface-variant">Funcionario Judicial</p>
+</div>
+<img alt="Perfil de Funcionario Judicial" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a middle-aged male judicial official with a kind but serious expression. He is wearing a dark navy suit and white shirt, set against a blurred office background with warm, institutional lighting. The image maintains a high-key, clean aesthetic consistent with a professional government portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDspmOFBKkx3Ktat_kVwKkf_dsSBCI5vXZB4RuxzQv_L2mUSy7uaFG38dSjlErVb08U-xPJA4t1mkPqRGRG18wPSgPkfaobmgbBqyZ7i9v4stxD0LBoYRRhaUK3Mq2e5KrUWlvNvZFbo4b6zZREbW7P-psYzLHKTPUy3GDy3sc1r49Y5KRNYoC7md1pTfpPXushL6EzSrAw5iHmLpTLZ_AXjbl4Soa2zdk6IRNflxIIFeci6S0Fbcw5EMKFz2Zb6tjV4hMFH7O8KYM"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Canvas -->
+<div class="flex-1 overflow-y-auto p-gutter">
+<div class="max-w-container-max mx-auto">
+<!-- Security Banner -->
+<div class="bg-secondary-container/30 border border-secondary-container p-md rounded-xl mb-lg flex items-start gap-md">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<div>
+<h4 class="font-bold text-on-secondary-container text-body-md">Entorno de Datos Protegidos</h4>
+<p class="text-on-secondary-container text-xs">Este formulario contiene información sensible bajo Ley de Protección Integral. El acceso y edición están siendo auditados y encriptados en tiempo real (AES-256).</p>
+</div>
+<div class="ml-auto flex items-center gap-xs bg-white/50 px-sm py-1 rounded-full border border-outline-variant">
+<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+<span class="text-[10px] font-bold text-outline">ENCRIPTADO</span>
+</div>
+</div>
+<!-- Page Header -->
+<div class="mb-xl flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<nav class="flex items-center gap-xs text-outline text-xs mb-xs">
+<span>Informes</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold">Crear Nuevo Informe Técnico</span>
+</nav>
+<h2 class="font-display-lg text-display-lg text-on-surface">Nuevo Informe Técnico</h2>
+<p class="text-on-surface-variant">Complete los campos requeridos para la elaboración del dictamen pericial o social.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-lg py-sm border border-outline-variant text-on-surface-variant rounded-lg font-bold hover:bg-surface-container-high transition-colors">
+                                Cancelar
+                            </button>
+<button class="px-lg py-sm bg-primary text-on-primary rounded-lg font-bold hover:shadow-md transition-all flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="save">save</span>
+                                Guardar Borrador
+                            </button>
+</div>
+</div>
+<!-- Form Sections: Bento Style -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- Section 1 & 2: Main Context -->
+<div class="col-span-12 lg:col-span-8 space-y-lg">
+<!-- Card: Seleccion NNyA -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-lg border-b border-outline-variant pb-md">
+<span class="material-symbols-outlined text-primary" data-icon="person_search">person_search</span>
+<h3 class="font-title-sm text-title-sm">Selección de NNyA y Expediente</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="text-xs font-bold text-on-surface-variant">BUSCAR NIÑO, NIÑA O ADOLESCENTE</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary/20" placeholder="Nombre o DNI..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="text-xs font-bold text-on-surface-variant">EXPEDIENTE VINCULADO</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary/20">
+<option>Seleccione un expediente activo...</option>
+<option>EXP-2023-9941-FL (García, M.)</option>
+<option>EXP-2024-1102-FL (López, J.)</option>
+</select>
+</div>
+</div>
+<div class="mt-md p-md bg-surface rounded-lg border border-dashed border-outline-variant flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-outline">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold text-outline">NNyA SELECCIONADO</p>
+<p class="text-body-md font-bold data-shield-blur">GARCÍA, MATEO ALEJANDRO (12 años)</p>
+</div>
+<button class="text-primary hover:underline text-xs font-bold">Cambiar</button>
+</div>
+</div>
+<!-- Card: Contenido del Informe -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-lg border-b border-outline-variant pb-md">
+<span class="material-symbols-outlined text-primary" data-icon="edit_note">edit_note</span>
+<h3 class="font-title-sm text-title-sm">Contenido del Informe</h3>
+</div>
+<div class="space-y-lg">
+<div class="space-y-xs">
+<div class="flex justify-between">
+<label class="text-xs font-bold text-on-surface-variant">CONSIDERACIONES TÉCNICAS</label>
+<span class="text-[10px] text-outline">AUTO-GUARDADO HACE 2 MIN</span>
+</div>
+<div class="border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-container-low p-2 border-b border-outline-variant flex gap-sm">
+<button class="p-1 hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[18px]" data-icon="format_bold">format_bold</span></button>
+<button class="p-1 hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[18px]" data-icon="format_italic">format_italic</span></button>
+<button class="p-1 hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[18px]" data-icon="format_list_bulleted">format_list_bulleted</span></button>
+<div class="w-px h-4 bg-outline-variant self-center"></div>
+<button class="p-1 hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[18px]" data-icon="history">history</span></button>
+</div>
+<textarea class="w-full bg-white border-none p-md text-body-md focus:ring-0 focus:outline-none placeholder:text-outline-variant" placeholder="Describa los hallazgos técnicos, entrevistas realizadas y contexto observado..." rows="8"></textarea>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="text-xs font-bold text-on-surface-variant">SUGERENCIAS / RECOMENDACIONES</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg p-md text-body-md focus:ring-2 focus:ring-primary/20 placeholder:text-outline-variant" placeholder="Indique las medidas sugeridas para el bienestar del NNyA..." rows="4"></textarea>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Column -->
+<div class="col-span-12 lg:col-span-4 space-y-lg">
+<!-- Card: Datos del Informe -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-lg border-b border-outline-variant pb-md">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+<h3 class="font-title-sm text-title-sm">Metadatos</h3>
+</div>
+<div class="space-y-md">
+<div class="space-y-xs">
+<label class="text-xs font-bold text-on-surface-variant">TIPO DE INFORME</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary/20">
+<option>Informe Social Preliminar</option>
+<option>Evaluación Psicológica</option>
+<option>Informe de Revinculación</option>
+<option>Dictamen Técnico Interdisciplinario</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="text-xs font-bold text-on-surface-variant">FECHA DE EVALUACIÓN</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary/20" type="date"/>
+</div>
+<div class="space-y-xs">
+<label class="text-xs font-bold text-on-surface-variant">PROFESIONALES INTERVINIENTES</label>
+<div class="flex flex-wrap gap-xs mb-sm">
+<span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full flex items-center gap-xs font-bold">
+                                                Dr. Rossi <span class="material-symbols-outlined text-[14px] cursor-pointer" data-icon="close">close</span>
+</span>
+<span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full flex items-center gap-xs font-bold">
+                                                Lic. M. Sosa <span class="material-symbols-outlined text-[14px] cursor-pointer" data-icon="close">close</span>
+</span>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary/20" placeholder="Agregar profesional..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline" data-icon="person_add">person_add</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card: Documentación Adjunta (Drag & Drop) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-lg border-b border-outline-variant pb-md">
+<span class="material-symbols-outlined text-primary" data-icon="attach_file">attach_file</span>
+<h3 class="font-title-sm text-title-sm">Anexos y Documentación</h3>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center text-center bg-surface transition-all hover:bg-surface-container-low hover:border-primary/40 group">
+<span class="material-symbols-outlined text-[40px] text-outline mb-md group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+<p class="text-body-md font-bold mb-xs">Arrastre archivos aquí</p>
+<p class="text-[10px] text-on-surface-variant mb-md">PDF, JPG o PNG (Máx 10MB)</p>
+<button class="text-xs font-bold text-primary border border-primary px-md py-sm rounded-lg hover:bg-primary/5">Explorar Archivos</button>
+</div>
+<div class="mt-md space-y-sm">
+<div class="flex items-center gap-sm p-sm bg-surface rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-error" data-icon="picture_as_pdf">picture_as_pdf</span>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-bold truncate">Partida_Nacimiento.pdf</p>
+<p class="text-[10px] text-outline">1.2 MB</p>
+</div>
+<button class="text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Visual Stamp -->
+<div class="p-lg bg-surface-container-high/50 rounded-xl border border-outline-variant flex flex-col items-center gap-md opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+<img class="w-16 h-16 object-contain mix-blend-multiply" data-alt="A clean, official-looking graphic design of a digital security seal or emblem representing judicial integrity. It features minimalist circular patterns, a subtle shield icon, and an elegant professional color palette of deep teals and greys on a light background. The style is modern, professional, and suggests high-level encryption and trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYW7VBy4cYqEmSesO8UxTI4PHjG-hjpilqzJFtgCeYzkB_UqFqjcJaU0HsLbyi_Vf3Z8HPKnOYnDN2s1YcZgIqVaTKgtIeu1_tWVQx5GmS47W_IK8tHnsNvp5kabNGicvZtYLBab5iPo6RF-CKZgyFi-JYF3iBgSaCKJXxDdYD19Y0uji5SZh0dy-AfuxLCTlYu9fh4Jq7TnXSCY7vB5pqJSo0DD6x48NJiFaFG8TvongSqljhElJgtWuG72xsx0_7ZB9z6-cWFOw"/>
+<div class="text-center">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Sello de Integridad Digital</p>
+<p class="text-[8px] text-outline">HASH: 77f8-22e1-9c01-f8a2-d9e1</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Footer Actions -->
+<footer class="bg-surface border-t border-outline-variant px-gutter py-md">
+<div class="max-w-container-max mx-auto flex flex-col sm:flex-row justify-between items-center gap-md">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility_off" style="font-variation-settings: 'FILL' 1;">visibility_off</span>
+<span class="text-xs">Los datos sensibles están parcialmente ocultos por seguridad.</span>
+</div>
+<div class="flex items-center gap-md w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-lg py-sm text-error font-bold hover:bg-error-container/20 rounded-lg transition-colors">
+                            Cancelar
+                        </button>
+<button class="flex-1 sm:flex-none px-lg py-sm border border-primary text-primary font-bold hover:bg-primary/5 rounded-lg transition-colors">
+                            Guardar Borrador
+                        </button>
+<button class="flex-1 sm:flex-none px-xl py-sm bg-primary text-on-primary font-bold rounded-lg shadow-lg hover:shadow-primary/20 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="draw">draw</span>
+                            Finalizar y Firmar
+                        </button>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

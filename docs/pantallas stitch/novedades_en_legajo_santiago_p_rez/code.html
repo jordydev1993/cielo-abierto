@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Inter:wght@600&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004e5d",
+                        "secondary-fixed": "#d3e4fe",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#fab980",
+                        "tertiary-fixed": "#ffdcc0",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#1e6777",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-container": "#bcefff",
+                        "tertiary": "#724515",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "surface-container": "#eceef0",
+                        "primary-fixed": "#aeecff",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-container": "#54647a",
+                        "background": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-container": "#d0e1fb",
+                        "primary-container": "#2a7081",
+                        "surface-bright": "#f7f9fb",
+                        "outline-variant": "#bfc8cb",
+                        "error-container": "#ffdad6",
+                        "on-background": "#191c1e",
+                        "primary": "#005768",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001f26",
+                        "outline": "#70797c",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-tertiary-container": "#ffe1ca",
+                        "on-surface-variant": "#3f484b",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#8e5c2b",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "on-surface": "#191c1e",
+                        "inverse-surface": "#2d3133",
+                        "surface-dim": "#d8dadc",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary-fixed": "#2d1600",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "inverse-primary": "#8fd0e3",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary": "#505f76",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "container-max": "1280px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["manrope"],
+                        "label-caps": ["inter"],
+                        "display-lg": ["manrope"],
+                        "body-md": ["atkinsonHyperlegibleNext"],
+                        "title-sm": ["manrope"],
+                        "headline-md": ["manrope"],
+                        "body-lg": ["atkinsonHyperlegibleNext"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Atkinson Hyperlegible Next', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest flex justify-between items-center w-full px-lg py-sm sticky top-0 z-40 border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-extrabold text-primary">Portal NNyA</span>
+<div class="hidden md:flex ml-xl gap-lg">
+<a class="text-on-surface-variant hover:bg-surface-container-high transition-colors px-md py-sm rounded-lg font-body-md text-body-md" href="#">Dashboard</a>
+<a class="text-primary font-bold border-b-2 border-primary px-md py-sm font-body-md text-body-md" href="#">Expedientes</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-sm rounded-full transition-colors" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-sm rounded-full transition-colors" data-icon="security">security</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Foto de perfil del usuario administrativo" data-alt="A professional portrait of a female administrative officer in a modern judicial office setting. She has a serene and confident expression, with soft, natural lighting illuminating the space. The background features a clean, minimalist interior with subtle blue and grey tones reflecting an institutional yet welcoming environment. The visual style is high-definition with a shallow depth of field, emphasizing trust and professionalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBugWMAhTnNrWmJJuvh8UGbvir6qw8U7fAcj0vNhBgZUQy3WJIYbEwRq-aCubpSk5p4Lgfcpr9ekPHhFzc_nQ2tmbrDJKkT4ARaCXDridW4t_QPTuESAXP0J-C0YoiFHRyrPuRN0Gzr97uWnlXgufJkEcaI1sPAtY0HYeYzJMpWprneG4vfVmE8YuvZ93aS8xqxOV_32Fk0HtNL3Bd510ORfgr7F7tqlhuju0vgkV-FmdS_t0Lo89ktkGcKjmuZsB5Uhc77OZaF3qc"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-64px)]">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-md z-50 bg-surface-container-low border-r border-outline-variant w-64 hidden md:flex pt-20">
+<div class="flex flex-col gap-xs mb-xl px-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="balance" style="font-variation-settings: 'FILL' 1;">balance</span>
+<span class="font-title-sm text-title-sm font-bold text-primary">Gestión NNyA</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant opacity-70 uppercase tracking-wider">Ámbito Judicial</span>
+</div>
+<nav class="flex flex-col gap-xs grow">
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps">Panel de Control</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-label-caps text-label-caps">Novedades Diarias</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-label-caps text-label-caps">Alertas Tempranas</span>
+</a>
+<a class="flex items-center gap-md bg-secondary-container text-on-secondary-container rounded-lg px-md py-sm transition-transform duration-150 scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared" style="font-variation-settings: 'FILL' 1;">folder_shared</span>
+<span class="font-label-caps text-label-caps">Expedientes NNyA</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant px-md py-sm hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-caps text-label-caps">Configuración</span>
+</a>
+</nav>
+<button class="mt-auto bg-primary text-on-primary w-full py-md rounded-xl font-title-sm text-title-sm flex items-center justify-center gap-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Nuevo Expediente
+            </button>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-gutter max-w-container-max mx-auto w-full">
+<!-- Profile Header -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg flex flex-col md:flex-row gap-lg items-center mb-lg">
+<div class="relative">
+<div class="h-24 w-24 rounded-full overflow-hidden border-2 border-primary-fixed ring-4 ring-surface-container">
+<img alt="Santiago Pérez" data-alt="A portrait of a young boy named Santiago, approximately ten years old, with a gentle and reflective expression. He is wearing a simple, clean light-blue sweater. The background is a soft-focus garden setting with warm, dappled sunlight, creating a serene and safe atmosphere. The image uses a high-key lighting style to emphasize a sense of hope and protection, maintaining a professional yet compassionate judicial record aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBclnpoZtpDeuHkBHU4xmupWf3ABd8MtSpRdaC_3V2IqY3dQsNni_FtwiAAVdIxTj_M9JHrPCZigywDtw8vJTBDVQAROl-gdN9AUrQ8EwtHMzFzgXLJhpa26SKMNuzfkOFV8OH_Bgxkt8JwdL5vYdGYJOjzBDgQYBCGo3t_VdxNVoZ0OXTu5nLFOvefES8GUEFqDiSreKZpGid6Ys1VdXsuSQYCdAji88jUPyOKh6zbJCQy6F9p1PbYeIFtoTroB0zyrIPaHbpLcCU"/>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary text-on-primary rounded-full p-1 border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified">verified</span>
+</div>
+</div>
+<div class="flex-1 text-center md:text-left">
+<div class="flex flex-col md:flex-row md:items-center gap-sm">
+<h1 class="font-headline-md text-headline-md text-primary">Santiago Pérez</h1>
+<span class="bg-surface-container-high text-on-surface-variant px-md py-xs rounded-full font-label-caps text-label-caps">LEG: 2024-88392-SP</span>
+</div>
+<div class="flex flex-wrap justify-center md:justify-start gap-md mt-sm text-on-surface-variant font-body-md text-body-md">
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]" data-icon="cake">cake</span> 10 años</span>
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]" data-icon="location_on">location_on</span> Residencia Estudiantil N° 4</span>
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]" data-icon="gavel">gavel</span> Juzgado de Familia N° 2</span>
+</div>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-high text-on-surface-variant px-lg py-md rounded-lg font-title-sm text-title-sm hover:bg-surface-container-highest transition-colors">Ver Legajo Completo</button>
+<button class="bg-primary text-on-primary px-lg py-md rounded-lg font-title-sm text-title-sm flex items-center gap-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add_notes">add_notes</span>
+                        Registrar Novedad
+                    </button>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Main Timeline Section -->
+<div class="lg:col-span-8 space-y-md">
+<div class="flex items-center justify-between mb-sm">
+<h2 class="font-title-sm text-title-sm text-on-surface font-bold flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+                            Seguimiento Cronológico
+                        </h2>
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high px-md py-xs rounded-full">Filtrar por Categoría</button>
+<span class="text-outline-variant">|</span>
+<button class="text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high px-md py-xs rounded-full">Recientes primero</button>
+</div>
+</div>
+<!-- Timeline Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="bg-tertiary-fixed text-on-tertiary-fixed-variant p-sm rounded-full">
+<span class="material-symbols-outlined" data-icon="health_and_safety">health_and_safety</span>
+</div>
+<div class="w-[1px] grow bg-outline-variant my-sm"></div>
+</div>
+<div class="flex-1 pb-sm">
+<div class="flex justify-between items-start">
+<div>
+<div class="flex items-center gap-sm">
+<span class="font-label-caps text-label-caps text-on-tertiary-fixed-variant font-bold uppercase">Salud - Seguimiento</span>
+<span class="bg-error-container text-on-error-container px-sm py-[2px] rounded text-[10px] font-bold uppercase">Prioridad Alta</span>
+</div>
+<h3 class="font-title-sm text-title-sm mt-xs">Control Pediátrico Mensual</h3>
+</div>
+<span class="text-on-surface-variant font-label-caps text-label-caps">HOY, 10:45 AM</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-sm line-clamp-2">
+                                    Santiago asistió al control programado. Se observa una mejoría en su esquema de vacunación. Se solicitan estudios complementarios por cuadro alérgico estacional persistente...
+                                </p>
+<div class="mt-md flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<div class="h-6 w-6 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]" data-icon="person">person</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Dra. Marta Suárez (Pediatría)</span>
+</div>
+<button class="text-primary font-label-caps text-label-caps flex items-center gap-xs group-hover:underline">
+                                        Leer informe completo <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="bg-primary-fixed text-on-primary-fixed-variant p-sm rounded-full">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+</div>
+<div class="w-[1px] grow bg-outline-variant my-sm"></div>
+</div>
+<div class="flex-1 pb-sm">
+<div class="flex justify-between items-start">
+<div>
+<div class="flex items-center gap-sm">
+<span class="font-label-caps text-label-caps text-on-primary-fixed-variant font-bold uppercase">Educación</span>
+</div>
+<h3 class="font-title-sm text-title-sm mt-xs">Informe de Desempeño Escolar</h3>
+</div>
+<span class="text-on-surface-variant font-label-caps text-label-caps">AYER, 16:20 PM</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-sm line-clamp-2">
+                                    La escuela primaria N° 12 reporta una excelente integración en las actividades grupales. Se destaca su participación en el taller de ajedrez donde muestra habilidades notables.
+                                </p>
+<div class="mt-md flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<div class="h-6 w-6 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]" data-icon="person">person</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Lic. Ricardo Gómez (Trabajo Social)</span>
+</div>
+<button class="text-primary font-label-caps text-label-caps flex items-center gap-xs group-hover:underline">
+                                        Ver acta escolar <span class="material-symbols-outlined text-[16px]" data-icon="attachment">attachment</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md relative overflow-hidden group opacity-80">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-outline"></div>
+<div class="flex gap-md">
+<div class="flex flex-col items-center">
+<div class="bg-surface-container-high text-on-surface-variant p-sm rounded-full">
+<span class="material-symbols-outlined" data-icon="family_restroom">family_restroom</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<div class="flex items-center gap-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant font-bold uppercase">Visitas vinculares</span>
+</div>
+<h3 class="font-title-sm text-title-sm mt-xs">Visita Materna Programada</h3>
+</div>
+<span class="text-on-surface-variant font-label-caps text-label-caps">12 OCT, 11:00 AM</span>
+</div>
+<p class="text-on-surface-variant font-body-md text-body-md mt-sm">
+                                    La visita transcurrió bajo la supervisión de los operadores asignados. El clima fue ameno y se respetaron los protocolos de privacidad establecidos por el juzgado.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Contextual Section -->
+<aside class="lg:col-span-4 space-y-gutter">
+<!-- Estado del Caso -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-lg">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-md">Estado del Expediente</h4>
+<div class="space-y-md">
+<div class="flex justify-between items-center bg-surface-container-lowest p-sm rounded-lg border border-outline-variant">
+<span class="font-body-md text-body-md">Situación</span>
+<span class="bg-secondary-container text-on-secondary-container px-md py-xs rounded-full font-label-caps text-label-caps">Activo - En Seguimiento</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-lowest p-sm rounded-lg border border-outline-variant">
+<span class="font-body-md text-body-md">Medida Proteccional</span>
+<span class="font-label-caps text-label-caps text-primary font-bold">Excepcional</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-lowest p-sm rounded-lg border border-outline-variant">
+<span class="font-body-md text-body-md">Próxima Audiencia</span>
+<span class="font-label-caps text-label-caps text-on-surface">24/11/2024</span>
+</div>
+</div>
+</div>
+<!-- Alertas Activas -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-error" data-icon="campaign" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<h4 class="font-label-caps text-label-caps text-error font-bold uppercase tracking-widest">Alertas Prioritarias</h4>
+</div>
+<div class="space-y-sm">
+<div class="bg-error-container p-md rounded-lg flex gap-sm items-start">
+<span class="material-symbols-outlined text-on-error-container text-[20px]" data-icon="medical_services">medical_services</span>
+<div>
+<p class="font-label-caps text-label-caps text-on-error-container font-bold">Tratamiento Odontológico</p>
+<p class="font-body-md text-body-md text-on-error-container opacity-80">Turno vencido hace 3 días. Requiere reagendamiento urgente.</p>
+</div>
+</div>
+<div class="bg-tertiary-container p-md rounded-lg flex gap-sm items-start">
+<span class="material-symbols-outlined text-on-tertiary-container text-[20px]" data-icon="lock_open">lock_open</span>
+<div>
+<p class="font-label-caps text-label-caps text-on-tertiary-fixed font-bold">Datos de Contacto</p>
+<p class="font-body-md text-body-md text-on-tertiary-container opacity-80">Solicitud de actualización de teléfono de referente familiar.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Privacidad Shield Component -->
+<div class="bg-surface-container-highest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="policy">policy</span>
+<span class="font-label-caps text-label-caps font-bold">Protocolo de Confidencialidad</span>
+</div>
+<p class="text-[12px] text-on-surface-variant leading-relaxed">
+                            Está visualizando información sensible protegida por la Ley de Protección Integral de NNyA. Toda acción en este registro queda auditada bajo su usuario administrativo.
+                        </p>
+<button class="mt-md w-full bg-surface-container-low border border-outline-variant text-on-surface-variant font-label-caps text-label-caps py-sm rounded-lg flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility_off">visibility_off</span>
+                            Ocultar Datos Sensibles
+                        </button>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</body></html>

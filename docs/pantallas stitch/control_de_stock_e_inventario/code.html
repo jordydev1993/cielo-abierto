@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Atkinson+Hyperlegible+Next:wght@400;700&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#2d1600",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#bfc8cb",
+                    "secondary": "#505f76",
+                    "primary-container": "#2a7081",
+                    "primary-fixed": "#aeecff",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "on-tertiary-container": "#ffe1ca",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-primary": "#8fd0e3",
+                    "primary": "#005768",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary-fixed-dim": "#fab980",
+                    "surface-tint": "#1e6777",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-primary-container": "#bcefff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-bright": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "outline": "#70797c",
+                    "background": "#f7f9fb",
+                    "tertiary-container": "#8e5c2b",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-secondary-container": "#54647a",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#d0e1fb",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-fixed": "#001f26",
+                    "on-surface-variant": "#3f484b",
+                    "on-surface": "#191c1e",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-dim": "#d8dadc",
+                    "inverse-surface": "#2d3133",
+                    "surface-container": "#eceef0",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface": "#f7f9fb",
+                    "on-secondary-fixed": "#0b1c30",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#724515"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "unit": "4px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Manrope"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "title-sm": ["Manrope"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-md": ["Atkinson Hyperlegible Next"],
+                    "label-caps": ["Inter"],
+                    "headline-md": ["Manrope"]
+            },
+            "fontSize": {
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<aside class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col bg-surface-container-low border-r border-outline-variant py-lg justify-between z-50">
+<div class="flex flex-col gap-lg">
+<div class="px-md">
+<h1 class="text-primary font-display-lg text-headline-md font-bold mb-xs">Gestión Integral</h1>
+<p class="text-on-surface-variant font-body-md">Área Técnica de Protección</p>
+</div>
+<nav class="flex flex-col gap-xs">
+<a class="flex items-center gap-md bg-secondary-container text-on-secondary-container rounded-lg p-md mx-sm active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-title-sm text-title-sm">Panel Principal</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md mx-sm hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md text-body-md">Legajos Judiciales</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md mx-sm hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body-md text-body-md">Informes Técnicos</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md mx-sm hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-md text-body-md">Seguimiento Clínico</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md mx-sm hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-error">warning</span>
+<span class="font-body-md text-body-md">Alertas Críticas</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant p-md mx-sm hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Configuración</span>
+</a>
+</nav>
+</div>
+<div class="px-md flex flex-col gap-md">
+<button class="bg-primary text-on-primary w-full py-md rounded-xl font-bold flex items-center justify-center gap-sm hover:opacity-90 transition-opacity shadow-sm">
+<span class="material-symbols-outlined">add</span>
+                Nuevo Legajo
+            </button>
+<div class="border-t border-outline-variant pt-md">
+<a class="flex items-center gap-md text-on-surface-variant p-md hover:bg-surface-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Cerrar Sesión</span>
+</a>
+</div>
+</div>
+</aside>
+<header class="bg-surface-bright docked full-width top-0 sticky z-40 border-b border-outline-variant h-16 w-full flex items-center justify-between px-md md:pl-72 md:pr-lg">
+<div class="flex items-center gap-md">
+<span class="md:hidden material-symbols-outlined text-primary cursor-pointer">menu</span>
+<span class="font-display-lg text-primary font-bold">Sistema NNyA</span>
+</div>
+<div class="hidden md:flex flex-1 max-w-xl px-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 py-2 focus:ring-2 focus:ring-primary text-body-md" placeholder="Buscar insumos o movimientos..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex gap-sm">
+<button class="p-2 hover:bg-surface-container-low rounded-full text-on-surface-variant transition-all focus:ring-2 focus:ring-primary focus:outline-none">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full text-on-surface-variant transition-all focus:ring-2 focus:ring-primary focus:outline-none">
+<span class="material-symbols-outlined">security</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full text-on-surface-variant transition-all focus:ring-2 focus:ring-primary focus:outline-none">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Foto de perfil del profesional interviniente" class="w-full h-full object-cover" data-alt="A professional portrait of a social worker or government administrator in a bright, modern office setting. The individual is wearing professional attire, and the lighting is warm and welcoming, reflecting institutional trust and competence. The background is softly blurred with a clean, minimalist interior design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM66Cox9IzS_Syq_sKozozc5TW7MCLEEUdTL2E_Jf1n4r2yi4V2UQovuregGZA0acDdTSOfG-YTJd8ZE3NlPGmdD5sT5Z8OEnVsO-IwqYSUYwOfDcge-8ELUwJIJUx3Trh__uUcRA6NegYjLGYBQfAu0w77vriHyvQ3QRn4V0n8xLr9jCry88HQVqyRdeDNXdWMtJ6vByr0jdZY1W9m1K5AUN820Czpcf8qH2_9Vfp_Bgo4WOD5ErtE62IJiff7560cdWg-z294XQ"/>
+</div>
+</div>
+</header>
+<main class="md:ml-64 p-md md:p-lg">
+<div class="max-w-container-max mx-auto space-y-lg">
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Administración de Stock</h2>
+<p class="text-on-surface-variant mt-1">Gestión centralizada de insumos de alimentos, limpieza y librería.</p>
+</div>
+<div class="flex gap-md">
+<button class="flex items-center gap-sm bg-surface-container-highest text-on-surface py-md px-lg rounded-xl font-bold hover:bg-surface-variant transition-colors border border-outline-variant">
+<span class="material-symbols-outlined">download</span>
+                        Exportar Reporte
+                    </button>
+<button class="flex items-center gap-sm bg-primary text-on-primary py-md px-lg rounded-xl font-bold hover:opacity-90 transition-all shadow-sm">
+<span class="material-symbols-outlined">add_box</span>
+                        Registrar Entrada
+                    </button>
+</div>
+</section>
+<section class="grid grid-cols-1 md:grid-cols-4 gap-md">
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+<span class="text-label-caps uppercase text-on-surface-variant">Alertas Críticas</span>
+<div class="flex items-center justify-between">
+<span class="text-display-lg font-display-lg text-error">04</span>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+<span class="text-label-caps uppercase text-on-surface-variant">Insumos Alimentos</span>
+<div class="flex items-center justify-between">
+<span class="text-display-lg font-display-lg text-primary">128</span>
+<span class="material-symbols-outlined text-primary">restaurant</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+<span class="text-label-caps uppercase text-on-surface-variant">Movimientos Hoy</span>
+<div class="flex items-center justify-between">
+<span class="text-display-lg font-display-lg text-secondary">+12</span>
+<span class="material-symbols-outlined text-secondary">swap_vert</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+<span class="text-label-caps uppercase text-on-surface-variant">Capacidad Ocupada</span>
+<div class="flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<span class="text-headline-md font-display-lg text-on-surface">62%</span>
+</div>
+<div class="w-full bg-surface-variant h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[62%]"></div>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<section class="lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden flex flex-col">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md">Inventario General</h3>
+<div class="flex gap-sm">
+<button class="bg-surface-container text-on-surface-variant px-md py-sm rounded-lg font-label-caps hover:bg-outline-variant transition-colors">Todos</button>
+<button class="bg-primary-container text-on-primary-container px-md py-sm rounded-lg font-label-caps">Alimentos</button>
+<button class="bg-surface-container text-on-surface-variant px-md py-sm rounded-lg font-label-caps hover:bg-outline-variant transition-colors">Limpieza</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant">
+<th class="px-lg py-md font-label-caps uppercase text-xs">Insumo</th>
+<th class="px-lg py-md font-label-caps uppercase text-xs">Categoría</th>
+<th class="px-lg py-md font-label-caps uppercase text-xs">Stock Actual</th>
+<th class="px-lg py-md font-label-caps uppercase text-xs">Mínimo</th>
+<th class="px-lg py-md font-label-caps uppercase text-xs">Estado</th>
+<th class="px-lg py-md font-label-caps uppercase text-xs"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="px-lg py-md font-bold text-on-surface">Leche en polvo 800g</td>
+<td class="px-lg py-md text-on-surface-variant">Alimentos</td>
+<td class="px-lg py-md">45 unidades</td>
+<td class="px-lg py-md text-outline">15</td>
+<td class="px-lg py-md">
+<span class="bg-green-100 text-green-800 px-sm py-1 rounded-full text-xs font-bold">Óptimo</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="px-lg py-md font-bold text-on-surface">Detergente Industrial 5L</td>
+<td class="px-lg py-md text-on-surface-variant">Limpieza</td>
+<td class="px-lg py-md text-error font-bold">03 unidades</td>
+<td class="px-lg py-md text-outline">10</td>
+<td class="px-lg py-md">
+<span class="bg-error-container text-on-error-container px-sm py-1 rounded-full text-xs font-bold">Crítico</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="px-lg py-md font-bold text-on-surface">Resmas A4 (500 hjs)</td>
+<td class="px-lg py-md text-on-surface-variant">Librería</td>
+<td class="px-lg py-md text-tertiary font-bold">12 unidades</td>
+<td class="px-lg py-md text-outline">10</td>
+<td class="px-lg py-md">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-sm py-1 rounded-full text-xs font-bold">Agotándose</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="px-lg py-md font-bold text-on-surface">Aceite Girasol 1.5L</td>
+<td class="px-lg py-md text-on-surface-variant">Alimentos</td>
+<td class="px-lg py-md">24 unidades</td>
+<td class="px-lg py-md text-outline">10</td>
+<td class="px-lg py-md">
+<span class="bg-green-100 text-green-800 px-sm py-1 rounded-full text-xs font-bold">Óptimo</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="px-lg py-md font-bold text-on-surface">Papel Higiénico (Pack 12)</td>
+<td class="px-lg py-md text-on-surface-variant">Limpieza</td>
+<td class="px-lg py-md text-error font-bold">02 unidades</td>
+<td class="px-lg py-md text-outline">08</td>
+<td class="px-lg py-md">
+<span class="bg-error-container text-on-error-container px-sm py-1 rounded-full text-xs font-bold">Crítico</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-md bg-surface-container-low flex justify-center">
+<button class="text-primary font-bold hover:underline">Ver catálogo completo</button>
+</div>
+</section>
+<section class="lg:col-span-4 space-y-lg">
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex flex-col gap-lg">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md">Últimos Movimientos</h3>
+<button class="material-symbols-outlined text-outline hover:text-primary">history</button>
+</div>
+<div class="relative pl-8 space-y-lg border-l-2 border-outline-variant">
+<div class="relative">
+<span class="absolute -left-[41px] top-0 h-6 w-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center border-4 border-white">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</span>
+<div>
+<p class="font-bold text-on-surface">Ingreso de Harina 000</p>
+<p class="text-xs text-on-surface-variant">Hace 15 minutos • Depósito Central</p>
+<div class="mt-sm inline-block px-sm py-0.5 bg-surface-container-low rounded text-xs text-outline font-label-caps">RESP: MARCOS D.</div>
+</div>
+</div>
+<div class="relative">
+<span class="absolute -left-[41px] top-0 h-6 w-6 bg-red-100 text-red-700 rounded-full flex items-center justify-center border-4 border-white">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+</span>
+<div>
+<p class="font-bold text-on-surface">Egreso Lavandina 5L</p>
+<p class="text-xs text-on-surface-variant">Hoy, 09:12 AM • Sector Limpieza</p>
+<div class="mt-sm inline-block px-sm py-0.5 bg-surface-container-low rounded text-xs text-outline font-label-caps">SOLIC: ELENA R.</div>
+</div>
+</div>
+<div class="relative">
+<span class="absolute -left-[41px] top-0 h-6 w-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center border-4 border-white">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</span>
+<div>
+<p class="font-bold text-on-surface">Recepción Resmas A4</p>
+<p class="text-xs text-on-surface-variant">Ayer • Compra Directa</p>
+</div>
+</div>
+</div>
+<button class="w-full py-md text-primary font-bold bg-primary-container/10 rounded-xl hover:bg-primary-container/20 transition-all">Ver historial completo</button>
+</div>
+<div class="bg-primary text-on-primary p-lg rounded-xl shadow-lg relative overflow-hidden group">
+<div class="relative z-10 flex flex-col gap-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-caps uppercase opacity-80">Próximo Pedido</span>
+</div>
+<p class="font-display-lg text-headline-md leading-tight">Generar orden de reposición quincenal</p>
+<p class="text-on-primary-container opacity-90 text-sm">Se detectaron 8 insumos por debajo del stock mínimo recomendado para este período.</p>
+<button class="mt-md bg-on-primary text-primary py-md rounded-xl font-bold hover:scale-105 transition-transform">Revisar y Confirmar</button>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-10 scale-150 rotate-12">
+<span class="material-symbols-outlined text-[120px]">assignment_turned_in</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-surface-container border-t border-outline-variant flex justify-around py-md z-50">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Inicio</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">inventory</span>
+<span class="text-[10px]">Stock</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="text-[10px]">Alertas</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">Perfil</span>
+</a>
+</div>
+</body></html>

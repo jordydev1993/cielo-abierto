@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal NNyA - Gestián de Roles</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#ffffff",
+                      "tertiary-container": "#8e5c2b",
+                      "error": "#ba1a1a",
+                      "on-surface": "#191c1e",
+                      "surface-container-low": "#f2f4f6",
+                      "outline-variant": "#bfc8cb",
+                      "surface-container-high": "#e6e8ea",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#001f26",
+                      "surface-dim": "#d8dadc",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-error": "#ffffff",
+                      "on-background": "#191c1e",
+                      "on-secondary-fixed": "#0b1c30",
+                      "primary-fixed": "#aeecff",
+                      "on-tertiary-container": "#ffe1ca",
+                      "on-primary-fixed-variant": "#004e5d",
+                      "inverse-surface": "#2d3133",
+                      "primary-container": "#2a7081",
+                      "surface-container": "#eceef0",
+                      "surface-bright": "#f7f9fb",
+                      "on-surface-variant": "#3f484b",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#2d1600",
+                      "surface-tint": "#1e6777",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "outline": "#70797c",
+                      "secondary-container": "#d0e1fb",
+                      "surface-variant": "#e0e3e5",
+                      "background": "#f7f9fb",
+                      "inverse-primary": "#8fd0e3",
+                      "on-tertiary-fixed-variant": "#683c0d",
+                      "primary-fixed-dim": "#8fd0e3",
+                      "on-primary-container": "#bcefff",
+                      "inverse-on-surface": "#eff1f3",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed": "#d3e4fe",
+                      "surface": "#f7f9fb",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-secondary-container": "#54647a",
+                      "tertiary-fixed-dim": "#fab980",
+                      "tertiary": "#724515",
+                      "secondary": "#505f76",
+                      "primary": "#005768",
+                      "tertiary-fixed": "#ffdcc0",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "40px",
+                      "lg": "24px",
+                      "md": "16px",
+                      "gutter": "24px",
+                      "container-max": "1280px",
+                      "sm": "8px",
+                      "unit": "4px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["manrope"],
+                      "label-caps": ["inter"],
+                      "title-sm": ["manrope"],
+                      "headline-md": ["manrope"],
+                      "body-lg": ["atkinsonHyperlegibleNext"],
+                      "display-lg": ["manrope"],
+                      "body-md": ["atkinsonHyperlegibleNext"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Atkinson Hyperlegible Next', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-on-surface-variant">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Portal NNyA</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex items-center bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-64" placeholder="Buscar..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="Avatar del Administrador" class="w-8 h-8 rounded-full border border-outline ml-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6pwNcel1Ogjg6by_l0Tp8HD6Te9BGZPKaJzIRsGi6fBfQDmMZ0G9kXaBZUaGuqOCqAs1Q6oJKosH0lOgEGBTO8mZyT1r7-kYtQYenIi-Vk_2ZdsvBi32LiVzsADu7mMFriX4yUE7FvrmVDiG0X1_FUNfF1PMbP9cHkcFtqSc5tcgnJmLJMjqPTX8GwLrAKEgK_m94GsqFtztdHLb5f2OwkXkDrobI9C-trJ4h6Vwhmj77MX0OGTozBdOSCKtiwmRwoA32IMSW_qk"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col p-md gap-sm bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-on-surface-variant">
+<div class="mb-lg px-xs">
+<h2 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">Administración</h2>
+<p class="text-on-surface-variant font-body-md">Control de Acceso</p>
+</div>
+<nav class="flex-grow flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-title-sm text-title-sm">Panel Principal</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container dark:bg-primary-fixed-dim text-on-primary-container dark:text-on-primary-fixed font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-title-sm text-title-sm">Gestión de Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-title-sm text-title-sm">Usuarios</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-title-sm text-title-sm">Legajos Judiciales</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-title-sm text-title-sm">Reportes</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-error-container hover:text-on-error-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-title-sm text-title-sm">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-lg bg-background min-h-[calc(100vh-64px)]">
+<div class="max-w-container-max mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface">Configuración de Seguridad</h1>
+<p class="text-body-lg text-on-surface-variant">Administra los niveles de acceso y responsabilidades del personal institucional.</p>
+</div>
+<button class="bg-primary text-on-primary flex items-center gap-sm px-lg py-sm rounded-lg font-title-sm shadow-sm hover:opacity-90 transition-opacity active:scale-95">
+<span class="material-symbols-outlined">add</span>
+                    Crear Nuevo Rol
+                </button>
+</div>
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-xl">
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-xs">
+<span class="material-symbols-outlined text-primary mb-xs">verified_user</span>
+<span class="text-label-caps text-on-surface-variant uppercase">Roles Totales</span>
+<span class="font-display-lg text-display-lg">12</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-xs">
+<span class="material-symbols-outlined text-tertiary mb-xs">supervisor_account</span>
+<span class="text-label-caps text-on-surface-variant uppercase">Usuarios Activos</span>
+<span class="font-display-lg text-display-lg">84</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-xs">
+<span class="material-symbols-outlined text-primary mb-xs">lock_open</span>
+<span class="text-label-caps text-on-surface-variant uppercase">Permisos Definidos</span>
+<span class="font-display-lg text-display-lg">45</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-xs">
+<span class="material-symbols-outlined text-error mb-xs">gpp_maybe</span>
+<span class="text-label-caps text-on-surface-variant uppercase">Sin Rol Asignado</span>
+<span class="font-display-lg text-display-lg">3</span>
+</div>
+</div>
+<!-- Roles Table Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-title-sm text-title-sm">Listado de Roles Actuales</h3>
+<div class="flex gap-sm">
+<button class="p-xs rounded hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</button>
+<button class="p-xs rounded hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-lg py-md font-label-caps text-on-surface-variant">ROL</th>
+<th class="px-lg py-md font-label-caps text-on-surface-variant">FUNCIÓN Y DESCRIPCIÓN</th>
+<th class="px-lg py-md font-label-caps text-on-surface-variant">USUARIOS</th>
+<th class="px-lg py-md font-label-caps text-on-surface-variant text-center">ESTADO</th>
+<th class="px-lg py-md font-label-caps text-on-surface-variant text-right">ACCIONES</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Role: Dirección -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="px-lg py-lg align-top">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-title-sm text-title-sm text-on-surface">Dirección</span>
+</div>
+</td>
+<td class="px-lg py-lg align-top max-w-md">
+<p class="text-body-md text-on-surface-variant">Supervisión general del centro, toma de decisiones estratégicas y firma de convenios judiciales de alta prioridad.</p>
+</td>
+<td class="px-lg py-lg align-top">
+<div class="flex -space-x-2">
+<img alt="Usuario 1" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyMgDFKjwvQG1qK6c7jB0-xBaud2IqV8OQcNLP57QZNl_d4QGdV0nvo-RTPWsaNAUdWBeWzg3DwNfHMbWbY7XXlqjKqM7-p0yWBsW2AIvK49C8p6A0ru7IYu78zPybB48xkSp3KO_1nHQuVkyu6hUV4E5GKcvgdMuAtDdXQ0-InPutmQF1Fzp3DmkXcf6kBe5Pkyracy4pyEDWSvRSnJPOkyhKKVwy5HXFWi8luvsMtSdjbCnnvlFm1OrMhfq9KDXFln7AocsTw1k"/>
+<img alt="Usuario 2" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQtyyoqf6udj6Uwy9HKz-RrE2Hevq8doR0vTre_460i07vHR9U2UyX1FdeL82FU-an-Gm0w7ijePlB_1YLWYOKuIThUJNLYVy_fSfb98HQcIrl--iDIGGHQsrlBvcTdvIexskhcDyNUBQsxeEtk4YjvirgBHu1RNToiGNra6dJcbvNS1eK-T1DFeeY53Yy95Mmn9BdEBRJGVU8YKnu-hPctc5jOJzfyFo0Gk5ZBRQI5tKzp7qqq9GVrOlGeKw9oZQWADiINgEG53w"/>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+1</div>
+</div>
+</td>
+<td class="px-lg py-lg align-top text-center">
+<span class="px-sm py-xs bg-secondary-container text-on-secondary-container text-label-caps rounded-full">SISTEMA</span>
+</td>
+<td class="px-lg py-lg align-top text-right">
+<button class="text-primary hover:underline font-title-sm inline-flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                                        Editar Permisos
+                                    </button>
+</td>
+</tr>
+<!-- Role: Equipo Técnico -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="px-lg py-lg align-top">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="font-title-sm text-title-sm text-on-surface">Equipo Técnico</span>
+</div>
+</td>
+<td class="px-lg py-lg align-top max-w-md">
+<p class="text-body-md text-on-surface-variant">Psicólogos y trabajadores sociales encargados del seguimiento clínico, informes evolutivos y peritajes judiciales.</p>
+</td>
+<td class="px-lg py-lg align-top">
+<div class="flex -space-x-2">
+<img alt="Usuario 1" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAErNoAruaCFAeQ_uJM5I5qReQOuS7ojSQuhznAJ4uKSPfXs0DC0YvbJsbnwH0c7MpRkzuOYG_orJcrMxMATk4ATyPX_-5fzX48vMdlLJoRox-gSYYgxc_NCHg6z2BHrWb0hdKMS_5eAeFV9eg29DJ5o-o-jH556wt3oHdQOPgdhCqYT0bpGbFCpNA_F4YLbesFDX7kv1_auBJhH99OvDQwdgp-aMkgjYL_f9hYqwBBzhl8WWOWsNKMc3gQd6JB7SSmboR22-e4pnk"/>
+<img alt="Usuario 2" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRWP7-s3f1Lbnx2iH-advtqpSsnK7_niP7tui3Okcn_ECwZK7-RS037p1zURP102p5KA0jg043OjntmRooRCsYe3ycAAicA8VwtacD3vfl5L7-3snLVoi59HiqrjDvTe0xWLFEY0wh60USvW0OIsyX9Htu9WZ0UeniRU0kL_Y4o-J12TOxgkj256MVOBRRHCToBgmO-JRbCWV1i6EGqkkEMrLzEbo-sTJK-RjHNGf74po_5JFP2hVIWXLRHND4DeeQcnuwpbNMHyk"/>
+<img alt="Usuario 3" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKYnS6TgVS-xaGsEh7P8D50Ncy7bAssPFqKpG2LhVAduLfA155AUxBmF4iSNzVZ131ymkzVrjLrqU_k8PqAFRevDkKh82gv0nYiKCzjFxVrEBAqeSuyertUwwz_Rh3fBM7KOAqVq2UNSd6IY7AEk5MRJnKOxFNieLuOEX8yYo1WyjuTrYCBli8-GR91HtkoXmx30VJY3kACGp4JS-GStZ-zls1rI-kzUq4Te7IZHW_3ERhlyUptGNh4AHYdepcIFk_sTRjLFa2o9M"/>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+5</div>
+</div>
+</td>
+<td class="px-lg py-lg align-top text-center">
+<span class="px-sm py-xs bg-surface-container-high text-on-surface-variant text-label-caps rounded-full">ACTIVO</span>
+</td>
+<td class="px-lg py-lg align-top text-right">
+<button class="text-primary hover:underline font-title-sm inline-flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                                        Editar Permisos
+                                    </button>
+</td>
+</tr>
+<!-- Role: Educadores -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="px-lg py-lg align-top">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-title-sm text-title-sm text-on-surface">Educadores</span>
+</div>
+</td>
+<td class="px-lg py-lg align-top max-w-md">
+<p class="text-body-md text-on-surface-variant">Personal de atención directa. Registro de novedades diarias, control de asistencia y bitácora de convivencia.</p>
+</td>
+<td class="px-lg py-lg align-top">
+<div class="flex -space-x-2">
+<img alt="Usuario 1" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGVEEE5aIyXezBd9hdNnVhBXBu1gX6rFv34c3pe-BFxj9EmeNuWS0oxICJ3HNviefnr69hUB44tI9dd7-jGMDp1fDOo3751Kr3gGAFchqCfyX-rt9UAoBiBkLlCkpfan-4J32QJDu5wHHvg_4WJ16SDWEtp58LoW9H_QzkyQaOnsPdBXpSTxqWPm7ITgqalZ-g-SQXaiNQ4_QWH7RgbIinCnN6ttJdbtykMSo-SX3_xml7GO2iG_DB2Hf9zsgIlPITWbvnFvVg6Ec"/>
+<img alt="Usuario 2" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGWUSNCjtk2yPDs0R4kuIglaBZGe344-T_Tk0YxVg3zO0NhIKkYu4Uqui4Bav25_OSkedDzShvL7eWte3IzuvjcVKYQVeMG-TcRR4TmBCYiurHlwoZvgv3m8fRpyZgx_T2NpHbBNg_02cx-tWmJkuGsMd17gS2SOcNNSecNMK37hciztgITT5JMY5tuC8Cjm-LPiDVAGDUWxhSl_lMH2UZptxe52Qa_YtPmVSJR3kREiwr8jHjqMtvNIBP6PsbQ_S2DxPOunUb64w"/>
+<img alt="Usuario 3" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRp90SrpKPdLVN-V2giFugzU5q0Elf-2zgcObesQnmQ2Uc7qsjzPyZc5HsQCiVvEAyL_PyQPGSDyirE5pUkzdohBva7np5XRwt5-Mx6hhnDGkTgQCv2Xgde3SJb5M9zMtqQQpLMU4zUqdM0XQCMSk-LK_AgkHDQJOOfPqUFkfaAQ7H1RGw6vZxSDy5JJWW09-gQ8RLQuGMAsCZpEX7-B2ARLVG8sD0PT4cGKQut7V7LsD9kzWHhJYAYJFqTpY3sRaZHFVxzMz0ROM"/>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+42</div>
+</div>
+</td>
+<td class="px-lg py-lg align-top text-center">
+<span class="px-sm py-xs bg-surface-container-high text-on-surface-variant text-label-caps rounded-full">ACTIVO</span>
+</td>
+<td class="px-lg py-lg align-top text-right">
+<button class="text-primary hover:underline font-title-sm inline-flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                                        Editar Permisos
+                                    </button>
+</td>
+</tr>
+<!-- Role: SENAF -->
+<tr class="hover:bg-surface-bright transition-colors border-l-4 border-l-tertiary">
+<td class="px-lg py-lg align-top">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="font-title-sm text-title-sm text-on-surface">SENAF</span>
+</div>
+</td>
+<td class="px-lg py-lg align-top max-w-md">
+<p class="text-body-md text-on-surface-variant">Acceso de auditoría externa para la Secretaría Nacional de Niñez, Adolescencia y Familia. Solo lectura de expedientes.</p>
+</td>
+<td class="px-lg py-lg align-top">
+<div class="flex -space-x-2">
+<img alt="Usuario 1" class="w-8 h-8 rounded-full border-2 border-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0XIXSJniCKL7JNvPnJKTW-t1UgqLoBE76gUceSO-YZ7UpSte8MnT3utaWBnWO3ALWp79Kohf4sZXfYagwDh_y-Re4hhd0WhZOV3gdx-rQ3jXHOM8cCN2Igpyz0PxBgDt0V4nNvnBSf_xiKQEL1CroUN2vawRzQ9Bhgk4ekW4Zy0gzoDs_llnbM3S9YslS6Hivfiu6IEEA1ZVMWhhakg4_l-6V66G5LhkpBp3BSmIWxFJqYjOo6DlLctC0pWD7KZNp3S7KTpBkhDw"/>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+4</div>
+</div>
+</td>
+<td class="px-lg py-lg align-top text-center">
+<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed text-label-caps rounded-full">AUDITORÍA</span>
+</td>
+<td class="px-lg py-lg align-top text-right">
+<button class="text-primary hover:underline font-title-sm inline-flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                                        Editar Permisos
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-lg py-md border-t border-outline-variant bg-surface-bright flex justify-between items-center">
+<span class="text-body-md text-on-surface-variant">Mostrando 4 de 12 roles institucionales</span>
+<div class="flex gap-sm">
+<button class="p-xs border border-outline-variant rounded hover:bg-surface-container-low disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-xs border border-outline-variant rounded hover:bg-surface-container-low">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sensitive Data Notice -->
+<div class="mt-xl p-lg bg-surface-container-low rounded-xl flex items-start gap-md border border-outline-variant">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface">Privacidad de Datos y Seguridad</h4>
+<p class="text-body-md text-on-surface-variant max-w-3xl">Cualquier cambio en los permisos de los roles registrados afectará inmediatamente el acceso a la información sensible de los NNyA. Recuerde que la Ley de Protección Integral prohíbe la divulgación de identidades y expedientes fuera del equipo técnico autorizado.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB Action (As requested for primary purpose aligned screen) -->
+<button class="fixed bottom-lg right-lg w-14 h-14 rounded-full bg-primary text-on-primary shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform z-40">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>

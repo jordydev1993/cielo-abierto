@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=Inter:wght@600&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#505f76",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "tertiary-container": "#8e5c2b",
+                        "surface-dim": "#d8dadc",
+                        "primary-container": "#2a7081",
+                        "on-surface": "#191c1e",
+                        "outline": "#70797c",
+                        "tertiary-fixed": "#ffdcc0",
+                        "tertiary-fixed-dim": "#fab980",
+                        "surface-tint": "#1e6777",
+                        "on-tertiary-container": "#ffe1ca",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#724515",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary-fixed": "#001f26",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed": "#2d1600",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d0e1fb",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-primary-container": "#bcefff",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-high": "#e6e8ea",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary": "#005768",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#aeecff",
+                        "on-secondary-container": "#54647a",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-fixed-variant": "#004e5d",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "inverse-primary": "#8fd0e3",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "on-background": "#191c1e",
+                        "on-surface-variant": "#3f484b",
+                        "outline-variant": "#bfc8cb",
+                        "surface-bright": "#f7f9fb",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xl": "40px",
+                        "container-max": "1280px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "title-sm": ["Manrope"],
+                        "label-caps": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "body-lg": ["Atkinson Hyperlegible Next"],
+                        "body-md": ["Atkinson Hyperlegible Next"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Atkinson Hyperlegible Next', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .form-input-styled {
+            background-color: #f2f4f6;
+            border: 1px solid #bfc8cb;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+        }
+        .form-input-styled:focus {
+            border-color: #005768;
+            ring: 2px;
+            ring-color: #005768;
+            outline: none;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Header Section (Back Navigation Only for Focused View) -->
+<nav class="bg-surface border-b border-outline-variant px-lg py-md sticky top-0 z-50">
+<div class="max-w-container-max mx-auto flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container rounded-full text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-headline-md text-title-sm text-on-surface">Registrar Nueva Audiencia Judicial</h1>
+<span class="text-body-md text-secondary">Expediente de Niñez y Adolescencia</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary" data-icon="shield" data-weight="fill" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="text-label-caps text-secondary uppercase tracking-wider">Conexión Segura</span>
+</div>
+</div>
+</nav>
+<main class="max-w-[1000px] mx-auto px-md py-xl flex flex-col gap-lg">
+<!-- Privacy Alert -->
+<div class="bg-primary-container/10 border-l-4 border-primary p-md rounded-lg flex gap-md items-start">
+<span class="material-symbols-outlined text-primary">gavel</span>
+<div>
+<h4 class="font-title-sm text-primary">Aviso de Confidencialidad</h4>
+<p class="text-body-md text-on-surface-variant">Este formulario contiene información sensible de menores. El acceso y registro de estos datos están protegidos por la Ley de Protección Integral de NNyA. Asegúrese de cerrar sesión al finalizar.</p>
+</div>
+</div>
+<form class="flex flex-col gap-lg">
+<!-- Section 1: Identificación -->
+<section class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="bg-surface-container p-md border-b border-outline-variant flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="person_search">person_search</span>
+<h2 class="font-title-sm">1. Identificación del NNyA y Expediente</h2>
+</div>
+<div class="p-lg grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="col-span-1 md:col-span-2 flex items-center gap-lg bg-surface-container-low p-md rounded-lg border border-dashed border-outline">
+<div class="h-20 w-20 bg-surface-container-highest rounded-full flex items-center justify-center overflow-hidden">
+<img class="h-full w-full object-cover grayscale opacity-50" data-alt="A soft-focus, minimalist portrait of a professional judicial office background with natural lighting and serene teal accents. The atmosphere is calm and institutional, featuring clean lines and a modern, light-mode aesthetic that conveys trust and security. The scene is illuminated by gentle daylight filtering through a window, creating a safe and professional environment for legal proceedings." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9OdLr9ggWcOAsGnLlilu5Vt6IqChah_3YosQ5VJV_gbMDRAt6wi9a-OX86eEGWwI9lJ1emhVQdZxZG9LA_UU9d4f3lnZql_Q-bXqIHhShu72GZp3RiCptiCboJpKdeYjAbT7dQSwooh9ifpHOkfGvWNTx_5fwOT0FCXocTNJwwcT_mFEwnvhZlZdhWjetmc1gHrm9Mj49eniLmUM0FQDKsyr8EnOOmav-8zcV87UHw4AnQEYeLIest0pgg8HN3pWSZNKknLrOlKE"/>
+</div>
+<div class="flex-1">
+<label class="block text-label-caps text-on-surface-variant mb-sm">Búsqueda de Perfil</label>
+<div class="relative">
+<input class="form-input-styled pr-xl" placeholder="Nombre completo o Nro. de Causa..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-secondary">search</span>
+</div>
+<p class="text-xs text-secondary mt-sm">Ingrese al menos 3 caracteres para filtrar la base de datos centralizada.</p>
+</div>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Número de Expediente</label>
+<input class="form-input-styled bg-surface-dim/30 cursor-not-allowed font-semibold" readonly="" type="text" value="EXP-2023-8842-FL"/>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Carátula</label>
+<input class="form-input-styled bg-surface-dim/30 cursor-not-allowed" readonly="" type="text" value="G. M. S/ Medida de Protección"/>
+</div>
+</div>
+</section>
+<!-- Section 2: Detalles de la Audiencia -->
+<section class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="bg-surface-container p-md border-b border-outline-variant flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="event">event</span>
+<h2 class="font-title-sm">2. Detalles de la Audiencia</h2>
+</div>
+<div class="p-lg grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Tipo de Audiencia</label>
+<select class="form-input-styled">
+<option>Seleccionar tipo...</option>
+<option>Preliminar</option>
+<option>De Vista</option>
+<option>Informativa</option>
+<option>De Seguimiento</option>
+</select>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Fecha</label>
+<input class="form-input-styled" type="date"/>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Hora</label>
+<input class="form-input-styled" type="time"/>
+</div>
+<div class="col-span-1 md:col-span-3">
+<label class="text-label-caps text-on-surface-variant block mb-md">Modalidad de Encuentro</label>
+<div class="flex gap-lg">
+<label class="flex items-center gap-md cursor-pointer group">
+<input class="w-5 h-5 text-primary focus:ring-primary border-outline-variant" name="modalidad" type="radio"/>
+<span class="flex items-center gap-sm text-body-lg text-on-surface">
+<span class="material-symbols-outlined text-secondary group-hover:text-primary">home_pin</span>
+                                    Presencial
+                                </span>
+</label>
+<label class="flex items-center gap-md cursor-pointer group">
+<input class="w-5 h-5 text-primary focus:ring-primary border-outline-variant" name="modalidad" type="radio"/>
+<span class="flex items-center gap-sm text-body-lg text-on-surface">
+<span class="material-symbols-outlined text-secondary group-hover:text-primary">videocam</span>
+                                    Virtual (Videollamada)
+                                </span>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Organismo Judicial -->
+<section class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="bg-surface-container p-md border-b border-outline-variant flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance">account_balance</span>
+<h2 class="font-title-sm">3. Organismo Judicial</h2>
+</div>
+<div class="p-lg grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Juzgado / Dependencia</label>
+<select class="form-input-styled">
+<option>Juzgado de Familia Nro. 1</option>
+<option>Defensoría de Menores</option>
+<option>Asesoría Letrada</option>
+</select>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Juez / Secretario a Cargo</label>
+<input class="form-input-styled" placeholder="Nombre del magistrado" type="text"/>
+</div>
+<div class="col-span-1 md:col-span-2">
+<label class="text-label-caps text-on-surface-variant">Sede del Organismo</label>
+<div class="mt-sm flex items-center gap-md p-md bg-surface-container-low rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-secondary">location_on</span>
+<span class="text-body-md">Calle Ficticia 123, Edificio Judicial, Piso 4.</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Notificaciones y Testigos -->
+<section class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="bg-surface-container p-md border-b border-outline-variant flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+<h2 class="font-title-sm">4. Participantes y Logística</h2>
+</div>
+<div class="p-lg grid grid-cols-1 gap-lg">
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Profesionales Presentes</label>
+<textarea class="form-input-styled resize-none" placeholder="Especifique trabajadores sociales, psicólogos o abogados citados..." rows="3"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Responsable del Traslado (si aplica)</label>
+<input class="form-input-styled" placeholder="Nombre y DNI del responsable" type="text"/>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-caps text-on-surface-variant">Notificaciones Especiales</label>
+<div class="flex items-center h-full">
+<label class="flex items-center gap-md cursor-pointer">
+<input class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/>
+<span class="text-body-md text-on-surface">Requiere Intérprete o Apoyo Cognitivo</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+<div class="flex flex-col md:flex-row justify-end gap-md pt-lg border-t border-outline-variant">
+<button class="px-xl py-md border border-primary text-primary font-title-sm rounded-lg hover:bg-primary/5 transition-colors flex items-center justify-center gap-sm" type="button">
+<span class="material-symbols-outlined">save</span>
+                    Guardar Borrador
+                </button>
+<button class="px-xl py-md bg-primary text-on-primary font-title-sm rounded-lg hover:bg-on-primary-fixed-variant shadow-md transition-all flex items-center justify-center gap-sm" type="submit">
+<span class="material-symbols-outlined">done_all</span>
+                    Confirmar Programación
+                </button>
+</div>
+</form>
+<!-- Footer Metadata -->
+<footer class="mt-xl text-center flex flex-col items-center gap-sm pb-xl">
+<div class="h-[2px] w-20 bg-outline-variant mb-md"></div>
+<p class="text-label-caps text-secondary uppercase">Sistema de Gestión Judicial Unificado</p>
+<p class="text-xs text-secondary max-w-md">Toda acción realizada en este formulario queda registrada en el log de auditoría del sistema con su firma digital.</p>
+</footer>
+</main>
+</body></html>

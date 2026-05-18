@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Historial de Novedades - Portal NNyA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-low": "#f2f4f6",
+                      "on-primary-container": "#bcefff",
+                      "on-primary-fixed-variant": "#004e5d",
+                      "surface-tint": "#1e6777",
+                      "on-surface": "#191c1e",
+                      "on-tertiary-fixed": "#2d1600",
+                      "primary-fixed": "#aeecff",
+                      "surface-container": "#eceef0",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "tertiary-fixed": "#ffdcc0",
+                      "primary": "#005768",
+                      "on-surface-variant": "#3f484b",
+                      "on-primary-fixed": "#001f26",
+                      "surface-container-high": "#e6e8ea",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-error": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "background": "#f7f9fb",
+                      "on-secondary-fixed": "#0b1c30",
+                      "error": "#ba1a1a",
+                      "secondary": "#505f76",
+                      "on-tertiary-container": "#ffe1ca",
+                      "secondary-fixed": "#d3e4fe",
+                      "tertiary": "#724515",
+                      "on-secondary": "#ffffff",
+                      "surface-variant": "#e0e3e5",
+                      "secondary-container": "#d0e1fb",
+                      "tertiary-container": "#8e5c2b",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#2d3133",
+                      "on-error-container": "#93000a",
+                      "outline-variant": "#bfc8cb",
+                      "on-background": "#191c1e",
+                      "outline": "#70797c",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#54647a",
+                      "inverse-primary": "#8fd0e3",
+                      "surface-dim": "#d8dadc",
+                      "surface-bright": "#f7f9fb",
+                      "on-tertiary-fixed-variant": "#683c0d",
+                      "primary-container": "#2a7081",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "inverse-on-surface": "#eff1f3",
+                      "tertiary-fixed-dim": "#fab980",
+                      "surface": "#f7f9fb",
+                      "primary-fixed-dim": "#8fd0e3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "sm": "8px",
+                      "container-max": "1280px",
+                      "lg": "24px",
+                      "unit": "4px",
+                      "xs": "4px",
+                      "xl": "40px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Manrope"],
+                      "body-md": ["Atkinson Hyperlegible Next"],
+                      "body-lg": ["Atkinson Hyperlegible Next"],
+                      "label-caps": ["Inter"],
+                      "headline-md": ["Manrope"],
+                      "display-lg": ["Manrope"],
+                      "title-sm": ["Manrope"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-md z-50 bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline w-64">
+<div class="flex items-center gap-md mb-xl px-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">balance</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim leading-none">Gestión NNyA</h2>
+<p class="text-on-surface-variant font-label-caps text-label-caps">Ámbito Judicial</p>
+</div>
+</div>
+<nav class="flex-1 space-y-sm">
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Panel de Control</span>
+</a>
+<a class="flex items-center gap-md bg-secondary-container dark:bg-on-primary-fixed-variant text-on-secondary-container dark:text-on-primary-container rounded-lg px-md py-sm scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">event_note</span>
+<span class="font-label-caps text-label-caps">Novedades Diarias</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-label-caps text-label-caps">Alertas Tempranas</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-label-caps text-label-caps">Expedientes NNyA</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant px-md py-sm hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps">Configuración</span>
+</a>
+</nav>
+<div class="mt-auto pt-lg">
+<button class="w-full flex items-center justify-center gap-sm bg-primary text-on-primary py-md rounded-xl font-title-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Nuevo Expediente</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-lg py-sm sticky top-0 z-40 bg-surface-container-lowest dark:bg-surface-container-low border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-lg">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Portal NNyA</h1>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-xl pr-md py-xs bg-surface-container border-none rounded-full w-64 text-body-md focus:ring-2 focus:ring-primary-container" placeholder="Buscar novedades..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">security</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-sm"></div>
+<div class="flex items-center gap-sm">
+<div class="text-right hidden sm:block">
+<p class="font-title-sm text-sm leading-none">Eduardo Gómez</p>
+<p class="text-xs text-on-surface-variant">Educador Principal</p>
+</div>
+<img alt="Foto de perfil del usuario administrativo" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A professional headshot of a middle-aged man with a friendly expression, wearing business casual attire. The background is a clean, minimalist office setting with soft, natural lighting that complements the serene teal and white brand colors. The photography style is modern, sharp, and high-quality, conveying institutional trust and professional reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV7jgg1MzuL2iOfFn_7AhvryffUR_aRI_YUJqaOktKlcaZEWPtoUFSXI1Grias8bGLGj2bE2HiO3K8jCc8PZw8VvfP5krDTnyN5zWTn8yw4tGtT3toEupDMkSlyZluW0_hAU5pSqKMPQQfAIWoH5O93wLo2XsX7Cvv2rMtyoJ7jE_SvI2Y1iz5kcIc_-Jdcycs1U6jVy4-iBfMGPvZrW2VrkwOCb5A9aUPHNVyORMiT7QpkNIBoxdBdIiYGDgo0H2QFs4aoDgfeXk"/>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="flex-1 p-lg max-w-[1280px] mx-auto w-full">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-md mb-xl">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-xs">Historial de Novedades</h2>
+<p class="text-on-surface-variant max-w-2xl font-body-lg">
+                        Seguimiento y registro de los eventos diarios de los Niños, Niñas y Adolescentes bajo cuidado. Esta información es de carácter confidencial.
+                    </p>
+</div>
+<button class="flex items-center gap-sm bg-primary text-on-primary px-lg py-md rounded-xl font-title-sm hover:opacity-90 transition-opacity shadow-sm">
+<span class="material-symbols-outlined">post_add</span>
+                    Registrar Nueva Novedad
+                </button>
+</div>
+<!-- Filters & Tools Bento -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-md mb-lg">
+<div class="md:col-span-1 bg-surface-container-lowest border border-outline-variant p-md rounded-xl">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-sm block">Buscar por Nombre</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline scale-90">person_search</span>
+<input class="w-full pl-xl pr-md py-sm bg-surface-container-low border-none rounded-lg text-body-md" placeholder="Ej: Santiago Pérez" type="text"/>
+</div>
+</div>
+<div class="md:col-span-1 bg-surface-container-lowest border border-outline-variant p-md rounded-xl">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-sm block">Categoría</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg text-body-md py-sm">
+<option>Todas las categorías</option>
+<option>Salud</option>
+<option>Comportamiento</option>
+<option>Educación</option>
+<option>Vínculos</option>
+</select>
+</div>
+<div class="md:col-span-1 bg-surface-container-lowest border border-outline-variant p-md rounded-xl">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-sm block">Prioridad</label>
+<div class="flex gap-xs">
+<button class="flex-1 py-sm bg-surface-container-low rounded-lg text-xs font-label-caps hover:bg-surface-container-high transition-colors">Baja</button>
+<button class="flex-1 py-sm bg-surface-container-low rounded-lg text-xs font-label-caps hover:bg-surface-container-high transition-colors">Media</button>
+<button class="flex-1 py-sm bg-surface-container-low rounded-lg text-xs font-label-caps hover:bg-surface-container-high transition-colors">Alta</button>
+</div>
+</div>
+<div class="md:col-span-1 bg-surface-container-lowest border border-outline-variant p-md rounded-xl">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-sm block">Rango de Fechas</label>
+<div class="flex items-center gap-xs">
+<input class="w-full bg-surface-container-low border-none rounded-lg text-xs py-sm" type="date"/>
+<span class="text-outline">/</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg text-xs py-sm" type="date"/>
+</div>
+</div>
+</section>
+<!-- Table/List Header -->
+<div class="bg-surface-container-high rounded-t-xl px-lg py-sm flex items-center justify-between text-on-surface-variant font-label-caps text-label-caps">
+<div class="grid grid-cols-12 w-full">
+<div class="col-span-2">Fecha y Hora</div>
+<div class="col-span-3">NNyA</div>
+<div class="col-span-2">Categoría</div>
+<div class="col-span-3">Resumen</div>
+<div class="col-span-1 text-center">Prioridad</div>
+<div class="col-span-1 text-right">Acciones</div>
+</div>
+</div>
+<!-- List of News (The Rows) -->
+<div class="space-y-[1px] mb-xl">
+<!-- Row 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant hover:bg-surface-bright transition-colors px-lg py-md grid grid-cols-12 items-center">
+<div class="col-span-2">
+<p class="font-bold text-on-surface">24 Oct 2023</p>
+<p class="text-xs text-on-surface-variant">08:45 AM</p>
+</div>
+<div class="col-span-3 flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-xs">SP</div>
+<div>
+<p class="font-bold">Santiago Pérez</p>
+<p class="text-xs text-on-surface-variant">Exp: #2441/23</p>
+</div>
+</div>
+<div class="col-span-2 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary scale-90">medical_services</span>
+<span class="text-body-md">Salud</span>
+</div>
+<div class="col-span-3 pr-md">
+<p class="text-body-md line-clamp-2 text-on-surface-variant">Presentó cuadro febril leve durante el turno mañana. Se administró medicación según protocolo...</p>
+</div>
+<div class="col-span-1 flex justify-center">
+<span class="px-sm py-1 rounded-full bg-error-container text-on-error-container text-[10px] font-bold uppercase tracking-wider">Alta</span>
+</div>
+<div class="col-span-1 flex justify-end gap-sm">
+<button class="p-xs hover:text-primary transition-colors" title="Ver detalle">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-xs hover:text-primary transition-colors" title="Editar">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant hover:bg-surface-bright transition-colors px-lg py-md grid grid-cols-12 items-center">
+<div class="col-span-2">
+<p class="font-bold text-on-surface">24 Oct 2023</p>
+<p class="text-xs text-on-surface-variant">07:30 AM</p>
+</div>
+<div class="col-span-3 flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-bold text-xs">ML</div>
+<div>
+<p class="font-bold">Martina López</p>
+<p class="text-xs text-on-surface-variant">Exp: #1192/22</p>
+</div>
+</div>
+<div class="col-span-2 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary scale-90">psychology</span>
+<span class="text-body-md">Comportamiento</span>
+</div>
+<div class="col-span-3 pr-md">
+<p class="text-body-md line-clamp-2 text-on-surface-variant">Participación activa en el taller de arte. Muestra mejoría en la interacción con sus pares...</p>
+</div>
+<div class="col-span-1 flex justify-center">
+<span class="px-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-[10px] font-bold uppercase tracking-wider">Baja</span>
+</div>
+<div class="col-span-1 flex justify-end gap-sm">
+<button class="p-xs hover:text-primary transition-colors" title="Ver detalle">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-xs hover:text-primary transition-colors" title="Editar">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant hover:bg-surface-bright transition-colors px-lg py-md grid grid-cols-12 items-center">
+<div class="col-span-2">
+<p class="font-bold text-on-surface">23 Oct 2023</p>
+<p class="text-xs text-on-surface-variant">21:15 PM</p>
+</div>
+<div class="col-span-3 flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-xs">JD</div>
+<div>
+<p class="font-bold">Juan Delgado</p>
+<p class="text-xs text-on-surface-variant">Exp: #3005/23</p>
+</div>
+</div>
+<div class="col-span-2 flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary scale-90">group</span>
+<span class="text-body-md">Vínculos</span>
+</div>
+<div class="col-span-3 pr-md">
+<p class="text-body-md line-clamp-2 text-on-surface-variant">Visita supervisada con su tío materno. El encuentro transcurrió sin incidentes y con buen ánimo...</p>
+</div>
+<div class="col-span-1 flex justify-center">
+<span class="px-sm py-1 rounded-full bg-tertiary-fixed-dim text-on-tertiary-fixed-variant text-[10px] font-bold uppercase tracking-wider">Media</span>
+</div>
+<div class="col-span-1 flex justify-end gap-sm">
+<button class="p-xs hover:text-primary transition-colors" title="Ver detalle">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="opacity-30 cursor-not-allowed p-xs" title="No editable">
+<span class="material-symbols-outlined">lock</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default, shown via logic if filters return none) -->
+<div class="hidden flex-col items-center justify-center py-xl bg-surface-container-lowest border border-dashed border-outline-variant rounded-xl">
+<div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-outline text-4xl">folder_off</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-on-surface mb-xs">No se encontraron registros</h3>
+<p class="text-on-surface-variant font-body-md mb-lg">Intenta ajustar los filtros de búsqueda para ver más resultados.</p>
+<button class="text-primary font-bold hover:underline">Limpiar todos los filtros</button>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between mt-md">
+<p class="text-xs text-on-surface-variant">Mostrando 3 de 128 registros</p>
+<div class="flex gap-xs">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined scale-75">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container transition-colors text-xs font-bold">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container transition-colors text-xs font-bold">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined scale-75">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Privacy Footer -->
+<footer class="mt-auto px-lg py-md border-t border-outline-variant bg-surface-container-low flex justify-between items-center">
+<div class="flex items-center gap-sm text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined scale-75">verified_user</span>
+<span class="text-xs font-label-caps">Información Protegida por Ley 26.061</span>
+</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-widest opacity-50">
+                © 2023 Portal Judicial NNyA - Sistema de Gestión Institucional
+            </div>
+</footer>
+</main>
+<!-- Contextual FAB (Only for News creation) -->
+<button class="fixed bottom-lg right-lg w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>

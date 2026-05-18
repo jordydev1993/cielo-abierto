@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&amp;family=Inter:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f7f9fb",
+                    "on-tertiary-fixed": "#2d1600",
+                    "on-primary-fixed": "#001f26",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#8fd0e3",
+                    "secondary": "#505f76",
+                    "on-background": "#191c1e",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-container": "#d0e1fb",
+                    "on-tertiary-container": "#ffe1ca",
+                    "tertiary": "#724515",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-tint": "#1e6777",
+                    "primary": "#005768",
+                    "surface": "#f7f9fb",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#54647a",
+                    "outline-variant": "#bfc8cb",
+                    "tertiary-container": "#8e5c2b",
+                    "on-surface-variant": "#3f484b",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "surface-container": "#eceef0",
+                    "tertiary-fixed": "#ffdcc0",
+                    "on-primary-container": "#bcefff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-variant": "#e0e3e5",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "tertiary-fixed-dim": "#fab980",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-container-high": "#e6e8ea",
+                    "primary-container": "#2a7081",
+                    "outline": "#70797c",
+                    "surface-dim": "#d8dadc",
+                    "primary-fixed": "#aeecff",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "on-secondary-fixed-variant": "#38485d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "unit": "4px",
+                    "container-max": "1280px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-md": ["Atkinson Hyperlegible Next"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "title-sm": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bfc8cb;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md text-on-surface">
+<div class="flex min-h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 bg-surface-container-low dark:bg-surface-container-highest border-r border-outline-variant dark:border-outline p-md gap-sm z-50">
+<div class="flex items-center gap-md px-sm py-md">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div>
+<h2 class="font-headline-md text-[18px] leading-tight text-primary">Secure Nexus</h2>
+<p class="text-[12px] text-on-surface-variant">Judicial Records</p>
+</div>
+</div>
+<nav class="mt-xl flex flex-col gap-xs grow">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">safety_divider</span>
+<span class="font-body-md">NNyA Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md">Case Records</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-body-md">User Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-body-md">Audit Logs</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-xs pt-md border-t border-outline-variant">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span class="font-body-md">Privacy Policy</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all duration-200" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-body-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-lg py-sm w-full z-40 bg-surface border-b border-outline-variant sticky top-0 h-16">
+<div class="flex items-center gap-lg">
+<h1 class="text-title-sm font-title-sm font-bold text-primary">Portal NNyA</h1>
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-lg py-xs text-body-md focus:ring-2 focus:ring-primary-container w-64 lg:w-80 transition-all" placeholder="Buscar expedientes o usuarios..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant active:scale-95 duration-200">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant active:scale-95 duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-xs"></div>
+<div class="flex items-center gap-sm">
+<div class="text-right hidden lg:block">
+<p class="text-body-md font-semibold leading-tight">Admin Principal</p>
+<p class="text-[12px] text-on-surface-variant">Gestión de Sistemas</p>
+</div>
+<img alt="Administrator Profile" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="Close-up professional portrait of a male system administrator with a calm and confident expression. He is wearing a minimalist dark navy sweater. The background is a blurred high-end office environment with soft morning light, creating a professional and trustworthy institutional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf3Zcmm3_9pmhNp-_Cbnsf3iGXwiaj49HAY3kwbyIZ8Pi98dO3XQzztt08G2-WRdVgZaUWiR4YaHD1qJwcp1yzN3cy_biRaM68SMc4YJOKzwLlsT0kYPPqGsHMpeghd4vEUSDUDlYaM44FEUBe9jtZkGLQc1vCTRwpHVlsVP7Z9jaOvBEHm9CJvINZrw3adXc_3EBiTPPRPDfUsktrt1ZLxWVKDyv6QtDznwWFSjaVHqIqryHYuVd1tjzK-wPYTbMxT7NJ4SVC8-Y"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-lg custom-scrollbar">
+<div class="max-w-[1280px] mx-auto space-y-lg">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Gestión de Roles y Permisos</h2>
+<p class="text-on-surface-variant mt-xs">Administre el acceso jerárquico y defina las capacidades operativas del personal.</p>
+</div>
+<button class="bg-primary text-on-primary px-lg py-md rounded-lg font-semibold flex items-center gap-sm hover:brightness-110 active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined">add_moderator</span>
+                            Crear Nuevo Rol
+                        </button>
+</div>
+<!-- Role Summary Cards (Bento Style Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Admin Card -->
+<div class="bg-white border border-outline-variant p-lg rounded-xl flex flex-col gap-md relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
+<div class="absolute top-0 right-0 p-lg opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="px-sm py-xs bg-primary/10 text-primary text-label-caps rounded-full">Sistema</span>
+</div>
+<div>
+<h3 class="font-headline-md text-title-sm">Administrador</h3>
+<p class="text-on-surface-variant text-body-md mt-xs line-clamp-2">Acceso total a configuraciones, registros de auditoría y gestión de usuarios.</p>
+</div>
+<div class="flex items-center gap-md mt-auto pt-md border-t border-outline-variant/50">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="A professional male headshot with a friendly look, wearing a light blue shirt, clear glasses, softly lit background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLx3tEZFeYFbfuZALv_epBARW_m1-7oofUvQA4KAQ8HV8_hYzYI6HTo7tdX0d7Vp7jx3-46z_YOmAXHd_jGoAoJxnMmETR4rnbsPAThnP1OmOTuepe_riexEz6_m9dqCzAz91P0chG3vutViKQtcIzZbcijwCRKSXXAiYYB1o2thCSnS9-UXrJ4QtFx46LPCWEywIlnE8nOEP0UWOAZOrE88EzBY-rCZQw1wlYkKLZUEf1fhtiHD59l4ZAmGaJvRjtCMA5LIWQxVI"/>
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="A professional female headshot, elegant attire, bright office lighting, minimalist neutral colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3piAOAcT5XaV0x7JOE3ucFlNDAJRCyhBVOSmAGwFTUh564M6-6KPtgxn6b9V2vRF0swa5LgCTmJUbrcRhlWkToHI3sZJjRmiHz5UnvAKQMaY5lUBWj81iguur_F518Gx2NrmNTSp4dUJdNxc0DBPvnVPiEnz4qk1A1PPLCTIyo0pIVDj4_TSOnMc39E3YYqhUCQhkUzJIzrJewxyxPFVcsJ_0vmtleBx_BeAe2f9AZhMbVkhU31jshaxr-TqATxp9x-AVULVsuGE"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+2</div>
+</div>
+<span class="text-on-surface-variant text-label-caps">4 Usuarios</span>
+</div>
+</div>
+<!-- Educador Card -->
+<div class="bg-white border border-outline-variant p-lg rounded-xl flex flex-col gap-md relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
+<div class="absolute top-0 right-0 p-lg opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]" style="font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="px-sm py-xs bg-secondary-container text-on-secondary-container text-label-caps rounded-full">Campo</span>
+</div>
+<div>
+<h3 class="font-headline-md text-title-sm">Educador</h3>
+<p class="text-on-surface-variant text-body-md mt-xs line-clamp-2">Gestión de actividades diarias, seguimiento de niños y carga de novedades.</p>
+</div>
+<div class="flex items-center gap-md mt-auto pt-md border-t border-outline-variant/50">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="A professional female educator portrait, warm smile, professional casual wear, bright classroom-style background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_YMgZovCPeMTWRh2g8GdPbGu4c8jzjmBK2gumsWIZFpD4zGtiY0nNcN9ExCYL0VhqRZuwp994J0pJuWpWXPXZswnq_yRDmX7px5gI-E7TUHFWLlzk99XbUh-Yx7tAj_Jx9crY2v5m7bnwiZg3P0_wVPtmyW9CmSHqDpKzQF6yqpP5Iyc3eNJgnmNqqJ7VDFTqXte8Xco8wPnZgzxW_kYW3yvmzF2aJNUMb78sxYdBDMRAeHYIaKJMm_1SnXC5RGixbJ2mDxGNza0"/>
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Headshot of a middle-aged woman, empathetic expression, natural light, minimalist and calm aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgqd73z896HqMkuNeZdacUOqgrZa5TNXfBq29M62a8AK9nl1oa0we4TnMEhnUi8ux7-D9dFS6vZQfCiqnVxkvCd5OV7YvxiVKaWqkUgoemSFSiX0EfeGd26ICWIFAvDsDWzh6jMTQmKxt-vMabrr2tO3M7oRxCM5qflStM6jV_a3MHqoBEV9bxKOvL4N_5UHb0opBOQi4xsJKSRb8hTj4jfj3FAieTmV1iyY85U2ZWS-X7-0F8gH81FV8NwlnQrLg_eTal_Tms71M"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+12</div>
+</div>
+<span class="text-on-surface-variant text-label-caps">14 Usuarios</span>
+</div>
+</div>
+<!-- Técnico Card -->
+<div class="bg-white border border-outline-variant p-lg rounded-xl flex flex-col gap-md relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
+<div class="absolute top-0 right-0 p-lg opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-caps rounded-full">Gabinete</span>
+</div>
+<div>
+<h3 class="font-headline-md text-title-sm">Equipo Técnico</h3>
+<p class="text-on-surface-variant text-body-md mt-xs line-clamp-2">Acceso a expedientes judiciales sensibles, informes psicológicos y peritajes.</p>
+</div>
+<div class="flex items-center gap-md mt-auto pt-md border-t border-outline-variant/50">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="A professional man in a formal white shirt, serious but approachable, studio lighting, clean background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx9dldu7N237NwmV8ibJ7XaRupIg1QgOx-vTaYQeeAl617B-K1FD3Gy6seKki521gme3YDazYDHjiJC4dCgAum6xxG8-PBlsMLqYjLxyv0VF-ulFKeCL16BfvcZZMMUICjRGg-WRX584oPnOlFimZSeNuS2v43D-kQYkVvYBB8J1CMqWBMCrrkvDcPW00RcOU9tf5ou7GqO04vTyCwFGEo01j4WAG4BcBJ9dRygllEwEQBX_-7TzYGUxK6Rl-oOGNcZ5CSoU7fn2Y"/>
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="A professional woman with a soft confident smile, dark blazer, soft high-key lighting, modern office vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzz68MGT_5rDXP1mRq5l1xiAZ-kV4LGSeQu75oQ41U-BsvaMxlQHxzZToCKlyJkgn1fkFKMsRT614rlU-2dGgoiYQd5RJFxTG658SWh8rDY3x2YYezGd3Z5CwhpB74UrzypNRBsEopdMMIhs_iz_BoCfIFAfy0YY4pZvvQHr1mnICtNK-LBLQCZufjk_o6Zi9Ul_hoUmH8geYmH7JPZW7Tyaax0ljN3Td1vd28COEHKp6n7v-uzuSLsceZ6La8qMjXFsFSNrmYfQM"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+6</div>
+</div>
+<span class="text-on-surface-variant text-label-caps">8 Usuarios</span>
+</div>
+</div>
+</div>
+<!-- Permissions Matrix Table Section -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-lg py-md bg-surface-container border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-title-sm text-on-surface">Matriz de Permisos Específicos</h3>
+<div class="flex gap-sm">
+<button class="px-md py-sm rounded-lg text-primary hover:bg-primary/5 transition-colors font-semibold flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">filter_list</span> Filtrar
+                                </button>
+<button class="px-md py-sm rounded-lg text-primary hover:bg-primary/5 transition-colors font-semibold flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">download</span> Exportar
+                                </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low">
+<th class="px-lg py-md text-label-caps text-on-surface-variant">Módulo / Funcionalidad</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant text-center">Admin</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant text-center">Educador</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant text-center">Equipo Técnico</th>
+<th class="px-lg py-md text-label-caps text-on-surface-variant text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-lg py-md">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">Expedientes Judiciales</span>
+<span class="text-[12px] text-on-surface-variant">Lectura y edición de medidas judiciales</span>
+</div>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-outline">cancel</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-lg py-md">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">Seguimiento Diario (Bitácora)</span>
+<span class="text-[12px] text-on-surface-variant">Carga de novedades y eventos cotidianos</span>
+</div>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-lg py-md">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">Informes Psicosociales</span>
+<span class="text-[12px] text-on-surface-variant">Carga de documentos técnicos confidenciales</span>
+</div>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-outline">cancel</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-lg py-md">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">Gestión de Usuarios</span>
+<span class="text-[12px] text-on-surface-variant">Alta/Baja y reseteo de contraseñas</span>
+</div>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-outline">cancel</span>
+</td>
+<td class="px-lg py-md text-center">
+<span class="material-symbols-outlined text-outline">cancel</span>
+</td>
+<td class="px-lg py-md text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-md bg-surface-container-low flex justify-between items-center">
+<span class="text-[12px] text-on-surface-variant">Mostrando 4 de 12 módulos configurables</span>
+<div class="flex gap-xs">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-white transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-bold text-[12px]">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-white transition-colors text-[12px]">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-white transition-colors text-[12px]">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-white transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Sensitive Data Section (Institutional Trust focus) -->
+<div class="bg-primary/5 border border-primary/20 p-lg rounded-xl flex items-start gap-lg">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary shrink-0">
+<span class="material-symbols-outlined">security_update_good</span>
+</div>
+<div class="space-y-sm">
+<h4 class="font-title-sm text-primary">Políticas de Privacidad de Datos</h4>
+<p class="text-on-surface-variant max-w-3xl">Todas las acciones realizadas sobre los roles y permisos quedan registradas en el <strong>Audit Log</strong> del sistema. Modificar el acceso a "Expedientes Judiciales" requiere la validación de un supervisor de nivel jerárquico superior.</p>
+<button class="text-primary font-bold flex items-center gap-xs hover:underline mt-sm">
+                                Revisar histórico de cambios <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Padding for mobile view safe area -->
+<div class="h-xl md:hidden"></div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Bar (Suppressed on Desktop) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant flex justify-around py-sm z-50">
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px]">Dashboard</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">safety_divider</span>
+<span class="text-[10px]">Directory</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-primary font-bold">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="text-[10px]">Roles</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px]">Ajustes</span>
+</button>
+</nav>
+</body></html>

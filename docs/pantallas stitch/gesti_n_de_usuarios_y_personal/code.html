@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&amp;family=Manrope:wght@600;700;800&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f7f9fb",
+                    "on-tertiary-fixed": "#2d1600",
+                    "on-primary-fixed": "#001f26",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#8fd0e3",
+                    "secondary": "#505f76",
+                    "on-background": "#191c1e",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-container": "#d0e1fb",
+                    "on-tertiary-container": "#ffe1ca",
+                    "tertiary": "#724515",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-tint": "#1e6777",
+                    "primary": "#005768",
+                    "surface": "#f7f9fb",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#54647a",
+                    "outline-variant": "#bfc8cb",
+                    "tertiary-container": "#8e5c2b",
+                    "on-surface-variant": "#3f484b",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "surface-container": "#eceef0",
+                    "tertiary-fixed": "#ffdcc0",
+                    "on-primary-container": "#bcefff",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-variant": "#e0e3e5",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "tertiary-fixed-dim": "#fab980",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-container-high": "#e6e8ea",
+                    "primary-container": "#2a7081",
+                    "outline": "#70797c",
+                    "surface-dim": "#d8dadc",
+                    "primary-fixed": "#aeecff",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "on-secondary-fixed-variant": "#38485d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "unit": "4px",
+                    "container-max": "1280px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["manrope"],
+                    "body-md": ["atkinsonHyperlegibleNext"],
+                    "body-lg": ["atkinsonHyperlegibleNext"],
+                    "title-sm": ["manrope"],
+                    "display-lg": ["manrope"],
+                    "headline-md": ["manrope"],
+                    "label-caps": ["inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface">
+<div class="flex min-h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 bg-surface-container-low dark:bg-surface-container-highest border-r border-outline-variant dark:border-outline p-md gap-sm fixed z-50">
+<div class="flex items-center gap-md mb-xl">
+<div class="w-12 h-12 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-headline-md">security</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md text-primary dark:text-inverse-primary">Secure Nexus</h1>
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-wider">Judicial Records</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-sm">
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-all font-body-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-all font-body-md" href="#">
+<span class="material-symbols-outlined">safety_divider</span>
+<span>NNyA Directory</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-all font-body-md" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span>Case Records</span>
+</a>
+<a class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container dark:bg-secondary dark:text-on-secondary font-semibold rounded-lg focus:ring-2 focus:ring-primary-container" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span>User Roles</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container transition-all font-body-md" href="#">
+<span class="material-symbols-outlined">security</span>
+<span>Audit Logs</span>
+</a>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-md rounded-lg font-title-sm text-title-sm mb-lg active:scale-95 transition-all">
+                    Register New Case
+                </button>
+<div class="flex flex-col gap-sm">
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span>Privacy Policy</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-lg py-sm w-full z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0">
+<div class="flex items-center gap-xl">
+<span class="text-title-sm font-title-sm font-bold text-primary dark:text-inverse-primary">Portal NNyA</span>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-xl pr-md py-sm bg-surface-container-low border-none rounded-full text-body-md focus:ring-2 focus:ring-primary-container transition-all" placeholder="Buscar profesional..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-sm"></div>
+<img alt="Administrator Profile" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A professional headshot of a female administrator in her 40s, with a friendly yet professional expression. She is wearing a modern teal blazer that matches the brand color palette. The background is a blurred high-end office setting with soft, natural lighting. The overall mood is institutional, trustworthy, and serene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi29QAQZnDZDqhX7YVNQBBJwSxj86nEW_MKjEINyDODn6THH5DNihmCV2L-dtMB0fSo-s-JW_kjvS7VCHpc-8TfOCAsb5lMa7Q-gFv6KqVRZytBvIC2L3vH0gRKd728XhKKaLf0hi8gHor35K_xCWkFEUBIhaNnLhKVqAZ29mxEtdlaD-VJpcePwXB9NDVsxLVM377SoRww2oW20mJ3uyvnowM2QpenqfIIpa1c1dwu8wLJ81FMaGjqE1fuXhNYgHUp_dcenDcVjA"/>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-lg max-w-container-max mx-auto w-full">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-xl">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Gestión de Usuarios</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Administración de profesionales y personal de la institución.</p>
+</div>
+<button class="flex items-center gap-sm bg-primary text-on-primary px-lg py-md rounded-lg font-title-sm hover:opacity-90 transition-opacity active:scale-95">
+<span class="material-symbols-outlined">person_add</span>
+                        Alta de Usuario
+                    </button>
+</div>
+<!-- Stats/Bento Area -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-xl">
+<div class="col-span-1 p-lg bg-surface-container-lowest border border-outline-variant rounded-xl">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-primary">groups</span>
+<span class="text-label-caps text-on-surface-variant">TOTAL</span>
+</div>
+<p class="text-display-lg font-display-lg text-on-surface">142</p>
+<p class="text-body-md text-on-surface-variant">Profesionales activos</p>
+</div>
+<div class="col-span-1 p-lg bg-surface-container-lowest border border-outline-variant rounded-xl">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-tertiary">psychology</span>
+<span class="text-label-caps text-on-surface-variant">GABINETE</span>
+</div>
+<p class="text-display-lg font-display-lg text-on-surface">38</p>
+<p class="text-body-md text-on-surface-variant">Psicólogos y TS</p>
+</div>
+<div class="col-span-1 p-lg bg-surface-container-lowest border border-outline-variant rounded-xl">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-secondary">gavel</span>
+<span class="text-label-caps text-on-surface-variant">LEGALES</span>
+</div>
+<p class="text-display-lg font-display-lg text-on-surface">12</p>
+<p class="text-body-md text-on-surface-variant">Asesores judiciales</p>
+</div>
+<div class="col-span-1 p-lg bg-surface-container-lowest border border-outline-variant rounded-xl">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-primary-container">pending_actions</span>
+<span class="text-label-caps text-on-surface-variant">PENDIENTES</span>
+</div>
+<p class="text-display-lg font-display-lg text-on-surface">4</p>
+<p class="text-body-md text-on-surface-variant">Accesos por validar</p>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-md mb-lg">
+<div class="flex items-center gap-xs px-md py-sm bg-surface-container border border-outline-variant rounded-full text-body-md text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>Todos los Roles</span>
+</div>
+<div class="flex items-center gap-xs px-md py-sm bg-primary-container text-on-primary-container border border-primary rounded-full text-body-md cursor-pointer">
+<span>Activos</span>
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex items-center gap-xs px-md py-sm bg-surface-container border border-outline-variant rounded-full text-body-md text-on-surface-variant hover:bg-surface-container-high transition-colors cursor-pointer">
+<span>Última Conexión</span>
+</div>
+</div>
+<!-- User Table/List -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-lg py-md font-title-sm text-on-surface-variant">Profesional</th>
+<th class="px-lg py-md font-title-sm text-on-surface-variant">Rol del Sistema</th>
+<th class="px-lg py-md font-title-sm text-on-surface-variant">Contacto</th>
+<th class="px-lg py-md font-title-sm text-on-surface-variant">Estado</th>
+<th class="px-lg py-md font-title-sm text-on-surface-variant text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- User Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<img alt="Dra. Mariana Soler" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A professional portrait of a Hispanic female doctor in her 30s wearing a white clinical coat. She has a serene and trustworthy expression. The lighting is soft and even, typical of a professional medical directory. Background is a clean, minimalist interior with soft gray tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqejDoA-pLHnBWB9l_iYwvtDsYJSk4d9Bau8dn31rSX6kX5PuRo8EiuzAh-tVbQWiTW3cEUN8ggPbasTgji6p68qUXn4bdhikh1hQF2UPNakkTC5Vh3w3LhB83bKbUWozQ5mNb5YxoK2Zxn-DdJqbctB4zCE1jQuZj98vfObOZe8iCYZzlqJFyyIsN8M0pxsQBGTL54VlWkn9ET1g82tA42OWzUiiJsOXOtZDfHa-uWbgac9qRIa9XInXwiKJAxZExWL7enRwIcQ0"/>
+<div>
+<p class="font-title-sm text-on-surface">Dra. Mariana Soler</p>
+<p class="text-body-md text-on-surface-variant">Mat. 45.129 - Psiquiatría</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="inline-flex items-center gap-xs px-sm py-xs bg-secondary-container text-on-secondary-container rounded-lg font-label-caps uppercase">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+                                            Gabinete Técnico
+                                        </div>
+</td>
+<td class="px-lg py-md">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-xs text-body-md text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">mail</span>
+                                                m.soler@institucion.gob.ar
+                                            </div>
+<div class="flex items-center gap-xs text-body-md text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">phone</span>
+                                                +54 11 4455-8899
+                                            </div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="inline-flex items-center gap-xs text-body-md text-primary font-semibold">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                                            Activo
+                                        </span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" title="Editar">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" title="Seguridad">
+<span class="material-symbols-outlined">key</span>
+</button>
+<button class="p-sm text-error hover:bg-error-container rounded-lg transition-all" title="Suspender">
+<span class="material-symbols-outlined">person_off</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<img alt="Lic. Ricardo Gomez" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A professional headshot of a middle-aged male social worker with a kind and approachable look. He is wearing a simple gray knit sweater. The lighting is warm and natural, suggesting an office near a window. The style is professional, minimalist, and serene, adhering to institutional trust standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC58IeHWzHtJOdLybpLGt-L08dwdzkYWc59c9hjgEBssJDklBOFrt8iWz3njOI4pNRxjb29ICS4J6hhLRZIGcPgf0g5TilRA092SUgSvUqfaGnJWVpOPFVtnoPIuasYAkbbLmvHl42yKdY-dPlAbbWEsQp0T4SRrh3GNm5C4rbE5md25NTlh5jAyUGTUtNug--4r9fXnuzN0OdsLSNT5unsndyFR5YPV76_eUQHMnQnmWy5dow3gC54HQ5cdJgZ5i9wPbM9YC0RlcM"/>
+<div>
+<p class="font-title-sm text-on-surface">Lic. Ricardo Gomez</p>
+<p class="text-body-md text-on-surface-variant">Trabajador Social - Área Norte</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="inline-flex items-center gap-xs px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-lg font-label-caps uppercase">
+<span class="material-symbols-outlined text-[16px]">groups</span>
+                                            Operador de Campo
+                                        </div>
+</td>
+<td class="px-lg py-md">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-xs text-body-md text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">mail</span>
+                                                r.gomez@institucion.gob.ar
+                                            </div>
+<div class="flex items-center gap-xs text-body-md text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">phone</span>
+                                                +54 11 2233-1122
+                                            </div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="inline-flex items-center gap-xs text-body-md text-primary font-semibold">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                                            Activo
+                                        </span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+<span class="material-symbols-outlined">key</span>
+</button>
+<button class="p-sm text-error hover:bg-error-container rounded-lg transition-all">
+<span class="material-symbols-outlined">person_off</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="font-title-sm text-on-surface">Dr. Facundo Rios</p>
+<p class="text-body-md text-on-surface-variant">Asesoría Legal Central</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="inline-flex items-center gap-xs px-sm py-xs bg-outline-variant/30 text-on-surface-variant rounded-lg font-label-caps uppercase border border-outline-variant">
+<span class="material-symbols-outlined text-[16px]">gavel</span>
+                                            Asesor Legal
+                                        </div>
+</td>
+<td class="px-lg py-md">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-xs text-body-md text-on-surface italic opacity-60">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">mail</span>
+                                                No registrado
+                                            </div>
+<div class="flex items-center gap-xs text-body-md text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">phone</span>
+                                                +54 11 0000-0000
+                                            </div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="inline-flex items-center gap-xs text-body-md text-on-surface-variant font-semibold">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                                            Pendiente
+                                        </span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+<span class="material-symbols-outlined">key</span>
+</button>
+<button class="p-sm text-error hover:bg-error-container rounded-lg transition-all">
+<span class="material-symbols-outlined">person_off</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-lg py-md bg-surface-container-low border-t border-outline-variant flex items-center justify-between">
+<p class="text-body-md text-on-surface-variant">Mostrando 1-10 de 142 profesionales</p>
+<div class="flex items-center gap-sm">
+<button class="p-sm border border-outline-variant rounded-lg hover:bg-surface-container transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex items-center gap-xs">
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary text-body-md font-bold">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-body-md">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-body-md">3</button>
+</div>
+<button class="p-sm border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Context -->
+<div class="mt-xl p-lg bg-surface-container-low rounded-xl border border-outline-variant flex items-center gap-lg">
+<span class="material-symbols-outlined text-primary text-headline-md">verified_user</span>
+<div>
+<p class="font-title-sm text-on-surface">Protocolo de Privacidad y Seguridad</p>
+<p class="text-body-md text-on-surface-variant">Todos los cambios de roles y permisos son auditados y almacenados con firma digital del administrador. El acceso a datos sensibles de NNyA está restringido por niveles de jerarquía definidos en la Ley de Protección de Datos Personales.</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

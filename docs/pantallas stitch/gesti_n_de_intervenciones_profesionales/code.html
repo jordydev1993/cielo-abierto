@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600;700&amp;family=Inter:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "secondary-container": "#d0e1fb",
+                        "outline": "#70797c",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed": "#2d1600",
+                        "surface-tint": "#1e6777",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed-dim": "#fab980",
+                        "primary-fixed": "#aeecff",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "tertiary": "#724515",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed-variant": "#004e5d",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-container": "#8e5c2b",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-fixed": "#001f26",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eceef0",
+                        "primary": "#005768",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#bfc8cb",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-surface": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-container": "#2a7081",
+                        "on-tertiary-container": "#ffe1ca",
+                        "secondary": "#505f76",
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-primary": "#8fd0e3",
+                        "on-surface-variant": "#3f484b",
+                        "background": "#f7f9fb",
+                        "on-primary-container": "#bcefff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-container": "#54647a",
+                        "tertiary-fixed": "#ffdcc0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "container-max": "1280px",
+                        "xs": "4px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["atkinsonHyperlegibleNext"],
+                        "display-lg": ["manrope"],
+                        "body-lg": ["atkinsonHyperlegibleNext"],
+                        "label-caps": ["inter"],
+                        "title-sm": ["manrope"],
+                        "headline-md": ["manrope"],
+                        "headline-lg-mobile": ["manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Atkinson Hyperlegible Next', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .tab-active { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-md z-40 bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-outline w-64">
+<div class="mb-xl px-sm">
+<h1 class="font-manrope text-headline-md font-bold text-primary">Gestión NNyA</h1>
+<p class="font-atkinsonHyperlegibleNext text-body-md text-on-surface-variant">Protección Integral</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Navigation Items -->
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="folder_shared">folder_shared</span>
+<span>Expedientes</span>
+</a>
+<!-- Active Tab: Intervenciones -->
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-semibold font-body-md" href="#">
+<span class="material-symbols-outlined tab-active" data-icon="psychology_alt" style="font-variation-settings: 'FILL' 1;">psychology_alt</span>
+<span>Intervenciones</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="warning">warning</span>
+<span>Alerts</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-body-md group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="settings">settings</span>
+<span>Configuración</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full flex items-center justify-center gap-sm bg-primary text-on-primary py-md px-lg rounded-xl font-bold font-manrope shadow-sm hover:brightness-110 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Nueva Intervención
+            </button>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-surface border-b border-outline-variant z-30">
+<div class="flex justify-between items-center h-full px-lg max-w-container-max mx-auto">
+<div class="flex items-center gap-md w-1/3">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full pl-10 pr-md py-2 bg-surface-container-low border-none rounded-full text-body-md focus:ring-2 focus:ring-primary/20 outline-none" placeholder="Buscar expediente o profesional..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</button>
+<div class="flex items-center gap-md pl-lg border-l border-outline-variant">
+<div class="text-right">
+<p class="text-body-md font-semibold text-on-surface">Lic. G. Rossi</p>
+<p class="text-xs text-on-surface-variant">Equipo Técnico</p>
+</div>
+<img alt="User profile" class="w-10 h-10 rounded-full object-cover border-2 border-primary-container" data-alt="Professional headshot of a female social worker in a modern office environment. The image is brightly lit with natural light, featuring a clean, minimalist background with soft teal accents. She is smiling confidently, conveying professional trust and empathetic care for the NNyA judicial system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_IfreWRWd_Tq_bb8XjIn7ioxXaD-Uaf347jcWcmsPOTDMkyud5tjzD4SCQbC8SGmLweHMGzObq_ILmxZZ30ttW5FbdKOokE-G93oOXscqfIDT-cmB3wylH0Anm2wvib1TfpAoEuyohyyHB_GcnzjkqmoYnUrVhKpLPISw147TgKO0VoDp15HvrCMX73zBlWrV_na95JJr0bI2YH4yaE9GkToKYNHRUDmZxv6pXsuaZLHPN9lwkxkGHFVaS9GNXpvzk258yUO5thU"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 pt-24 px-lg pb-xl max-w-container-max mx-auto min-h-screen">
+<!-- Header Section -->
+<header class="mb-lg">
+<h2 class="font-manrope text-headline-lg-mobile text-primary font-bold">Gestión de Intervenciones Profesionales</h2>
+<p class="font-body-lg text-on-surface-variant max-w-3xl mt-xs">Registro y seguimiento centralizado de acciones técnicas, entrevistas y peritajes realizados por los equipos de protección integral.</p>
+</header>
+<!-- KPI Cards Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-lg">
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex items-center gap-lg">
+<div class="bg-primary/10 p-md rounded-full text-primary">
+<span class="material-symbols-outlined text-display-lg" data-icon="assignment">assignment</span>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">TOTAL INTERVENCIONES</p>
+<p class="text-headline-md font-bold text-on-surface">1,248</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex items-center gap-lg">
+<div class="bg-secondary-container p-md rounded-full text-on-secondary-container">
+<span class="material-symbols-outlined text-display-lg" data-icon="calendar_month">calendar_month</span>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">ESTE MES</p>
+<p class="text-headline-md font-bold text-on-surface">142</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex items-center gap-lg">
+<div class="bg-tertiary-fixed-dim/20 p-md rounded-full text-tertiary">
+<span class="material-symbols-outlined text-display-lg" data-icon="pending_actions">pending_actions</span>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">PENDIENTES DE INFORME</p>
+<p class="text-headline-md font-bold text-on-surface">28</p>
+</div>
+</div>
+</section>
+<!-- Confidentiality Banner -->
+<section class="bg-primary-container/10 border border-primary-container/30 p-lg rounded-xl mb-lg flex items-start gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="gpp_maybe">gpp_maybe</span>
+<div>
+<h3 class="text-title-sm text-primary font-bold">Protocolo de Seguridad y Confidencialidad</h3>
+<p class="text-body-md text-on-surface-variant">Usted está accediendo a datos sensibles de Niñas, Niños y Adolescentes. Queda terminantemente prohibido compartir capturas de pantalla o información del expediente fuera de los canales institucionales seguros. Toda actividad es auditada.</p>
+</div>
+</section>
+<!-- Filter & Search Bar -->
+<section class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant mb-md flex flex-wrap items-center gap-md">
+<div class="flex-1 min-w-[240px]">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="w-full pl-9 pr-md py-2 bg-surface-container border border-outline-variant rounded-lg text-body-md focus:ring-1 focus:ring-primary outline-none" placeholder="Filtrar por nombre o expediente..." type="text"/>
+</div>
+</div>
+<select class="bg-surface-container border border-outline-variant rounded-lg text-body-md px-md py-2 outline-none focus:ring-1 focus:ring-primary">
+<option>Tipo de Intervención</option>
+<option>Entrevista Familiar</option>
+<option>Visita Domiciliaria</option>
+<option>Informe Psicológico</option>
+</select>
+<input class="bg-surface-container border border-outline-variant rounded-lg text-body-md px-md py-2 outline-none focus:ring-1 focus:ring-primary" type="date"/>
+<select class="bg-surface-container border border-outline-variant rounded-lg text-body-md px-md py-2 outline-none focus:ring-1 focus:ring-primary">
+<option>Estado</option>
+<option>Realizada</option>
+<option>Pendiente</option>
+<option>Cancelada</option>
+</select>
+<button class="flex items-center gap-xs text-primary font-semibold px-md py-2 hover:bg-primary/5 rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+                Más Filtros
+            </button>
+</section>
+<!-- Main Table Section -->
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden">
+<table class="w-full border-collapse text-left">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="p-md text-label-caps text-on-surface-variant">NNyA / EXPEDIENTE</th>
+<th class="p-md text-label-caps text-on-surface-variant">TIPO DE INTERVENCIÓN</th>
+<th class="p-md text-label-caps text-on-surface-variant">FECHA</th>
+<th class="p-md text-label-caps text-on-surface-variant">PROFESIONAL</th>
+<th class="p-md text-label-caps text-on-surface-variant">ESTADO</th>
+<th class="p-md text-label-caps text-on-surface-variant">ACCIONES</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">ML</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Mateo López</p>
+<p class="text-xs text-on-surface-variant">EXP 4521/2023</p>
+</div>
+</div>
+</td>
+<td class="p-md text-body-md">Entrevista Familiar</td>
+<td class="p-md text-body-md">24 Oct, 2023</td>
+<td class="p-md">
+<p class="text-body-md font-medium text-on-surface">Lic. S. Martínez</p>
+<p class="text-xs text-on-surface-variant">Trabajo Social</p>
+</td>
+<td class="p-md">
+<span class="bg-primary/10 text-primary px-sm py-1 rounded-full text-xs font-bold uppercase tracking-wider">Realizada</span>
+</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Ver">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Editar">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Historial">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold">SG</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Sofía García</p>
+<p class="text-xs text-on-surface-variant">EXP 1289/2024</p>
+</div>
+</div>
+</td>
+<td class="p-md text-body-md">Informe Psicológico</td>
+<td class="p-md text-body-md">26 Oct, 2023</td>
+<td class="p-md">
+<p class="text-body-md font-medium text-on-surface">Psic. A. Benitez</p>
+<p class="text-xs text-on-surface-variant">Salud Mental</p>
+</td>
+<td class="p-md">
+<span class="bg-tertiary-fixed-dim/30 text-tertiary px-sm py-1 rounded-full text-xs font-bold uppercase tracking-wider">Pendiente</span>
+</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Ver">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Editar">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Historial">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold">JV</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Julián Villalba</p>
+<p class="text-xs text-on-surface-variant">EXP 8823/2022</p>
+</div>
+</div>
+</td>
+<td class="p-md text-body-md">Visita Domiciliaria</td>
+<td class="p-md text-body-md">22 Oct, 2023</td>
+<td class="p-md">
+<p class="text-body-md font-medium text-on-surface">Lic. R. Mendez</p>
+<p class="text-xs text-on-surface-variant">Servicio Social</p>
+</td>
+<td class="p-md">
+<span class="bg-error/10 text-error px-sm py-1 rounded-full text-xs font-bold uppercase tracking-wider">Cancelada</span>
+</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Ver">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Editar">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant" title="Historial">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<footer class="p-md bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
+<p class="text-body-md text-on-surface-variant">Mostrando 1-10 de 1,248 resultados</p>
+<div class="flex items-center gap-xs">
+<button class="p-2 hover:bg-surface-container rounded-lg disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-lg font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container rounded-lg text-xs font-semibold">2</button>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container rounded-lg text-xs font-semibold">3</button>
+<span class="px-1">...</span>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-container rounded-lg text-xs font-semibold">125</button>
+<button class="p-2 hover:bg-surface-container rounded-lg">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</footer>
+</div>
+</main>
+<!-- FAB for New Intervention (Contextual) -->
+<button class="fixed bottom-lg right-lg bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all z-50 md:hidden">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</body></html>

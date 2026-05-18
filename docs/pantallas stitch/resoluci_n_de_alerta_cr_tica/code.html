@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#2a7081",
+                    "outline": "#70797c",
+                    "surface-variant": "#e0e3e5",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#ffdcc0",
+                    "on-secondary-fixed": "#0b1c30",
+                    "surface-container-low": "#f2f4f6",
+                    "on-surface": "#191c1e",
+                    "on-tertiary-fixed": "#2d1600",
+                    "primary": "#005768",
+                    "on-primary-fixed": "#001f26",
+                    "outline-variant": "#bfc8cb",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#724515",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary-fixed-dim": "#fab980",
+                    "tertiary-container": "#8e5c2b",
+                    "on-secondary-container": "#54647a",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "inverse-primary": "#8fd0e3",
+                    "on-background": "#191c1e",
+                    "surface-container": "#eceef0",
+                    "background": "#f7f9fb",
+                    "surface-tint": "#1e6777",
+                    "secondary-container": "#d0e1fb",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-dim": "#d8dadc",
+                    "secondary-fixed": "#d3e4fe",
+                    "secondary": "#505f76",
+                    "on-tertiary-container": "#ffe1ca",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f7f9fb",
+                    "primary-fixed": "#aeecff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "on-surface-variant": "#3f484b",
+                    "surface": "#f7f9fb",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#bcefff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "xl": "40px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "container-max": "1280px",
+                    "unit": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Atkinson Hyperlegible Next"],
+                    "headline-md": ["Manrope"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "title-sm": ["Manrope"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .blur-shield {
+            backdrop-filter: blur(8px);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col gap-xs p-md h-screen w-64 bg-surface-container border-r border-outline-variant fixed left-0">
+<div class="flex items-center gap-md mb-lg px-sm">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">balance</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md text-primary leading-tight">Portal NNyA</h1>
+<p class="text-label-caps text-on-surface-variant opacity-70">Jurisdicción Judicial</p>
+</div>
+</div>
+<nav class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Panel de Control</span>
+</a>
+<a class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container font-bold rounded-lg scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="font-body-md">Alertas Críticas</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md">Expedientes NNyA</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body-md">Informes Técnicos</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">settings_accessibility</span>
+<span class="font-body-md">Configuración</span>
+</a>
+</nav>
+<button class="mt-auto bg-primary text-on-primary p-md rounded-lg flex items-center justify-center gap-sm font-bold shadow-sm active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">add_alert</span>
+                Nueva Alerta
+            </button>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center w-full px-gutter h-16 sticky top-0 z-10">
+<div class="flex items-center gap-md">
+<button class="md:hidden p-sm">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="flex items-center gap-sm bg-surface-container-low px-md py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-48 md:w-64" placeholder="Buscar expediente..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-xs rounded-full transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-xs rounded-full transition-colors">help_outline</span>
+<div class="h-8 w-px bg-outline-variant mx-xs"></div>
+<div class="flex items-center gap-sm">
+<img alt="Avatar del técnico judicial" class="w-8 h-8 rounded-full object-cover" data-alt="A professional portrait of a judicial officer in a minimalist office setting. The person is wearing a clean charcoal suit, looking confident and serene. Soft natural light flows from a window, creating a trustworthy and institutional atmosphere. High-end professional photography style, light-mode color palette with soft gray and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRJsGguP915BV4xUu3QCDO2Yi-QjzHn6nIbYJm4mazc19qxyt2iDVvaYftmDblgRAMJ4Kr9CHkfuQPCWAOlbHCce80DY8OX-v-ptdboEhkmBKdeY0lhn873Hqzm-4sMcNVYfKVG690IK7diqC_zxnFmCmNlZ2jmeW2y_uXLu2QaOqT6xfgASMT9yUTFQVf-kRwcay_CZWSro0lQ_TBwuakAxm0ZIzBt_88nyVG3i6-kOm-ltpFjF1eHGbxVxH_Yfr2CieY5d9wgmg"/>
+<span class="hidden lg:block text-title-sm font-title-sm font-bold text-primary">Dr. Julián Rivas</span>
+</div>
+<button class="text-error font-bold text-body-md px-md py-xs hover:bg-error-container rounded-lg transition-colors">Cerrar Sesión</button>
+</div>
+</header>
+<div class="p-gutter max-w-container-max mx-auto w-full flex-1">
+<!-- Back Link & Header -->
+<div class="mb-lg">
+<a class="flex items-center gap-xs text-primary mb-md hover:underline" href="#">
+<span class="material-symbols-outlined text-body-md">arrow_back</span>
+                        Volver a Listado de Alertas
+                    </a>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<span class="bg-error-container text-on-error-container px-md py-xs rounded-full text-label-caps font-bold inline-block mb-sm">ALERTA CRÍTICA ACTIVA</span>
+<h2 class="text-display-lg font-display-lg text-on-surface">Egreso No Autorizado: Lucas García</h2>
+<p class="text-on-surface-variant mt-xs">Expediente Nº: 88242-NNyA | Hogar 'Rayito de Luz' | Iniciada: Hace 4 horas</p>
+</div>
+<button class="bg-error text-on-error px-lg py-md rounded-lg flex items-center gap-sm font-bold shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined">gavel</span>
+                            Finalizar Intervención y Cerrar Alerta
+                        </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Left Column: Details & Timeline -->
+<div class="lg:col-span-7 flex flex-col gap-lg">
+<!-- Case Information Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="text-title-sm font-title-sm text-primary border-b border-outline-variant pb-md mb-md">Detalle de la Alerta</h3>
+<div class="grid grid-cols-2 gap-md">
+<div>
+<p class="text-label-caps text-on-surface-variant">Sujeto Protegido</p>
+<p class="font-bold">García, Lucas Ezequiel (14 años)</p>
+</div>
+<div>
+<p class="text-label-caps text-on-surface-variant">Institución Responsable</p>
+<p class="font-bold">Hogar Convivencial Nivel III</p>
+</div>
+<div class="col-span-2">
+<p class="text-label-caps text-on-surface-variant">Descripción del Evento</p>
+<p class="bg-surface-container-low p-md rounded-lg border border-outline-variant mt-xs italic">
+                                        "El joven se retiró de la institución a las 14:30 hs tras una discusión con el personal de guardia. No se llevó pertenencias personales. Se desconoce paradero actual."
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Timeline of Actions -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex-1">
+<h3 class="text-title-sm font-title-sm text-primary border-b border-outline-variant pb-md mb-lg">Línea de Tiempo de Intervención</h3>
+<div class="relative pl-8">
+<!-- Vertical Line -->
+<div class="absolute left-3 top-0 bottom-0 w-px bg-primary opacity-20"></div>
+<!-- Timeline Nodes -->
+<div class="relative mb-lg">
+<div class="absolute -left-8 top-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center border-4 border-surface-container-lowest">
+<span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-bold text-on-surface">Denuncia Policial Radicada</p>
+<p class="text-body-md text-on-surface-variant">Comisaría 4ta - Of. Inspector Méndez. Protocolo de búsqueda nacional activado.</p>
+</div>
+<span class="text-label-caps text-on-surface-variant whitespace-nowrap">Hace 3h 20m</span>
+</div>
+</div>
+<div class="relative mb-lg">
+<div class="absolute -left-8 top-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center border-4 border-surface-container-lowest">
+<span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-bold text-on-surface">Notificación a Progenitores</p>
+<p class="text-body-md text-on-surface-variant">Contacto telefónico con la madre (Sra. Estela G.). Indica no haber tenido contacto.</p>
+</div>
+<span class="text-label-caps text-on-surface-variant whitespace-nowrap">Hace 2h 45m</span>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -left-8 top-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center border-4 border-surface-container-lowest">
+<span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="font-bold text-on-surface">Revisión de Cámaras de Seguridad</p>
+<p class="text-body-md text-on-surface-variant">Se observa al joven dirigiéndose hacia la parada del colectivo 202 a las 14:45 hs.</p>
+</div>
+<span class="text-label-caps text-on-surface-variant whitespace-nowrap">Hace 1h 10m</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Form & Attachments -->
+<div class="lg:col-span-5 flex flex-col gap-lg">
+<!-- Register Action Form -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="text-title-sm font-title-sm text-primary border-b border-outline-variant pb-md mb-md">Registrar Nueva Acción</h3>
+<div class="space-y-md">
+<div>
+<label class="text-label-caps text-on-surface-variant mb-xs block">TIPO DE ACCIÓN</label>
+<select class="w-full bg-surface-container-low border-outline-variant rounded-lg p-md text-body-md focus:ring-primary focus:border-primary">
+<option>Comunicación Telefónica</option>
+<option>Entrevista Presencial</option>
+<option>Diligencia Policial</option>
+<option>Notificación Judicial</option>
+<option>Localización de Paradero</option>
+</select>
+</div>
+<div>
+<label class="text-label-caps text-on-surface-variant mb-xs block">DESCRIPCIÓN DE LA ACCIÓN</label>
+<textarea class="w-full bg-surface-container-low border-outline-variant rounded-lg p-md text-body-md focus:ring-primary focus:border-primary" placeholder="Describa brevemente la acción realizada..." rows="4"></textarea>
+</div>
+<button class="w-full border border-primary text-primary font-bold py-md rounded-lg hover:bg-primary-container hover:text-white transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined">save</span>
+                                    Guardar Acción
+                                </button>
+</div>
+</div>
+<!-- Attach Resolution Report -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="text-title-sm font-title-sm text-primary border-b border-outline-variant pb-md mb-md">Informe de Resolución</h3>
+<p class="text-body-md text-on-surface-variant mb-md">Adjunte el informe final firmado por el responsable institucional para proceder al cierre.</p>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-xl flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-variant transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-display-lg text-primary mb-sm">upload_file</span>
+<p class="font-bold text-on-surface">Cargar Informe (PDF/JPG)</p>
+<p class="text-label-caps text-on-surface-variant">Máximo 10MB</p>
+</div>
+<div class="mt-md space-y-xs">
+<div class="flex items-center justify-between p-sm bg-white border border-outline-variant rounded-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">picture_as_pdf</span>
+<span class="text-body-md font-bold">Acta_Procedimiento_Policial_001.pdf</span>
+</div>
+<span class="material-symbols-outlined text-error cursor-pointer">delete</span>
+</div>
+</div>
+</div>
+<!-- Privacy Shield -->
+<div class="bg-secondary-container/30 border border-secondary-container rounded-xl p-md flex items-center justify-between">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+<div>
+<p class="text-label-caps text-on-secondary-container">DATOS PROTEGIDOS</p>
+<p class="text-body-md font-bold">Visibilidad restringida por LOPD</p>
+</div>
+</div>
+<button class="bg-white p-xs rounded-full border border-outline-variant hover:shadow-sm">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Meta -->
+<footer class="p-gutter border-t border-outline-variant text-center opacity-60">
+<p class="text-label-caps">Portal de Gestión NNyA © 2024 - Sistema de Alerta Temprana Unificado</p>
+</footer>
+</main>
+</div>
+</body></html>

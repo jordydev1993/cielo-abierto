@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&amp;family=Manrope:wght@400;600;700&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#8fd0e3",
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-container": "#8e5c2b",
+                        "surface-dim": "#d8dadc",
+                        "surface": "#f7f9fb",
+                        "secondary-container": "#d0e1fb",
+                        "primary": "#005768",
+                        "background": "#f7f9fb",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-variant": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#2d1600",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "on-surface": "#191c1e",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#2a7081",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-primary-container": "#bcefff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-primary-fixed": "#001f26",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "surface-bright": "#f7f9fb",
+                        "outline": "#70797c",
+                        "on-secondary-container": "#54647a",
+                        "on-tertiary-container": "#ffe1ca",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#004e5d",
+                        "on-error": "#ffffff",
+                        "secondary": "#505f76",
+                        "tertiary-fixed-dim": "#fab980",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-surface-variant": "#3f484b",
+                        "tertiary-fixed": "#ffdcc0",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bfc8cb",
+                        "tertiary": "#724515",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#1e6777",
+                        "primary-fixed": "#aeecff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "xl": "40px",
+                        "md": "16px",
+                        "container-max": "1280px",
+                        "sm": "8px",
+                        "unit": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["manrope"],
+                        "body-md": ["atkinsonHyperlegibleNext"],
+                        "body-lg": ["atkinsonHyperlegibleNext"],
+                        "title-sm": ["manrope"],
+                        "headline-md": ["manrope"],
+                        "label-caps": ["inter"],
+                        "display-lg": ["manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["26px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+                        "title-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background: radial-gradient(circle at top right, #f2f4f6 0%, #f7f9fb 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-on-surface">
+<main class="flex-grow flex items-center justify-center px-gutter py-xl">
+<div class="w-full max-w-md">
+<!-- Institutional Shield / Brand Anchor -->
+<div class="flex flex-col items-center mb-xl">
+<div class="mb-md">
+<img alt="Escudo Institucional" class="w-20 h-20 object-contain grayscale opacity-80" data-alt="A minimalist and high-contrast vector representation of an official judicial seal or institutional crest. The design is clean, using thin lines and a monochromatic Serene Teal palette against a bright white background. It conveys a sense of authority, tradition, and modern professional trust within a legal or governmental framework. The lighting is perfectly even, emphasizing the graphic precision of the emblem." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIxjHjJGHrKtxbTlfO9SOubEet24zCJ83eeN9pZptffWXkSj4q5rVyXGaofM1k3FiCVuOZFU5Q758POrY0P-CmyyoOzy3wVYetptAtxNo3F7LJQsdWcyOgH4eqlZYZ8yqDQeBnCB4bGaHh7X6BDJzZT-CYPdEiclq6BBeFKtOwmOy_1eAG6udLpI6QbS7EWylLCUeD6LC1L05eUaqELFAdJXC49U0Q4mu0ziat_RCwTq8ylZB6B9DyPI5scnzZ46rLM7pgLo2XWWs"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Gestión NNyA</h1>
+<p class="font-body-md text-on-surface-variant">Protección Integral de Niñeces y Adolescencias</p>
+</div>
+<!-- Login Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg md:p-xl transition-all duration-300">
+<form class="space-y-lg">
+<!-- Email Field -->
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="email">Correo Institucional</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">mail</span>
+<input class="w-full pl-10 pr-md py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface font-body-lg text-body-lg transition-all" id="email" name="email" placeholder="usuario@justicia.gov.ar" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="password">Contraseña</label>
+<a class="text-primary hover:underline font-body-md text-body-md" href="#">¿Olvidó su clave?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">lock</span>
+<input class="w-full pl-10 pr-md py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface font-body-lg text-body-lg transition-all" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full bg-primary text-on-primary font-title-sm text-title-sm py-4 rounded-lg hover:bg-on-primary-fixed-variant active:scale-[0.98] transition-all duration-200 shadow-sm" type="submit">
+                        Ingresar al Sistema
+                    </button>
+</form>
+<!-- Support Section -->
+<div class="mt-lg pt-lg border-t border-outline-variant text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        ¿Problemas para acceder? <br/>
+<a class="text-primary font-bold hover:underline inline-flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+Contactar a Soporte Técnico
+                        </a>
+</p>
+</div>
+</div>
+<!-- Privacy/Legal Notice -->
+<div class="mt-xl px-md">
+<div class="flex gap-3 p-md bg-secondary-container/30 rounded-lg border border-secondary-container">
+<span class="material-symbols-outlined text-on-secondary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">shield</span>
+<p class="font-body-md text-[12px] leading-relaxed text-on-secondary-container">
+<strong>AVISO DE CONFIDENCIALIDAD:</strong> El acceso a este sistema está restringido a personal autorizado. Los datos aquí contenidos están protegidos por la <strong>Ley 25.326 de Protección de Datos Personales</strong>. Toda consulta queda registrada para auditoría judicial.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Meta -->
+<footer class="py-lg px-gutter text-center border-t border-outline-variant/30">
+<p class="font-label-caps text-label-caps text-outline uppercase tracking-widest">
+            Sistema de Gestión Judicial NNyA © 2024 • Poder Judicial
+        </p>
+</footer>
+</body></html>

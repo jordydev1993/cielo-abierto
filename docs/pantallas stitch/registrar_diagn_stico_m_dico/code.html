@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#0b1c30",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "background": "#f7f9fb",
+                    "tertiary-fixed-dim": "#fab980",
+                    "inverse-primary": "#8fd0e3",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-secondary-container": "#54647a",
+                    "surface-container": "#eceef0",
+                    "secondary": "#505f76",
+                    "primary-container": "#2a7081",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary-fixed": "#2d1600",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#724515",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-surface-variant": "#3f484b",
+                    "primary-fixed": "#aeecff",
+                    "surface-tint": "#1e6777",
+                    "on-primary-fixed": "#001f26",
+                    "surface": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary-container": "#8e5c2b",
+                    "inverse-surface": "#2d3133",
+                    "outline-variant": "#bfc8cb",
+                    "surface-dim": "#d8dadc",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "error-container": "#ffdad6",
+                    "outline": "#70797c",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#bcefff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdcc0",
+                    "primary": "#005768",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-fixed": "#d3e4fe",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#d0e1fb",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "sm": "8px",
+                    "xl": "40px",
+                    "unit": "4px",
+                    "lg": "24px",
+                    "gutter": "24px",
+                    "md": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "title-sm": ["Manrope"],
+                    "body-md": ["Atkinson Hyperlegible Next"],
+                    "headline-md": ["Manrope"],
+                    "label-caps": ["Inter"],
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "display-lg": ["Manrope"]
+            },
+            "fontSize": {
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .privacy-blur {
+            filter: blur(4px);
+            transition: filter 0.3s ease;
+        }
+        .privacy-blur:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full z-40 bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-outline w-64 flex flex-col gap-sm p-md">
+<div class="flex items-center gap-md mb-xl px-sm">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center overflow-hidden">
+<img alt="Escudo Institucional" class="w-full h-full object-cover" data-alt="A professional, high-resolution close-up of a national institutional emblem or coat of arms, featuring sharp vector-like clarity and metallic gold and silver textures. The style is formal and authoritative, set against a soft, clean white background with subtle ambient shadows to emphasize governmental prestige and institutional trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwW7VSqTRx_HUGA6gFEpiufRIdRWV4ic7Z3VS8iaWYEyCQo-P6G8AbGVq-fwErWZTifdz4QiZefkb7iS5KOc3T0eZTmphxHG_7n2ES5xOq6msbdlYokKVoCVTb4CUR7qKLKVx0W1EEdkUTXjB2V6H_Dk1rj1FPp0NBiNRPQfjijxhBAddWy_esN74C5ZxNF3CGmtxB5zLt7cTk71wGi_awi6FJd9RQIo3G_Yp33-7Od__mfQJ8mgThuhBXrr0HXa9IsRbNWYfQlVY"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed leading-none">Gestión Técnica</h1>
+<p class="font-label-caps text-[10px] text-on-surface-variant mt-xs">Protocolo de Protección</p>
+</div>
+</div>
+<nav class="flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-label-caps text-label-caps">Expedientes NNyA</span>
+</a>
+<!-- Active Tab: Módulo Clínico -->
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container dark:bg-primary-container text-on-secondary-container dark:text-on-primary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">medical_information</span>
+<span class="font-label-caps text-label-caps">Módulo Clínico</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">medication_liquid</span>
+<span class="font-label-caps text-label-caps">Tratamientos</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-label-caps text-label-caps">Ajustes de Privacidad</span>
+</a>
+</nav>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="sticky top-0 z-50 bg-surface-container-lowest dark:bg-surface-container-low border-b border-outline-variant dark:border-outline h-16 w-full">
+<div class="flex justify-between items-center h-full px-gutter w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-lg">
+<span class="font-title-sm text-title-sm font-bold text-primary dark:text-primary-fixed">Portal NNyA</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-1.5 text-body-md w-64 focus:ring-2 focus:ring-primary" placeholder="Buscar expediente..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 hover:bg-surface-container transition-colors rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container transition-colors rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined">lock_open</span>
+</button>
+<button class="p-2 hover:bg-surface-container transition-colors rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-sm">
+<img alt="Avatar del Profesional" class="w-8 h-8 rounded-full object-cover" data-alt="A professional portrait of a clinical healthcare specialist in a modern medical setting. The lighting is soft and even, highlighting a friendly but serious expression suitable for a technical portal. The background is a blurred high-end medical facility with clean lines and soft blue-teal tones, maintaining a serene and professional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMTJ5cq0b11jQgKOA6tYaK72LdWSBhYDemwCHrsD9XCynPdSDxBKNMFw6C-ON0hfKFGJrs-W4YvzJTPuEgO480iMEcZiU5TNI3ZZWAwlfLx-uC5qjG-AWK8UhtnZhUzwYyatCeERQRwz_kEnXBTCIv6pUHUOu1kUAjkIwF3TWFyNifqKrKeci8yrzHZB4Fml2etcJuoqfKgV9JoF7KXrBQmMBIcU2NiNCsMzEK-jW4CVRrZJWdobnx3536BPkqxCr9pTeTnHYyx0o"/>
+<span class="font-label-caps text-label-caps text-on-surface">Dr. A. Valente</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="max-w-[1000px] mx-auto p-gutter">
+<!-- Header Section -->
+<div class="mb-lg flex justify-between items-end">
+<div>
+<nav class="flex items-center gap-xs text-on-surface-variant mb-xs">
+<span class="font-label-caps text-[11px]">MÓDULO CLÍNICO</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-label-caps text-[11px] text-primary">NUEVO DIAGNÓSTICO</span>
+</nav>
+<h2 class="font-display-lg text-display-lg text-on-surface">Alta de Registro Médico</h2>
+</div>
+<!-- Privacy Shield Badge -->
+<div class="flex items-center gap-sm px-md py-2 bg-error-container text-on-error-container rounded-lg">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-label-caps text-[11px] font-bold">DATOS SENSIBLES - LEY 25.326</span>
+</div>
+</div>
+<!-- Warning Banner -->
+<div class="bg-surface-container border border-outline-variant rounded-xl p-md mb-lg flex gap-md items-start">
+<span class="material-symbols-outlined text-tertiary">warning</span>
+<div class="flex-1">
+<p class="font-title-sm text-[15px] text-on-surface leading-tight mb-xs">Atención: Confidencialidad de la Información</p>
+<p class="text-on-surface-variant text-body-md">Está accediendo a la carga de datos de salud de un NNyA. Asegúrese de que el entorno de trabajo sea privado y que la información ingresada coincida estrictamente con el informe médico oficial.</p>
+</div>
+</div>
+<!-- Form Layout (Bento-style Cards) -->
+<form class="grid grid-cols-12 gap-lg">
+<!-- Card 1: NNyA Selection & Core Info -->
+<div class="col-span-12 lg:col-span-8 space-y-lg">
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-title-sm text-primary mb-lg border-b border-outline-variant pb-sm">Identificación del Paciente</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">BUSCAR NIÑA/O O ADOLESCENTE</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">person_search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-3 text-body-md focus:ring-2 focus:ring-primary" placeholder="DNI o Nombre..." type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">EXPEDIENTE RELACIONADO</label>
+<input class="w-full bg-surface-container border-none rounded-lg px-4 py-3 text-body-md text-on-surface-variant font-bold cursor-not-allowed" readonly="" type="text" value="EXP-2023-4492-JZ"/>
+</div>
+<div class="md:col-span-2 flex items-center gap-md p-md bg-surface-container-low rounded-lg">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-outline-variant">
+<img alt="Retrato del NNyA" class="w-full h-full object-cover privacy-blur" data-alt="A soft, respectful profile-view artistic illustration of a diverse child, captured in warm, natural lighting. The style is painterly and empathetic, avoiding a clinical feel. The child appears calm and safe. The overall color palette is composed of serene teals, soft whites, and natural skin tones, designed to evoke a sense of protection and care." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3eGYBGLjvNV86G0MEBuo8kYTXZWl07zh3JjHnp0H7HUk6_ZOC4vJ2Qmec2uvpV7pP6ddh7q0BAvPYd47oca78LXI-LEvsDoQE2sfAqvGr_g2yJN9hINOyqUtmEPhQhKe6D0-IsT2RiPL7HgTbKtX90UvTmhla2kmMIMssuVuYPsqCp3lYXAJz4CNnlBwEseiOtcdgtjEsmgYRrd8uuOknLcQVBzsnE6JZxKQVewGsrx_eZA5SmeB-y-Srq5l4duAru6ZF-dXRDas"/>
+</div>
+<div>
+<p class="font-title-sm text-title-sm leading-none">M. S. L.</p>
+<p class="text-body-md text-on-surface-variant">Edad: 8 años | DNI: <span class="privacy-blur inline-block bg-surface-variant rounded px-1">45.XXX.XXX</span></p>
+</div>
+<button class="ml-auto text-primary font-label-caps text-label-caps hover:underline" type="button">CAMBIAR SELECCIÓN</button>
+</div>
+</div>
+</section>
+<!-- Card 2: Diagnosis Details -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-title-sm text-primary mb-lg border-b border-outline-variant pb-sm">Detalles del Diagnóstico</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg mb-lg">
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">CATEGORÍA</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary">
+<option>Neurodesarrollo</option>
+<option>Psiquiatría Infantil</option>
+<option>Traumatología</option>
+<option>Clínica Médica</option>
+<option>Nutrición</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">FECHA DEL DIAGNÓSTICO</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary" type="date"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs mb-lg">
+<label class="font-label-caps text-label-caps text-on-surface-variant">CÓDIGO CIE-10 / DESCRIPCIÓN</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant">info</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary" placeholder="Ej: F84.0 Autismo en la niñez..." type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs mb-lg">
+<label class="font-label-caps text-label-caps text-on-surface-variant">OBSERVACIONES CLÍNICAS</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary" placeholder="Describa el cuadro actual del paciente..." rows="4"></textarea>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant">TRATAMIENTO SUGERIDO</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary" placeholder="Intervenciones recomendadas..." rows="3"></textarea>
+</div>
+</section>
+</div>
+<!-- Side Info Cards (Asymmetric) -->
+<div class="col-span-12 lg:col-span-4 space-y-lg">
+<!-- Criticality -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-title-sm text-primary mb-md">Nivel de Prioridad</h3>
+<div class="grid grid-cols-1 gap-sm">
+<label class="flex items-center gap-md p-md rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-low transition-colors group">
+<input class="text-error focus:ring-error" name="priority" type="radio"/>
+<div>
+<p class="font-title-sm text-[14px] text-error font-bold uppercase">Urgente</p>
+<p class="text-xs text-on-surface-variant">Requiere intervención inmediata</p>
+</div>
+</label>
+<label class="flex items-center gap-md p-md rounded-lg border border-primary bg-secondary-container/20 cursor-pointer hover:bg-secondary-container/40 transition-colors group">
+<input checked="" class="text-primary focus:ring-primary" name="priority" type="radio"/>
+<div>
+<p class="font-title-sm text-[14px] text-primary font-bold uppercase">Moderada</p>
+<p class="text-xs text-on-surface-variant">Seguimiento preventivo regular</p>
+</div>
+</label>
+<label class="flex items-center gap-md p-md rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-container-low transition-colors group">
+<input class="text-secondary focus:ring-secondary" name="priority" type="radio"/>
+<div>
+<p class="font-title-sm text-[14px] text-on-surface-variant font-bold uppercase">Estable</p>
+<p class="text-xs text-on-surface-variant">Control de rutina</p>
+</div>
+</label>
+</div>
+</section>
+<!-- Professional Information -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-title-sm text-primary mb-md">Profesional Interviniente</h3>
+<div class="flex flex-col gap-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">medical_services</span>
+<span class="text-body-md font-bold">Dr. Alessandro Valente</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">badge</span>
+<span class="text-body-md text-on-surface-variant">Matrícula: MP-208394-B</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">home_health</span>
+<span class="text-body-md text-on-surface-variant">Equipo Técnico Zonal II</span>
+</div>
+</div>
+</section>
+<!-- Documentation Upload -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-title-sm text-primary mb-md">Documentación</h3>
+<p class="text-body-md text-on-surface-variant mb-md">Adjunte informes escaneados en formato PDF o imagen.</p>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center text-center gap-sm hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-outline text-3xl group-hover:text-primary">upload_file</span>
+<p class="font-label-caps text-[11px] font-bold text-on-surface-variant">ARRASTRAR ARCHIVOS O HACER CLIC</p>
+<p class="text-[10px] text-outline italic">Máximo 10MB por archivo</p>
+</div>
+<div class="mt-md space-y-xs">
+<div class="flex items-center justify-between p-2 bg-surface-container-low rounded border border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-sm text-error">picture_as_pdf</span>
+<span class="text-xs truncate max-w-[120px]">Informe_Clinico_S...pdf</span>
+</div>
+<button class="text-on-surface-variant hover:text-error" type="button"><span class="material-symbols-outlined text-sm">close</span></button>
+</div>
+</div>
+</section>
+</div>
+<!-- Form Actions -->
+<div class="col-span-12 flex justify-between items-center bg-surface-container-low p-lg rounded-xl border border-outline-variant mt-xl">
+<button class="px-lg py-sm font-label-caps text-label-caps text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all border border-transparent" type="button">
+                        CANCELAR Y VOLVER
+                    </button>
+<div class="flex gap-md">
+<button class="px-lg py-sm font-label-caps text-label-caps text-primary border border-primary hover:bg-primary/5 rounded-lg transition-all" type="button">
+                            GUARDAR BORRADOR
+                        </button>
+<button class="bg-primary text-on-primary px-xl py-sm font-label-caps text-label-caps rounded-lg hover:opacity-90 transition-all flex items-center gap-sm" type="submit">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">save</span>
+                            FINALIZAR Y REGISTRAR
+                        </button>
+</div>
+</div>
+</form>
+</div>
+</main>
+<!-- Floating Security Tooltip (Optional Branding) -->
+<div class="fixed bottom-gutter right-gutter z-50">
+<div class="bg-inverse-surface text-inverse-on-surface p-sm rounded-full flex items-center gap-sm shadow-lg opacity-80 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span class="font-label-caps text-[10px] pr-2">CONEXIÓN ENCRIPTADA AES-256</span>
+</div>
+</div>
+</body></html>

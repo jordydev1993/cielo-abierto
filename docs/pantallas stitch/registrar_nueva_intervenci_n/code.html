@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .blur-shield {
+            backdrop-filter: blur(8px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "secondary-container": "#d0e1fb",
+                        "outline": "#70797c",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-fixed": "#2d1600",
+                        "surface-tint": "#1e6777",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed-dim": "#fab980",
+                        "primary-fixed": "#aeecff",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "tertiary": "#724515",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed-variant": "#004e5d",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-container": "#8e5c2b",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-fixed": "#001f26",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eceef0",
+                        "primary": "#005768",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#bfc8cb",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-surface": "#191c1e",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-container": "#2a7081",
+                        "on-tertiary-container": "#ffe1ca",
+                        "secondary": "#505f76",
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-primary": "#8fd0e3",
+                        "on-surface-variant": "#3f484b",
+                        "background": "#f7f9fb",
+                        "on-primary-container": "#bcefff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-container": "#54647a",
+                        "tertiary-fixed": "#ffdcc0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "container-max": "1280px",
+                        "xs": "4px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["atkinsonHyperlegibleNext"],
+                        "display-lg": ["manrope"],
+                        "body-lg": ["atkinsonHyperlegibleNext"],
+                        "label-caps": ["inter"],
+                        "title-sm": ["manrope"],
+                        "headline-md": ["manrope"],
+                        "headline-lg-mobile": ["manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline fixed top-0 left-0 w-full z-50 h-16">
+<div class="flex justify-between items-center w-full px-lg h-16 max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<span class="font-manrope text-headline-md font-bold text-primary dark:text-primary-fixed">NNyA Judicial</span>
+<div class="hidden md:flex ml-xl items-center bg-surface-container px-sm py-1.5 rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-64" placeholder="Buscar expediente..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container p-2 rounded-full transition-colors">notifications</button>
+<button class="material-symbols-outlined text-primary hover:bg-surface-container p-2 rounded-full transition-colors">security</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer active:scale-95 duration-150">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close-up professional portrait of a woman in a neutral office setting, featuring soft natural lighting and a warm, trustworthy expression. The background is a clean, modern workspace with muted professional tones, reflecting a judicial or administrative environment. High-end photography with a focus on professional approachability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ1uTCkraa8W7FbJ6WNHbxItj2ansWHsDTWLFos5E9y9qPA377deX2xBJf414u35xnhLNd1DoEWGrcAZcncX8KsN0WfbLw4-LJEPg26-J7-uKAWu6GLPE2zrlaDwBxQEZ1l2KSn2UbyCJhuVH4G9x2MaTGMXqu4J-pC6KFrQ7JVP6luRSYDixd_R1TwuLD1xHD3P5xlsTPRST2_9ckkICXjKCfIbkwyRtfHL33NqLkEFF7LBDAw7umOWl9UxTYbrcuzzGNtRFfOos"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-outline p-md flex flex-col z-40 hidden md:flex">
+<div class="mb-xl px-2">
+<h2 class="font-manrope text-headline-md font-bold text-primary">Gestión NNyA</h2>
+<p class="text-on-surface-variant text-body-md">Protección Integral</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-atkinsonHyperlegibleNext text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-atkinsonHyperlegibleNext text-body-md">Expedientes</span>
+</a>
+<a class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container rounded-lg font-semibold transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology_alt</span>
+<span class="font-atkinsonHyperlegibleNext text-body-md">Intervenciones</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-atkinsonHyperlegibleNext text-body-md">Alerts</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-atkinsonHyperlegibleNext text-body-md">Configuración</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full py-3 bg-primary text-on-primary rounded-lg font-bold flex items-center justify-center gap-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add</span>
+                Nueva Intervención
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-16 min-h-screen">
+<div class="max-w-container-max mx-auto p-lg lg:p-xl space-y-lg">
+<!-- Header & Breadcrumbs -->
+<div class="space-y-xs">
+<nav class="flex items-center gap-sm text-on-surface-variant font-label-caps text-label-caps">
+<a class="hover:text-primary transition-colors" href="#">Expedientes</a>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Santiago Pérez</a>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-primary font-bold">Nueva Intervención</span>
+</nav>
+<h1 class="font-manrope text-display-lg text-primary">Nueva Intervención Profesional</h1>
+</div>
+<!-- Sensitive Data Warning -->
+<div class="bg-error-container text-on-error-container p-md rounded-lg border border-error/20 flex items-start gap-md">
+<span class="material-symbols-outlined text-error">gpp_maybe</span>
+<div class="space-y-xs">
+<p class="font-bold">Advertencia de Seguridad</p>
+<p class="text-body-md">Está accediendo a la carga de datos sensibles. Asegúrese de que su entorno sea privado para proteger la identidad y privacidad de las Niñas, Niños y Adolescentes.</p>
+</div>
+</div>
+<!-- Form Body -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Main Form Column -->
+<div class="lg:col-span-8 space-y-lg">
+<!-- Section 1: NNyA Selection -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md text-primary">
+<span class="material-symbols-outlined">person_search</span>
+<h3 class="font-manrope text-title-sm">Selección de NNyA</h3>
+</div>
+<div class="space-y-md">
+<div class="relative">
+<label class="block text-on-surface-variant font-label-caps mb-xs">Buscar por nombre o DNI</label>
+<div class="flex items-center bg-surface-container-low rounded-lg border border-outline-variant px-md py-2.5">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full" type="text" value="Santiago Pérez"/>
+</div>
+</div>
+<!-- Selected Profile Preview -->
+<div class="flex items-center gap-lg p-md bg-surface border border-outline-variant rounded-lg">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container-highest">
+<img alt="Child profile" class="w-full h-full object-cover" data-alt="A gentle, high-key portrait of a young child with a neutral, calm expression. The lighting is soft and professional, avoiding any dramatic shadows. The background is a solid, warm off-white, maintaining a clinical but empathetic aesthetic suitable for a judicial portal. The child's clothing is simple and non-distracting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDD0QDjJYQfsqhOSxdMpFOqbmCbbQPPThgCw9Ds614NpqMemQjEimy2EtuFPg5ys1Wvf2pXFLoYymVZOzYbcw4nclpsmxpJt0h6450Yz8LiGoyBTvIa3gtT09_iL2SYlBc6L6H800NZorSuI188MUE7vi-MYXqGR7-Zzptjs_72mRJuerEeGPJiX5WQ66DqgKhv-2n9EP_eJmVyBHWIT4rOS-HiKIxefYsnQWAEfRefZiNWGC3jhEXGw3v4JamDIGLnyMptw_6Hbw"/>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-primary">Santiago Pérez</h4>
+<p class="text-on-surface-variant text-body-md">Exp: 4423/2023 • 9 años • CABA</p>
+</div>
+<div class="flex flex-col items-end gap-xs">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-caps font-bold">ACTIVO</span>
+<button class="text-primary font-bold text-body-md hover:underline">Cambiar</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Details -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md text-primary">
+<span class="material-symbols-outlined">clinical_notes</span>
+<h3 class="font-manrope text-title-sm">Detalles de la Intervención</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="text-on-surface-variant font-label-caps">Tipo de Intervención</label>
+<select class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-2.5 text-body-md focus:ring-primary focus:border-primary">
+<option>Entrevista Domiciliaria</option>
+<option>Visita Escolar</option>
+<option>Evaluación Psicológica</option>
+<option>Audiencia Judicial</option>
+<option>Intervención de Emergencia</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="text-on-surface-variant font-label-caps">Profesional Interviniente</label>
+<div class="relative">
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg p-2.5 text-body-md text-on-surface-variant" readonly="" type="text" value="Lic. Ana Valenzuela (Actual)"/>
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-outline">lock</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="text-on-surface-variant font-label-caps">Fecha y Hora</label>
+<div class="flex gap-xs">
+<input class="flex-1 bg-surface-container-low border border-outline-variant rounded-lg p-2.5 text-body-md" type="date"/>
+<input class="flex-1 bg-surface-container-low border border-outline-variant rounded-lg p-2.5 text-body-md" type="time"/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="text-on-surface-variant font-label-caps">Lugar de la intervención</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-2.5 text-body-md" placeholder="Ej. Domicilio particular, Juzgado N°5..." type="text"/>
+</div>
+</div>
+</section>
+<!-- Section 3: Narrative -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md text-primary">
+<span class="material-symbols-outlined">description</span>
+<h3 class="font-manrope text-title-sm">Descripción y Hallazgos</h3>
+</div>
+<div class="space-y-md">
+<div class="space-y-xs">
+<label class="text-on-surface-variant font-label-caps">Descripción de la Intervención</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-md text-body-md focus:ring-primary focus:border-primary" placeholder="Detalle el desarrollo de la intervención de manera cronológica y objetiva..." rows="6"></textarea>
+</div>
+<div class="space-y-xs">
+<label class="text-on-surface-variant font-label-caps">Observaciones y Recomendaciones</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-md text-body-md focus:ring-primary focus:border-primary" placeholder="Sugerencias de seguimiento o medidas urgentes..." rows="3"></textarea>
+</div>
+</div>
+</section>
+</div>
+<!-- Secondary Column (Documentation & Actions) -->
+<div class="lg:col-span-4 space-y-lg">
+<!-- Section 4: Documentation -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md text-primary">
+<span class="material-symbols-outlined">attachment</span>
+<h3 class="font-manrope text-title-sm">Documentación</h3>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-xl flex flex-col items-center text-center gap-md hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">upload_file</span>
+</div>
+<div class="space-y-xs">
+<p class="font-bold text-on-surface">Arrastre archivos aquí</p>
+<p class="text-body-md text-on-surface-variant">O haga clic para seleccionar (PDF, JPG, PNG)</p>
+</div>
+<button class="text-primary font-bold text-body-md px-4 py-1 border border-primary rounded-lg">Seleccionar Archivo</button>
+</div>
+<div class="mt-md space-y-sm">
+<div class="flex items-center justify-between p-sm bg-surface rounded-lg border border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">picture_as_pdf</span>
+<span class="text-body-md">Acta_Santiago_23.pdf</span>
+</div>
+<button class="material-symbols-outlined text-error hover:bg-error-container p-1 rounded">delete</button>
+</div>
+</div>
+</section>
+<!-- Sticky Actions -->
+<section class="lg:sticky lg:top-24 space-y-md">
+<div class="bg-surface-container-high p-lg rounded-xl border border-outline-variant space-y-md shadow-sm">
+<h4 class="font-manrope font-bold text-primary">Finalizar Registro</h4>
+<p class="text-body-md text-on-surface-variant">Al registrar, la intervención será visible para el equipo judicial asignado.</p>
+<div class="space-y-sm">
+<button class="w-full py-4 bg-primary text-on-primary rounded-lg font-bold flex items-center justify-center gap-sm active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined">how_to_reg</span>
+                                    Finalizar y Registrar
+                                </button>
+<button class="w-full py-4 border border-primary text-primary rounded-lg font-bold flex items-center justify-center gap-sm hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">save</span>
+                                    Guardar como Borrador
+                                </button>
+</div>
+<hr class="border-outline-variant"/>
+<button class="w-full py-2 text-on-surface-variant font-label-caps hover:text-error transition-colors">Cancelar y Salir</button>
+</div>
+<!-- Data Privacy Shield Component -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">visibility_off</span>
+<span class="text-body-md">Escudo de Privacidad Activo</span>
+</div>
+<div class="w-10 h-6 bg-primary rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Judicial Timeline - Contextual Insight -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h3 class="font-manrope text-title-sm text-primary mb-lg">Línea de Intervenciones Recientes</h3>
+<div class="relative border-l-2 border-primary/20 ml-3 pl-8 space-y-lg">
+<div class="relative">
+<div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-primary-container"></div>
+<p class="text-label-caps font-bold text-primary">HOY (En curso)</p>
+<h4 class="font-bold">Nueva Intervención Profesional</h4>
+<p class="text-body-md text-on-surface-variant">Lic. Ana Valenzuela</p>
+</div>
+<div class="relative">
+<div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-outline-variant"></div>
+<p class="text-label-caps font-bold text-on-surface-variant">14 OCT 2023</p>
+<h4 class="font-bold">Evaluación Psicológica Trimestral</h4>
+<p class="text-body-md text-on-surface-variant">Dr. Martín Gómez • Juzgado Civil 5</p>
+</div>
+<div class="relative">
+<div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-outline-variant"></div>
+<p class="text-label-caps font-bold text-on-surface-variant">22 SEP 2023</p>
+<h4 class="font-bold">Entrevista de seguimiento domiciliario</h4>
+<p class="text-body-md text-on-surface-variant">Lic. Elena Ruiz • Equipo Técnico</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Mobile Bottom Navigation Shell -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant h-16 flex items-center justify-around px-md z-50">
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label-caps">Home</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-primary font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="text-[10px] font-label-caps">Nueva</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-[10px] font-label-caps">Exped.</span>
+</button>
+<button class="flex flex-col items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-label-caps">Perfil</span>
+</button>
+</nav>
+</body></html>

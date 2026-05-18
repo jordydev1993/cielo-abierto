@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-tint": "#1e6777",
+                        "on-primary-fixed-variant": "#004e5d",
+                        "tertiary-fixed-dim": "#fab980",
+                        "outline-variant": "#bfc8cb",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-container": "#bcefff",
+                        "surface-dim": "#d8dadc",
+                        "primary": "#005768",
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#ffe1ca",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#8fd0e3",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-fixed": "#aeecff",
+                        "on-tertiary-fixed": "#2d1600",
+                        "tertiary": "#724515",
+                        "inverse-primary": "#8fd0e3",
+                        "tertiary-container": "#8e5c2b",
+                        "secondary-container": "#d0e1fb",
+                        "on-surface-variant": "#3f484b",
+                        "secondary": "#505f76",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-container": "#eceef0",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-fixed": "#ffdcc0",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary-fixed": "#001f26",
+                        "outline": "#70797c",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e6e8ea",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb",
+                        "primary-container": "#2a7081",
+                        "on-tertiary-fixed-variant": "#683c0d",
+                        "on-secondary-container": "#54647a",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "container-max": "1280px",
+                        "sm": "8px",
+                        "xl": "40px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Manrope"],
+                        "body-md": ["Atkinson Hyperlegible Next"],
+                        "title-sm": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"],
+                        "body-lg": ["Atkinson Hyperlegible Next"],
+                        "label-caps": ["Inter"],
+                        "display-lg": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+        }
+        .data-shield-blur {
+            filter: blur(4px);
+            transition: filter 0.3s ease;
+        }
+        .data-shield-blur:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 bottom-0 z-40 h-full w-64 flex flex-col bg-surface border-r border-outline-variant">
+<div class="p-lg">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">NNyA System</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Judicial Management</p>
+</div>
+<nav class="flex-1 px-md space-y-unit">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="font-body-md">Cases</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">contact_phone</span>
+<span class="font-body-md">Directory</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span class="font-body-md">Roles</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-body-md">Audit</span>
+</a>
+</nav>
+<div class="p-md mt-auto border-t border-outline-variant">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-body-md">Help</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 z-30 flex justify-between items-center px-lg h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-body-md focus:ring-2 focus:ring-primary w-64" placeholder="Buscar expediente..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="flex items-center gap-sm border-l border-outline-variant pl-lg">
+<div class="text-right">
+<p class="font-title-sm text-sm">Admin Judicial</p>
+<p class="font-label-caps text-[10px] text-on-surface-variant">Personal Educación</p>
+</div>
+<img alt="Administrator Profile" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A professional portrait of a woman in her 40s working in an administrative role. She has a serene and confident expression, wearing a neutral-toned professional blazer. The background is a softly blurred office environment with warm, natural lighting that emphasizes a trustworthy and institutional atmosphere. The overall style is clean, modern, and professional, aligning with a judicial and social services context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi7DxZkfJTLEfbMBZKBp4s_t-HmJeiiGNAeqZGD_YKeLD_Nxrp7ccK3bv6tE2GUiDqhA8tpZglKSc6B4EbjmcEK6a5Svj5Es35V3Ryd0IUEqgERDMZzJUrTQSBcQGTg8K-vLq8RIcqJs_RgZ8oFdV0n8qxapx2XRN0hjxGckRd-64hHEUwNwuKbt_xJwiKBUcFmX2VJWukkDtiSdLF5fCVTy4TETGFURrq3MDmP3JN3Hf_WOkXm76RB4BHy5VPKTFvlDMhUz3kdqg"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 pt-16 p-lg">
+<div class="max-w-container-max mx-auto space-y-lg">
+<!-- Page Header & Action -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-display-lg text-display-lg text-primary">Gestión de Actividades Diarias</h2>
+<p class="font-body-lg text-on-surface-variant">Supervisión y registro de rutinas institucionales para NNyA.</p>
+</div>
+<button class="flex items-center gap-sm bg-primary text-on-primary px-lg py-md rounded-lg font-bold shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add_circle</span>
+                    Registrar Nueva Actividad
+                </button>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-on-surface-variant mb-unit">Total de Actividades Hoy</p>
+<h3 class="font-display-lg text-primary">142</h3>
+</div>
+<span class="material-symbols-outlined text-primary p-sm bg-primary/10 rounded-lg">event_available</span>
+</div>
+<div class="mt-md flex items-center gap-xs text-secondary font-bold text-xs">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+12% vs ayer</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-on-surface-variant mb-unit">Asistencia Registrada</p>
+<h3 class="font-display-lg text-tertiary">94%</h3>
+</div>
+<span class="material-symbols-outlined text-tertiary p-sm bg-tertiary/10 rounded-lg">person_check</span>
+</div>
+<div class="mt-md w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[94%]"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-caps text-on-surface-variant mb-unit">Pendientes de Carga</p>
+<h3 class="font-display-lg text-error">8</h3>
+</div>
+<span class="material-symbols-outlined text-error p-sm bg-error/10 rounded-lg">pending_actions</span>
+</div>
+<p class="mt-md text-xs text-on-surface-variant">Requiere atención inmediata antes de fin de turno.</p>
+</div>
+</div>
+<!-- Privacy Banner -->
+<div class="bg-primary-container/20 border border-primary-container p-md rounded-lg flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">shield_person</span>
+<p class="font-body-md text-on-primary-fixed-variant">
+<strong class="font-bold">Aviso de Confidencialidad:</strong> Los datos contenidos en esta plataforma están sujetos a la Ley de Protección de Datos Personales. El acceso y uso indebido de información de NNyA está estrictamente prohibido y penado por la ley.
+                </p>
+</div>
+<!-- Filters Section -->
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl">
+<div class="flex flex-wrap items-center gap-lg">
+<div class="flex-1 min-w-[200px]">
+<label class="font-label-caps text-on-surface-variant block mb-sm">Filtrar por NNyA</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg text-body-md p-md focus:ring-2 focus:ring-primary">
+<option>Todos los residentes</option>
+<option>García, Lucas (EXP 2024-012)</option>
+<option>López, Sofía (EXP 2024-045)</option>
+</select>
+</div>
+<div class="flex-1 min-w-[200px]">
+<label class="font-label-caps text-on-surface-variant block mb-sm">Tipo de Actividad</label>
+<div class="flex gap-sm">
+<button class="bg-primary text-on-primary px-md py-sm rounded-full text-xs font-bold">Todas</button>
+<button class="bg-surface-container-high text-on-surface-variant px-md py-sm rounded-full text-xs hover:bg-outline-variant transition-colors">Educativa</button>
+<button class="bg-surface-container-high text-on-surface-variant px-md py-sm rounded-full text-xs hover:bg-outline-variant transition-colors">Salud</button>
+<button class="bg-surface-container-high text-on-surface-variant px-md py-sm rounded-full text-xs hover:bg-outline-variant transition-colors">Recreativa</button>
+</div>
+</div>
+<div class="min-w-[250px]">
+<label class="font-label-caps text-on-surface-variant block mb-sm">Rango de Fechas</label>
+<div class="flex items-center bg-surface-container-low rounded-lg p-unit">
+<input class="bg-transparent border-none text-body-md focus:ring-0" type="date"/>
+<span class="text-outline mx-xs">-</span>
+<input class="bg-transparent border-none text-body-md focus:ring-0" type="date"/>
+</div>
+</div>
+<button class="self-end mb-[2px] bg-secondary-container text-on-secondary-container p-md rounded-lg hover:bg-outline-variant transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Main Activities Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="p-md font-label-caps text-on-surface-variant">NNyA / Expediente</th>
+<th class="p-md font-label-caps text-on-surface-variant">Tipo de Actividad</th>
+<th class="p-md font-label-caps text-on-surface-variant">Fecha y Hora</th>
+<th class="p-md font-label-caps text-on-surface-variant">Responsable</th>
+<th class="p-md font-label-caps text-on-surface-variant">Estado</th>
+<th class="p-md font-label-caps text-on-surface-variant text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-xs">LG</div>
+<div>
+<p class="font-bold text-on-surface data-shield-blur">Lucas García</p>
+<p class="text-[10px] text-on-surface-variant">EXP: 2024-012</p>
+</div>
+</div>
+</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-xs font-bold text-primary">
+<span class="material-symbols-outlined text-sm">school</span>
+                                    Educativa
+                                </span>
+</td>
+<td class="p-md">
+<p class="text-sm">Hoy, 09:30 AM</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Taller de Carpintería</p>
+</td>
+<td class="p-md">
+<p class="text-sm">Prof. Martínez, J.</p>
+</td>
+<td class="p-md">
+<span class="bg-green-100 text-green-800 px-md py-unit rounded-full text-[10px] font-bold">Completada</span>
+</td>
+<td class="p-md text-right">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center font-bold text-xs">SL</div>
+<div>
+<p class="font-bold text-on-surface data-shield-blur">Sofía López</p>
+<p class="text-[10px] text-on-surface-variant">EXP: 2024-045</p>
+</div>
+</div>
+</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-xs font-bold text-tertiary">
+<span class="material-symbols-outlined text-sm">medical_services</span>
+                                    Salud
+                                </span>
+</td>
+<td class="p-md">
+<p class="text-sm">Hoy, 11:00 AM</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Control Pediátrico</p>
+</td>
+<td class="p-md">
+<p class="text-sm">Dra. Valenzuela, M.</p>
+</td>
+<td class="p-md">
+<span class="bg-secondary-container text-on-secondary-container px-md py-unit rounded-full text-[10px] font-bold">En progreso</span>
+</td>
+<td class="p-md text-right">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-tertiary flex items-center justify-center font-bold text-xs">MR</div>
+<div>
+<p class="font-bold text-on-surface data-shield-blur">Mateo Ramírez</p>
+<p class="text-[10px] text-on-surface-variant">EXP: 2023-988</p>
+</div>
+</div>
+</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-xs font-bold text-on-secondary-container">
+<span class="material-symbols-outlined text-sm">palette</span>
+                                    Recreativa
+                                </span>
+</td>
+<td class="p-md">
+<p class="text-sm">Hoy, 16:00 PM</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Actividad de Patio</p>
+</td>
+<td class="p-md">
+<p class="text-sm">Ed. Social Quiroga, A.</p>
+</td>
+<td class="p-md">
+<span class="bg-surface-container-high text-on-surface-variant px-md py-unit rounded-full text-[10px] font-bold">Programada</span>
+</td>
+<td class="p-md text-right">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-md">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-error-container text-error flex items-center justify-center font-bold text-xs">EC</div>
+<div>
+<p class="font-bold text-on-surface data-shield-blur">Elena Castro</p>
+<p class="text-[10px] text-on-surface-variant">EXP: 2024-102</p>
+</div>
+</div>
+</td>
+<td class="p-md">
+<span class="flex items-center gap-xs text-xs font-bold text-primary">
+<span class="material-symbols-outlined text-sm">school</span>
+                                    Educativa
+                                </span>
+</td>
+<td class="p-md">
+<p class="text-sm">Hoy, 08:00 AM</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Clase Apoyo Escolar</p>
+</td>
+<td class="p-md">
+<p class="text-sm">Prof. Sosa, B.</p>
+</td>
+<td class="p-md">
+<span class="bg-error-container text-on-error-container px-md py-unit rounded-full text-[10px] font-bold">Cancelada</span>
+</td>
+<td class="p-md text-right">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-md bg-surface-container-low flex justify-between items-center">
+<p class="text-xs text-on-surface-variant font-body-md">Mostrando 4 de 142 actividades hoy</p>
+<div class="flex gap-sm">
+<button class="p-sm rounded border border-outline-variant hover:bg-surface transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="p-sm rounded border border-outline-variant hover:bg-surface transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Visual Timeline Insight (Bonus) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl">
+<h4 class="font-title-sm text-primary mb-lg">Distribución de Actividades</h4>
+<div class="flex items-center gap-lg">
+<div class="relative w-32 h-32">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="64" cy="64" fill="transparent" r="54" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary" cx="64" cy="64" fill="transparent" r="54" stroke="currentColor" stroke-dasharray="339.29" stroke-dashoffset="135.7" stroke-width="12"></circle>
+<circle class="text-tertiary" cx="64" cy="64" fill="transparent" r="54" stroke="currentColor" stroke-dasharray="339.29" stroke-dashoffset="271.4" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-bold text-lg">Total</div>
+</div>
+<div class="flex-1 space-y-sm">
+<div class="flex justify-between items-center text-xs">
+<span class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-primary"></span> Educativas (60%)</span>
+<span class="font-bold">85</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-tertiary"></span> Salud (25%)</span>
+<span class="font-bold">36</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="flex items-center gap-xs"><span class="w-3 h-3 rounded-full bg-secondary"></span> Recreativas (15%)</span>
+<span class="font-bold">21</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col justify-between">
+<div>
+<h4 class="font-title-sm text-primary mb-unit">Resumen de Turno</h4>
+<p class="text-xs text-on-surface-variant">Personal responsable actualmente en servicio.</p>
+</div>
+<div class="flex -space-x-md overflow-hidden my-lg">
+<img alt="Team member" class="inline-block h-10 w-10 rounded-full ring-2 ring-surface" data-alt="Close-up portrait of a female educator with a friendly smile, in a modern, brightly lit office environment. The lighting is natural and soft, evoking warmth and institutional trust. She wears professional yet approachable attire. The photo has a clean, high-resolution aesthetic with a focus on human connection and professional care." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1lJhYyj6HZ1TLjGY0gvv5wOwjqyUa9k8NcsnjhNyW2mn3GjxUZ4GgeaSfMTa43GJ8VaGCYUAlYnDZQNDL893gp0E3x1ELwG9i6zuw26Ex0fWPgKgB3KqjQILhidnqa8o8lniIu1PbCKinGIRei2qHMhoNXoG9XV-iejqqoylJAv6Mm3lY-CEDdWVq81yX7FQO3XvE_YGK1EPAvnwTT8Lrtu-fN7KQGGSdLXb7gA5LBTC4xPIAk6IbDS1F3IhPUVTIhGi9YmsU-d4"/>
+<img alt="Team member" class="inline-block h-10 w-10 rounded-full ring-2 ring-surface" data-alt="A portrait of a male professional working in social services. He has a calm and focused expression, dressed in a professional shirt. The background is a minimalist institutional hallway with soft white walls and natural light. The aesthetic is serene and trustworthy, following the NNyA system visual language of professionalism and safety." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUP8qep_dOBBypSWAfwRK6vwQjdGYOs1udx2C-7iymbATS150G6448r6RNcxskxTq6zsmH7zjPJwOyhfs94K29WYEdVZ-rIZhfeB3X-09219ONnuizQThZBAuacs6k4nflIRWMa9RdOGOF-ub8povqUUkcikMyOpAASo6o_Nx7KGq6W76cD2KIWKzq_HiYb8JTq94dJqTaavKoXobvI_3Ywa74LzhnMn0bWOQJ0nyQEasLOjFMe_G8z-4roqKHPfHN34w5DgtEGCo"/>
+<img alt="Team member" class="inline-block h-10 w-10 rounded-full ring-2 ring-surface" data-alt="A professional male doctor in his late 50s, looking into the camera with a reassuring smile. He is in a clean, modern medical facility with soft lighting that conveys hygiene and care. The photograph uses a shallow depth of field to keep focus on the person, maintaining a light-mode, high-key aesthetic that feels safe and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLPvdoAKnVb2JR1nkRoMOHQpLt3WP8sgmOz1E-s8rcNAzQXrLZGU1Z5_0jpl4RZ5-Xd3CzEen5rFuueReT-HwLf7YMPBPgXTweXaCMvhLvnbxUD7S3E963j75TyUgOlJG5jZuvsHbYTC3GOQ044sFXjnc-cXrHNATnJwSCJ2DiCGbX_7gLhHJzEtMMW9iqoEtGWyUrYIGgjoLh3DpiEcmXqT3pB69L7jco8E4d8no5lPXQxLex3q33xOJhzLejsGhwrvukU8lClns"/>
+<div class="flex items-center justify-center h-10 w-10 rounded-full ring-2 ring-surface bg-surface-container-highest text-[10px] font-bold text-on-surface-variant">+3</div>
+</div>
+<p class="text-[10px] text-tertiary font-bold flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">update</span>
+                        Última actualización: hace 5 minutos
+                    </p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

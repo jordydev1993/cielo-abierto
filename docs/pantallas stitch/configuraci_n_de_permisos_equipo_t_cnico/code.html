@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;600&amp;family=Inter:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#8e5c2b",
+                    "error": "#ba1a1a",
+                    "on-surface": "#191c1e",
+                    "surface-container-low": "#f2f4f6",
+                    "outline-variant": "#bfc8cb",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#001f26",
+                    "surface-dim": "#d8dadc",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-error": "#ffffff",
+                    "on-background": "#191c1e",
+                    "on-secondary-fixed": "#0b1c30",
+                    "primary-fixed": "#aeecff",
+                    "on-tertiary-container": "#ffe1ca",
+                    "on-primary-fixed-variant": "#004e5d",
+                    "inverse-surface": "#2d3133",
+                    "primary-container": "#2a7081",
+                    "surface-container": "#eceef0",
+                    "surface-bright": "#f7f9fb",
+                    "on-surface-variant": "#3f484b",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#2d1600",
+                    "surface-tint": "#1e6777",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "outline": "#70797c",
+                    "secondary-container": "#d0e1fb",
+                    "surface-variant": "#e0e3e5",
+                    "background": "#f7f9fb",
+                    "inverse-primary": "#8fd0e3",
+                    "on-tertiary-fixed-variant": "#683c0d",
+                    "primary-fixed-dim": "#8fd0e3",
+                    "on-primary-container": "#bcefff",
+                    "inverse-on-surface": "#eff1f3",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#d3e4fe",
+                    "surface": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "on-secondary-container": "#54647a",
+                    "tertiary-fixed-dim": "#fab980",
+                    "tertiary": "#724515",
+                    "secondary": "#505f76",
+                    "primary": "#005768",
+                    "tertiary-fixed": "#ffdcc0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "40px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "sm": "8px",
+                    "unit": "4px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Manrope"],
+                    "label-caps": ["Inter"],
+                    "title-sm": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "body-lg": ["Atkinson Hyperlegible Next"],
+                    "display-lg": ["Manrope"],
+                    "body-md": ["Atkinson Hyperlegible Next"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Atkinson Hyperlegible Next', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #bfc8cb;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #005768;
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-lg h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-on-surface-variant">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Portal NNyA</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-sm rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">notifications</button>
+<button class="material-symbols-outlined p-sm rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">help_outline</button>
+<button class="material-symbols-outlined p-sm rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">settings</button>
+<img alt="Avatar del Administrador" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional, clean portrait of a modern office administrator for a government institution. The lighting is soft and high-key, emphasizing a light-mode UI aesthetic. The person has a friendly but professional expression, wearing minimalist attire. The background is a blurred, high-end office environment with tones of light grey and serene teal, reflecting institutional trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWMHPeG1lr7Gm8_D9sCgJxv0XKbAV8A4r2OfFPnxO1VZVojluvOv9XXkQWf4GKaIFPSXIsrAElXpA0e1sQm_JSbD5USEAh7kyrQ4nNrjExse7BQMClnml0bIFLnOZcHRrNWZAIgU4BIMZwOew3Y1Q_0I4tirHbehElMipIhvGFaWr3w-xpM1UI-MT9OsupkyFzkmWM-7pp5V_f8Fj71ZIrZ4k1g29RUVGajX8TdNDFAPxd7RZWUTTYLeSxIf9arIM7YunT2rDcQWQ"/>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col p-md gap-sm bg-surface-container-low dark:bg-surface-dim border-r border-outline-variant dark:border-on-surface-variant">
+<div class="mb-lg px-sm">
+<h2 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">Administración</h2>
+<p class="font-title-sm text-title-sm text-on-surface-variant opacity-70">Control de Acceso</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all font-title-sm text-title-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Panel Principal</span>
+</a>
+<a class="flex items-center gap-md p-md bg-primary-container dark:bg-primary-fixed-dim text-on-primary-container dark:text-on-primary-fixed font-semibold rounded-lg transition-all font-title-sm text-title-sm" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span>Gestión de Roles</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all font-title-sm text-title-sm" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Usuarios</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all font-title-sm text-title-sm" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span>Legajos Judiciales</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all font-title-sm text-title-sm" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Reportes</span>
+</a>
+</nav>
+<div class="mt-auto">
+<a class="flex items-center gap-md p-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg transition-all font-title-sm text-title-sm" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 mt-16 p-xl max-w-container-max mx-auto">
+<header class="mb-lg">
+<nav class="flex items-center gap-sm text-on-surface-variant mb-sm">
+<span class="text-body-md font-body-md">Configuración</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-body-md font-body-md">Roles</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-body-md font-body-md font-semibold text-primary">Equipo Técnico</span>
+</nav>
+<div class="flex justify-between items-end">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-xs">Permisos del Rol</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Configure las facultades de acceso para los miembros del Equipo Técnico.</p>
+</div>
+<div class="flex gap-md">
+<button class="px-lg h-10 border border-primary text-primary font-semibold rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all text-body-md">Descartar cambios</button>
+<button class="px-lg h-10 bg-primary text-white font-semibold rounded-lg hover:opacity-90 transition-all text-body-md shadow-sm">Guardar Cambios</button>
+</div>
+</div>
+</header>
+<div class="grid grid-cols-12 gap-lg items-start">
+<!-- Left Column: Permissions Grid -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-lg">
+<!-- Category Section -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">folder_shared</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Gestión de Legajos</h3>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant uppercase">Módulo Principal</span>
+</div>
+<div class="p-lg grid grid-cols-2 md:grid-cols-4 gap-lg">
+<!-- Permission Item -->
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Ver</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Crear</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Editar</span>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant text-error">Eliminar</span>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Alertas Section -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Alertas y Notificaciones</h3>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant uppercase">Operativo</span>
+</div>
+<div class="p-lg grid grid-cols-2 md:grid-cols-4 gap-lg">
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Ver</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Crear</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Editar</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant text-error">Eliminar</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Informes Section -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">description</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Informes Técnicos</h3>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant uppercase">Documentación</span>
+</div>
+<div class="p-lg grid grid-cols-2 md:grid-cols-4 gap-lg">
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Ver</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Crear</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Editar</span>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant text-error">Eliminar</span>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Usuarios Section -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">people</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Directorio de Usuarios</h3>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant uppercase">Sistema</span>
+</div>
+<div class="p-lg grid grid-cols-2 md:grid-cols-4 gap-lg">
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Ver</span>
+<label class="switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Crear</span>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant">Editar</span>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<span class="font-body-md font-semibold text-on-surface-variant text-error">Eliminar</span>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Actions & Security -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-lg">
+<!-- Sensitive Data Shield Section -->
+<div class="bg-surface-container-highest border border-error-container rounded-xl p-lg">
+<div class="flex items-center gap-md mb-md text-error">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<h3 class="font-title-sm text-title-sm">Acceso a Datos Sensibles</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">
+                        El acceso a datos sensibles (DNI, domicilio real, historial médico) debe estar restringido exclusivamente a personal autorizado bajo la Ley de Protección de Datos Personales.
+                    </p>
+<div class="flex flex-col gap-md">
+<div class="flex items-center justify-between p-md bg-white rounded-lg border border-outline-variant">
+<div>
+<p class="font-body-md font-semibold text-on-surface">Revelar DNI/IDs</p>
+<p class="text-[12px] text-on-surface-variant">Permite quitar el desenfoque de privacidad.</p>
+</div>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<div class="flex items-center justify-between p-md bg-white rounded-lg border border-outline-variant">
+<div>
+<p class="font-body-md font-semibold text-on-surface">Acceso a Historial Clínico</p>
+<p class="text-[12px] text-on-surface-variant">Requiere justificación de auditoría.</p>
+</div>
+<label class="switch">
+<input type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+</div>
+<div class="mt-lg p-md bg-error-container rounded-lg flex gap-md">
+<span class="material-symbols-outlined text-on-error-container text-[20px] mt-xs">info</span>
+<p class="text-[13px] text-on-error-container leading-relaxed">
+                            Cualquier cambio en esta sección será registrado en el <strong>Log de Auditoría</strong> con marca de tiempo y usuario responsable.
+                        </p>
+</div>
+</div>
+<!-- Info Card -->
+<div class="bg-white border border-outline-variant rounded-xl p-lg">
+<h3 class="font-title-sm text-title-sm text-on-surface mb-md">Resumen del Rol</h3>
+<div class="flex flex-col gap-md">
+<div class="flex justify-between items-center py-sm border-b border-surface-container">
+<span class="text-body-md text-on-surface-variant">Usuarios asignados</span>
+<span class="font-bold text-on-surface">24</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-surface-container">
+<span class="text-body-md text-on-surface-variant">Nivel de Seguridad</span>
+<span class="px-sm py-[2px] bg-secondary-container text-on-secondary-container rounded text-[12px] font-bold">NIVEL 2</span>
+</div>
+<div class="flex justify-between items-center py-sm">
+<span class="text-body-md text-on-surface-variant">Última modificación</span>
+<span class="text-body-md text-on-surface">12 Oct 2023</span>
+</div>
+</div>
+</div>
+<!-- Illustration Card -->
+<div class="relative rounded-xl overflow-hidden h-48 bg-primary-container">
+<img alt="Security Illustration" class="w-full h-full object-cover mix-blend-overlay opacity-30" data-alt="A high-tech digital security background with abstract hexagonal patterns and data streams. The lighting is dominated by serene teal and deep navy blue, creating a sense of institutional security and advanced technology. The overall aesthetic is minimalist and professional, perfectly fitting a modern government dashboard interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt3YtRSqV7euAmnJc1l_RerRadVVuXO_hAFncZ444SwJ3pc8kupMH_L89IfnJgrLCuoVsn075EH5YdksoqVPYl_7bVXEa1w1fe5fD0TTaXzVrtzVVXmaAyndyMBQjV9tTFCnCRwSqc0nS2wJQS0YdQcLDbnNO3jqHawvnHwUEkSIsfdQT1122bpu3QJV3FU9s7rTgwkNx8gFvLAhs42tlvutCY4nCnyrbAy57z1Hf1Zw5AbA6ll4_vtGeqeI3DzwlaXFLYVpUKavk"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end">
+<p class="text-white font-semibold text-title-sm">Seguridad por Diseño</p>
+<p class="text-primary-fixed text-body-md">Garantizando la integridad de cada expediente judicial.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -11,7 +11,7 @@ export function useCreateRol() {
       const supabase = createClient()
       const { data, error } = await supabase
         .from('roles')
-        .insert({ nombre: values.nombre, descripcion: values.descripcion || null })
+        .insert({ nombre: values.nombre, descripcion: values.descripcion || null, activo: true })
         .select()
         .single()
       if (error) throw error
