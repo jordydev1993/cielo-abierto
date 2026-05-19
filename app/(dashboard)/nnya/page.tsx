@@ -12,7 +12,7 @@ import type { Nnya } from '@/types/database.types'
 
 export default function NnyaPage() {
   const router = useRouter()
-  const { data: nnyas = [], isLoading } = useNnyas()
+  const { data: nnyas = [], isLoading, isError, error } = useNnyas()
   const [search, setSearch] = useState('')
 
   const filtered = search.trim()
@@ -50,6 +50,13 @@ export default function NnyaPage() {
           className="pl-9"
         />
       </div>
+
+      {isError && (
+        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          Error al cargar NNyA:{' '}
+          {error instanceof Error ? error.message : String(error)}
+        </div>
+      )}
 
       <NnyaTable
         data={filtered}

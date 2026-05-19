@@ -11,7 +11,7 @@ export function useUsuarios() {
       const supabase = createClient()
       const { data, error } = await supabase
         .from('usuarios')
-        .select('*, roles(nombre)')
+        .select('*, roles!usuarios_rol_id_fkey(nombre)')
         .order('apellido')
       if (error) throw error
       return data as Usuario[]

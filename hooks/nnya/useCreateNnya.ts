@@ -9,7 +9,7 @@ export function useCreateNnya() {
   return useMutation({
     mutationFn: async (values: NnyaFormValues) => {
       const supabase = createClient()
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('nnya')
         .insert({
           ...values,
@@ -23,10 +23,7 @@ export function useCreateNnya() {
           obra_social: values.obra_social || null,
           numero_expediente: values.numero_expediente || null,
         })
-        .select()
-        .single()
       if (error) throw error
-      return data
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.nnya.lists() }),
   })

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { signOutAction } from '@/app/actions/auth'
 import type { User } from '@supabase/supabase-js'
 
 export type AppRole = 'Admin' | 'Equipo Tecnico' | 'Educador'
@@ -28,26 +29,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const supabase = createClient()
 
-    const fetchRole = async (userId: string) => {
-      const { data } = await supabase
-        .from('usuarios')
-        .select('roles(nombre)')
-        .eq('auth_user_id', userId)
-        .eq('activo', true)
-        .single()
-
-      if (data?.roles) {
-        const roles = data.roles as unknown as { nombre: string }
-        // 'Direccion' es un rol real de la institución — se trata como Admin
-        const nombre = roles.nombre === 'Direccion' ? 'Admin' : roles.nombre
-        setRole(nombre as AppRole)
-      }
+    const fetchRole = async () => {
+      const sb = createClient()
+      const { data } = await sb.rpc('get_my_role')
+      if (data) setRole(data as AppRole)
     }
 
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
       if (user) {
-        fetchRole(user.id).finally(() => setLoading(false))
+        fetchRole().finally(() => setLoading(false))
       } else {
         setLoading(false)
       }
@@ -55,12 +46,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT') {
+        setUser(null)
+        setRole(null)
+        setLoading(false)
+        return
+      }
       setUser(session?.user ?? null)
       if (session?.user) {
-        await fetchRole(session.user.id)
-      } else {
-        setRole(null)
+        await fetchRole()
       }
       setLoading(false)
     })
@@ -69,9 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const signOut = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    window.location.href = '/login'
+    await signOutAction()
   }
 
   return (
