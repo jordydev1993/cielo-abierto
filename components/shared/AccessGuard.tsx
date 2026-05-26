@@ -9,7 +9,8 @@ interface AccessGuardProps {
 }
 
 export function AccessGuard({ roles, fallback = null, children }: AccessGuardProps) {
-  const { role } = useAuth()
+  const { role, loading } = useAuth()
+  if (loading) return null
   if (!role || !roles.includes(role)) return <>{fallback}</>
   return <>{children}</>
 }

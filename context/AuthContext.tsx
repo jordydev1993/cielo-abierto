@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const fetchRole = async () => {
       const sb = createClient()
       const { data } = await sb.rpc('get_my_role')
-      if (data) setRole(data as AppRole)
+      setRole(data as AppRole | null)
     }
 
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -55,6 +55,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       setUser(session?.user ?? null)
       if (session?.user) {
+        setRole(null)
+        setLoading(true)
         await fetchRole()
       }
       setLoading(false)
