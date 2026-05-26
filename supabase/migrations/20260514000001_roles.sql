@@ -8,6 +8,5 @@ CREATE TABLE IF NOT EXISTS roles (
 -- Roles iniciales del sistema
 INSERT INTO roles (nombre, descripcion) VALUES
   ('Admin',          'Acceso total al sistema'),
-  ('Equipo Tecnico', 'Profesionales técnicos: psicólogos, trabajadores sociales'),
-  ('Educador',       'Personal educativo de planta')
+  ('Equipo Tecnico', 'Profesionales técnicos: psicólogos, trabajadores sociales, educadores y todo el personal de planta')
 ON CONFLICT (nombre) DO NOTHING;

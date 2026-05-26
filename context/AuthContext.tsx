@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 import { signOutAction } from '@/app/actions/auth'
 import type { User } from '@supabase/supabase-js'
 
-export type AppRole = 'Admin' | 'Equipo Tecnico' | 'Educador'
+export type AppRole = 'Admin' | 'Equipo Tecnico'
 
 interface AuthContextType {
   user: User | null

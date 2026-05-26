@@ -1,6 +1,6 @@
 -- Fix: get_my_role() ahora normaliza el rol 'Direccion' → 'Admin'.
 -- El rol 'Direccion' existe en la institución pero no figura en las políticas
--- RLS (que solo conocen 'Admin', 'Equipo Tecnico', 'Educador'). Sin este mapeo
+-- RLS (que solo conocen 'Admin', 'Equipo Tecnico'). Sin este mapeo
 -- los usuarios con ese rol no pueden hacer INSERT/UPDATE/DELETE en ninguna tabla.
 CREATE OR REPLACE FUNCTION get_my_role()
 RETURNS TEXT

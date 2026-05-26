@@ -40,52 +40,36 @@ CREATE POLICY "usuarios_self_read" ON usuarios
   USING (auth_user_id = auth.uid());
 
 -- ============================================================
--- NNyA — Admin y Técnico: CRUD; Educador: solo lectura activos
+-- NNyA — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "nnya_admin_tecnico_all" ON nnya
   FOR ALL TO authenticated
   USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
-CREATE POLICY "nnya_educador_read" ON nnya
-  FOR SELECT TO authenticated
-  USING (get_my_role() = 'Educador' AND activo = TRUE);
-
 -- ============================================================
--- TUTORES — Admin y Técnico: CRUD; Educador: solo lectura
+-- TUTORES — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "tutores_admin_tecnico_all" ON tutores
   FOR ALL TO authenticated
   USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
-CREATE POLICY "tutores_educador_read" ON tutores
-  FOR SELECT TO authenticated
-  USING (get_my_role() = 'Educador');
-
 CREATE POLICY "nnya_tutores_admin_tecnico_all" ON nnya_tutores
   FOR ALL TO authenticated
   USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
-CREATE POLICY "nnya_tutores_educador_read" ON nnya_tutores
-  FOR SELECT TO authenticated
-  USING (get_my_role() = 'Educador');
-
 -- ============================================================
--- LEGAJOS — Admin y Técnico: CRUD; Educador: solo lectura
+-- LEGAJOS — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "legajos_admin_tecnico_all" ON legajos
   FOR ALL TO authenticated
   USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
-CREATE POLICY "legajos_educador_read" ON legajos
-  FOR SELECT TO authenticated
-  USING (get_my_role() = 'Educador');
-
 -- ============================================================
--- INTERVENCIONES — Admin y Técnico: CRUD; Educador: sin acceso
+-- INTERVENCIONES — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "intervenciones_admin_tecnico_all" ON intervenciones
   FOR ALL TO authenticated
@@ -93,64 +77,39 @@ CREATE POLICY "intervenciones_admin_tecnico_all" ON intervenciones
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
 -- ============================================================
--- TURNOS — Admin y Técnico: CRUD; Educador: solo lectura
+-- TURNOS — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "turnos_admin_tecnico_all" ON turnos
   FOR ALL TO authenticated
   USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
-CREATE POLICY "turnos_educador_read" ON turnos
-  FOR SELECT TO authenticated
-  USING (get_my_role() = 'Educador');
-
 -- ============================================================
--- ALERTAS — Admin y Técnico: CRUD; Educador: crear, leer y actualizar
+-- ALERTAS — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "alertas_admin_tecnico_all" ON alertas
   FOR ALL TO authenticated
   USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
-CREATE POLICY "alertas_educador_insert" ON alertas
-  FOR INSERT TO authenticated
-  WITH CHECK (get_my_role() = 'Educador');
-
-CREATE POLICY "alertas_educador_select" ON alertas
-  FOR SELECT TO authenticated
-  USING (get_my_role() = 'Educador');
-
-CREATE POLICY "alertas_educador_update" ON alertas
-  FOR UPDATE TO authenticated
-  USING (get_my_role() = 'Educador')
-  WITH CHECK (get_my_role() = 'Educador');
-
 -- ============================================================
--- ACTIVIDADES — todos los roles: CRUD completo
+-- ACTIVIDADES — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
-CREATE POLICY "actividades_all_roles" ON actividades
+CREATE POLICY "actividades_admin_tecnico_all" ON actividades
   FOR ALL TO authenticated
-  USING (get_my_role() IN ('Admin', 'Equipo Tecnico', 'Educador'))
-  WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico', 'Educador'));
+  USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
+  WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
 -- ============================================================
--- INCIDENTES — Admin y Técnico: CRUD; Educador: insertar y leer
+-- INCIDENTES — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "incidentes_admin_tecnico_all" ON incidentes
   FOR ALL TO authenticated
   USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
-CREATE POLICY "incidentes_educador_insert" ON incidentes
-  FOR INSERT TO authenticated
-  WITH CHECK (get_my_role() = 'Educador');
-
-CREATE POLICY "incidentes_educador_select" ON incidentes
-  FOR SELECT TO authenticated
-  USING (get_my_role() = 'Educador');
-
 -- ============================================================
--- DIAGNÓSTICOS — Admin y Técnico: CRUD; Educador: sin acceso
+-- DIAGNÓSTICOS — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "diagnosticos_admin_tecnico_all" ON diagnosticos
   FOR ALL TO authenticated
@@ -158,7 +117,7 @@ CREATE POLICY "diagnosticos_admin_tecnico_all" ON diagnosticos
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
 -- ============================================================
--- MEDICAMENTOS — Admin y Técnico: CRUD; Educador: sin acceso
+-- MEDICAMENTOS — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "medicamentos_admin_tecnico_all" ON medicamentos
   FOR ALL TO authenticated
@@ -166,7 +125,7 @@ CREATE POLICY "medicamentos_admin_tecnico_all" ON medicamentos
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
 -- ============================================================
--- INFORMES — Admin y Técnico: CRUD; Educador: sin acceso
+-- INFORMES — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "informes_admin_tecnico_all" ON informes
   FOR ALL TO authenticated
@@ -174,19 +133,15 @@ CREATE POLICY "informes_admin_tecnico_all" ON informes
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
 -- ============================================================
--- DOCUMENTOS — Admin y Técnico: CRUD; Educador: solo lectura
+-- DOCUMENTOS — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "documentos_admin_tecnico_all" ON documentos
   FOR ALL TO authenticated
   USING (get_my_role() IN ('Admin', 'Equipo Tecnico'))
   WITH CHECK (get_my_role() IN ('Admin', 'Equipo Tecnico'));
 
-CREATE POLICY "documentos_educador_read" ON documentos
-  FOR SELECT TO authenticated
-  USING (get_my_role() = 'Educador');
-
 -- ============================================================
--- AUDIENCIAS JUDICIALES — Admin y Técnico: CRUD; Educador: sin acceso
+-- AUDIENCIAS JUDICIALES — Admin y Equipo Tecnico: CRUD completo
 -- ============================================================
 CREATE POLICY "audiencias_admin_tecnico_all" ON audiencias_judiciales
   FOR ALL TO authenticated

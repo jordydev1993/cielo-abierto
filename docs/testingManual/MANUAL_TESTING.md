@@ -8,11 +8,10 @@
 
 | Tester | Email | Contraseña | Rol | ¿Qué prueba? |
 |--------|-------|------------|-----|--------------|
-| **Meli** | meli@cielo-abierto.test | CieloAbierto2026! | Admin | Todo el sistema + gestión de usuarios |
-| **Cami** | cami@cielo-abierto.test | CieloAbierto2026! | Equipo Técnico | NNyA, tutores, legajos (sin usuarios/roles) |
-| **Sofi** | sofi@cielo-abierto.test | CieloAbierto2026! | Educador | Solo lectura en la mayoría; puede registrar alertas e incidentes |
+| **Meli** | meli@cielo-abierto.test | CieloAbierto2026! | Admin | Todo el sistema + gestión de usuarios y roles |
+| **Cami** | cami@cielo-abierto.test | CieloAbierto2026! | Equipo Tecnico | Acceso completo a NNyA, tutores, legajos, alertas y todas las entidades de negocio (sin usuarios/roles) |
 
-> **Contraseña igual para las tres.** Anotá los errores con captura de pantalla + descripción de lo que hiciste.
+> **Contraseña igual para ambas.** Anotá los errores con captura de pantalla + descripción de lo que hiciste.
 
 ---
 
@@ -35,6 +34,15 @@ Para cada error que encontrés, indicá:
 - [ ] Ingresá con `meli@cielo-abierto.test` / `CieloAbierto2026!`
 - [ ] **Esperado:** te redirige a `/dashboard`, el sidebar muestra: Inicio, NNyA, Legajos, Tutores, Alertas, Usuarios, Roles
 
+1. **Qué hiciste** INGRESE LOS DATOS DEL LIGIN
+2. **Qué esperabas** QUE ME LOGEARA
+3. **Qué pasó** SE LOGIO CON EXITO
+4. **Captura de pantalla**
+![alt text]({F71CFE55-4821-407B-87B3-4C4CD9287950}.png)
+
+si cierro sesion varias veces no aparecen algunos modulos 
+![alt text]({0AA3DE7A-4F80-497C-B48C-E30486F2FF17}.png)
+
 
 
 ### 2. Gestión de Roles
@@ -45,6 +53,7 @@ Para cada error que encontrés, indicá:
 - [ ] **Esperado:** la lista muestra el nombre actualizado
 - [ ] Intentá eliminar el rol → confirmá en el diálogo
 - [ ] **Esperado:** desaparece de la lista
+![alt text]({91AA65E5-720D-4A1B-98F9-4AAB475C0368}.png)
 
 
 
@@ -54,10 +63,10 @@ Para cada error que encontrés, indicá:
   - Nombre: `Lucas`, Apellido: `Prueba`
   - Email: `lucas@cielo-abierto.test`
   - Contraseña: `Test12345!`
-  - Rol: `Educador`
+  - Rol: `Equipo Tecnico`
 - [ ] Hacé click en **Crear usuario**
 - [ ] **Esperado:** aparece en la lista sin errores
-- [ ] Hacé click en editar de Lucas → cambiá su rol a "Equipo Tecnico" → guardá
+- [ ] Hacé click en editar de Lucas → cambiá su nombre → guardá
 - [ ] Hacé click en el ícono de desactivar 🗑️ de Lucas → confirmá
 - [ ] **Esperado:** su badge pasa a "Inactivo"
 
@@ -92,16 +101,18 @@ Para cada error que encontrés, indicá:
 - [ ] **Esperado:** error "Este NNyA ya tiene un legajo activo" (el sistema no permite dos)
 
 ### 7. Control de acceso (verificación)
-- [ ] Cerrá sesión → ingresá como Sofi (`sofi@cielo-abierto.test`)
+- [ ] Cerrá sesión → ingresá como Cami (`cami@cielo-abierto.test`)
 - [ ] **Esperado:** en el sidebar NO aparecen "Usuarios" ni "Roles"
 - [ ] Intentá navegar manualmente a `https://cielo-abierto-two.vercel.app/roles`
+- [ ] **Esperado:** muestra "Sin acceso"
+- [ ] Intentá navegar a `https://cielo-abierto-two.vercel.app/usuarios`
 - [ ] **Esperado:** muestra "Sin acceso"
 
 ---
 
-## CAMI — Rol: Equipo Técnico
+## CAMI — Rol: Equipo Tecnico
 
-> Tu rol tiene acceso a NNyA, tutores y legajos, pero NO a usuarios ni roles.
+> Tu rol tiene acceso completo a todas las entidades de negocio (NNyA, tutores, legajos, alertas, diagnósticos, etc.), pero NO a usuarios ni roles.
 
 ### 1. Login
 - [ ] Abrí https://cielo-abierto-two.vercel.app
@@ -200,41 +211,6 @@ no aparece nada
 
 ![alt text]({BEDBFDD2-BB6C-49BB-959D-CE5193815E70}.png)
 
-## SOFI — Rol: Educador
-
-> Tu rol tiene acceso **de solo lectura** a la mayoría de los módulos. Podés crear alertas e incidentes (Sprint 2).
-
-### 1. Login
-- [ ] Abrí https://cielo-abierto-two.vercel.app
-- [ ] Ingresá con `sofi@cielo-abierto.test` / `CieloAbierto2026!`
-- [ ] **Esperado:** sidebar muestra solo Inicio, NNyA, Legajos, Tutores — sin Usuarios, Roles ni Alertas
-
-### 2. Solo lectura en NNyA
-- [ ] Hacé click en **NNyA**
-- [ ] **Esperado:** ves la lista pero NO aparece el botón "Registrar NNyA"
-- [ ] Verificá que los NNyA con `activo = false` NO aparezcan en la lista
-- [ ] **Esperado:** solo ves los NNyA activos
-
-### 3. Solo lectura en Tutores
-- [ ] Hacé click en **Tutores**
-- [ ] **Esperado:** ves la lista pero los botones de editar y eliminar no deberían permitirte hacer cambios (o directamente no aparecen)
-
-### 4. Solo lectura en Legajos
-- [ ] Hacé click en **Legajos**
-- [ ] **Esperado:** ves la lista de legajos sin botón para crear uno nuevo
-
-### 5. Restricción de acceso directo
-- [ ] Intentá ir a `https://cielo-abierto-two.vercel.app/usuarios`
-- [ ] **Esperado:** "Sin acceso"
-- [ ] Intentá ir a `https://cielo-abierto-two.vercel.app/roles`
-- [ ] **Esperado:** "Sin acceso"
-- [ ] Intentá ir a `https://cielo-abierto-two.vercel.app/nnya/nuevo`
-- [ ] **Esperado:** "Sin acceso"
-
-### 6. Cerrar sesión
-- [ ] Hacé click en **Cerrar sesión** en el sidebar
-- [ ] **Esperado:** te redirige al login
-
 ---
 
 ## Checklist de reglas de negocio críticas
@@ -245,9 +221,8 @@ Estas reglas deben ser verificadas (cualquiera puede hacerlo):
 |---|-------|---------------|-------------------|
 | 1 | DNI único por NNyA | Intentar registrar dos NNyA con el mismo DNI | Error al guardar |
 | 2 | 1 legajo activo por NNyA | Abrir segundo legajo para el mismo NNyA | Error "ya tiene legajo activo" |
-| 3 | Educador no ve NNyA inactivos | Desactivar un NNyA con Meli, verificar con Sofi | No aparece en lista |
-| 4 | Proxy redirige no autenticados | Abrir `/dashboard` sin login | Redirige a `/login` |
-| 5 | Login inválido | Usar contraseña incorrecta | Mensaje de error en el form |
+| 3 | Proxy redirige no autenticados | Abrir `/dashboard` sin login | Redirige a `/login` |
+| 4 | Login inválido | Usar contraseña incorrecta | Mensaje de error en el form |
 
 ---
 
@@ -256,8 +231,8 @@ Estas reglas deben ser verificadas (cualquiera puede hacerlo):
 Esta versión incluye los ABMs de las entidades maestras:
 - ✅ Roles (solo Admin)
 - ✅ Usuarios (solo Admin, con creación en Supabase Auth)
-- ✅ NNyA (Admin + Equipo Técnico: CRUD; Educador: solo activos)
-- ✅ Tutores / Familiares (Admin + Equipo Técnico: CRUD; Educador: lectura)
-- ✅ Legajos (Admin + Equipo Técnico: CRUD; Educador: lectura)
+- ✅ NNyA (Admin + Equipo Técnico: CRUD completo)
+- ✅ Tutores / Familiares (Admin + Equipo Técnico: CRUD completo)
+- ✅ Legajos (Admin + Equipo Técnico: CRUD completo)
 
 **No incluido aún (Sprint 2):** Intervenciones, Turnos, Alertas, Actividades, Incidentes, Diagnósticos, Medicamentos, Informes, Documentos, Audiencias.
