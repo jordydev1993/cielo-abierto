@@ -30,7 +30,48 @@ export const queryKeys = {
   },
   alertas: {
     all: ['alertas'] as const,
+    lists: () => [...queryKeys.alertas.all, 'list'] as const,
     pendientes: () => [...queryKeys.alertas.all, 'pendientes'] as const,
     byNnya: (nnyaId: string) => [...queryKeys.alertas.all, 'nnya', nnyaId] as const,
+  },
+  turnos: {
+    all: ['turnos'] as const,
+    lists: () => [...queryKeys.turnos.all, 'list'] as const,
+    byLegajo: (legajoId: string) => [...queryKeys.turnos.all, 'legajo', legajoId] as const,
+  },
+  actividades: {
+    all: ['actividades'] as const,
+    lists: () => [...queryKeys.actividades.all, 'list'] as const,
+  },
+  incidentes: {
+    all: ['incidentes'] as const,
+    lists: () => [...queryKeys.incidentes.all, 'list'] as const,
+    byLegajo: (legajoId: string) => [...queryKeys.incidentes.all, 'legajo', legajoId] as const,
+  },
+  intervenciones: {
+    all: ['intervenciones'] as const,
+    lists: () => [...queryKeys.intervenciones.all, 'list'] as const,
+    byNnya: (nnyaId: string) => [...queryKeys.intervenciones.all, 'nnya', nnyaId] as const,
+  },
+  informes: {
+    all: ['informes'] as const,
+    lists: () => [...queryKeys.informes.all, 'list'] as const,
+    byLegajo: (legajoId: string) => [...queryKeys.informes.all, 'legajo', legajoId] as const,
+  },
+  audiencias: {
+    all: ['audiencias'] as const,
+    byLegajo: (legajoId: string) => [...queryKeys.audiencias.all, 'legajo', legajoId] as const,
+  },
+  diagnosticos: {
+    all: ['diagnosticos'] as const,
+    byLegajo: (legajoId: string) => [...queryKeys.diagnosticos.all, 'legajo', legajoId] as const,
+  },
+  medicamentos: {
+    all: ['medicamentos'] as const,
+    byLegajo: (legajoId: string) => [...queryKeys.medicamentos.all, 'legajo', legajoId] as const,
+  },
+  documentos: {
+    all: ['documentos'] as const,
+    byLegajo: (legajoId: string) => [...queryKeys.documentos.all, 'legajo', legajoId] as const,
   },
 }

@@ -46,14 +46,15 @@ si cierro sesion varias veces no aparecen algunos modulos
 
 
 ### 2. Gestión de Roles
-- [ ] Hacé click en **Roles** en el sidebar
-- [ ] Hacé click en **Nuevo rol** → completá nombre "Coordinador" y una descripción → **Crear rol**
-- [ ] **Esperado:** aparece en la lista con badge "Activo"
-- [ ] Hacé click en el ícono de editar ✏️ del rol creado → cambiá el nombre → **Guardar cambios**
-- [ ] **Esperado:** la lista muestra el nombre actualizado
-- [ ] Intentá eliminar el rol → confirmá en el diálogo
-- [ ] **Esperado:** desaparece de la lista
-![alt text]({91AA65E5-720D-4A1B-98F9-4AAB475C0368}.png)
+- [ ] Hacé click en **Roles** en el sidebar - ok
+
+- [ ] Hacé click en **Nuevo rol** → completá nombre "Coordinador" y una descripción → **Crear rol** - ok
+- [ ] **Esperado:** aparece en la lista con badge "Activo" - ok
+- [ ] Hacé click en el ícono de editar ✏️ del rol creado → cambiá el nombre → **Guardar cambios** - ok
+- [ ] **Esperado:** la lista muestra el nombre actualizado - ok 
+- [ ] Intentá eliminar el rol → confirmá en el diálogo - ok 
+- [ ] **Esperado:** desaparece de la lista - ok 
+
 
 
 

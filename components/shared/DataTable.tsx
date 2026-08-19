@@ -19,6 +19,7 @@ interface DataTableProps<T> {
   loading?: boolean
   onEdit?: (row: T) => void
   onDelete?: (row: T) => void
+  extraActions?: (row: T) => React.ReactNode
   pageSize?: number
   emptyMessage?: string
 }
@@ -29,13 +30,14 @@ export function DataTable<T>({
   loading,
   onEdit,
   onDelete,
+  extraActions,
   pageSize = 20,
   emptyMessage = 'No hay registros',
 }: DataTableProps<T>) {
   const [page, setPage] = React.useState(1)
   const totalPages = Math.max(1, Math.ceil(data.length / pageSize))
   const sliced = data.slice((page - 1) * pageSize, page * pageSize)
-  const showActions = onEdit || onDelete
+  const showActions = onEdit || onDelete || extraActions
 
   if (loading) {
     return (
@@ -87,6 +89,7 @@ export function DataTable<T>({
                           <Pencil className="h-4 w-4" />
                         </Button>
                       )}
+                      {extraActions && extraActions(row)}
                       {onDelete && (
                         <Button
                           variant="ghost"

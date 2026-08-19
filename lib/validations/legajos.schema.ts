@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const legajoSchema = z.object({
-  nnya_id: z.string().uuid({ error: 'Seleccioná un NNyA' }),
+  nnya_id: z.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i, { error: 'Seleccioná un NNyA' }),
   numero_legajo: z.string().min(1, { error: 'Requerido' }).max(50),
   fecha_apertura: z.string().min(1, { error: 'Requerido' }),
   observaciones: z.string().max(2000).optional().or(z.literal('')),

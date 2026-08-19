@@ -7,9 +7,10 @@ import { QueryProvider } from '@/components/providers/QueryProvider'
 import { Toaster } from '@/components/ui/toaster'
 import {
   Users, User, FileText, Home, BookOpen, Shield, UserCheck,
-  LogOut, AlertTriangle,
+  LogOut, AlertTriangle, CalendarClock, Siren, PartyPopper,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useAlertasPendientesCount } from '@/hooks/alertas/useAlertasPendientesCount'
 
 const NAV_ALL = [
   { href: '/dashboard', label: 'Inicio', icon: Home },
@@ -19,7 +20,11 @@ const NAV_ALL = [
 ]
 
 const NAV_ADMIN_TECNICO = [
+  { href: '/incidentes', label: 'Incidentes', icon: Siren },
   { href: '/alertas', label: 'Alertas', icon: AlertTriangle },
+  { href: '/turnos', label: 'Turnos', icon: CalendarClock },
+  { href: '/actividades', label: 'Actividades', icon: PartyPopper },
+  { href: '/informes', label: 'Informes', icon: FileText },
 ]
 
 const NAV_ADMIN_ONLY = [
@@ -27,14 +32,24 @@ const NAV_ADMIN_ONLY = [
   { href: '/roles', label: 'Roles', icon: Shield },
 ]
 
+function AlertasBadge() {
+  const { data: count } = useAlertasPendientesCount()
+  if (!count) return null
+  return (
+    <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center leading-4">
+      {count > 99 ? '99+' : count}
+    </span>
+  )
+}
+
 function Sidebar() {
   const pathname = usePathname()
-  const { role, signOut } = useAuth()
+  const { role, loading, signOut } = useAuth()
 
   const navItems = [
     ...NAV_ALL,
-    ...(role === 'Admin' || role === 'Equipo Tecnico' ? NAV_ADMIN_TECNICO : []),
-    ...(role === 'Admin' ? NAV_ADMIN_ONLY : []),
+    ...(!loading && (role === 'Admin' || role === 'Equipo Tecnico') ? NAV_ADMIN_TECNICO : []),
+    ...(!loading && role === 'Admin' ? NAV_ADMIN_ONLY : []),
   ]
 
   return (
@@ -60,6 +75,7 @@ function Sidebar() {
             >
               <Icon className={cn('h-4 w-4 shrink-0', active ? 'text-primary' : 'text-outline')} />
               {label}
+              {href === '/alertas' && <AlertasBadge />}
             </Link>
           )
         })}

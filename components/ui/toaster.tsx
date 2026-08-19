@@ -41,26 +41,28 @@ export function Toaster() {
         <div
           key={t.id}
           className={cn(
-            'flex items-start gap-3 rounded-lg border p-4 shadow-md bg-white animate-in slide-in-from-bottom-2',
-            t.variant === 'destructive' && 'border-red-200 bg-red-50',
-            t.variant === 'success' && 'border-green-200 bg-green-50'
+            'flex items-start gap-3 rounded-lg border p-4 shadow-md bg-surface-container-lowest animate-in slide-in-from-bottom-2',
+            t.variant === 'destructive' && 'border-error-container bg-error-container',
+            t.variant === 'success' && 'border-primary-fixed bg-primary-container',
+            t.variant === 'default' && 'border-outline-variant'
           )}
         >
           <div className="flex-1 min-w-0">
             <p className={cn(
               'text-sm font-semibold',
-              t.variant === 'destructive' && 'text-red-800',
-              t.variant === 'success' && 'text-green-800'
+              t.variant === 'destructive' && 'text-on-error-container',
+              t.variant === 'success' && 'text-on-primary-container',
+              (!t.variant || t.variant === 'default') && 'text-on-surface'
             )}>
               {t.title}
             </p>
             {t.description && (
-              <p className="text-xs text-slate-500 mt-0.5">{t.description}</p>
+              <p className="text-xs text-on-surface-variant mt-0.5">{t.description}</p>
             )}
           </div>
           <button
             onClick={() => setToasts((prev) => prev.filter((x) => x.id !== t.id))}
-            className="text-slate-400 hover:text-slate-600 shrink-0"
+            className="text-outline hover:text-on-surface-variant shrink-0"
           >
             <X className="h-4 w-4" />
           </button>

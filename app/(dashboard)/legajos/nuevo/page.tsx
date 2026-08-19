@@ -19,10 +19,7 @@ export default function NuevoLegajoPage() {
       toast({ title: 'Legajo abierto', variant: 'success' })
       router.push('/legajos')
     } catch (e: any) {
-      const msg = e.message?.includes('uq_legajo_activo_por_nnya')
-        ? 'Este NNyA ya tiene un legajo activo'
-        : e.message
-      toast({ title: 'Error', description: msg, variant: 'destructive' })
+      toast({ title: 'Error al abrir legajo', description: e.message, variant: 'destructive' })
     }
   }
 

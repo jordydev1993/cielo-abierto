@@ -1,6 +1,8 @@
 'use client'
 import { DataTable, type Column } from '@/components/shared/DataTable'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Pencil, Eye } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import type { Legajo } from '@/types/database.types'
@@ -47,7 +49,19 @@ export function LegajoTable({ data, loading, onEdit, onCerrar }: LegajoTableProp
       columns={columns}
       data={data}
       loading={loading}
-      onEdit={onEdit}
+      extraActions={(row) =>
+        onEdit ? (
+          row.estado === 'activo' ? (
+            <Button variant="ghost" size="icon" onClick={() => onEdit(row)} title="Editar legajo">
+              <Pencil className="h-4 w-4" />
+            </Button>
+          ) : (
+            <Button variant="ghost" size="icon" onClick={() => onEdit(row)} title="Ver legajo (solo lectura)">
+              <Eye className="h-4 w-4 text-slate-400" />
+            </Button>
+          )
+        ) : null
+      }
       emptyMessage="No hay legajos registrados"
     />
   )

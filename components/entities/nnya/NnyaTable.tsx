@@ -1,6 +1,8 @@
 'use client'
 import { DataTable, type Column } from '@/components/shared/DataTable'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Eye } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import type { Nnya } from '@/types/database.types'
@@ -68,6 +70,11 @@ export function NnyaTable({ data, loading, onEdit, onView }: NnyaTableProps) {
       data={data}
       loading={loading}
       onEdit={onEdit}
+      extraActions={(row) => (
+        <Button variant="ghost" size="icon" onClick={() => onView(row)} title="Ver">
+          <Eye className="h-4 w-4" />
+        </Button>
+      )}
       emptyMessage="No hay NNyA registrados"
     />
   )

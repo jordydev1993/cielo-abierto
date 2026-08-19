@@ -93,11 +93,32 @@ export interface Intervencion {
   created_by: string | null
   created_at: string
   updated_at: string
+  usuarios?: Pick<Usuario, 'id' | 'nombre' | 'apellido'>
+}
+
+export interface Actividad {
+  id: string
+  titulo: string
+  descripcion: string | null
+  tipo: string
+  fecha: string
+  hora_inicio: string | null
+  hora_fin: string | null
+  lugar: string | null
+  responsable_id: string | null
+  nnya_ids: string[]
+  estado: 'programada' | 'en_curso' | 'realizada' | 'cancelada'
+  observaciones: string | null
+  created_by: string | null
+  created_at: string
+  updated_at: string
+  usuarios?: Pick<Usuario, 'id' | 'nombre' | 'apellido'>
 }
 
 export interface Turno {
   id: string
   nnya_id: string
+  legajo_id: string
   tipo: string
   fecha_hora: string
   lugar: string | null
@@ -117,7 +138,7 @@ export interface Alerta {
   descripcion: string | null
   tipo: string
   prioridad: 'baja' | 'media' | 'alta' | 'critica'
-  estado: 'pendiente' | 'en_seguimiento' | 'resuelta' | 'vencida'
+  estado: 'pendiente' | 'en_proceso' | 'completada' | 'vencida'
   fecha_vencimiento: string | null
   completada_por: string | null
   fecha_completada: string | null
@@ -147,13 +168,16 @@ export interface Actividad {
 export interface Incidente {
   id: string
   nnya_id: string
+  legajo_id: string
   tipo: string
   descripcion: string
   fecha_hora: string
-  gravedad: 'leve' | 'media' | 'grave' | 'critica'
+  gravedad: 'leve' | 'media' | 'grave' | 'critico'
   reportado_por: string | null
   acciones_tomadas: string | null
   estado: 'abierto' | 'en_seguimiento' | 'cerrado'
+  gravedad_sugerida: string | null
+  sugerencia_aceptada: boolean
   created_at: string
   updated_at: string
 }
@@ -161,12 +185,13 @@ export interface Incidente {
 export interface Diagnostico {
   id: string
   nnya_id: string
+  legajo_id: string
   tipo: string
   descripcion: string
   fecha_diagnostico: string
   profesional: string | null
   institucion: string | null
-  activo: boolean
+  estado: 'activo' | 'en_seguimiento' | 'resuelto'
   created_at: string
   updated_at: string
 }
@@ -174,6 +199,8 @@ export interface Diagnostico {
 export interface Medicamento {
   id: string
   nnya_id: string
+  legajo_id: string
+  diagnostico_id: string | null
   nombre: string
   dosis: string
   frecuencia: string
@@ -181,7 +208,7 @@ export interface Medicamento {
   prescriptor: string | null
   fecha_inicio: string
   fecha_fin: string | null
-  activo: boolean
+  estado: 'en_curso' | 'finalizado'
   observaciones: string | null
   created_at: string
   updated_at: string
@@ -190,6 +217,7 @@ export interface Medicamento {
 export interface Informe {
   id: string
   nnya_id: string
+  legajo_id: string
   tipo: string
   titulo: string
   contenido: string
@@ -203,6 +231,7 @@ export interface Informe {
 export interface Documento {
   id: string
   nnya_id: string
+  legajo_id: string
   nombre: string
   tipo: string
   url: string
@@ -217,6 +246,7 @@ export interface Documento {
 export interface AudienciaJudicial {
   id: string
   nnya_id: string
+  legajo_id: string
   fecha_hora: string
   tribunal: string
   juzgado: string | null
@@ -225,7 +255,7 @@ export interface AudienciaJudicial {
   tipo: string
   resultado: string | null
   observaciones: string | null
-  estado: 'programada' | 'realizada' | 'postergada' | 'cancelada'
+  estado: 'programada' | 'realizada' | 'suspendida' | 'cancelada'
   created_by: string | null
   created_at: string
   updated_at: string

@@ -14,14 +14,14 @@ function FormField({ label, error, required, className, children }: FormFieldPro
   return (
     <div className={cn('space-y-1.5', className)}>
       <LabelPrimitive.Root className={cn(
-        'text-sm font-medium text-slate-700',
-        error && 'text-red-600'
+        'text-sm font-medium text-on-surface-variant',
+        error && 'text-error'
       )}>
         {label}
-        {required && <span className="text-red-500 ml-0.5">*</span>}
+        {required && <span className="text-error ml-0.5">*</span>}
       </LabelPrimitive.Root>
       {children}
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <p className="text-xs text-error">{error}</p>}
     </div>
   )
 }
@@ -35,7 +35,7 @@ interface FormSectionProps {
 function FormSection({ title, className, children }: FormSectionProps) {
   return (
     <div className={cn('space-y-4', className)}>
-      {title && <h3 className="text-sm font-semibold text-slate-900 border-b border-slate-100 pb-2">{title}</h3>}
+      {title && <h3 className="text-sm font-semibold text-on-surface border-b border-outline-variant pb-2">{title}</h3>}
       {children}
     </div>
   )

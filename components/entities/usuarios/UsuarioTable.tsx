@@ -1,6 +1,8 @@
 'use client'
 import { DataTable, type Column } from '@/components/shared/DataTable'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { UserCheck, UserX } from 'lucide-react'
 import type { Usuario } from '@/types/database.types'
 
 interface UsuarioTableProps {
@@ -50,7 +52,20 @@ export function UsuarioTable({ data, loading, onEdit, onToggleActivo }: UsuarioT
       data={data}
       loading={loading}
       onEdit={onEdit}
-      onDelete={onToggleActivo}
+      extraActions={(row) => (
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => onToggleActivo(row)}
+          title={row.activo ? 'Desactivar' : 'Activar'}
+          className={row.activo
+            ? 'text-slate-500 hover:text-red-600 hover:bg-red-50'
+            : 'text-slate-400 hover:text-green-600 hover:bg-green-50'
+          }
+        >
+          {row.activo ? <UserX className="h-4 w-4" /> : <UserCheck className="h-4 w-4" />}
+        </Button>
+      )}
       emptyMessage="No hay usuarios registrados"
     />
   )

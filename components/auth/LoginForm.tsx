@@ -33,13 +33,26 @@ export function LoginForm() {
     setServerError(null)
     const supabase = createClient()
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data: authData, error } = await supabase.auth.signInWithPassword({
       email: values.email,
       password: values.password,
     })
 
     if (error) {
       setServerError('Credenciales incorrectas. Verificá tu email y contraseña.')
+      return
+    }
+
+    // U-EX-03: verificar que el usuario esté activo en el sistema
+    const { data: perfil } = await supabase
+      .from('usuarios')
+      .select('activo')
+      .eq('auth_user_id', authData.user.id)
+      .single()
+
+    if (perfil && perfil.activo === false) {
+      await supabase.auth.signOut()
+      setServerError('Tu cuenta se encuentra inactiva. Contactá al administrador del sistema. (U-EX-03)')
       return
     }
 

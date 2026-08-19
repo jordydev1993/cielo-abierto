@@ -1,7 +1,23 @@
 import { createClient } from '@supabase/supabase-js'
+import { createClient as createServerClient } from '@/lib/supabase/server'
 import { usuarioCreateSchema } from '@/lib/validations/usuarios.schema'
 
 export async function POST(request: Request) {
+  const supabaseServer = await createServerClient()
+
+  const { data: { user } } = await supabaseServer.auth.getUser()
+  if (!user) {
+    return Response.json({ error: 'No autenticado.' }, { status: 401 })
+  }
+
+  const { data: role } = await supabaseServer.rpc('get_my_role')
+  if (role !== 'Admin') {
+    return Response.json(
+      { error: 'Acceso denegado: su rol no cuenta con los permisos necesarios para gestionar usuarios.' },
+      { status: 403 }
+    )
+  }
+
   const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -23,7 +39,11 @@ export async function POST(request: Request) {
   })
 
   if (authError) {
-    return Response.json({ error: authError.message }, { status: 400 })
+    const msg = authError.message.toLowerCase()
+    const friendly = msg.includes('already') || msg.includes('exists') || msg.includes('registered')
+      ? 'Ya existe un usuario registrado con ese email. Ingresá un email diferente. (U-EX-01)'
+      : 'Error al crear el usuario. Intentá nuevamente.'
+    return Response.json({ error: friendly }, { status: 400 })
   }
 
   const { data, error } = await supabaseAdmin
