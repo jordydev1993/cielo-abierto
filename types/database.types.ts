@@ -38,6 +38,7 @@ export interface Nnya {
   numero_expediente: string | null
   activo: boolean
   estado_actual: 'En residencia' | 'En proceso de egreso' | 'Egresado' | 'Fallecido'
+  fecha_egreso: string | null
   created_at: string
   updated_at: string
 }
@@ -257,6 +258,154 @@ export interface AudienciaJudicial {
   observaciones: string | null
   estado: 'programada' | 'realizada' | 'suspendida' | 'cancelada'
   created_by: string | null
+  created_at: string
+  updated_at: string
+}
+
+// ── FASE A1 (AGENTS.md sección 11) — ver prompts/012-tutela-evaluacion-turnos-seguimiento.md ──
+
+export interface Referente {
+  id: string
+  nombre: string
+  apellido: string
+  dni: string
+  fecha_nacimiento: string | null
+  tipo: 'familiar' | 'educador' | 'vecino' | 'otro'
+  vinculo_descripcion: string | null
+  telefono: string | null
+  email: string | null
+  domicilio: string | null
+  activo: boolean
+  created_by: string
+  created_at: string
+  updated_at: string
+}
+
+export interface VinculoTutela {
+  id: string
+  nnya_id: string
+  tipo: 'tutela_residencia' | 'revinculacion_familiar' | 'referente_afectivo'
+  usuario_id: string | null
+  referente_id: string | null
+  vigente_desde: string
+  vigente_hasta: string | null
+  estado: 'propuesto' | 'vigente' | 'finalizado' | 'revocado'
+  resolucion_respaldo: string | null
+  motivo_finalizacion: string | null
+  observaciones: string | null
+  created_by: string
+  created_at: string
+  updated_at: string
+}
+
+export interface ValidacionRenaper {
+  id: string
+  referente_id: string
+  momento: 'alta_referente' | 'egreso' | 'reintento'
+  dni_consultado: string
+  estado_dni: 'vigente' | 'vencido' | 'inexistente' | 'error_servicio'
+  tiene_antecedentes: boolean | null
+  resultado: 'aprobado' | 'rechazado' | 'no_concluyente'
+  respuesta_cruda: Record<string, unknown> | null
+  consultado_por: string
+  consultado_at: string
+}
+
+export interface TransferenciaAuh {
+  id: string
+  nnya_id: string
+  vinculo_id: string
+  fecha_gestion: string | null
+  fecha_efectiva: string | null
+  estado: 'pendiente' | 'en_gestion' | 'transferida' | 'rechazada' | 'no_corresponde'
+  organismo: string | null
+  observaciones: string | null
+  created_by: string
+  created_at: string
+  updated_at: string
+}
+
+export interface EvaluacionInstitucional {
+  id: string
+  periodo_mes: number
+  periodo_anio: number
+  fecha_reunion: string
+  observaciones: string | null
+  estado: 'convocada' | 'realizada' | 'cancelada'
+  created_by: string
+  created_at: string
+  updated_at: string
+}
+
+export interface EvaluacionInstitucionalAsistente {
+  id: string
+  evaluacion_id: string
+  usuario_id: string
+  asistio: boolean
+  created_at: string
+}
+
+export interface EvaluacionInstitucionalCaso {
+  id: string
+  evaluacion_id: string
+  nnya_id: string
+  resumen_situacion: string
+  indicador_avance: number | null
+  recomendaciones: string | null
+  seguimiento_requerido: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface PropuestaMejora {
+  id: string
+  evaluacion_id: string
+  descripcion: string
+  tipo: 'mejora' | 'capacitacion'
+  area: 'educativa' | 'sanitaria' | 'social' | 'institucional' | 'protocolos' | null
+  responsable_id: string | null
+  fecha_vencimiento: string | null
+  estado: 'abierto' | 'en_progreso' | 'completado' | 'cancelado'
+  observaciones: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface TurnoPersonal {
+  id: string
+  usuario_id: string
+  fecha: string
+  turno: 'mañana' | 'tarde' | 'noche'
+  hora_inicio: string | null
+  hora_cierre: string | null
+  estado: 'planificado' | 'en_curso' | 'entregado' | 'cerrado' | 'no_cubierto'
+  novedades_traspaso: string | null
+  entregado_por: string | null
+  entregado_at: string | null
+  recibido_por: string | null
+  recibido_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface SeguimientoPostEgreso {
+  id: string
+  nnya_id: string
+  vinculo_id: string | null
+  dias_post_egreso: 30 | 60
+  fecha_programada: string
+  fecha_contacto: string | null
+  contacto_realizado: boolean
+  contacto_efectivo: boolean | null
+  escolaridad: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
+  salud: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
+  terapias: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
+  percibe_auh: boolean | null
+  detalle_incumplimiento: string | null
+  observaciones: string | null
+  indicador_reinsercion: number | null
+  requiere_intervencion: boolean
+  contactado_por: string | null
   created_at: string
   updated_at: string
 }
