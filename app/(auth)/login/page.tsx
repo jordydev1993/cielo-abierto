@@ -5,7 +5,7 @@ export default function LoginPage() {
   return (
     <Card className="w-full max-w-sm mx-4">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Cielo Abierto</CardTitle>
+        <CardTitle className="text-2xl">Argüello Infancias</CardTitle>
         <CardDescription>
           Sistema de Gestión Residencia NNyA
         </CardDescription>

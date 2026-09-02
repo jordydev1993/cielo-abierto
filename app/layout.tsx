@@ -15,7 +15,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Cielo Abierto — Sistema de Gestión',
+  title: 'Argüello Infancias — Sistema de Gestión',
   description: 'Sistema de gestión para residencia de NNyA',
 }
 

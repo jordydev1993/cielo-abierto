@@ -37,7 +37,7 @@ Ninguno.
 
 ## Archivos a modificar
 
-- `cielo-abierto/app/api/usuarios/route.ts`: al inicio del `POST`, antes de crear el cliente admin, obtener el usuario y su rol con el cliente server (`lib/supabase/server.ts`) llamando a la RPC `get_my_role`; si no hay sesión o el rol no es `Admin`, devolver `401`/`403` sin ejecutar ninguna operación privilegiada.
+- `arguello-infancias/app/api/usuarios/route.ts`: al inicio del `POST`, antes de crear el cliente admin, obtener el usuario y su rol con el cliente server (`lib/supabase/server.ts`) llamando a la RPC `get_my_role`; si no hay sesión o el rol no es `Admin`, devolver `401`/`403` sin ejecutar ninguna operación privilegiada.
 
 ## Requisitos de implementación
 

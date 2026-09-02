@@ -1,5 +1,5 @@
 -- ============================================================
--- SCHEMA COMPLETO CIELO ABIERTO — versión limpia y consolidada
+-- SCHEMA COMPLETO ARGÜELLO INFANCIAS — versión limpia y consolidada
 -- Reemplaza las migraciones 001-030 en una DB nueva.
 -- ============================================================
 

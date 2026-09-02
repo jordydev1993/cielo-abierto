@@ -1,4 +1,4 @@
-# Manual de Pruebas — Cielo Abierto
+# Manual de Pruebas — Argüello Infancias
 **Versión:** Sprint 1 · Fecha: 14/05/2026  
 **URL de la app:** https://cielo-abierto-two.vercel.app
 

@@ -41,14 +41,14 @@ Ninguna aplica directamente; se sigue el patrón de `crud-generator` ya material
 
 ## Archivos a crear
 
-- `cielo-abierto/app/(dashboard)/legajos/[id]/editar/page.tsx`
+- `arguello-infancias/app/(dashboard)/legajos/[id]/editar/page.tsx`
 
 ## Archivos a modificar
 
-- `cielo-abierto/components/entities/legajos/LegajoForm.tsx`: agregar prop `initialData?: Legajo`, calcular `isEditing = !!initialData`, `defaultValues` desde `initialData` cuando exista, texto del botón `"Guardar cambios"` / `"Guardando..."` en modo edición (vs. `"Abrir legajo"` / `"Creando..."` en modo alta).
-- `cielo-abierto/hooks/legajos/useUpdateLegajo.ts`: agregar `useUpdateLegajoDatos`, mutación que actualiza únicamente `numero_legajo`, `fecha_apertura`, `observaciones` y `updated_at` (allow-list explícito, igual criterio que `useUpdateNnya` — nunca toca `estado`/`fecha_cierre`/`motivo_cierre` aunque el formulario reciba `nnya_id` en `values`, ese campo se ignora en la mutación). Invalida `queryKeys.legajos.lists()` y `queryKeys.legajos.detail(id)`.
-- `cielo-abierto/app/(dashboard)/legajos/page.tsx`: `onEdit` pasa a `router.push(row.estado === 'activo' ? \`/legajos/${row.id}/editar\` : \`/legajos/${row.id}\`)`.
-- `cielo-abierto/app/(dashboard)/legajos/[id]/page.tsx`: agregar botón "Editar" (ícono `Pencil`) en el header, junto al de "Cerrar legajo", visible solo si `legajoActivo`, dentro de `AccessGuard roles={['Admin', 'Equipo Tecnico']}`, navega a `/legajos/${id}/editar`.
+- `arguello-infancias/components/entities/legajos/LegajoForm.tsx`: agregar prop `initialData?: Legajo`, calcular `isEditing = !!initialData`, `defaultValues` desde `initialData` cuando exista, texto del botón `"Guardar cambios"` / `"Guardando..."` en modo edición (vs. `"Abrir legajo"` / `"Creando..."` en modo alta).
+- `arguello-infancias/hooks/legajos/useUpdateLegajo.ts`: agregar `useUpdateLegajoDatos`, mutación que actualiza únicamente `numero_legajo`, `fecha_apertura`, `observaciones` y `updated_at` (allow-list explícito, igual criterio que `useUpdateNnya` — nunca toca `estado`/`fecha_cierre`/`motivo_cierre` aunque el formulario reciba `nnya_id` en `values`, ese campo se ignora en la mutación). Invalida `queryKeys.legajos.lists()` y `queryKeys.legajos.detail(id)`.
+- `arguello-infancias/app/(dashboard)/legajos/page.tsx`: `onEdit` pasa a `router.push(row.estado === 'activo' ? \`/legajos/${row.id}/editar\` : \`/legajos/${row.id}\`)`.
+- `arguello-infancias/app/(dashboard)/legajos/[id]/page.tsx`: agregar botón "Editar" (ícono `Pencil`) en el header, junto al de "Cerrar legajo", visible solo si `legajoActivo`, dentro de `AccessGuard roles={['Admin', 'Equipo Tecnico']}`, navega a `/legajos/${id}/editar`.
 
 No se modifica `lib/validations/legajos.schema.ts` — se reutiliza `legajoSchema` tal cual (incluye `nnya_id` en el tipo, pero el campo queda oculto y sin cambios en modo edición, mismo mecanismo que ya usa `LegajoForm` al crear desde un perfil de NNyA).
 

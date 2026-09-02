@@ -37,7 +37,7 @@ Ninguno.
 
 ## Archivos a modificar
 
-- `cielo-abierto/app/(dashboard)/dashboard/page.tsx`: quitar el comentario `{/* ... */}` que envuelve el `<div className="grid...">` de las 3 `KPICard`.
+- `arguello-infancias/app/(dashboard)/dashboard/page.tsx`: quitar el comentario `{/* ... */}` que envuelve el `<div className="grid...">` de las 3 `KPICard`.
 
 ## Requisitos de implementación
 

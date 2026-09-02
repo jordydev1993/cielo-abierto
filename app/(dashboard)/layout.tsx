@@ -55,7 +55,7 @@ function Sidebar() {
   return (
     <aside className="w-60 bg-surface-container-lowest border-r border-outline-variant flex flex-col shrink-0">
       <div className="px-4 py-5 border-b border-outline-variant">
-        <h1 className="font-heading font-bold text-primary text-sm tracking-tight">Cielo Abierto</h1>
+        <h1 className="font-heading font-bold text-primary text-sm tracking-tight">Argüello Infancias</h1>
         <p className="text-xs text-on-surface-variant mt-0.5">Residencia NNyA</p>
       </div>
 

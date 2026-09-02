@@ -1,4 +1,4 @@
-# Auditoría de Base de Datos — Cielo Abierto
+# Auditoría de Base de Datos — Argüello Infancias
 **Versión:** Sprint 1 · Fecha: 24/05/2026  
 **Objetivo:** Verificar que las políticas RLS funcionan correctamente y que no hay recursiones circulares activas.
 
@@ -6,7 +6,7 @@
 
 ## Cómo acceder
 
-1. Abrí https://supabase.com → iniciá sesión → entrá al proyecto **cielo-abierto**
+1. Abrí https://supabase.com → iniciá sesión → entrá al proyecto **cielo-abierto** (nombre real del proyecto en Supabase; no se renombró junto con el resto)
 2. En el menú lateral hacé click en **SQL Editor**
 3. Cada sección tiene queries listas para copiar y pegar
 

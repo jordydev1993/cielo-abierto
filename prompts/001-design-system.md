@@ -63,7 +63,7 @@ No aplican chequeos de build/lint/test — este plan es exclusivamente documenta
 
 ## Verificación manual
 
-1. Levantar la app (`npm run dev` en `cielo-abierto/`).
+1. Levantar la app (`npm run dev` en `arguello-infancias/`).
 2. Abrir al menos una pantalla que use cada primitiva catalogada (ej. `/nnya` para tabla y badges, `/nnya/nuevo` para formulario e inputs, cualquier modal de confirmación para `dialog`/`ConfirmDialog`).
 3. Confirmar que lo que se ve en pantalla coincide con lo documentado en `docs/design-system.md` (mismos colores, mismas variantes).
 

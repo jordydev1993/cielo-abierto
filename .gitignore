@@ -45,3 +45,8 @@ next-env.d.ts
 
 # supabase temp
 supabase/.temp/
+
+# db backups (contienen datos reales de NNyA — nunca versionar)
+/backups/
+*.sql
+!supabase/migrations/*.sql

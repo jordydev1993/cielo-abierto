@@ -36,11 +36,11 @@ Ninguna aplica directamente (no hay skill de "detail views"); se sigue el patró
 
 ## Archivos a crear
 
-- `cielo-abierto/app/(dashboard)/nnya/[id]/page.tsx`
+- `arguello-infancias/app/(dashboard)/nnya/[id]/page.tsx`
 
 ## Archivos a modificar
 
-- `cielo-abierto/components/entities/nnya/NnyaTable.tsx`: agregar un botón "Ver" (ícono `Eye`) vía `extraActions` de `DataTable`, que llama a `onView(row)` — esto también resuelve el warning de lint `'onView' is defined but never used`.
+- `arguello-infancias/components/entities/nnya/NnyaTable.tsx`: agregar un botón "Ver" (ícono `Eye`) vía `extraActions` de `DataTable`, que llama a `onView(row)` — esto también resuelve el warning de lint `'onView' is defined but never used`.
 
 ## Requisitos de implementación
 

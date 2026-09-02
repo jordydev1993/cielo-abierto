@@ -1,4 +1,4 @@
-# Sistema de diseño — Cielo Abierto
+# Sistema de diseño — Argüello Infancias
 
 > Catálogo del sistema de diseño **tal como está implementado hoy**, auditado según `prompts/001-design-system.md`. No es una propuesta de rediseño: documenta lo que ya renderiza en producción, para que las próximas pantallas lo reutilicen en vez de crear estilos ad hoc.
 
