@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Agregar `app/(dashboard)/nnya/[id]/page.tsx` como vista de solo-lectura, cerrando el gap 1 de `AGENTS.md` § Deuda conocida (hoy solo existe `nnya/[id]/editar`).
+Agregar `app/(dashboard)/nnya/[id]/page.tsx` como vista de solo-lectura, cerrando el gap 1 de `AGENTS-WEB.md` § Deuda conocida (hoy solo existe `nnya/[id]/editar`).
 
 ## Contexto
 

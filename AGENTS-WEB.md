@@ -1,689 +1,207 @@
-# AGENTS-WEB.md
+# AGENTS-WEB.md — Argüello Infancias (web)
 
-**Sistema de Gestión de Residencia — Versión WEB**
+Documento de trabajo del repo web (`cielo-abierto` en GitHub). Escrito bajo la metodología **Vibe Engineering + SDD** y basado exclusivamente en lo confirmado por inspección real del código, las migraciones (`supabase/migrations/`) y la base en vivo — no en documentación aspiracional.
 
-> Lee primero **AGENTS.md** para entender el contexto general, principios y seguridad compartida.
+> Historia: este archivo reemplaza al `AGENTS.md` que existió hasta el commit `fcf0791` y fue borrado por error en esa reestructuración. Los `prompts/002`–`013` lo citan como `AGENTS.md`; es este archivo. Mapa de secciones citadas al final.
 
----
-
-## 🎯 Propósito Web
-
-La versión **WEB** es el sistema principal para **gestión institucional** de la residencia.
-
-**Usuarios:** Admin, Técnicos, Psicología, Trabajo Social, Dirección, Administración
-
-**Responsabilidades:**
-- Gestión integral de NNA (admisión, evaluaciones, cambios de estado)
-- Legajos digitales (fichas, informes, documentos)
-- Evaluaciones (psicológica, educativa, sanitaria, social)
-- Reportes institucionales
-- Auditoría y trazabilidad
-- Gestión de usuarios y permisos
+`CLAUDE.md` carga este archivo (`@AGENTS-WEB.md`).
 
 ---
 
-## 🏗️ Arquitectura Web
+## Rol
+
+Actuás como ingeniero de software principal de este proyecto. Seguís el ciclo de trabajo de la sección siguiente para cada funcionalidad nueva o modificada. **Regla fundamental: el líder (Jordy) toma las decisiones de producto/arquitectura/seguridad; vos hacés el trabajo técnico.** Ante una decisión de ese tipo, detenete, explicá el problema, presentá alternativas, recomendá una, y esperá la decisión. Para decisiones pequeñas y reversibles, usá criterio técnico.
+
+## Flujo de trabajo
+
+Para cada tarjeta del tablero (https://github.com/users/jordydev1993/projects/1):
+
+1. Leer este `AGENTS-WEB.md`.
+2. Leer las skills relevantes en `.claude/skills/` (ver sección Skills).
+3. Inspeccionar el código relacionado — no asumir, confirmar en el repo.
+4. Identificar dependencias y ambigüedades.
+5. Si hay una decisión realmente necesaria, preguntar concretamente.
+6. Escribir un plan en `prompts/NNN-nombre.md` (formato: Objetivo, Contexto, Archivos inspeccionados, Skills utilizadas, Supuestos, Archivos a crear/modificar, Requisitos, Seguridad, Criterios de aceptación, Chequeos, Verificación manual).
+7. **No implementar todavía.** Informar que el plan está listo y esperar aprobación explícita ("✓ Aprobado" / "✕ Cambiar X").
+8. Solo después de la aprobación, implementar.
+9. Ejecutar los chequeos: `npm run lint` y `npm run build` (y `npx tsc --noEmit` si tocaste tipos).
+10. Informar exactamente cómo probar la funcionalidad manualmente.
+
+El proceso completo de equipo (rama → PR → merge → cerrar tarjeta) está en `GUIA-PROCESO-COMPLETO.md`.
+
+Si aparece una contradicción entre esta documentación y el código actual: detectarla, documentarla en "Deuda conocida", **no corregirla automáticamente**, y plantear la decisión antes de implementar.
+
+## Producto
+
+Sistema web para centralizar y digitalizar la gestión de una residencia de NNyA (niños, niñas y adolescentes) bajo protección judicial, en Córdoba, Argentina. Reemplaza planillas Excel/Word y registros físicos fragmentados por un sistema trazable, con alertas sobre eventos críticos. El complemento móvil vive en el repo `arguello-infancias-mobile` y comparte la misma base de datos.
+
+Actores: **Admin** (Dirección — acceso total, incluye usuarios/roles) y **Equipo Tecnico** (psicólogos, trabajadores sociales, abogados, educadores — CRUD completo sobre entidades de negocio, sin acceso a usuarios/roles). El rol se resuelve vía RPC `get_my_role`.
+
+Documentos de negocio (fuera del repo, en la carpeta compartida del equipo): `presentacion-del-proyecto.md`, `procesos-del-negocio.md`.
+
+## Alcance
+
+Módulos de negocio implementados: NNyA, Tutores, Legajos, Intervenciones (tab dentro de Legajo), Turnos, Alertas, Actividades (módulo propio en el sidebar), Incidentes (con predicción de severidad), Diagnósticos, Medicamentos, Informes, Documentos, Audiencias Judiciales, más Usuarios y Roles (administración) y Dashboard con KPIs.
+
+## Fuera de alcance
+
+- Redes sociales, integraciones externas no justificadas, IA generativa "porque se puede", funcionalidades administrativas no pedidas, features "por si acaso".
+- **Gestión de recursos/fondos, stock y asistencia de personal** (proceso 1.4 de `procesos-del-negocio.md`): proceso institucional real, sin entidades en el modelo de datos implementado. No construir sin decisión explícita.
+
+## Arquitectura
+
+Next.js 16 App Router con route groups `(auth)` y `(dashboard)`:
 
 ```
-┌─────────────────────────────────────┐
-│   NAVEGADOR (Cliente)               │
-│  Next.js 14 + React 18 + Tailwind   │
-│  - UI responsiva                    │
-│  - Datos temporales                 │
-│  - NO datos sensibles en RAM        │
-└──────────────┬──────────────────────┘
-               │ HTTPS + JWT + CSRF Token
-               ▼
-┌─────────────────────────────────────┐
-│  NODE.JS + EXPRESS (Servidor)       │
-│  - Autenticación (Passport + MFA)   │
-│  - Validación zod                   │
-│  - Cifrado/Descifrado               │
-│  - Auditoría antes de guardar       │
-│  - RBAC middleware                  │
-└──────────────┬──────────────────────┘
-               │ SSL + Credenciales
-               ▼
-┌─────────────────────────────────────┐
-│  PostgreSQL (Supabase)              │
-│  - Datos cifrados en reposo         │
-│  - RLS policies                     │
-│  - Audit log immutable              │
-└─────────────────────────────────────┘
+components/ui/            primitivas (shadcn/Radix): button, input, select, table, dialog, card, badge, form, tabs...
+components/shared/        AccessGuard, ConfirmDialog, DataTable, KPICard
+components/entities/<e>/  Form.tsx + List.tsx por entidad (patrón uniforme)
+components/legajos/tabs/  sub-tabs del detalle de legajo (Resumen, Salud, Alertas, Documentos, Incidentes, Turnos, Intervenciones)
+hooks/<entidad>/          un hook useQuery/useMutation por operación (TanStack Query)
+lib/supabase/client.ts    cliente browser (createBrowserClient, solo NEXT_PUBLIC_*)
+lib/supabase/server.ts    cliente server (createServerClient + cookies())
+lib/validations/*.schema.ts  un schema zod por entidad
+lib/constants/queryKeys.ts   factories de query keys
+context/AuthContext.tsx   rol del usuario vía RPC get_my_role
+proxy.ts                  protección de rutas (Next 16 renombró middleware.ts a proxy.ts)
+app/api/                  incidentes/prediccion, usuarios
+supabase/migrations/      migraciones SQL — fuente de verdad del schema (no solo el proyecto remoto)
+types/database.types.ts   tipos de dominio escritos a mano (NO generados con `supabase gen types`)
 ```
+
+Capas: UI (`components/ui` → `components/entities`) → datos (`hooks/*` con TanStack Query) → acceso a Supabase (`lib/supabase/{client,server}.ts`) → Postgres con RLS. Autorización por rol: `context/AuthContext.tsx` + `components/shared/AccessGuard.tsx` (cliente); RLS en la base (servidor/DB). **No hay una capa Express**: el cliente Supabase habla directo con la base, con RLS de guardia.
+
+## Stack confirmado
+
+Next 16.2.6, React 19.2.4, TypeScript strict, Tailwind 4 vía `@theme` en `app/globals.css` (sin `tailwind.config.*`), `@supabase/ssr` + `@supabase/supabase-js`, **TanStack Query** (no Table ni Router), react-hook-form + `@hookform/resolvers` + zod 4, Radix UI, `class-variance-authority`, recharts, date-fns, lucide-react. `playwright` está en devDependencies pero sin tests escritos.
+
+No agregar dependencias nuevas sin justificar la necesidad primero.
+
+## Prohibiciones
+
+- Nunca exponer `SUPABASE_SERVICE_ROLE_KEY` al cliente (solo server-side, hoy en `app/api/usuarios/route.ts`).
+- No usar `any` sin justificación explícita.
+- No duplicar componentes existentes en `components/ui/` o `components/entities/`.
+- No refactors ni "limpiezas" no relacionadas con la tarea pedida.
+- No reemplazar tecnologías existentes sin razón técnica explícita.
+
+## Modelo de datos
+
+**27 tablas** en `public` (Postgres/Supabase), gestionadas vía `supabase/migrations/`. RLS activo en todas.
+
+17 originales: `roles`, `usuarios`, `nnya`, `tutores`, `nnya_tutores`, `legajos`, `intervenciones`, `turnos`, `alertas`, `actividades`, `incidentes`, `diagnosticos`, `medicamentos`, `informes`, `documentos`, `audiencias_judiciales`, `audit_log`.
+
+10 de FASE A1 (`prompts/012`, migración `20260827000033`) — **tablas + RLS creadas, sin UI todavía** (ver Roadmap): `referentes`, `vinculos_tutela`, `validaciones_renaper`, `transferencia_auh`, `evaluacion_institucional` (+ `_asistentes`, `_casos`), `propuestas_mejora`, `turnos_personal`, `seguimiento_post_egreso`.
+
+Reglas de negocio completas (máquinas de estado, validaciones por entidad) en `procesos-del-negocio.md`.
+
+**Ojo con migraciones superseded**: `supabase/migrations/20260620000031_clean_schema.sql` ("Reemplaza las migraciones 001-030 en una DB nueva") es la definición de schema **vigente** — puede diferir de migraciones individuales más viejas para la misma tabla (ej. `intervenciones.tipo` tenía un `CHECK` con 7 valores en la migración de mayo, pero `clean_schema.sql` lo redefine como texto libre; los datos semilla reales solo son válidos bajo `clean_schema.sql`). Antes de escribir un schema Zod contra una columna, verificar el `CREATE TABLE` en `clean_schema.sql` — o mejor, consultar los valores reales ya insertados con una query.
+
+## Contratos de API
+
+Dos route handlers en `app/api/`:
+- `incidentes/prediccion` — predicción de severidad de incidente (usada desde el form de Incidentes).
+- `usuarios` (POST) — creación de usuario admin, usa `SUPABASE_SERVICE_ROLE_KEY` server-side. Exige sesión + rol `Admin` (`prompts/002`).
+
+## Seguridad
+
+- RLS activo en las 27 tablas.
+- Roles de aplicación: `Admin`, `Equipo Tecnico` (vía RPC `get_my_role`).
+- Nunca loguear ni exponer datos sensibles de NNyA innecesariamente.
+- Limitar el acceso a información sensible según rol desde el diseño de cada funcionalidad, no como añadido posterior.
+- **Nota honesta**: la documentación vieja afirmaba cifrado AES-256 de DNI/nombres y un audit log inmutable "en cada acción". Ninguna de las dos cosas está implementada hoy (ver Deuda conocida #DNI y #audit). No repetir esas afirmaciones como si fueran ciertas.
+
+## Estándares de código
+
+- TypeScript strict, tipos explícitos.
+- Un hook (`useQuery`/`useMutation`) por operación de datos, en `hooks/<entidad>/`.
+- Un schema zod por entidad en `lib/validations/`.
+- Patrón `components/entities/<entidad>/Form.tsx` + `List.tsx` — seguirlo para entidades nuevas.
+- Componentes y funciones pequeños, responsabilidades separadas, sin abstracciones prematuras.
+
+## Regla ante dudas
+
+Si algo no está documentado en las fuentes de negocio o no se puede confirmar leyendo el código: no inventar. Preguntar o documentar el vacío explícitamente.
+
+## Skills
+
+Viven en `.claude/skills/` (convención nativa de Claude Code — no crear `.agents/skills/` paralela).
+
+| Skill | Para qué sirve |
+|---|---|
+| `domain-validation` | Valida que los requisitos coincidan con los procesos reales de la residencia |
+| `database-design` | Diseño e implementación del modelo relacional en Postgres/Supabase |
+| `auth-implementation` | Autenticación y sesiones con Supabase Auth + Next.js 16 |
+| `role-permission` | Roles y matriz de permisos del sistema |
+| `crud-generator` | Patrón estándar para generar un ABM completo por entidad |
+| `sprint-planning` | Seguimiento de sprints (histórico) |
+| `documentation` | Mantenimiento de documentación del proyecto |
+| `testing-nnya` | Checklist manual de QA por módulo |
+
+**Nota de fiabilidad**: algunas skills (`crud-generator`, `sprint-planning`) contienen tablas de estado (`⏳`/`✅`) que no se mantuvieron actualizadas. Ante una discrepancia entre una skill y el código real, **el código es la fuente de verdad**; actualizar la skill si corresponde en vez de confiar en su tabla.
 
 ---
 
-## 🛠️ Stack Web Específico
+## Roadmap
 
-### Frontend
+Estado por fase (detalle en `docs/evolucion/CHECKLIST-FINAL (1).md`):
 
-```
-- Next.js 14+
-- React 18 (server components where possible)
-- TypeScript (strict mode)
-- Tailwind CSS + shadcn/ui
-- TanStack Query (data fetching + caching)
-- Zustand (global state)
-- Supabase Auth
-- Axios (HTTP client)
-```
-
-### Backend
-
-```
-- Node.js 20+
-- Express.js + TypeScript
-- Passport.js (authentication strategies)
-- JWT (tokens)
-- speakeasy (TOTP/MFA)
-- bcryptjs (password hashing)
-- crypto-js (AES-256 encryption)
-- zod (schema validation)
-- winston (logging)
-- helmet (security headers)
-- express-rate-limit (rate limiting)
-```
-
-### Base de Datos
-
-```
-- PostgreSQL 15+
-- Supabase (managed hosting)
-- pgcrypto extension (encryption)
-- RLS policies (row-level security)
-```
+| Fase | Qué es | Estado |
+|---|---|---|
+| Core (12–16 módulos CRUD) | ABMs de las 17 entidades originales + auth + roles + dashboard | ✅ Implementado |
+| A0 | `fecha_egreso` en `nnya` + backfill + CHECK (`prompts/011`) | ✅ Implementado (migración `20260826000032`) |
+| A1 | Crear las 10 tablas de tutela/evaluación/turnos/seguimiento (`prompts/012`) | ✅ Tablas + RLS (migración `20260827000033`) |
+| A2 | Políticas RLS por operación para esas 10 tablas + trigger de protección de `dni` en `referentes` (`prompts/013`) | ✅ Implementado (migración `20260827000034`) |
+| B | UI de tutela/referentes + validación RENAPER + transferencia AUH | ⏳ Sin empezar — [issue #25] |
+| C | UI de evaluación institucional + kanban de propuestas de mejora + notificaciones | ⏳ Sin empezar — [issue #26] |
+| D | UI de `turnos_personal` + firma doble de traspaso de guardia + dashboard de cobertura | ⏳ Sin empezar — [issue #27] |
+| E | UI de seguimiento post-egreso + cron 30/60 días + dashboard de reinserción | ⏳ Sin empezar — [issue #28] |
 
 ---
 
-## 📊 Modelo de Datos Web
+## Deuda conocida / gaps
 
-### Tablas Principales (Compartidas)
+Detectada por inspección directa del código. **No se corrige sin aprobación** (regla del flujo de trabajo). Cada ítem abierto es una tarjeta del tablero.
 
-Ver **AGENTS.md** para tablas base:
-- `users`
-- `minors`
-- `daily_tasks`
-- `daily_observations`
-- `medications`
-- `audit_log`
+| # | Gap | Tarjeta |
+|---|---|---|
+| audit | El audit log NO está cableado: la base real tiene 0 triggers `trg_audit_*`, no existe `fn_audit_trigger()`, `audit_log` tiene 0 filas y sus columnas difieren de la migración. La doc dice "auditoría inmutable en cada acción" — falso. Requiere resolver la decisión A/B/C planteada en `prompts/012`. | issue #23 |
+| rol-rot | `roles` tiene 7 filas (no 2). 6 de 7 seed users apuntan a roles legacy (`Trabajador Social`, `Médico/a`, etc.) y no tienen `auth_user_id`: si se les da login, `get_my_role()` los deja fuera de las 27 tablas. | issue #24 |
+| types | `types/database.types.ts` se escribe a mano. Debería generarse con `supabase gen types`. | issue #29 |
+| tests | `playwright` instalado, 0 tests. | issue #30 |
+| design | `docs/design-system.md` §5: sin escala tipográfica nombrada; `Toaster` sin variantes warning/info; sin wrapper de alert-dialog no destructivo; colores hardcodeados en `NnyaTable.tsx`. | issue #31 |
+| dni | `nnya.dni` y `tutores.dni` son `varchar` plano. `AGENTS`/arquitectura afirmaban AES-256; `pgcrypto` instalado sin usar. | issue #32 |
+| readme | `README.md` del repo sigue siendo el boilerplate de `create-next-app`. | issue #33 |
+| proceso-1.4 | Recursos/fondos, stock y asistencia de personal: proceso real sin modelo de datos. Fuera de alcance hasta decisión. | — |
+| legajo-estados | La máquina de estados de `legajos` en `procesos-del-negocio.md` ("En incidente", "En evaluación") es más amplia que el `CHECK` real (`activo`/`cerrado`/`archivado`). Discrepancia documentada, no tocada. | — |
 
-### Tablas Específicas Web
+### Resuelto
 
-**`minor_evaluations`** — Fichas de evaluación
-```sql
-id (UUID) — PRIMARY KEY
-minor_id (UUID) — FK minors(id)
-evaluation_type (VARCHAR 50) — psicológica | educativa | sanitaria | social
-evaluator_id (UUID) — FK users(id)
-evaluation_date (DATE)
-content (TEXT) — contenido de evaluación
-recommendations (TEXT)
-status (VARCHAR 50) — completed | pending
-created_at (TIMESTAMP)
-updated_at (TIMESTAMP)
+Registro de gaps ya cerrados (ledger histórico; cada uno tiene su `prompts/NNN`):
 
-ÍNDICES: (minor_id), (evaluation_type), (evaluation_date)
-```
-
-**`medical_appointments`** — Turnos médicos
-```sql
-id (UUID) — PRIMARY KEY
-minor_id (UUID) — FK minors(id)
-appointment_date (DATE)
-appointment_time (TIME)
-specialty (VARCHAR 100)
-medical_center (VARCHAR 255)
-reason (TEXT)
-attended (BOOLEAN)
-observations (TEXT)
-follow_up_required (BOOLEAN)
-created_at (TIMESTAMP)
-updated_at (TIMESTAMP)
-
-ÍNDICES: (minor_id), (appointment_date)
-```
-
-**`system_reports`** — Reportes generados
-```sql
-id (UUID) — PRIMARY KEY
-report_type (VARCHAR 50) — seguimiento | evaluación | egreso | estadísticas
-generated_by (UUID) — FK users(id)
-report_date (DATE)
-content (TEXT) — reporte formateado
-format (VARCHAR 20) — html | pdf | json
-created_at (TIMESTAMP)
-
-ÍNDICES: (report_type), (generated_by)
-```
+- **`app/api/usuarios` sin chequeo de rol** — `prompts/002`. El endpoint exige sesión + rol `Admin` (`get_my_role`); `401` sin sesión, `403` si no es Admin. Verificado end-to-end.
+- **Dashboard `/dashboard` con KPIs comentados** — `prompts/003`. Se descomentó el grid de `KPICard` (NNyA activos, Legajos activos, Alertas pendientes); la query ya era correcta.
+- **`nnya/[id]` sin vista de detalle** — `prompts/004`. `nnya/[id]/page.tsx` de solo lectura + botón "Ver" (`Eye`) conectado en `NnyaTable`.
+- **`legajos/[id]` sin ruta de edición** — `prompts/005`. `legajos/[id]/editar/page.tsx` + `useUpdateLegajoDatos` (allow-list, nunca toca `estado`). Verificado end-to-end.
+- **Zod 4 `.uuid()` rechaza IDs semilla** — `prompts/006`. 7 schemas usaban `.uuid()` (RFC4122 estricto) contra IDs semilla con patrón no conforme → fallos de validación silenciosos. Reemplazado por regex de forma UUID.
+- **Inconsistencia de tokens en primitivas UI** — `prompts/007`. `select`, `dialog`, `tabs`, `textarea`, `toaster`, `form.tsx` migrados de la paleta shadcn genérica a los tokens `@theme`.
+- **`next dev` no hidrata en `127.0.0.1`** — `prompts/008`. Next 16 bloquea recursos `/_next/*` desde orígenes que no sean `localhost`. Se agregó `allowedDevOrigins: ['127.0.0.1']` a `next.config.ts` (solo dev).
+- **Módulo "Intervenciones" inexistente** (pese a estar listado como "implementado") — `prompts/009`. Schema + hooks + `IntervencionForm/List` + tab en `legajos/[id]`. `tipo` quedó como texto libre (no enum) tras verificar `clean_schema.sql`.
+- **Módulo "Actividades" inexistente** — `prompts/010`. Módulo propio en el sidebar (`/actividades`), grupal (`nnya_ids` array, sin `legajo_id`). `tipo` texto libre.
+- **`nnya` sin `fecha_egreso`** — `prompts/011` (A0). Columna + backfill desde `legajos.fecha_cierre` + CHECK de coherencia. Migración `20260826000032`.
+- **Sin soporte de datos para tutela / evaluación institucional / turnos de personal / seguimiento post-egreso** — `prompts/012` (A1). 10 tablas nuevas + RLS habilitado. Migración `20260827000033`. (La UI de estas tablas es FASES B–E, ver Roadmap.)
+- **Las 10 tablas de A1 sin políticas RLS por operación** — `prompts/013` (A2). Políticas SELECT/INSERT/UPDATE/DELETE por rol + trigger que protege `referentes.dni`. Migración `20260827000034`.
 
 ---
 
-## 🔐 Seguridad Web Específica
-
-### Obligatorios en Web
-
-- ✅ **MFA en login** (TOTP via speakeasy)
-- ✅ **Session management** (JWT + httpOnly cookies)
-- ✅ **CSRF tokens** en formularios
-- ✅ **Rate limiting** en endpoints sensibles
-- ✅ **CORS configurado** (solo dominios autorizados)
-- ✅ **Helmet.js** (headers de seguridad)
-- ✅ **Input sanitization** (zod + DOMPurify)
-- ✅ **Error handling** (nunca exponer stack traces)
-- ✅ **Timeouts** (15-30 min inactividad)
-
-### Headers de Seguridad (Helmet)
-
-```
-Strict-Transport-Security: max-age=31536000
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
-X-XSS-Protection: 1; mode=block
-Content-Security-Policy: restrictive
-```
-
-### Endpoints Protegidos
-
-Todos los endpoints requieren:
-```typescript
-Authorization: Bearer <JWT>
-```
-
-Sin JWT válido → 401 Unauthorized
-
----
-
-## 🔌 Endpoints API (Backend)
-
-### Autenticación
-
-```
-POST /api/auth/login
-  Body: { email, password }
-  Response: { access_token, refresh_token, user }
-  MFA Challenge: { mfa_required: true, session_token }
-  Status: 200 | 401 | 429
-
-POST /api/auth/mfa/verify
-  Body: { session_token, mfa_code }
-  Response: { access_token, refresh_token }
-  Status: 200 | 401
-
-GET /api/auth/me
-  Response: { id, email, name, role, permissions }
-  Status: 200 | 401
-
-POST /api/auth/logout
-  Response: { success: true }
-  Status: 200
-```
-
-### Menores (NNA)
-
-```
-GET /api/minors
-  Query: ?status=active&sort=admission_date
-  Response: { data: [{id, first_name, dni, status, ...}], total, page }
-  RBAC: admin, technician
-  Status: 200
-
-GET /api/minors/:id
-  Response: { id, first_name, last_name, dni, birthdate, ... }
-  Auditoría: registra VIEW (quién vio qué)
-  Status: 200 | 404
-
-POST /api/minors
-  Body: { first_name, last_name, dni, birthdate, admission_date, ... }
-  Validación: DNI único, fecha válida, responsable válido
-  Response: { id, created_at }
-  RBAC: admin, technician
-  Auditoría: registra INSERT con new_values
-  Status: 201 | 400 | 403
-
-PATCH /api/minors/:id
-  Body: { fields a actualizar }
-  Auditoría: registra UPDATE con old/new_values
-  Response: { id, updated_at }
-  Status: 200 | 403 | 404
-
-PATCH /api/minors/:id/status
-  Body: { status: "egressed", egress_date, egress_reason }
-  Auditoría: registra EGRESO como acción especial
-  Response: { id, status, egress_date }
-  Status: 200 | 403
-```
-
-### Evaluaciones
-
-```
-GET /api/minors/:id/evaluations
-  Query: ?type=psicológica
-  Response: { data: [{id, type, evaluator, date, content, ...}] }
-  Status: 200
-
-POST /api/minors/:id/evaluations
-  Body: { evaluation_type, content, recommendations }
-  RBAC: technician, admin
-  Auditoría: registra INSERT
-  Response: { id, created_at }
-  Status: 201 | 403
-
-GET /api/minors/:id/evaluations/:eval_id
-  Response: { evaluación completa }
-  Auditoría: registra VIEW
-  Status: 200
-
-PATCH /api/minors/:id/evaluations/:eval_id
-  Body: { content, recommendations, status }
-  RBAC: evaluator (quien la creó), admin
-  Response: { id, updated_at }
-  Status: 200 | 403
-```
-
-### Tareas Diarias
-
-```
-GET /api/minors/:id/tasks
-  Query: ?date=2025-01-20&status=pending
-  Response: { data: [{id, type, assigned_to, status, ...}] }
-  Status: 200
-
-POST /api/minors/:id/tasks
-  Body: { assigned_to, task_type, description, task_date }
-  RBAC: admin, technician, educator
-  Response: { id, created_at }
-  Status: 201 | 403
-
-PATCH /api/tasks/:id
-  Body: { status: "completed", notes: "..." }
-  RBAC: educator (asignada a ti), admin
-  Auditoría: quién completó, cuándo
-  Response: { id, status, completed_at }
-  Status: 200 | 403
-```
-
-### Observaciones
-
-```
-GET /api/minors/:id/observations
-  Query: ?days=30
-  Response: { data: [{date, reported_by, content, category, mood}] }
-  Status: 200
-
-POST /api/minors/:id/observations
-  Body: { content, category, mood_level, incidents, positive_events }
-  RBAC: educator, technician, admin
-  Auditoría: registra observación
-  Response: { id, created_at }
-  Status: 201 | 403
-```
-
-### Medicación
-
-```
-GET /api/minors/:id/medications?active=true
-  Response: { data: [{id, name, dosage, frequency, active}] }
-  Status: 200
-
-POST /api/minors/:id/medications
-  Body: { medication_name, dosage, frequency, start_date, prescribed_by }
-  RBAC: technician (médico), admin
-  Response: { id, created_at }
-  Status: 201 | 403
-
-GET /api/minors/:id/medications/:med_id/log?days=7
-  Response: { data: [{date, time, administered_by, given, notes}] }
-  Auditoría: acceso crítico a log de medicación
-  Status: 200
-
-POST /api/minors/:id/medications/:med_id/administer
-  Body: { administered_time, given, notes }
-  RBAC: educator, technician, admin
-  Auditoría: registra administración
-  Response: { id, log_entry_created }
-  Status: 201 | 403
-```
-
-### Turnos Médicos
-
-```
-GET /api/minors/:id/appointments?upcoming=true
-  Response: { data: [{id, date, time, specialty, center, attended}] }
-  Status: 200
-
-POST /api/minors/:id/appointments
-  Body: { appointment_date, appointment_time, specialty, medical_center, reason }
-  RBAC: technician, admin
-  Response: { id, created_at }
-  Status: 201 | 403
-
-PATCH /api/minors/:id/appointments/:apt_id
-  Body: { attended, observations, follow_up_required }
-  RBAC: educator, technician, admin
-  Auditoría: registra asistencia a turno
-  Response: { id, updated_at }
-  Status: 200 | 403
-```
-
-### Dashboard (Admin/Técnico)
-
-```
-GET /api/dashboard
-  Response: {
-    total_minors: int,
-    active_minors: int,
-    recent_admissions: [{...}],
-    pending_evaluations: int,
-    upcoming_appointments: [{...}],
-    pending_tasks: [{...}],
-    alerts: [{severity, message, minor_id}]
-  }
-  RBAC: admin, technician
-  Status: 200
-```
-
-### Auditoría (Admin only)
-
-```
-GET /api/audit
-  Query: ?table=minors&user_id=X&days=30&page=1
-  Response: { data: [audit_entries], total, page }
-  Campos: table_name, record_id, action, user_email, timestamp, ip_address, status
-  NO retorna: new_values/old_values (demasiado sensible en este endpoint)
-  RBAC: admin solo
-  Status: 200 | 403
-
-GET /api/audit/:log_id
-  Response: { ...audit_entry_completo con new_values/old_values }
-  RBAC: admin solo
-  Status: 200 | 403 | 404
-```
-
-### Reportes
-
-```
-POST /api/reports/generate
-  Body: { report_type, start_date, end_date, minor_id (opcional), format }
-  Response: { report_id, status, url (si PDF/HTML) }
-  RBAC: admin, technician
-  Auditoría: registra generación de reporte
-  Status: 201 | 403
-
-GET /api/reports/:report_id
-  Response: { contenido del reporte }
-  Status: 200 | 404
-```
-
----
-
-## 🎨 Estructura Frontend
-
-### Carpetas Principales
-
-```
-web/
-├── app/
-│   ├── (auth)/
-│   │   ├── login/page.tsx
-│   │   ├── mfa/page.tsx
-│   │   └── logout/page.tsx
-│   ├── (dashboard)/
-│   │   ├── dashboard/page.tsx
-│   │   ├── minors/
-│   │   ├── evaluations/
-│   │   ├── appointments/
-│   │   ├── tasks/
-│   │   ├── observations/
-│   │   ├── medications/
-│   │   ├── audit/
-│   │   └── reports/
-│   └── layout.tsx
-├── components/
-│   ├── auth/
-│   ├── dashboard/
-│   ├── minors/
-│   ├── ui/ (shadcn components)
-│   └── common/
-├── hooks/
-│   ├── useAuth.ts
-│   ├── useMinors.ts
-│   ├── useEvaluations.ts
-│   └── ...
-├── lib/
-│   ├── api-client.ts (axios + interceptors)
-│   ├── auth.ts (JWT helpers)
-│   └── encryption.ts (client-side crypto)
-├── services/
-│   ├── minorService.ts
-│   ├── evaluationService.ts
-│   ├── authService.ts
-│   └── ...
-├── types/
-│   ├── minor.ts
-│   ├── user.ts
-│   ├── evaluation.ts
-│   └── ...
-├── styles/
-│   └── globals.css (Tailwind config)
-└── utils/
-    ├── formatters.ts
-    ├── validators.ts
-    └── ...
-```
-
-### Componentes Comunes
-
-```
-Button (primario, secundario, danger)
-Card (contenedor)
-Dialog (modal)
-Form (form builder)
-Input (text, email, number, date)
-Select / MultiSelect
-Table (datos tabulares)
-Alert (mensajes)
-Loading (skeleton)
-Empty State
-Sidebar (navegación)
-```
-
----
-
-## 🔄 Flujos Principales Web
-
-### 1. Ingreso de un NNA
-
-```
-Usuario (Admin/Técnico) en Dashboard
-  ↓
-Click "Nuevo Menor"
-  ↓
-Formulario: datos básicos, DNI, residente, obra social, contacto emergencia
-  ↓
-Validación cliente (formato DNI, fecha válida, etc.)
-  ↓
-POST /api/minors (con Authorization header)
-  ↓
-Backend valida (zod), verifica DNI único, hasha datos sensibles, cifra
-  ↓
-Auditoría registra: INSERT minors (user, timestamp, ip)
-  ↓
-Respuesta: { id: new_minor_id }
-  ↓
-Redirect a /minors/:id
-  ↓
-Mostrar legajo del nuevo NNA (lectura)
-```
-
-### 2. Registrar Evaluación
-
-```
-Usuario abre ficha de NNA → Tab "Evaluaciones"
-  ↓
-Click "Nueva Evaluación" → Selecciona tipo (psic, educ, sanitaria, social)
-  ↓
-Formulario: contenido (textarea), recomendaciones
-  ↓
-POST /api/minors/:id/evaluations
-  ↓
-Backend: valida tipo, crea registro, audita
-  ↓
-Auditoría: INSERT minor_evaluations
-  ↓
-Refresh lista de evaluaciones
-```
-
-### 3. Egreso de un NNA
-
-```
-Usuario abre ficha → Tab "Estado"
-  ↓
-Click "Egresar menor"
-  ↓
-Formulario: fecha de egreso, motivo, referente
-  ↓
-PATCH /api/minors/:id/status
-  ↓
-Backend: verifica permisos (admin/tech), marca status = "egressed"
-  ↓
-Auditoría especial: EGRESO (quién, cuándo, motivo)
-  ↓
-Archiva minor de lista activa
-  ↓
-Inicia protocolo post-egreso (si aplica)
-```
-
-### 4. Generar Reporte
-
-```
-Usuario en Dashboard → Tab "Reportes"
-  ↓
-Formulario: tipo reporte, fecha inicio/fin, filtros
-  ↓
-POST /api/reports/generate
-  ↓
-Backend: arma SQL, genera contenido, exporta formato (PDF/HTML/JSON)
-  ↓
-Auditoría: REPORT_GENERATED (quién, tipo, datos utilizados)
-  ↓
-Respuesta: URL del reporte
-  ↓
-Usuario descarga/visualiza
-```
-
----
-
-## 🧪 Testing Web
-
-### Tipos de Tests
-
-- **Unit**: lógica en servicios, utils (Jest)
-- **Integration**: endpoints + BD (Jest + Supertest)
-- **E2E**: flujos usuario completos (Cypress o Playwright)
-
-### Coverage Mínimo
-
-- Autenticación (login, MFA, logout)
-- RBAC en endpoints (admin vs tech vs educador)
-- Validación de inputs (DNI, fechas, etc.)
-- Auditoría se registra correctamente
-- Cifrado/descifrado de datos sensibles
-- Manejo de errores (404, 500, etc.)
-
----
-
-## 📝 Estándares Código Web
-
-### Funciones
-
-- Max 20 líneas
-- Una responsabilidad
-- Tipos explícitos
-
-### Componentes React
-
-- Props tipadas con TypeScript
-- Usar hooks custom para lógica
-- Evitar lógica de negocio en el componente
-
-### Servicios
-
-- Una clase = una entidad (MinorService, etc.)
-- Métodos CRUD simples
-- Llamadas a API centralizadas
-
-### Manejo de Errores
-
-```typescript
-try {
-  const response = await minorService.create(data);
-  return response;
-} catch (error) {
-  if (error instanceof ValidationError) {
-    // validación fallida → mostrar mensaje
-  } else if (error instanceof AuthError) {
-    // no autorizado → logout
-  } else {
-    // error inesperado → log + mostrar genérico
-    logger.error('Error creating minor', error);
-  }
-}
-```
-
----
-
-## 🚀 Deploy Web
-
-### Frontend (Vercel)
-
-```bash
-npm run build
-vercel deploy
-```
-
-### Backend (Railway)
-
-```bash
-npm run build
-railway deploy
-```
-
-### BD (Supabase)
-
-```
-- Auto backups
-- Restore points
-- Replication si aplica
-```
-
----
-
-## ⚠️ Checklist Antes de Deploy
-
-- [ ] npm run build (sin errores)
-- [ ] npm run test (100% pass)
-- [ ] npm run lint (0 warnings)
-- [ ] Secrets en .env (NUNCA en código)
-- [ ] CORS configurado (solo dominios autorizados)
-- [ ] Rate limiting activo
-- [ ] Auditoría funciona
-- [ ] MFA habilitado
-- [ ] Datos sensibles cifrados
-- [ ] Backups automáticos
-
----
-
-## 🔗 Referencias
-
-Lee también:
-- **AGENTS.md** — Contexto general
-- **AGENTS-MOBILE.md** — Versión mobile (si quieres ver comparación)
-- **PROCESOS-OPERATIVOS.md** — Detalle de los 9 procesos
-- **README.md** — Setup + instalación
-
----
-
-**La versión WEB es la gestión integral. Desarrolla Feature por Feature, valida permisos en cada endpoint, audita todo.**
-
-¿Siguiente paso? Elige una Feature de los procesos 1.1-1.9 y escribe un prompt en `prompts/`.
+## Mapa de secciones citadas por prompts anteriores
+
+Los `prompts/002`–`013` fueron escritos cuando este archivo se llamaba `AGENTS.md` y usaban una numeración distinta. Equivalencias:
+
+| Cita en los prompts | Sección de este archivo |
+|---|---|
+| `AGENTS.md § Deuda conocida` | Deuda conocida / gaps |
+| `AGENTS.md § Resuelto` | Deuda conocida / gaps → Resuelto |
+| `AGENTS.md sección 7` (seguridad / cifrado / auditoría) | Seguridad |
+| `AGENTS.md sección 11` (FASE A/B/C/D/E) | Roadmap |
+| `AGENTS.md sección 3` (diagrama de arquitectura) | Arquitectura |

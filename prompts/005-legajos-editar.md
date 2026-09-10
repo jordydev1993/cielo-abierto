@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Agregar `app/(dashboard)/legajos/[id]/editar/page.tsx`, cerrando el gap 1 de `AGENTS.md` § Deuda conocida: hoy el botón "Editar legajo" de la lista no lleva a ningún formulario de edición.
+Agregar `app/(dashboard)/legajos/[id]/editar/page.tsx`, cerrando el gap 1 de `AGENTS-WEB.md` § Deuda conocida: hoy el botón "Editar legajo" de la lista no lleva a ningún formulario de edición.
 
 ## Contexto
 

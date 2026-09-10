@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Que `POST /api/usuarios` solo pueda ser ejecutado por un usuario autenticado con rol `Admin`, cerrando el gap de seguridad documentado en `AGENTS.md` § Deuda conocida (punto 4).
+Que `POST /api/usuarios` solo pueda ser ejecutado por un usuario autenticado con rol `Admin`, cerrando el gap de seguridad documentado en `AGENTS-WEB.md` § Deuda conocida (punto 4).
 
 ## Contexto
 

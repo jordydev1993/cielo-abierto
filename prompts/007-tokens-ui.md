@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Cerrar el gap 1 de `AGENTS.md` § Deuda conocida: migrar `select`, `dialog`, `tabs`, `textarea`, `toaster` y `form.tsx` (`components/ui/`) de la paleta neutra genérica de shadcn (`slate-*`, `white`, `red-*`, `green-*`, `black/50`) a los tokens `@theme` del proyecto, igual que ya hacen `button`, `badge`, `card`, `input` y `table`.
+Cerrar el gap 1 de `AGENTS-WEB.md` § Deuda conocida: migrar `select`, `dialog`, `tabs`, `textarea`, `toaster` y `form.tsx` (`components/ui/`) de la paleta neutra genérica de shadcn (`slate-*`, `white`, `red-*`, `green-*`, `black/50`) a los tokens `@theme` del proyecto, igual que ya hacen `button`, `badge`, `card`, `input` y `table`.
 
 ## Contexto
 
@@ -69,7 +69,7 @@ No se modifica ningún componente de `components/entities/` ni `components/share
 
 ## Verificación manual
 
-En `next build && next start` (`next dev` no hidrata en este entorno — ver gap 2 de `AGENTS.md`):
+En `next build && next start` (`next dev` no hidrata en este entorno — ver gap 2 de `AGENTS-WEB.md`):
 1. Abrir cualquier formulario con `Select` (ej. `legajos/nuevo`) → confirmar borde/fondo consistente con los `Input` de al lado.
 2. Abrir el diálogo "Cerrar legajo" (`legajos/[id]`) → confirmar que el modal se ve igual de superficie que una `Card`.
 3. Abrir el detalle de un legajo (`Tabs`) → confirmar que el tab activo y la lista de tabs usan tokens, no gris genérico.

@@ -68,7 +68,7 @@ Postgres deniega por default; no hace falta una política que siempre sea `false
 Archivo nuevo: `supabase/migrations/20260827000034_rls_tutela_evaluacion_turnos_seguimiento.sql`
 
 ```sql
--- FASE A2 (AGENTS.md sección 11): políticas RLS para las 10 tablas de A1.
+-- FASE A2 (AGENTS-WEB.md § Roadmap): políticas RLS para las 10 tablas de A1.
 -- Ver prompts/013-rls-tutela-evaluacion-turnos-seguimiento.md para el análisis completo.
 -- Patrón copiado de "intervenciones_admin_tecnico_all" (clean_schema.sql), abierto en
 -- políticas por operación porque la matriz pide reglas distintas por operación.
