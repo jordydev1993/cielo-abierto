@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Que `/dashboard` muestre las tres tarjetas de indicadores (NNyA activos, Legajos activos, Alertas pendientes) que ya están implementadas pero comentadas, cerrando el gap 1 de `AGENTS.md` § Deuda conocida.
+Que `/dashboard` muestre las tres tarjetas de indicadores (NNyA activos, Legajos activos, Alertas pendientes) que ya están implementadas pero comentadas, cerrando el gap 1 de `AGENTS-WEB.md` § Deuda conocida.
 
 ## Contexto
 

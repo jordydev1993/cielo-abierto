@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Cerrar el gap descrito en `AGENTS.md` sección 11 (FASE A, A0): el proceso 1.5 (Egreso o
+Cerrar el gap descrito en `AGENTS-WEB.md` sección 11 (FASE A, A0): el proceso 1.5 (Egreso o
 Reintegración Familiar) necesita la fecha de egreso como dato de primera clase — de ella
 se calculan los seguimientos post-egreso a 30 y 60 días (A0 es prerrequisito de FASE E).
 
@@ -152,7 +152,7 @@ El plan asumía que el `UPDATE` del backfill quedaría auditado por `trg_audit_n
 total. Además `audit_log` en la base real tiene columnas distintas a las del archivo de
 migración (`registro_id`/`usuario_id`/`created_at` en vez de
 `id_registro`/`auth_uid`/`fecha`) — otro caso del patrón "Ojo con migraciones superseded"
-que ya señala `AGENTS.md`: la migración de auditoría fue reemplazada o nunca aplicada tal
+que ya señala `AGENTS-WEB.md`: la migración de auditoría fue reemplazada o nunca aplicada tal
 cual en este proyecto. **No se corrigió acá** (fuera de alcance de A0, y es exactamente
-el tipo de hallazgo que `AGENTS.md` pide detectar y documentar, no arreglar sin
+el tipo de hallazgo que `AGENTS-WEB.md` pide detectar y documentar, no arreglar sin
 aprobación) — queda para un prompt aparte si se decide restaurar la auditoría.

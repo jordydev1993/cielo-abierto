@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Crear las 10 tablas de `AGENTS.md` sección 11, FASE A, A1: soporte de datos para tutela y
+Crear las 10 tablas de `AGENTS-WEB.md` sección 11, FASE A, A1: soporte de datos para tutela y
 revinculación (Procesos 1.1 y 1.5), evaluación institucional mensual (Proceso 1.8) y
 acompañamiento diario con firma doble de turno (Proceso 1.3). A0 (`fecha_egreso` en `nnya`)
 ya está implementado (`prompts/011-fecha-egreso-nnya.md`) y varias de estas tablas lo
@@ -26,7 +26,7 @@ conectada:
 - **RLS**: habilitado en las 17 tablas + políticas `Admin`/`Equipo Tecnico` en la misma
   migración que las crea.
 
-## (a) Cifrado de `nnya.dni` — verificado, no lo que dice `AGENTS.md`
+## (a) Cifrado de `nnya.dni` — verificado, no lo que dice `AGENTS-WEB.md`
 
 El prompt pedía replicar "el mismo tipo/cifrado que usa `nnya.dni`". Verificado contra la
 base real:
@@ -35,10 +35,10 @@ base real:
 - La extensión `pgcrypto` está instalada en la base, pero `grep` sobre las 31 migraciones no
   encontró ni un solo uso (`pgp_sym_encrypt`, `crypt(`, `digest(`) — está disponible pero no
   se usa para nada.
-- `AGENTS.md` sección 7 dice *"Cifrado: nombres, DNI, datos sanitarios → AES-256 en
+- `AGENTS-WEB.md` sección 7 dice *"Cifrado: nombres, DNI, datos sanitarios → AES-256 en
   Postgres"* y sección 5 dice *"dni ENCRYPTED"* — **esto no es cierto en el esquema real**.
   Es la misma imprecisión ya señalada en el resumen de la sesión anterior sobre esa sección
-  de `AGENTS.md` (mezcla aspiracional con lo implementado).
+  de `AGENTS-WEB.md` (mezcla aspiracional con lo implementado).
 
 **Aplicado a `referentes.dni`**: `VARCHAR(20) NOT NULL UNIQUE`, texto plano — igual que
 `nnya.dni`/`tutores.dni`. No se inventa un mecanismo de cifrado nuevo (el prompt pedía
@@ -86,13 +86,13 @@ central porque el prompt pide aplicarlo activamente. Verificado de nuevo, más a
   La migración vieja que sí los definía (`20260514000018_audit_log.sql`) quedó
   completamente superseded, no solo desactualizada en columnas como pensábamos en A0.
 - Osea: no hay ningún "patrón exacto de las 17 tablas" para copiar, porque ninguna de las
-  17 tablas está auditada hoy. `AGENTS.md` sección 7 y el diagrama de sección 3 (`audit_log
+  17 tablas está auditada hoy. `AGENTS-WEB.md` sección 7 y el diagrama de sección 3 (`audit_log
   IMMUTABLE`, "Audit triggers en cada tabla (automáticos)") describen un sistema que no
   está desplegado.
 
 **No decidí esto por mi cuenta.** Esta migración **no crea triggers de auditoría** (ni para
 las 10 tablas nuevas ni, obviamente, para las 17 viejas) — mantiene la migración enfocada en
-A1 (crear tablas) tal como lo separa tu propio `AGENTS.md` (A1 vs A2 aparte). Elegí entre
+A1 (crear tablas) tal como lo separa tu propio `AGENTS-WEB.md` (A1 vs A2 aparte). Elegí entre
 tres opciones y quiero tu confirmación antes de aplicar:
 
 - **Opción A (aplicada en el plan de abajo)**: no agregar auditoría ahora. Documentar el
@@ -105,7 +105,7 @@ tres opciones y quiero tu confirmación antes de aplicar:
   desde ya).
 - **Opción C**: recrear `fn_audit_trigger()` y aplicarlo a las 27 tablas (10 nuevas + 17
   viejas) en esta misma migración — es más alcance del que pediste ("crear 10 tablas"), pero
-  es la única opción que dejaría el sistema realmente auditado como dice `AGENTS.md`.
+  es la única opción que dejaría el sistema realmente auditado como dice `AGENTS-WEB.md`.
 
 Si preferís B o C en vez de A, decímelo y ajusto el archivo antes de aplicar.
 

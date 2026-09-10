@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Construir el módulo "Intervenciones" (acciones profesionales sobre el caso de un NNyA: Judicial, Social, Psicológica, Médica, Educativa, Familiar, Otra), que `AGENTS.md` listaba como uno de los "12 módulos de negocio ya implementados" pero que en realidad **no tiene ningún código de aplicación** — solo existe la tabla en la base de datos.
+Construir el módulo "Intervenciones" (acciones profesionales sobre el caso de un NNyA: Judicial, Social, Psicológica, Médica, Educativa, Familiar, Otra), que `AGENTS-WEB.md` listaba como uno de los "12 módulos de negocio ya implementados" pero que en realidad **no tiene ningún código de aplicación** — solo existe la tabla en la base de datos.
 
 ## Contexto
 
@@ -12,7 +12,7 @@ Verificado por inspección directa (no hay ambigüedad, es una ausencia total):
 - `types/database.types.ts` líneas 83-96: el tipo `Intervencion` **ya existe**, escrito a mano junto con el resto, pero no lo usa ningún archivo.
 - `grep` exhaustivo confirmó: no existe `components/entities/intervenciones/`, no existe `hooks/intervenciones/`, no existe `lib/validations/intervenciones.schema.ts`, no hay ninguna ruta ni tab que lo muestre. La única mención de "intervencion" en código de app es la palabra suelta "intervención" en un comentario de `useUpdateNnya`-adyacente, no el módulo.
 
-`AGENTS.md` (sección Arquitectura, línea sobre "12 módulos de negocio ya implementados") tenía esta afirmación incorrecta — se corrige como parte de este plan, independientemente de la implementación.
+`AGENTS-WEB.md` (sección Arquitectura, línea sobre "12 módulos de negocio ya implementados") tenía esta afirmación incorrecta — se corrige como parte de este plan, independientemente de la implementación.
 
 `procesos-del-negocio.md` (sección "Intervención — 7 excepciones") documenta: asociación obligatoria a NNyA con legajo activo; fecha obligatoria y no futura; profesional responsable obligatorio; "Rol Educador" no gestiona intervenciones (simplificación ya conocida: el modelo de roles real solo tiene `Admin`/`Equipo Tecnico`, "Educador" es un cargo dentro de Equipo Tecnico, no un rol de app — mismo criterio que el resto de los módulos); eliminar requiere Admin (no se implementa un botón de eliminar en este plan — **ningún** tab de legajo lo tiene hoy — Incidentes, Turnos, Salud — así que no se introduce un patrón nuevo).
 
@@ -32,7 +32,7 @@ La tabla solo tiene `nnya_id` (no `legajo_id`) — mismo caso que `alertas`, que
 
 ## Skills utilizadas
 
-`crud-generator` (patrón estándar de ABM por entidad) y `role-permission` (matriz de permisos: mismo criterio Admin/Equipo Tecnico que el resto) — solo como referencia de convención, no se sigue ninguna tabla de estado desactualizada de la skill (nota de fiabilidad de `AGENTS.md`).
+`crud-generator` (patrón estándar de ABM por entidad) y `role-permission` (matriz de permisos: mismo criterio Admin/Equipo Tecnico que el resto) — solo como referencia de convención, no se sigue ninguna tabla de estado desactualizada de la skill (nota de fiabilidad de `AGENTS-WEB.md`).
 
 ## Supuestos
 
@@ -56,7 +56,7 @@ La tabla solo tiene `nnya_id` (no `legajo_id`) — mismo caso que `alertas`, que
 
 - `lib/constants/queryKeys.ts`: agregar factory `intervenciones: { all, lists, byNnya }` (mismo patrón que `alertas`).
 - `app/(dashboard)/legajos/[id]/page.tsx`: agregar tab "Intervenciones" (ícono `Briefcase` o similar de `lucide-react`) entre Incidentes y Alertas, con badge de cantidad (mismo patrón `TabBadge` ya usado); pasar `nnyaId` (ya disponible) y `legajoActivo` al nuevo `IntervencionesTab`.
-- `AGENTS.md`: corregir la afirmación "12 módulos de negocio ya implementados" (ya no incluye Intervenciones en esa lista hasta que este plan se implemente; Actividades queda documentado aparte en Deuda conocida, fuera de alcance de este plan).
+- `AGENTS-WEB.md`: corregir la afirmación "12 módulos de negocio ya implementados" (ya no incluye Intervenciones en esa lista hasta que este plan se implemente; Actividades queda documentado aparte en Deuda conocida, fuera de alcance de este plan).
 
 ## Seguridad
 
@@ -86,4 +86,4 @@ La tabla solo tiene `nnya_id` (no `legajo_id`) — mismo caso que `alertas`, que
 
 ---
 
-**Estado**: implementado y verificado end-to-end. **Ajuste post-aprobación**: `tipo` se implementó como texto libre (`Input` + `datalist` de sugerencias), no como el `enum` de 7 valores capitalizados descrito arriba — la migración de la que salió ese enum (`20260514000006_intervenciones.sql`) resultó estar superseded por `20260620000031_clean_schema.sql`, que define `tipo` sin `CHECK`. Ver detalle en `AGENTS.md` § Resuelto. También se agregó `usuarios?: Pick<Usuario, 'id'|'nombre'|'apellido'>` a la interfaz `Intervencion` en `types/database.types.ts` (no listado originalmente en "Archivos a modificar"), necesario para el join usado en `useIntervencionesByNnya`.
+**Estado**: implementado y verificado end-to-end. **Ajuste post-aprobación**: `tipo` se implementó como texto libre (`Input` + `datalist` de sugerencias), no como el `enum` de 7 valores capitalizados descrito arriba — la migración de la que salió ese enum (`20260514000006_intervenciones.sql`) resultó estar superseded por `20260620000031_clean_schema.sql`, que define `tipo` sin `CHECK`. Ver detalle en `AGENTS-WEB.md` § Resuelto. También se agregó `usuarios?: Pick<Usuario, 'id'|'nombre'|'apellido'>` a la interfaz `Intervencion` en `types/database.types.ts` (no listado originalmente en "Archivos a modificar"), necesario para el join usado en `useIntervencionesByNnya`.

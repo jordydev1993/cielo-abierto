@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Cerrar el último gap de `AGENTS.md` § Deuda conocida: `next dev` (Turbopack y webpack) nunca hidrataba la app cuando se accedía por `127.0.0.1:3001` — cualquier formulario se comportaba como HTML puro (submit nativo por GET, sin validación, sin llamadas a Supabase).
+Cerrar el último gap de `AGENTS-WEB.md` § Deuda conocida: `next dev` (Turbopack y webpack) nunca hidrataba la app cuando se accedía por `127.0.0.1:3001` — cualquier formulario se comportaba como HTML puro (submit nativo por GET, sin validación, sin llamadas a Supabase).
 
 ## Contexto y causa raíz
 

@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Construir el módulo "Actividades" (talleres, salidas y eventos grupales o individuales: recreativos, educativos, terapéuticos), último gap de `AGENTS.md` § Deuda conocida. A diferencia de Intervenciones (009), no vive dentro del detalle de un legajo — es un módulo propio en el sidebar, como Turnos.
+Construir el módulo "Actividades" (talleres, salidas y eventos grupales o individuales: recreativos, educativos, terapéuticos), último gap de `AGENTS-WEB.md` § Deuda conocida. A diferencia de Intervenciones (009), no vive dentro del detalle de un legajo — es un módulo propio en el sidebar, como Turnos.
 
 ## Contexto
 
@@ -21,7 +21,7 @@ RLS: policy `actividades_admin_tecnico_all` ya existe (mismo criterio Admin/Equi
 
 **Confirmado con los 4 registros semilla reales** (consultados directo en la base): `tipo` es texto libre minúsculo (`'recreativa'`, `'educativa'`, `'terapeutica'`) — **sin `CHECK`**, igual que se corrigió en 009 para Intervenciones. `nnya_ids` es un array de 2 a 4 NNyA por actividad (no una relación 1 a 1) — confirma que es una actividad **grupal**, no ligada a un legajo puntual. **No existe columna `legajo_id`** en la tabla.
 
-`procesos-del-negocio.md` § "Actividad (6 excepciones)" dice "asociación a legajo obligatoria" y "no se pueden registrar actividades con fecha futura" — **ambas afirmaciones contradicen el schema real y los datos semilla** (no hay `legajo_id`; los 4 registros semilla tienen `estado: 'programada'` con fechas que representan justamente una actividad agendada para más adelante). Se sigue el criterio ya establecido en `AGENTS.md`: el código/modelo de datos real es la fuente de verdad ante una discrepancia — no se agrega una validación de "fecha no futura" ni un campo `legajo_id` inexistente.
+`procesos-del-negocio.md` § "Actividad (6 excepciones)" dice "asociación a legajo obligatoria" y "no se pueden registrar actividades con fecha futura" — **ambas afirmaciones contradicen el schema real y los datos semilla** (no hay `legajo_id`; los 4 registros semilla tienen `estado: 'programada'` con fechas que representan justamente una actividad agendada para más adelante). Se sigue el criterio ya establecido en `AGENTS-WEB.md`: el código/modelo de datos real es la fuente de verdad ante una discrepancia — no se agrega una validación de "fecha no futura" ni un campo `legajo_id` inexistente.
 
 ## Archivos inspeccionados
 
@@ -36,7 +36,7 @@ RLS: policy `actividades_admin_tecnico_all` ya existe (mismo criterio Admin/Equi
 
 ## Skills utilizadas
 
-`crud-generator` como referencia de convención (no de su tabla de estado desactualizada, por la nota de fiabilidad de `AGENTS.md`).
+`crud-generator` como referencia de convención (no de su tabla de estado desactualizada, por la nota de fiabilidad de `AGENTS-WEB.md`).
 
 ## Supuestos
 
@@ -63,7 +63,7 @@ RLS: policy `actividades_admin_tecnico_all` ya existe (mismo criterio Admin/Equi
 - `lib/constants/queryKeys.ts`: agregar factory `actividades: { all, lists }`.
 - `app/(dashboard)/layout.tsx`: agregar `{ href: '/actividades', label: 'Actividades', icon: PartyPopper }` (o ícono similar de `lucide-react`) a `NAV_ADMIN_TECNICO`, junto a Incidentes/Alertas/Turnos/Informes.
 - `types/database.types.ts`: agregar interfaz `Actividad` (no existe todavía, a diferencia de `Intervencion` que ya estaba escrita).
-- `AGENTS.md`: mover Actividades de "Deuda conocida" a "Resuelto"; actualizar el listado de módulos implementados en "Alcance".
+- `AGENTS-WEB.md`: mover Actividades de "Deuda conocida" a "Resuelto"; actualizar el listado de módulos implementados en "Alcance".
 
 ## Seguridad
 
