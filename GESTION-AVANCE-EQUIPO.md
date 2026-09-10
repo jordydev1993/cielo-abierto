@@ -6,6 +6,8 @@ Controlador de avance del proyecto Argüello Infancias (web + mobile + modelo de
 
 > Este archivo está también en el repo mobile (`arguello-infancias-mobile`). Es el mismo contenido: el controlador es uno solo y cubre los dos repos.
 
+**Proceso de trabajo paso a paso** (de la tarjeta al merge): `GUIA-PROCESO-COMPLETO.md`
+
 ---
 
 ## Quiénes
