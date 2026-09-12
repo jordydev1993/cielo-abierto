@@ -39,6 +39,9 @@ export interface Nnya {
   activo: boolean
   estado_actual: 'En residencia' | 'En proceso de egreso' | 'Egresado' | 'Fallecido'
   fecha_egreso: string | null
+  foto_url: string | null
+  alertas_importantes: string | null
+  turno_escolar: 'Mañana' | 'Tarde' | 'Noche' | 'Doble Jornada' | null
   created_at: string
   updated_at: string
 }
