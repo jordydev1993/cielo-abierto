@@ -108,3 +108,16 @@ En orden, sin estimar tiempos (eso corresponde a un plan formal cuando se aprueb
 7. Definir y aplicar la política de minimización de datos (qué se guarda y qué no) antes de escribir el primer registro real.
 
 Este orden no es una implementación aprobada — es la ruta que muestra el propio análisis; falta el plan formal (`prompts/`) del ciclo de trabajo del proyecto antes de tocar código, una vez que el equipo decida encarar esto.
+
+---
+
+## 8. Método de verificación: RENAPER (`id_lookup`), reemplaza la captura de documento
+
+**Decisión (2026-09-13, Jordy):** el workflow publicado usa el método `id_lookup` de Didit para Argentina (`arg_renaper`) en lugar de la captura fotográfica del DNI (frente/dorso) que especificaba originalmente la Práctica 3. Ya no se fotografía el documento — el flujo es **DNI + selfie**, contrastado directo contra el padrón de RENAPER.
+
+Workflow: `71a46d11-07f9-480c-89f3-3bb86cee7175`, versión publicada `390d69a8-46a2-4fdf-9ffe-337ead253203`. Grafo: un solo nodo OCR (config `id_lookup`, `document.enabled:false`, 3 intentos máx.) → estado final. Los nodos LIVENESS y FACE_MATCH que tenía la versión anterior se eliminaron del grafo: quedaban sin usar, porque `skip_liveness_and_face_match:true` los salta siempre que no hay captura de documento como fallback.
+
+**Implicancias a tener en cuenta (no resueltas todavía, quedan para el equipo):**
+- La Práctica 3 pedía "prueba de vida" (liveness) como paso propio — hoy no existe como nodo separado en el workflow. Si el entregable académico lo requiere explícito, hay que reincorporarlo (es compatible con `id_lookup`, son configs independientes).
+- Sin fallback a documento: si RENAPER no encuentra match, da error, o el match es parcial, la sesión se **declina** directamente (no hay ruta automática de "fallback manual" del lado de Didit). El fallback manual con autorización de Admin/coordinador (decisión `[CG1]`) sigue siendo válido, pero se resuelve en el backend propio, no en el workflow de Didit.
+- Base legal distinta: `id_lookup` consulta directamente el padrón de RENAPER (Ley 25.326) en vez de solo procesar una foto que el usuario aporta — vale la pena que quede explícito en el consentimiento/documento de privacidad del feature.

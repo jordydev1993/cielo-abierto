@@ -27,9 +27,17 @@ Las decisiones de Jordy ya están resueltas (2026-09-15) — solo queda pendient
 - [x] **Modelo de datos: tabla propia `retiros`, no un `tipo` dentro de `actividades`.** El retiro necesita campos que `actividades` no tiene y no debería tener (`tutor_id`, resultado de validación de identidad, resultado de autorización, cantidad de intentos, motivo de rechazo) — meterlos ahí como columnas nullable ensuciaría esa tabla para el resto de sus filas. Mismo criterio ya aplicado al crear `novedades` en vez de reusar `intervenciones`. **Esto ya destraba el trabajo de Sofi.**
 - [x] **Los 8 "Requisitos previos para producción"** (autorización institucional, evaluación legal de datos biométricos, transferencia internacional, consentimiento, contrato/DPA, política de retención, config. productiva, credenciales de producción): **confirmado que ninguno bloquea el prototipo de tesis** — la propia Práctica 3 ya lo dice ("durante la etapa de tesis/prototipo se utilizará el entorno de pruebas y datos ficticios"). Queda registrado acá para no perderlo de vista antes de un eventual uso real con NNA verdaderos.
 
-**Pendiente, requiere una acción tuya fuera de este repo:**
+**Resuelto (2026-09-13):**
 
-- [ ] **Alta de cuenta sandbox de Didit.** Es un servicio externo (probablemente con su propio proceso de alta/verificación) — nadie más que vos puede crearla. Una vez que tengas las credenciales de prueba, van como variables de entorno **solo del lado servidor**, mismo patrón que `SUPABASE_SERVICE_ROLE_KEY` hoy (nunca en el cliente, nunca en el repo). Nombres sugeridos para cuando las tengas: `DIDIT_API_KEY`, `DIDIT_WEBHOOK_SECRET` (o los que documente Didit — ajustar al nombre real que te den).
+- [x] **Alta de cuenta sandbox de Didit + configuración inicial.** App elegida: "arguelloinfancias (Sandbox)". Conectado vía MCP (`https://mcp.didit.me/mcp`) para terminar de configurarla:
+  - Workflow publicado `71a46d11-07f9-480c-89f3-3bb86cee7175`, versión `390d69a8-46a2-4fdf-9ffe-337ead253203` ("Retiro NNyA - Validación de identidad"): método `id_lookup` (RENAPER, Argentina) — DNI + selfie contra el padrón, **reemplaza** la captura de documento (frente/dorso) que preveía la Práctica 3 original. 3 intentos máx. (RF18). Detalle y por qué en `INFORME-VALIDACION-IDENTIDAD-RETIRO-DIDIT.md` § 8 — incluye 2 implicancias sin resolver (liveness explícito y base legal del consentimiento).
+  - Webhook creado `d8699159-5933-4cb8-92b5-f75a59e7b493` → `https://cielo-abierto-two.vercel.app/api/didit/webhook`, evento `status.updated`, versión `v3`.
+
+**Pendiente, requiere una acción tuya fuera de este repo (el MCP nunca expone secretos en texto plano):**
+
+- [ ] **Corregir `DIDIT_API_KEY` en `.env.local`.** La key que se cargó antes pertenece a la app "My Application", no a "arguelloinfancias (Sandbox)". Sacar la key real desde el dashboard de Didit → esa app → API keys, y reemplazarla.
+- [ ] **Guardar `DIDIT_WEBHOOK_SECRET`.** El webhook creado tiene un signing secret que el dashboard sí muestra (el MCP lo redacta). Meli lo va a necesitar para validar la firma de cada notificación (RNF-05) cuando construya el endpoint.
+- [ ] **Nota para Meli**: el endpoint todavía no existe en el código. El webhook ya está registrado apuntando a `/api/didit/webhook` (mismo patrón que `app/api/usuarios/route.ts`) — hay que crear esa ruta antes de que Didit pueda entregar resultados ahí.
 
 **Siguiente paso, ya destrabado:**
 
