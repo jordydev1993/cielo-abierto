@@ -14,7 +14,7 @@
 Jordy (decisiones) ✅  →  Sofi (modelo de datos) ⬅ YA PUEDE ARRANCAR  →  Meli (backend + Didit)  →  Cami (frontend)
 ```
 
-Las decisiones de Jordy ya están resueltas (2026-09-15) — solo queda pendiente el alta de la cuenta sandbox de Didit, que no bloquea a Sofi. **Sofi ya puede arrancar.**
+Las decisiones de Jordy y el alta de la cuenta sandbox de Didit (app "arguelloinfancias (Sandbox)", workflow + webhook configurados) ya están resueltas (2026-09-13/15). **Sofi ya puede arrancar.**
 
 ---
 
