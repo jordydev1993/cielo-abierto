@@ -11,32 +11,39 @@
 ## Orden de dependencias
 
 ```
-Jordy (decisiones)  →  Sofi (modelo de datos)  →  Meli (backend + Didit)  →  Cami (frontend)
+Jordy (decisiones) ✅  →  Sofi (modelo de datos) ⬅ YA PUEDE ARRANCAR  →  Meli (backend + Didit)  →  Cami (frontend)
 ```
 
-Nadie puede arrancar en serio antes de que Jordy cierre las 2 decisiones de negocio — están primero por algo, no por jerarquía.
+Las decisiones de Jordy ya están resueltas (2026-09-15) — solo queda pendiente el alta de la cuenta sandbox de Didit, que no bloquea a Sofi. **Sofi ya puede arrancar.**
 
 ---
 
 ## Jordy — Coordinación general y decisiones
 
-Es lo primero que tiene que pasar. Sin esto, Sofi/Meli/Cami están diseñando sobre una base que puede cambiar.
+**Resuelto (2026-09-15):**
 
-- [ ] Resolver **cuántos intentos** de validación se permiten antes de bloquear el proceso (RF18 lo pide, quedó sin definir — es el comentario `[CG2]` del propio PDF).
-- [ ] Decidir si, ante la indisponibilidad de Didit, se permite una **validación manual** comparando documentación ya registrada (comentario `[CG1]`, dice "Validar con Meli" — la decisión final es de producto, igual).
-- [ ] Decidir si el retiro se modela como un **`tipo` nuevo dentro de `actividades`** o como una **tabla propia** (`retiros`) — afecta directamente el trabajo de Sofi, hay que definirlo antes de que ella diseñe el modelo.
-- [ ] Gestionar el alta de una **cuenta sandbox de Didit** y las variables de entorno correspondientes (siguiendo el mismo patrón que `SUPABASE_SERVICE_ROLE_KEY`: solo servidor, nunca en el cliente).
-- [ ] De los 8 "Requisitos previos para producción" del documento (autorización institucional, evaluación legal de datos biométricos, transferencia internacional, consentimiento, contrato/DPA, política de retención, config. productiva, credenciales): **ninguno bloquea el prototipo de tesis** (el propio documento dice que se usa entorno de pruebas y datos ficticios) — pero sí hay que dejar por escrito esa decisión para no perderla de vista antes de un eventual uso real.
-- [ ] Una vez resuelto lo anterior, coordinar quién escribe el primer PLAN formal en `prompts/` (probablemente Meli, por la arquitectura) y aprobarlo.
+- [x] **RF18 — Intentos de validación: 3.** Al tercer fallo, el proceso deriva a revisión manual/supervisor (no se sigue reintentando indefinidamente).
+- [x] **`[CG1]` — Fallback manual: sí, pero solo lo autoriza un Admin/coordinador.** Si Didit no está disponible, se permite una validación manual comparando documentación ya registrada — pero no cualquier educador puede aprobarla, solo un rol con más responsabilidad (mismo criterio de roles que ya usa el resto del sistema: `Admin`/`Equipo Tecnico` vía `get_my_role()`).
+- [x] **Modelo de datos: tabla propia `retiros`, no un `tipo` dentro de `actividades`.** El retiro necesita campos que `actividades` no tiene y no debería tener (`tutor_id`, resultado de validación de identidad, resultado de autorización, cantidad de intentos, motivo de rechazo) — meterlos ahí como columnas nullable ensuciaría esa tabla para el resto de sus filas. Mismo criterio ya aplicado al crear `novedades` en vez de reusar `intervenciones`. **Esto ya destraba el trabajo de Sofi.**
+- [x] **Los 8 "Requisitos previos para producción"** (autorización institucional, evaluación legal de datos biométricos, transferencia internacional, consentimiento, contrato/DPA, política de retención, config. productiva, credenciales de producción): **confirmado que ninguno bloquea el prototipo de tesis** — la propia Práctica 3 ya lo dice ("durante la etapa de tesis/prototipo se utilizará el entorno de pruebas y datos ficticios"). Queda registrado acá para no perderlo de vista antes de un eventual uso real con NNA verdaderos.
+
+**Pendiente, requiere una acción tuya fuera de este repo:**
+
+- [ ] **Alta de cuenta sandbox de Didit.** Es un servicio externo (probablemente con su propio proceso de alta/verificación) — nadie más que vos puede crearla. Una vez que tengas las credenciales de prueba, van como variables de entorno **solo del lado servidor**, mismo patrón que `SUPABASE_SERVICE_ROLE_KEY` hoy (nunca en el cliente, nunca en el repo). Nombres sugeridos para cuando las tengas: `DIDIT_API_KEY`, `DIDIT_WEBHOOK_SECRET` (o los que documente Didit — ajustar al nombre real que te den).
+
+**Siguiente paso, ya destrabado:**
+
+- [ ] Con el modelo de datos decidido, **Sofi ya puede arrancar** su parte (tabla `retiros`, autorización de retiro, sesiones de verificación, política de minimización de datos).
+- [ ] Una vez que Sofi tenga el modelo, coordiná con **Meli** para que escriba el primer PLAN formal en `prompts/` (le toca a ella por ser quien lidera la arquitectura/integración Didit) y aprobalo antes de que se escriba una línea de código.
 
 ---
 
 ## Sofi — Modelo de datos
 
-Depende de que Jordy resuelva el punto de "actividad vs tabla propia" de arriba.
+**✅ Ya destrabado** (Jordy resolvió el 2026-09-15: tabla propia `retiros`, 3 intentos, fallback manual solo Admin/coordinador).
 
 - [ ] Diseñar el campo o tabla de **"autorización para retirar"** — hoy `nnya_tutores.es_principal` no representa esto; un tutor puede ser principal y no estar autorizado a retirar, o viceversa (RN-01).
-- [ ] Diseñar el modelo del **registro del retiro en sí**, con como mínimo: NNyA, tutor, usuario que lo registró, resultado de validación de identidad, resultado de autorización, cantidad de intentos, motivo de rechazo (RF19-RF20) — como extensión de `actividades` o tabla nueva, según lo que decida Jordy.
+- [ ] Diseñar la tabla **`retiros`** (ya definido: tabla propia, no un `tipo` de `actividades`), con como mínimo: `nnya_id`, `tutor_id`, `usuario_id` (quien lo registró), `resultado_validacion_identidad`, `resultado_autorizacion`, `cantidad_intentos` (tope de 3, según la decisión de Jordy), `motivo_rechazo`, `autorizado_por` (nullable — solo se completa si fue una validación manual con fallback, y debe ser un `Admin`/`Equipo Tecnico`) (RF19-RF20).
 - [ ] Diseñar la **tabla de sesiones de verificación Didit**, con los 5 estados que pide RNF-12: `Pendiente de verificación`, `Identidad verificada`, `Identidad no verificada`, `Requiere revisión`, `Error del proveedor`.
 - [ ] Diseñar el campo de **"restricciones vigentes"** sobre un vínculo tutor↔NNyA (lo pide RF-06 del documento de re-vinculación) — hoy no existe nada parecido.
 - [ ] Definir la **política de minimización de datos** (RNF-06/07): qué se guarda y qué no. El documento es explícito en que **no** se deben guardar selfies, videos de prueba de vida, plantillas biométricas ni copias de DNI — solo el resultado de la operación.
@@ -74,11 +81,11 @@ Depende de que Meli tenga al menos los endpoints definidos (puede arrancar el ma
 
 ## Resumen
 
-| Quién | Bloqueado por | Cantidad de tareas |
+| Quién | Estado | Cantidad de tareas |
 |---|---|---|
-| Jordy | — (arranca primero) | 6 |
-| Sofi | Jordy | 6 |
-| Meli | Sofi (+ Jordy) | 8 |
-| Cami | Meli (parcial) | 6 |
+| Jordy | ✅ Decisiones resueltas (2026-09-15) — falta solo el alta de la cuenta Didit | 6 |
+| Sofi | ✅ Ya puede arrancar | 6 |
+| Meli | Espera el modelo de Sofi | 8 |
+| Cami | Espera a Meli (parcial) | 6 |
 
-Ninguna de estas tareas tiene tarjeta en el tablero todavía — es análisis convertido en lista de trabajo, no compromiso de sprint. Si se decide encarar esta feature, el primer paso real es que Jordy cierre las decisiones de la sección propia y recién ahí se crean las tarjetas.
+Ninguna de estas tareas tiene tarjeta en el tablero todavía — es análisis convertido en lista de trabajo, no compromiso de sprint. Avisame cuando Sofi tenga el modelo listo y armamos las tarjetas para trackearlo en el tablero.
