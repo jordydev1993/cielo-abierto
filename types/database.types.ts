@@ -100,6 +100,18 @@ export interface Intervencion {
   usuarios?: Pick<Usuario, 'id' | 'nombre' | 'apellido'>
 }
 
+export interface Novedad {
+  id: string
+  nnya_id: string
+  usuario_id: string | null
+  tipo: 'Salud' | 'Educación' | 'Comportamiento' | 'Alimentación' | 'Visita Familiar' | 'Otro'
+  descripcion: string
+  fecha_hora: string
+  created_at: string
+  updated_at: string
+  usuarios?: Pick<Usuario, 'id' | 'nombre' | 'apellido'>
+}
+
 export interface Actividad {
   id: string
   titulo: string

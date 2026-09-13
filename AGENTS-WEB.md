@@ -87,11 +87,13 @@ No agregar dependencias nuevas sin justificar la necesidad primero.
 
 ## Modelo de datos
 
-**27 tablas** en `public` (Postgres/Supabase), gestionadas vía `supabase/migrations/`. RLS activo en todas.
+**28 tablas** en `public` (Postgres/Supabase), gestionadas vía `supabase/migrations/`. RLS activo en todas.
 
 17 originales: `roles`, `usuarios`, `nnya`, `tutores`, `nnya_tutores`, `legajos`, `intervenciones`, `turnos`, `alertas`, `actividades`, `incidentes`, `diagnosticos`, `medicamentos`, `informes`, `documentos`, `audiencias_judiciales`, `audit_log`.
 
 10 de FASE A1 (`prompts/012`, migración `20260827000033`) — **tablas + RLS creadas, sin UI todavía** (ver Roadmap): `referentes`, `vinculos_tutela`, `validaciones_renaper`, `transferencia_auh`, `evaluacion_institucional` (+ `_asistentes`, `_casos`), `propuestas_mejora`, `turnos_personal`, `seguimiento_post_egreso`.
+
+1 de mobile (`prompts/015`, migración `20260912000036`): `novedades` — diario liviano de novedades por NNA (F2/F3 mobile), consumida solo por la app mobile, sin UI en la web.
 
 Reglas de negocio completas (máquinas de estado, validaciones por entidad) en `procesos-del-negocio.md`.
 
@@ -105,7 +107,7 @@ Dos route handlers en `app/api/`:
 
 ## Seguridad
 
-- RLS activo en las 27 tablas.
+- RLS activo en las 28 tablas.
 - Roles de aplicación: `Admin`, `Equipo Tecnico` (vía RPC `get_my_role`).
 - Nunca loguear ni exponer datos sensibles de NNyA innecesariamente.
 - Limitar el acceso a información sensible según rol desde el diseño de cada funcionalidad, no como añadido posterior.
@@ -166,7 +168,7 @@ Detectada por inspección directa del código. **No se corrige sin aprobación**
 | # | Gap | Tarjeta |
 |---|---|---|
 | audit | El audit log NO está cableado: la base real tiene 0 triggers `trg_audit_*`, no existe `fn_audit_trigger()`, `audit_log` tiene 0 filas y sus columnas difieren de la migración. La doc dice "auditoría inmutable en cada acción" — falso. Requiere resolver la decisión A/B/C planteada en `prompts/012`. | issue #23 |
-| rol-rot | `roles` tiene 7 filas (no 2). 6 de 7 seed users apuntan a roles legacy (`Trabajador Social`, `Médico/a`, etc.) y no tienen `auth_user_id`: si se les da login, `get_my_role()` los deja fuera de las 27 tablas. | issue #24 |
+| rol-rot | `roles` tiene 7 filas (no 2). 6 de 7 seed users apuntan a roles legacy (`Trabajador Social`, `Médico/a`, etc.) y no tienen `auth_user_id`: si se les da login, `get_my_role()` los deja fuera de las 28 tablas. | issue #24 |
 | types | `types/database.types.ts` se escribe a mano. Debería generarse con `supabase gen types`. | issue #29 |
 | tests | `playwright` instalado, 0 tests. | issue #30 |
 | design | `docs/design-system.md` §5: sin escala tipográfica nombrada; `Toaster` sin variantes warning/info; sin wrapper de alert-dialog no destructivo; colores hardcodeados en `NnyaTable.tsx`. | issue #31 |
