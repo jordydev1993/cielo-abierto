@@ -37,7 +37,7 @@ Las decisiones de Jordy ya están resueltas (2026-09-15) — solo queda pendient
 
 - [x] **Corregir `DIDIT_API_KEY` en `.env.local`.** Actualizado (2026-09-13) con la key real de "arguelloinfancias (Sandbox)".
 - [x] **Guardar `DIDIT_WEBHOOK_SECRET`.** Cargado (2026-09-13) en `.env.local`. Meli lo va a necesitar para validar la firma de cada notificación (RNF-05) cuando construya el endpoint.
-- [ ] **Nota para Meli**: el endpoint todavía no existe en el código. El webhook ya está registrado apuntando a `/api/didit/webhook` (mismo patrón que `app/api/usuarios/route.ts`) — hay que crear esa ruta antes de que Didit pueda entregar resultados ahí.
+- [x] **Endpoint del webhook creado y en producción (2026-09-13).** `app/api/didit/webhook/route.ts` (plan `prompts/016-webhook-didit.md`, ✓ Aprobado): valida `X-Signature-V2` + `X-Timestamp` contra `DIDIT_WEBHOOK_SECRET` antes de aceptar cualquier notificación (RNF-05). Todavía **no** escribe en Supabase — no hay tablas de Sofi para eso — queda un `TODO(Meli)` marcado en el código. `DIDIT_API_KEY` y `DIDIT_WEBHOOK_SECRET` ya están cargadas en Vercel (Production + Development, vía `vercel env add`) y el deploy en producción (`https://cielo-abierto-two.vercel.app/api/didit/webhook`) ya las tiene activas — verificado en vivo (401 sin firma, no 500 por falta de configuración). Detalle completo para Meli en `INFORME-WEBHOOK-DIDIT-PARA-MELI.md`.
 
 **Siguiente paso, ya destrabado:**
 
@@ -67,7 +67,7 @@ Depende del modelo de datos de Sofi. Es el rol que el propio documento ya te asi
 
 - [ ] Escribir el PLAN formal en `prompts/` para esta feature (una vez que Jordy apruebe las decisiones y Sofi tenga el modelo).
 - [ ] Route handler server-side para **crear una sesión de verificación** en Didit — seguir el mismo patrón que ya existe en `app/api/usuarios/route.ts` (credenciales solo en servidor, nunca en el cliente).
-- [ ] **Webhook** que reciba el resultado de Didit — sería el primer webhook del proyecto, no hay ninguno todavía. Tiene que validar la autenticidad de la notificación (RNF-05) antes de procesarla — "no debe modificarse el estado de una re-vinculación simplemente porque se recibió una petición HTTP", lo dice el propio documento.
+- [x] **Webhook que reciba el resultado de Didit** — hecho por Jordy como adelanto (2026-09-13), solo la parte de seguridad: `app/api/didit/webhook/route.ts` valida la autenticidad (RNF-05) y ya está deployado en producción. **Te queda a vos** la lógica de negocio (buscar la sesión, actualizar estado, validar autorización de retiro) — está marcada con `TODO(Meli)` en el código y detallada en `INFORME-WEBHOOK-DIDIT-PARA-MELI.md`, a la espera de que Sofi tenga las tablas.
 - [ ] Endpoint para **consultar el estado** de una verificación en curso.
 - [ ] Verificar que la persona validada tenga **vínculo + autorización vigente** consultando Supabase (RF-05/RF-06 del segundo documento) — un resultado de identidad válido **no autoriza automáticamente** nada, son dos validaciones independientes.
 - [ ] Manejo de **timeouts y errores** en la comunicación con Didit (RNF-13) — hoy ningún servicio externo del proyecto (ni siquiera la predicción de incidentes) tiene este patrón, sería el primero en tenerlo bien hecho.
