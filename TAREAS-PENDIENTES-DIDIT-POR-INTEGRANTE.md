@@ -35,14 +35,16 @@ Las decisiones de Jordy ya están resueltas (2026-09-15) — solo queda pendient
 
 **Pendiente, requiere una acción tuya fuera de este repo (el MCP nunca expone secretos en texto plano):**
 
-- [ ] **Corregir `DIDIT_API_KEY` en `.env.local`.** La key que se cargó antes pertenece a la app "My Application", no a "arguelloinfancias (Sandbox)". Sacar la key real desde el dashboard de Didit → esa app → API keys, y reemplazarla.
-- [ ] **Guardar `DIDIT_WEBHOOK_SECRET`.** El webhook creado tiene un signing secret que el dashboard sí muestra (el MCP lo redacta). Meli lo va a necesitar para validar la firma de cada notificación (RNF-05) cuando construya el endpoint.
+- [x] **Corregir `DIDIT_API_KEY` en `.env.local`.** Actualizado (2026-09-13) con la key real de "arguelloinfancias (Sandbox)".
+- [x] **Guardar `DIDIT_WEBHOOK_SECRET`.** Cargado (2026-09-13) en `.env.local`. Meli lo va a necesitar para validar la firma de cada notificación (RNF-05) cuando construya el endpoint.
 - [ ] **Nota para Meli**: el endpoint todavía no existe en el código. El webhook ya está registrado apuntando a `/api/didit/webhook` (mismo patrón que `app/api/usuarios/route.ts`) — hay que crear esa ruta antes de que Didit pueda entregar resultados ahí.
 
 **Siguiente paso, ya destrabado:**
 
 - [ ] Con el modelo de datos decidido, **Sofi ya puede arrancar** su parte (tabla `retiros`, autorización de retiro, sesiones de verificación, política de minimización de datos).
 - [ ] Una vez que Sofi tenga el modelo, coordiná con **Meli** para que escriba el primer PLAN formal en `prompts/` (le toca a ella por ser quien lidera la arquitectura/integración Didit) y aprobalo antes de que se escriba una línea de código.
+
+**Estado a 2026-09-13**: confirmado con Jordy que Sofi **todavía no arrancó/cerró** su parte del modelo de datos. Hasta que eso pase, este último punto sigue bloqueado — no hay nada de código o de coordinación con Meli para hacer todavía. No es un pendiente de Jordy en sí, es una dependencia externa a su lista.
 
 ---
 
@@ -79,7 +81,7 @@ Depende del modelo de datos de Sofi. Es el rol que el propio documento ya te asi
 Depende de que Meli tenga al menos los endpoints definidos (puede arrancar el maquetado antes, pero la integración real espera).
 
 - [ ] Pantalla de **"Registrar retiro"**, siguiendo el patrón ya establecido `components/entities/<entidad>/Form.tsx` — selección de NNyA → lista de tutores autorizados → identificación del tutor presente.
-- [ ] Flujo de **captura**: frente del DNI, dorso del DNI, imagen facial, prueba de vida — es la primera vez que el proyecto web usa la cámara del dispositivo, no hay ningún componente existente para reusar acá.
+- [ ] Flujo de **captura**: número de DNI + selfie (vía el widget/SDK de Didit, método RENAPER — ya **no** se fotografía el documento físico, ver `INFORME-VALIDACION-IDENTIDAD-RETIRO-DIDIT.md` § 8) — es la primera vez que el proyecto web usa la cámara del dispositivo, no hay ningún componente existente para reusar acá.
 - [ ] Pantalla/estado de **confirmación** según el resultado: identidad validada + autorizado → continuar; los 4 mensajes de error ya redactados en el documento (§6 A-D) tal cual están escritos ahí, no hace falta inventar copy nuevo.
 - [ ] Formulario de **registro del retiro**: hora de inicio, descripción y observaciones opcionales, botón "Registrar retiro".
 - [ ] Pantalla de **cierre**: acceder vía "Editar", ingresar hora de finalización, marcar "Realizada".
@@ -91,8 +93,8 @@ Depende de que Meli tenga al menos los endpoints definidos (puede arrancar el ma
 
 | Quién | Estado | Cantidad de tareas |
 |---|---|---|
-| Jordy | ✅ Decisiones resueltas (2026-09-15) — falta solo el alta de la cuenta Didit | 6 |
-| Sofi | ✅ Ya puede arrancar | 6 |
+| Jordy | ✅ Sus 6 puntos resueltos — solo queda 1 coordinación, bloqueada por Sofi | 6 |
+| Sofi | ⏳ Destrabada, todavía no arrancó/cerró (confirmado 2026-09-13) | 6 |
 | Meli | Espera el modelo de Sofi | 8 |
 | Cami | Espera a Meli (parcial) | 6 |
 
