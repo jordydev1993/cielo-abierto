@@ -31,8 +31,10 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const isAuthRoute = request.nextUrl.pathname.startsWith('/login')
+  // Autenticado con firma HMAC (X-Signature-V2), no con sesión de Supabase — ver prompts/016.
+  const isDiditWebhook = request.nextUrl.pathname === '/api/didit/webhook'
 
-  if (!user && !isAuthRoute) {
+  if (!user && !isAuthRoute && !isDiditWebhook) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
