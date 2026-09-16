@@ -74,4 +74,49 @@ export const queryKeys = {
     all: ['documentos'] as const,
     byLegajo: (legajoId: string) => [...queryKeys.documentos.all, 'legajo', legajoId] as const,
   },
+  referentes: {
+    all: ['referentes'] as const,
+    lists: () => [...queryKeys.referentes.all, 'list'] as const,
+  },
+  vinculosTutela: {
+    all: ['vinculos_tutela'] as const,
+    byNnya: (nnyaId: string) => [...queryKeys.vinculosTutela.all, 'nnya', nnyaId] as const,
+  },
+  validacionesRenaper: {
+    all: ['validaciones_renaper'] as const,
+    ultimaByReferente: (referenteId: string) =>
+      [...queryKeys.validacionesRenaper.all, 'ultima', referenteId] as const,
+  },
+  transferenciaAuh: {
+    all: ['transferencia_auh'] as const,
+    byVinculo: (vinculoId: string) => [...queryKeys.transferenciaAuh.all, 'vinculo', vinculoId] as const,
+  },
+  evaluacionInstitucional: {
+    all: ['evaluacion_institucional'] as const,
+    lists: () => [...queryKeys.evaluacionInstitucional.all, 'list'] as const,
+    detail: (id: string) => [...queryKeys.evaluacionInstitucional.all, id] as const,
+  },
+  evaluacionAsistentes: {
+    all: ['evaluacion_institucional_asistentes'] as const,
+    byEvaluacion: (evaluacionId: string) =>
+      [...queryKeys.evaluacionAsistentes.all, 'evaluacion', evaluacionId] as const,
+  },
+  evaluacionCasos: {
+    all: ['evaluacion_institucional_casos'] as const,
+    byEvaluacion: (evaluacionId: string) =>
+      [...queryKeys.evaluacionCasos.all, 'evaluacion', evaluacionId] as const,
+  },
+  propuestasMejora: {
+    all: ['propuestas_mejora'] as const,
+    lists: () => [...queryKeys.propuestasMejora.all, 'list'] as const,
+    notificaciones: () => [...queryKeys.propuestasMejora.all, 'notificaciones'] as const,
+  },
+  turnosPersonal: {
+    all: ['turnos_personal'] as const,
+    lists: () => [...queryKeys.turnosPersonal.all, 'list'] as const,
+  },
+  seguimientoPostEgreso: {
+    all: ['seguimiento_post_egreso'] as const,
+    lists: () => [...queryKeys.seguimientoPostEgreso.all, 'list'] as const,
+  },
 }

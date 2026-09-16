@@ -1,5 +1,6 @@
 'use client'
-import { useForm, Controller } from 'react-hook-form'
+import { useEffect } from 'react'
+import { useForm, Controller, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { nnyaSchema, type NnyaFormValues } from '@/lib/validations/nnya.schema'
 import { FormField, FormGrid, FormSection } from '@/components/ui/form'
@@ -20,7 +21,7 @@ const GENEROS = ['Masculino', 'Femenino', 'No binario', 'Otro']
 
 export function NnyaForm({ initialData, onSubmit, loading }: NnyaFormProps) {
   const isEditing = !!initialData
-  const { register, handleSubmit, control, formState: { errors } } = useForm<NnyaFormValues>({
+  const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<NnyaFormValues>({
     resolver: zodResolver(nnyaSchema),
     defaultValues: initialData ? {
       nombre: initialData.nombre,
@@ -37,13 +38,20 @@ export function NnyaForm({ initialData, onSubmit, loading }: NnyaFormProps) {
       obra_social: initialData.obra_social ?? '',
       numero_expediente: initialData.numero_expediente ?? '',
       estado_actual: initialData.estado_actual,
+      fecha_egreso: initialData.fecha_egreso ?? '',
     } : {
       nombre: '', apellido: '', dni: '', fecha_nacimiento: '',
       lugar_nacimiento: '', nacionalidad: 'Argentina', genero: '',
       domicilio: '', telefono: '', email: '', escolaridad: '',
       obra_social: '', numero_expediente: '', estado_actual: 'En residencia',
+      fecha_egreso: '',
     },
   })
+
+  const estadoActual = useWatch({ control, name: 'estado_actual' })
+  useEffect(() => {
+    if (estadoActual !== 'Egresado') setValue('fecha_egreso', '')
+  }, [estadoActual, setValue])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -95,6 +103,11 @@ export function NnyaForm({ initialData, onSubmit, loading }: NnyaFormProps) {
               </Select>
             )} />
           </FormField>
+          {estadoActual === 'Egresado' && (
+            <FormField label="Fecha de egreso" error={errors.fecha_egreso?.message} required>
+              <Input {...register('fecha_egreso')} type="date" />
+            </FormField>
+          )}
           <FormField label="Escolaridad" error={errors.escolaridad?.message}>
             <Input {...register('escolaridad')} placeholder="Ej: Secundario incompleto" />
           </FormField>

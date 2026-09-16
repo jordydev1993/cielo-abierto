@@ -22,6 +22,7 @@ export function useCreateNnya() {
           escolaridad: values.escolaridad || null,
           obra_social: values.obra_social || null,
           numero_expediente: values.numero_expediente || null,
+          fecha_egreso: values.fecha_egreso || null,
         })
       if (error) throw error
     },

@@ -66,7 +66,8 @@ context/AuthContext.tsx   rol del usuario vía RPC get_my_role
 proxy.ts                  protección de rutas (Next 16 renombró middleware.ts a proxy.ts)
 app/api/                  incidentes/prediccion, usuarios
 supabase/migrations/      migraciones SQL — fuente de verdad del schema (no solo el proyecto remoto)
-types/database.types.ts   tipos de dominio escritos a mano (NO generados con `supabase gen types`)
+types/database.generated.ts  generado con `supabase gen types` — no editar a mano (ver prompts/020)
+types/database.types.ts   tipos de dominio derivados de database.generated.ts, angostando los `CHECK` a sus uniones literales
 ```
 
 Capas: UI (`components/ui` → `components/entities`) → datos (`hooks/*` con TanStack Query) → acceso a Supabase (`lib/supabase/{client,server}.ts`) → Postgres con RLS. Autorización por rol: `context/AuthContext.tsx` + `components/shared/AccessGuard.tsx` (cliente); RLS en la base (servidor/DB). **No hay una capa Express**: el cliente Supabase habla directo con la base, con RLS de guardia.
@@ -111,7 +112,8 @@ Dos route handlers en `app/api/`:
 - Roles de aplicación: `Admin`, `Equipo Tecnico` (vía RPC `get_my_role`).
 - Nunca loguear ni exponer datos sensibles de NNyA innecesariamente.
 - Limitar el acceso a información sensible según rol desde el diseño de cada funcionalidad, no como añadido posterior.
-- **Nota honesta**: la documentación vieja afirmaba cifrado AES-256 de DNI/nombres y un audit log inmutable "en cada acción". Ninguna de las dos cosas está implementada hoy (ver Deuda conocida #DNI y #audit). No repetir esas afirmaciones como si fueran ciertas.
+- **Audit log**: implementado (`prompts/018`). `fn_audit_trigger()` + `trg_audit_*` en las 27 tablas de negocio (todas menos `audit_log` misma) registran cada INSERT/UPDATE/DELETE. Solo `Admin` puede leerlo (`audit_log_admin_read`); nadie puede editarlo ni borrarlo (sin política de UPDATE/DELETE → RLS lo deniega), por eso es inmutable en la práctica.
+- **DNI en texto plano — decisión tomada (issue #11, `prompts/021`)**: `nnya.dni`, `tutores.dni` y `referentes.dni` son `varchar` plano, `pgcrypto` está instalado pero sin usar. La documentación vieja afirmaba cifrado AES-256; Jordy decidió no implementarlo (cifrar rompería el `UNIQUE(dni)` y la búsqueda parcial sin agregar una columna de hash aparte, y la clave viviría igual dentro de Postgres) y en cambio corregir la documentación que lo afirmaba falsamente. No repetir la afirmación de cifrado como si fuera cierta.
 
 ## Estándares de código
 
@@ -154,10 +156,10 @@ Estado por fase (detalle en `docs/evolucion/CHECKLIST-FINAL (1).md`):
 | A0 | `fecha_egreso` en `nnya` + backfill + CHECK (`prompts/011`) | ✅ Implementado (migración `20260826000032`) |
 | A1 | Crear las 10 tablas de tutela/evaluación/turnos/seguimiento (`prompts/012`) | ✅ Tablas + RLS (migración `20260827000033`) |
 | A2 | Políticas RLS por operación para esas 10 tablas + trigger de protección de `dni` en `referentes` (`prompts/013`) | ✅ Implementado (migración `20260827000034`) |
-| B | UI de tutela/referentes + validación RENAPER + transferencia AUH | ⏳ Sin empezar — [issue #25] |
-| C | UI de evaluación institucional + kanban de propuestas de mejora + notificaciones | ⏳ Sin empezar — [issue #26] |
-| D | UI de `turnos_personal` + firma doble de traspaso de guardia + dashboard de cobertura | ⏳ Sin empezar — [issue #27] |
-| E | UI de seguimiento post-egreso + cron 30/60 días + dashboard de reinserción | ⏳ Sin empezar — [issue #28] |
+| B | UI de tutela/referentes + validación RENAPER + transferencia AUH | ✅ Implementado (`prompts/019`) |
+| C | UI de evaluación institucional + kanban de propuestas de mejora + notificaciones | ✅ Implementado (`prompts/022`) |
+| D | UI de `turnos_personal` + firma doble de traspaso de guardia + dashboard de cobertura | ✅ Implementado (`prompts/023`) |
+| E | UI de seguimiento post-egreso + cron 30/60 días + dashboard de reinserción | ✅ Implementado (`prompts/026`) |
 
 ---
 
@@ -167,13 +169,8 @@ Detectada por inspección directa del código. **No se corrige sin aprobación**
 
 | # | Gap | Tarjeta |
 |---|---|---|
-| audit | El audit log NO está cableado: la base real tiene 0 triggers `trg_audit_*`, no existe `fn_audit_trigger()`, `audit_log` tiene 0 filas y sus columnas difieren de la migración. La doc dice "auditoría inmutable en cada acción" — falso. Requiere resolver la decisión A/B/C planteada en `prompts/012`. | issue #23 |
-| rol-rot | `roles` tiene 7 filas (no 2). 6 de 7 seed users apuntan a roles legacy (`Trabajador Social`, `Médico/a`, etc.) y no tienen `auth_user_id`: si se les da login, `get_my_role()` los deja fuera de las 28 tablas. | issue #24 |
-| types | `types/database.types.ts` se escribe a mano. Debería generarse con `supabase gen types`. | issue #29 |
 | tests | `playwright` instalado, 0 tests. | issue #30 |
 | design | `docs/design-system.md` §5: sin escala tipográfica nombrada; `Toaster` sin variantes warning/info; sin wrapper de alert-dialog no destructivo; colores hardcodeados en `NnyaTable.tsx`. | issue #31 |
-| dni | `nnya.dni` y `tutores.dni` son `varchar` plano. `AGENTS`/arquitectura afirmaban AES-256; `pgcrypto` instalado sin usar. | issue #32 |
-| readme | `README.md` del repo sigue siendo el boilerplate de `create-next-app`. | issue #33 |
 | proceso-1.4 | Recursos/fondos, stock y asistencia de personal: proceso real sin modelo de datos. Fuera de alcance hasta decisión. | — |
 | legajo-estados | La máquina de estados de `legajos` en `procesos-del-negocio.md` ("En incidente", "En evaluación") es más amplia que el `CHECK` real (`activo`/`cerrado`/`archivado`). Discrepancia documentada, no tocada. | — |
 
@@ -193,6 +190,15 @@ Registro de gaps ya cerrados (ledger histórico; cada uno tiene su `prompts/NNN`
 - **`nnya` sin `fecha_egreso`** — `prompts/011` (A0). Columna + backfill desde `legajos.fecha_cierre` + CHECK de coherencia. Migración `20260826000032`.
 - **Sin soporte de datos para tutela / evaluación institucional / turnos de personal / seguimiento post-egreso** — `prompts/012` (A1). 10 tablas nuevas + RLS habilitado. Migración `20260827000033`. (La UI de estas tablas es FASES B–E, ver Roadmap.)
 - **Las 10 tablas de A1 sin políticas RLS por operación** — `prompts/013` (A2). Políticas SELECT/INSERT/UPDATE/DELETE por rol + trigger que protege `referentes.dni`. Migración `20260827000034`.
+- **Rol rot: `roles` con 7 filas y 6 seed users legacy sin `auth_user_id`** (issue #3) — `prompts/017`. Los 6 usuarios eran datos de prueba: se borraron (sin filas dependientes por FK `RESTRICT`, verificado antes de borrar) junto con los 5 roles legacy (`Abogado/a`, `Administrador`, `Médico/a`, `Psicólogo/a`, `Trabajador Social`). Solo quedan `Admin`/`Equipo Tecnico` y el usuario real (`admin@arguelloinfancias.com`). Migración `20260915181604`.
+- **Audit log no cableado** (issue #2) — `prompts/018`. Resuelta la decisión A/B/C de `prompts/012` (Jordy eligió Opción C): `fn_audit_trigger()` + `trg_audit_*` en las 27 tablas de negocio (todas menos `audit_log`). Verificado con un UPDATE de prueba en `nnya` → quedó registrado en `audit_log` con `tabla`/`operacion`/`registro_id` correctos. Migración `20260915182618`.
+- **`types/database.types.ts` escrito a mano** (issue #8) — `prompts/020`. Generado `types/database.generated.ts` con `mcp__supabase__generate_typescript_types` (fuente de verdad regenerable); `database.types.ts` reescrito para derivar de ahí, angostando los `CHECK` a sus uniones literales y agregando las relaciones opcionales (`nnya?`, `usuarios?`, etc.) que el generador no infiere. Comparar campo por campo contra las 28 tablas reveló un `Actividad` duplicado (dead code, eliminado) y que `legajo_id` era `nullable` sin necesidad en 7 tablas. Cero cambios necesarios en el resto de la app (`tsc --noEmit` y `npm run build` limpios sin tocar otro archivo).
+- **`legajo_id` nullable sin necesidad en 7 tablas** (`turnos`, `incidentes`, `diagnosticos`, `medicamentos`, `informes`, `documentos`, `audiencias_judiciales`) — `prompts/020`. Descubierto al regenerar los tipos (issue #8): la columna no tenía `NOT NULL` pese a que todo formulario de alta ya lo exige. Verificado 0 filas con `legajo_id NULL` antes de aplicar `ALTER TABLE ... SET NOT NULL` en las 7 tablas. Migración `20260915193141`. Los tipos de dominio ya no necesitan angostar ese campo manualmente.
+- **DNI: doc corregida en vez de cifrado real** (issue #11) — `prompts/021`. Jordy decidió no implementar cifrado (AES-256 vía `pgcrypto` rompería `UNIQUE(dni)` y la búsqueda parcial sin agregar columna de hash aparte, y la clave terminaría viviendo igual dentro de Postgres — sin ganancia real de seguridad para el esfuerzo). `AGENTS-WEB.md` § Seguridad ya era honesto; se corrigió la única afirmación falsa que quedaba activa, en `docs/evolucion/00-RESUMEN-EJECUTIVO-FINAL.md` (documento histórico de Enero 2025), con una nota aclarando que es la spec aspiracional pre-implementación, no el estado real.
+- **FASE D: UI de `turnos_personal`** (issue #6) — `prompts/023`. Firma doble de traspaso resuelta separando "Entregar mi turno"/"Recibir turno" en dos acciones ligadas siempre a la identidad de quien está logueado (RLS sola no alcanza a garantizar que el receptor sea otra persona). Encontró y corrigió 2 bugs reales: colisión de resaltado en el sidebar entre `/turnos` y `/turnos-personal`, y el form de edición no podía guardar un turno ya `entregado`.
+- **`README.md` boilerplate de `create-next-app`** (issue #12) — reescrito con qué es el proyecto, stack, cómo levantar el entorno local, variables de entorno reales (confirmadas por grep de `process.env` en el código, no inventadas) y estructura, con `AGENTS-WEB.md` como fuente de verdad del resto. De paso se corrigió el diagrama de arquitectura de este mismo archivo, que todavía decía que los tipos se escriben a mano (desactualizado desde `prompts/020`).
+- **`ON DELETE CASCADE` en `nnya_id`** (issue #16, hallazgo del review de mobile#18) — `prompts/025`. El alcance real era mucho mayor a lo que decía la tarjeta (`novedades`/`incidentes`): las 14 tablas de negocio con `nnya_id` tenían `CASCADE` (todas menos `legajos`, que ya estaba en `RESTRICT`). Cambiadas las 14 a `RESTRICT` — `SET NULL` no era viable (`nnya_id` es `NOT NULL` en las 14) y además hubiera destruido el rastro de auditoría que la tarjeta busca proteger. Verificado que ningún hook del código hace `delete` sobre `nnya` (siempre se usa `activo=false`), así que no cambia ningún comportamiento actual. Migración `20260916011716`.
+- **FASE E: UI de seguimiento post-egreso** (issue #7) — `prompts/026`. Encontró un bug bloqueante: `NnyaForm` dejaba elegir `estado_actual = 'Egresado'` sin pedir nunca `fecha_egreso`, violando el `CHECK chk_nnya_fecha_egreso_coherente` de `prompts/011` — hoy corregido (campo condicional + `.refine()` con mensaje legible). El "cron 30/60 días" se resolvió con un trigger de BD (`fn_crear_seguimiento_post_egreso`, `AFTER UPDATE ON nnya`, dispara cuando `fecha_egreso` pasa de `NULL` a un valor) en vez de infraestructura de cron externa — mismo patrón que `fn_crear_alerta_incidente_grave`. Incluye backfill para el NNyA que ya estaba egresado en el seed. Verificado en vivo: egresar un NNyA generó sus 2 filas automáticamente, y registrar un contacto actualizó `contactado_por` correctamente.
 
 ---
 

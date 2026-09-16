@@ -2,7 +2,7 @@
 import { DataTable, type Column } from '@/components/shared/DataTable'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Pencil, Eye } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import type { Legajo } from '@/types/database.types'
@@ -10,8 +10,7 @@ import type { Legajo } from '@/types/database.types'
 interface LegajoTableProps {
   data: Legajo[]
   loading?: boolean
-  onEdit?: (row: Legajo) => void
-  onCerrar?: (row: Legajo) => void
+  onView?: (row: Legajo) => void
 }
 
 function estadoBadge(estado: Legajo['estado']) {
@@ -43,23 +42,17 @@ const columns: Column<Legajo>[] = [
   { key: 'estado', header: 'Estado', className: 'w-28', render: (r) => estadoBadge(r.estado) },
 ]
 
-export function LegajoTable({ data, loading, onEdit, onCerrar }: LegajoTableProps) {
+export function LegajoTable({ data, loading, onView }: LegajoTableProps) {
   return (
     <DataTable
       columns={columns}
       data={data}
       loading={loading}
       extraActions={(row) =>
-        onEdit ? (
-          row.estado === 'activo' ? (
-            <Button variant="ghost" size="icon" onClick={() => onEdit(row)} title="Editar legajo">
-              <Pencil className="h-4 w-4" />
-            </Button>
-          ) : (
-            <Button variant="ghost" size="icon" onClick={() => onEdit(row)} title="Ver legajo (solo lectura)">
-              <Eye className="h-4 w-4 text-slate-400" />
-            </Button>
-          )
+        onView ? (
+          <Button variant="ghost" size="icon" onClick={() => onView(row)} title="Ver">
+            <Eye className="h-4 w-4" />
+          </Button>
         ) : null
       }
       emptyMessage="No hay legajos registrados"

@@ -1,5 +1,12 @@
 # 📊 ARGÜELLO-INFANCIAS: PROYECTO COMPLETO (VERSIÓN FINAL)
 
+> **Nota (2026-09-15)**: este documento es la especificación aspiracional original
+> (Enero 2025), previa a la implementación real. Varios ✅ describen el diseño previsto,
+> no lo efectivamente construido — en particular "Cifrado AES-256" más abajo (issue #11:
+> `nnya.dni`/`tutores.dni`/`referentes.dni` son texto plano hoy). Para el estado real y
+> actualizado del proyecto, la fuente de verdad es `AGENTS-WEB.md` (raíz del repo), no este
+> archivo.
+
 **Fecha**: Enero 2025  
 **Base**: 8 procesos del negocio validados con institución  
 **Arquitectura**: 2 Fases (Core + Innovaciones)  
@@ -224,7 +231,7 @@ Beneficio: escalabilidad + seguridad
 ```
 ✅ LPDP (Ley de Protección de Datos)
    - Auditoría inmutable
-   - Cifrado AES-256
+   - Cifrado AES-256 [NO implementado — ver nota al inicio del documento; DNI en texto plano]
    - Derecho al olvido
 
 ✅ Ley 26.061 (Protección Integral de NNyA)

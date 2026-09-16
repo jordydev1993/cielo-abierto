@@ -29,7 +29,7 @@ export default function LegajosPage() {
       <LegajoTable
         data={legajos}
         loading={isLoading}
-        onEdit={(row) => router.push(row.estado === 'activo' ? `/legajos/${row.id}/editar` : `/legajos/${row.id}`)}
+        onView={(row) => router.push(`/legajos/${row.id}`)}
       />
     </div>
   )

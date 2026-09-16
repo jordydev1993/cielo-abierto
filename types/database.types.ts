@@ -1,426 +1,140 @@
-export interface Rol {
-  id: string
-  nombre: string
-  descripcion: string | null
-  activo: boolean
-  created_at: string
-  updated_at: string
-}
+// Tipos de dominio derivados de `database.generated.ts` (generado con
+// `supabase gen types` / `mcp__supabase__generate_typescript_types`).
+//
+// `supabase gen types` no infiere los valores literales de los `CHECK
+// (columna IN (...))` — esas columnas salen como `string` plano en el
+// archivo generado. Acá se angostan a sus uniones literales reales
+// (verificadas contra `supabase/migrations/20260620000031_clean_schema.sql`
+// y las migraciones de FASE A1), y se agregan las propiedades opcionales de
+// relación (`?`) que devuelven los `select('*, tabla(...)')` con join,
+// ausentes del tipo `Row` base.
+//
+// Para regenerar `database.generated.ts`: correr
+// `mcp__supabase__generate_typescript_types` (o `supabase gen types
+// typescript`) y pegar el resultado ahí. Si el schema real cambió los
+// nombres o tipos de columna, TypeScript va a marcar acá mismo qué `Omit`
+// quedó desalineado.
+import type { Database } from './database.generated'
 
-export interface Usuario {
-  id: string
-  email: string
-  nombre: string
-  apellido: string
-  rol_id: string
-  activo: boolean
-  created_at: string
-  updated_at: string
-  auth_user_id: string | null
-  telefono: string | null
+type Row<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row']
+
+export type Rol = Row<'roles'>
+
+export interface Usuario extends Row<'usuarios'> {
   roles?: { nombre: string }
 }
 
-export interface Nnya {
-  id: string
-  nombre: string
-  apellido: string
-  dni: string
-  fecha_nacimiento: string
-  lugar_nacimiento: string | null
-  nacionalidad: string | null
-  genero: string | null
-  domicilio: string | null
-  telefono: string | null
-  email: string | null
-  escolaridad: string | null
-  obra_social: string | null
-  numero_expediente: string | null
-  activo: boolean
+export interface Nnya extends Omit<Row<'nnya'>, 'estado_actual' | 'turno_escolar'> {
   estado_actual: 'En residencia' | 'En proceso de egreso' | 'Egresado' | 'Fallecido'
-  fecha_egreso: string | null
-  foto_url: string | null
-  alertas_importantes: string | null
   turno_escolar: 'Mañana' | 'Tarde' | 'Noche' | 'Doble Jornada' | null
-  created_at: string
-  updated_at: string
 }
 
-export interface Tutor {
-  id: string
-  nombre: string
-  apellido: string
-  dni: string
-  telefono: string | null
-  email: string | null
-  domicilio: string | null
-  parentesco: string
-  ocupacion: string | null
-  activo: boolean
-  created_at: string
-  updated_at: string
-}
+export type Tutor = Row<'tutores'>
 
-export interface NnyaTutor {
-  id: string
-  nnya_id: string
-  tutor_id: string
-  es_principal: boolean
-  created_at: string
+export interface NnyaTutor extends Row<'nnya_tutores'> {
   tutores?: Tutor
 }
 
-export interface Legajo {
-  id: string
-  nnya_id: string
-  numero_legajo: string
-  fecha_apertura: string
-  fecha_cierre: string | null
+export interface Legajo extends Omit<Row<'legajos'>, 'estado'> {
   estado: 'activo' | 'cerrado' | 'archivado'
-  motivo_cierre: string | null
-  observaciones: string | null
-  created_at: string
-  updated_at: string
   nnya?: Pick<Nnya, 'id' | 'nombre' | 'apellido' | 'dni'>
 }
 
-export interface Intervencion {
-  id: string
-  nnya_id: string
-  tipo: string
-  descripcion: string
-  fecha: string
-  profesional_id: string | null
+export interface Intervencion extends Omit<Row<'intervenciones'>, 'estado'> {
   estado: 'pendiente' | 'en_curso' | 'cerrada'
-  resultado: string | null
-  observaciones: string | null
-  created_by: string | null
-  created_at: string
-  updated_at: string
   usuarios?: Pick<Usuario, 'id' | 'nombre' | 'apellido'>
 }
 
-export interface Novedad {
-  id: string
-  nnya_id: string
-  usuario_id: string | null
+export interface Novedad extends Omit<Row<'novedades'>, 'tipo'> {
   tipo: 'Salud' | 'Educación' | 'Comportamiento' | 'Alimentación' | 'Visita Familiar' | 'Otro'
-  descripcion: string
-  fecha_hora: string
-  created_at: string
-  updated_at: string
   usuarios?: Pick<Usuario, 'id' | 'nombre' | 'apellido'>
 }
 
-export interface Actividad {
-  id: string
-  titulo: string
-  descripcion: string | null
-  tipo: string
-  fecha: string
-  hora_inicio: string | null
-  hora_fin: string | null
-  lugar: string | null
-  responsable_id: string | null
-  nnya_ids: string[]
+export interface Actividad extends Omit<Row<'actividades'>, 'estado'> {
   estado: 'programada' | 'en_curso' | 'realizada' | 'cancelada'
-  observaciones: string | null
-  created_by: string | null
-  created_at: string
-  updated_at: string
   usuarios?: Pick<Usuario, 'id' | 'nombre' | 'apellido'>
 }
 
-export interface Turno {
-  id: string
-  nnya_id: string
-  legajo_id: string
-  tipo: string
-  fecha_hora: string
-  lugar: string | null
-  profesional: string | null
-  motivo: string | null
+export interface Turno extends Omit<Row<'turnos'>, 'estado'> {
   estado: 'programado' | 'confirmado' | 'realizado' | 'cancelado' | 'ausente'
-  observaciones: string | null
-  created_by: string | null
-  created_at: string
-  updated_at: string
 }
 
-export interface Alerta {
-  id: string
-  nnya_id: string
-  titulo: string
-  descripcion: string | null
-  tipo: string
+export interface Alerta extends Omit<Row<'alertas'>, 'prioridad' | 'estado'> {
   prioridad: 'baja' | 'media' | 'alta' | 'critica'
   estado: 'pendiente' | 'en_proceso' | 'completada' | 'vencida'
-  fecha_vencimiento: string | null
-  completada_por: string | null
-  fecha_completada: string | null
-  observacion_cierre: string | null
-  created_at: string
-  updated_at: string
 }
 
-export interface Actividad {
-  id: string
-  titulo: string
-  descripcion: string | null
-  tipo: string
-  fecha: string
-  hora_inicio: string | null
-  hora_fin: string | null
-  lugar: string | null
-  responsable_id: string | null
-  nnya_ids: string[]
-  estado: 'programada' | 'en_curso' | 'realizada' | 'cancelada'
-  observaciones: string | null
-  created_by: string | null
-  created_at: string
-  updated_at: string
-}
-
-export interface Incidente {
-  id: string
-  nnya_id: string
-  legajo_id: string
-  tipo: string
-  descripcion: string
-  fecha_hora: string
+export interface Incidente extends Omit<Row<'incidentes'>, 'gravedad' | 'estado'> {
   gravedad: 'leve' | 'media' | 'grave' | 'critico'
-  reportado_por: string | null
-  acciones_tomadas: string | null
   estado: 'abierto' | 'en_seguimiento' | 'cerrado'
-  gravedad_sugerida: string | null
-  sugerencia_aceptada: boolean
-  created_at: string
-  updated_at: string
 }
 
-export interface Diagnostico {
-  id: string
-  nnya_id: string
-  legajo_id: string
-  tipo: string
-  descripcion: string
-  fecha_diagnostico: string
-  profesional: string | null
-  institucion: string | null
+export interface Diagnostico extends Omit<Row<'diagnosticos'>, 'estado'> {
   estado: 'activo' | 'en_seguimiento' | 'resuelto'
-  created_at: string
-  updated_at: string
 }
 
-export interface Medicamento {
-  id: string
-  nnya_id: string
-  legajo_id: string
-  diagnostico_id: string | null
-  nombre: string
-  dosis: string
-  frecuencia: string
-  via_administracion: string | null
-  prescriptor: string | null
-  fecha_inicio: string
-  fecha_fin: string | null
+export interface Medicamento extends Omit<Row<'medicamentos'>, 'estado'> {
   estado: 'en_curso' | 'finalizado'
-  observaciones: string | null
-  created_at: string
-  updated_at: string
 }
 
-export interface Informe {
-  id: string
-  nnya_id: string
-  legajo_id: string
-  tipo: string
-  titulo: string
-  contenido: string
-  elaborado_por: string | null
-  fecha_informe: string
+export interface Informe extends Omit<Row<'informes'>, 'estado'> {
   estado: 'borrador' | 'revisado' | 'finalizado'
-  created_at: string
-  updated_at: string
 }
 
-export interface Documento {
-  id: string
-  nnya_id: string
-  legajo_id: string
-  nombre: string
-  tipo: string
-  url: string
-  storage_path: string
-  tamaño_bytes: number | null
-  mime_type: string | null
-  subido_por: string | null
-  created_at: string
-  updated_at: string
-}
+export type Documento = Row<'documentos'>
 
-export interface AudienciaJudicial {
-  id: string
-  nnya_id: string
-  legajo_id: string
-  fecha_hora: string
-  tribunal: string
-  juzgado: string | null
-  caratula: string | null
-  numero_expediente: string | null
-  tipo: string
-  resultado: string | null
-  observaciones: string | null
+export interface AudienciaJudicial extends Omit<Row<'audiencias_judiciales'>, 'estado'> {
   estado: 'programada' | 'realizada' | 'suspendida' | 'cancelada'
-  created_by: string | null
-  created_at: string
-  updated_at: string
 }
 
-// ── FASE A1 (AGENTS.md sección 11) — ver prompts/012-tutela-evaluacion-turnos-seguimiento.md ──
+export type AuditLog = Row<'audit_log'>
 
-export interface Referente {
-  id: string
-  nombre: string
-  apellido: string
-  dni: string
-  fecha_nacimiento: string | null
+// ── FASE A1 (AGENTS-WEB.md § Roadmap) — ver prompts/012, prompts/019 ──
+
+export interface Referente extends Omit<Row<'referentes'>, 'tipo'> {
   tipo: 'familiar' | 'educador' | 'vecino' | 'otro'
-  vinculo_descripcion: string | null
-  telefono: string | null
-  email: string | null
-  domicilio: string | null
-  activo: boolean
-  created_by: string
-  created_at: string
-  updated_at: string
 }
 
-export interface VinculoTutela {
-  id: string
-  nnya_id: string
+export interface VinculoTutela extends Omit<Row<'vinculos_tutela'>, 'tipo' | 'estado'> {
   tipo: 'tutela_residencia' | 'revinculacion_familiar' | 'referente_afectivo'
-  usuario_id: string | null
-  referente_id: string | null
-  vigente_desde: string
-  vigente_hasta: string | null
   estado: 'propuesto' | 'vigente' | 'finalizado' | 'revocado'
-  resolucion_respaldo: string | null
-  motivo_finalizacion: string | null
-  observaciones: string | null
-  created_by: string
-  created_at: string
-  updated_at: string
 }
 
-export interface ValidacionRenaper {
-  id: string
-  referente_id: string
+export interface ValidacionRenaper
+  extends Omit<Row<'validaciones_renaper'>, 'momento' | 'estado_dni' | 'resultado' | 'respuesta_cruda'> {
   momento: 'alta_referente' | 'egreso' | 'reintento'
-  dni_consultado: string
   estado_dni: 'vigente' | 'vencido' | 'inexistente' | 'error_servicio'
-  tiene_antecedentes: boolean | null
   resultado: 'aprobado' | 'rechazado' | 'no_concluyente'
   respuesta_cruda: Record<string, unknown> | null
-  consultado_por: string
-  consultado_at: string
 }
 
-export interface TransferenciaAuh {
-  id: string
-  nnya_id: string
-  vinculo_id: string
-  fecha_gestion: string | null
-  fecha_efectiva: string | null
+export interface TransferenciaAuh extends Omit<Row<'transferencia_auh'>, 'estado'> {
   estado: 'pendiente' | 'en_gestion' | 'transferida' | 'rechazada' | 'no_corresponde'
-  organismo: string | null
-  observaciones: string | null
-  created_by: string
-  created_at: string
-  updated_at: string
 }
 
-export interface EvaluacionInstitucional {
-  id: string
-  periodo_mes: number
-  periodo_anio: number
-  fecha_reunion: string
-  observaciones: string | null
+export interface EvaluacionInstitucional extends Omit<Row<'evaluacion_institucional'>, 'estado'> {
   estado: 'convocada' | 'realizada' | 'cancelada'
-  created_by: string
-  created_at: string
-  updated_at: string
 }
 
-export interface EvaluacionInstitucionalAsistente {
-  id: string
-  evaluacion_id: string
-  usuario_id: string
-  asistio: boolean
-  created_at: string
-}
+export type EvaluacionInstitucionalAsistente = Row<'evaluacion_institucional_asistentes'>
 
-export interface EvaluacionInstitucionalCaso {
-  id: string
-  evaluacion_id: string
-  nnya_id: string
-  resumen_situacion: string
-  indicador_avance: number | null
-  recomendaciones: string | null
-  seguimiento_requerido: boolean
-  created_at: string
-  updated_at: string
-}
+export type EvaluacionInstitucionalCaso = Row<'evaluacion_institucional_casos'>
 
-export interface PropuestaMejora {
-  id: string
-  evaluacion_id: string
-  descripcion: string
+export interface PropuestaMejora extends Omit<Row<'propuestas_mejora'>, 'tipo' | 'area' | 'estado'> {
   tipo: 'mejora' | 'capacitacion'
   area: 'educativa' | 'sanitaria' | 'social' | 'institucional' | 'protocolos' | null
-  responsable_id: string | null
-  fecha_vencimiento: string | null
   estado: 'abierto' | 'en_progreso' | 'completado' | 'cancelado'
-  observaciones: string | null
-  created_at: string
-  updated_at: string
 }
 
-export interface TurnoPersonal {
-  id: string
-  usuario_id: string
-  fecha: string
+export interface TurnoPersonal extends Omit<Row<'turnos_personal'>, 'turno' | 'estado'> {
   turno: 'mañana' | 'tarde' | 'noche'
-  hora_inicio: string | null
-  hora_cierre: string | null
   estado: 'planificado' | 'en_curso' | 'entregado' | 'cerrado' | 'no_cubierto'
-  novedades_traspaso: string | null
-  entregado_por: string | null
-  entregado_at: string | null
-  recibido_por: string | null
-  recibido_at: string | null
-  created_at: string
-  updated_at: string
 }
 
-export interface SeguimientoPostEgreso {
-  id: string
-  nnya_id: string
-  vinculo_id: string | null
+export interface SeguimientoPostEgreso
+  extends Omit<Row<'seguimiento_post_egreso'>, 'dias_post_egreso' | 'escolaridad' | 'salud' | 'terapias'> {
   dias_post_egreso: 30 | 60
-  fecha_programada: string
-  fecha_contacto: string | null
-  contacto_realizado: boolean
-  contacto_efectivo: boolean | null
   escolaridad: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
   salud: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
   terapias: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
-  percibe_auh: boolean | null
-  detalle_incumplimiento: string | null
-  observaciones: string | null
-  indicador_reinsercion: number | null
-  requiere_intervencion: boolean
-  contactado_por: string | null
-  created_at: string
-  updated_at: string
 }

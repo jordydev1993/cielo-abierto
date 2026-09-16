@@ -7,24 +7,31 @@ import { QueryProvider } from '@/components/providers/QueryProvider'
 import { Toaster } from '@/components/ui/toaster'
 import {
   Users, User, FileText, Home, BookOpen, Shield, UserCheck,
-  LogOut, AlertTriangle, CalendarClock, Siren, PartyPopper,
+  LogOut, AlertTriangle, CalendarClock, Siren, PartyPopper, Contact2,
+  ClipboardCheck, KanbanSquare, UserCog, HeartHandshake,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAlertasPendientesCount } from '@/hooks/alertas/useAlertasPendientesCount'
+import { useNotificacionesPropuestasCount } from '@/hooks/propuestas-mejora/useNotificacionesPropuestasCount'
 
 const NAV_ALL = [
   { href: '/dashboard', label: 'Inicio', icon: Home },
   { href: '/nnya', label: 'NNyA', icon: Users },
   { href: '/legajos', label: 'Legajos', icon: BookOpen },
   { href: '/tutores', label: 'Tutores', icon: UserCheck },
+  { href: '/referentes', label: 'Referentes', icon: Contact2 },
 ]
 
 const NAV_ADMIN_TECNICO = [
   { href: '/incidentes', label: 'Incidentes', icon: Siren },
   { href: '/alertas', label: 'Alertas', icon: AlertTriangle },
   { href: '/turnos', label: 'Turnos', icon: CalendarClock },
+  { href: '/turnos-personal', label: 'Turnos de Personal', icon: UserCog },
   { href: '/actividades', label: 'Actividades', icon: PartyPopper },
   { href: '/informes', label: 'Informes', icon: FileText },
+  { href: '/evaluacion-institucional', label: 'Evaluación Institucional', icon: ClipboardCheck },
+  { href: '/propuestas-mejora', label: 'Propuestas de Mejora', icon: KanbanSquare },
+  { href: '/seguimiento-post-egreso', label: 'Seguimiento Post-Egreso', icon: HeartHandshake },
 ]
 
 const NAV_ADMIN_ONLY = [
@@ -34,6 +41,16 @@ const NAV_ADMIN_ONLY = [
 
 function AlertasBadge() {
   const { data: count } = useAlertasPendientesCount()
+  if (!count) return null
+  return (
+    <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center leading-4">
+      {count > 99 ? '99+' : count}
+    </span>
+  )
+}
+
+function PropuestasBadge() {
+  const { data: count } = useNotificacionesPropuestasCount()
   if (!count) return null
   return (
     <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center leading-4">
@@ -61,7 +78,7 @@ function Sidebar() {
 
       <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
         {navItems.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(href))
+          const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(`${href}/`))
           return (
             <Link
               key={href}
@@ -76,6 +93,7 @@ function Sidebar() {
               <Icon className={cn('h-4 w-4 shrink-0', active ? 'text-primary' : 'text-outline')} />
               {label}
               {href === '/alertas' && <AlertasBadge />}
+              {href === '/propuestas-mejora' && <PropuestasBadge />}
             </Link>
           )
         })}

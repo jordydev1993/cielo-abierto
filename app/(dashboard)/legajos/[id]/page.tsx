@@ -5,7 +5,8 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
-import { legajoCierreSchema, type LegajoCierreValues } from '@/lib/validations/legajos.schema'
+import { legajoCierreSchema, type LegajoCierreValues, type LegajoFormValues } from '@/lib/validations/legajos.schema'
+import { LegajoForm } from '@/components/entities/legajos/LegajoForm'
 import { AccessGuard } from '@/components/shared/AccessGuard'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -14,9 +15,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { FormField } from '@/components/ui/form'
-import { ChevronLeft, Lock, LayoutDashboard, AlertTriangle, CalendarClock, FileText, Activity, Archive, Pencil, Briefcase } from 'lucide-react'
+import { ChevronLeft, Lock, LayoutDashboard, AlertTriangle, CalendarClock, FileText, Activity, Archive, Pencil, Briefcase, Shield } from 'lucide-react'
 import { useLegajo } from '@/hooks/legajos/useLegajo'
-import { useCerrarLegajo } from '@/hooks/legajos/useUpdateLegajo'
+import { useCerrarLegajo, useUpdateLegajoDatos } from '@/hooks/legajos/useUpdateLegajo'
 import { useIncidentesByLegajo } from '@/hooks/incidentes/useIncidentesByLegajo'
 import { useIntervencionesByNnya } from '@/hooks/intervenciones/useIntervencionesByNnya'
 import { useAlertasByNnya } from '@/hooks/alertas/useAlertasByNnya'
@@ -32,11 +33,12 @@ import { AlertasTab } from '@/components/legajos/tabs/AlertasTab'
 import { TurnosTab } from '@/components/legajos/tabs/TurnosTab'
 import { SaludTab } from '@/components/legajos/tabs/SaludTab'
 import { DocumentosTab } from '@/components/legajos/tabs/DocumentosTab'
+import { TutelaTab } from '@/components/legajos/tabs/TutelaTab'
 import { toast } from '@/components/ui/toaster'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 
-const TABS = ['resumen', 'incidentes', 'intervenciones', 'alertas', 'turnos', 'salud', 'documentos'] as const
+const TABS = ['resumen', 'tutela', 'incidentes', 'intervenciones', 'alertas', 'turnos', 'salud', 'documentos'] as const
 type Tab = typeof TABS[number]
 
 function estadoBadge(estado: 'activo' | 'cerrado' | 'archivado') {
@@ -76,7 +78,9 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
 
   const { data: legajo, isLoading } = useLegajo(id)
   const cerrar = useCerrarLegajo()
+  const actualizarDatos = useUpdateLegajoDatos()
   const [openCierre, setOpenCierre] = useState(false)
+  const [openEditar, setOpenEditar] = useState(false)
 
   const nnyaId = (legajo?.nnya as any)?.id ?? legajo?.nnya_id ?? ''
 
@@ -94,6 +98,16 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
     resolver: zodResolver(legajoCierreSchema),
     defaultValues: { estado: 'cerrado', motivo_cierre: '' },
   })
+
+  const onEditar = async (values: LegajoFormValues) => {
+    try {
+      await actualizarDatos.mutateAsync({ id, values })
+      toast({ title: 'Legajo actualizado', variant: 'success' })
+      setOpenEditar(false)
+    } catch (e: any) {
+      toast({ title: 'Error al guardar', description: e.message, variant: 'destructive' })
+    }
+  }
 
   const onCerrar = async (values: LegajoCierreValues) => {
     if (!legajo) return
@@ -143,7 +157,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
           {legajoActivo && (
             <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
               <div className="flex items-center gap-2 shrink-0">
-                <Button variant="outline" size="sm" onClick={() => router.push(`/legajos/${id}/editar`)}>
+                <Button variant="outline" size="sm" onClick={() => setOpenEditar(true)}>
                   <Pencil className="h-4 w-4 mr-1.5" />Editar
                 </Button>
                 <Button variant="destructive" size="sm" onClick={() => setOpenCierre(true)}>
@@ -162,6 +176,9 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
             <TabsList className="h-auto py-2 bg-transparent gap-1 flex-wrap">
               <TabsTrigger value="resumen" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
                 <LayoutDashboard className="h-3.5 w-3.5" />Resumen
+              </TabsTrigger>
+              <TabsTrigger value="tutela" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+                <Shield className="h-3.5 w-3.5" />Tutela
               </TabsTrigger>
               <TabsTrigger value="incidentes" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
                 <AlertTriangle className="h-3.5 w-3.5" />Incidentes<TabBadge count={incidentes.length} />
@@ -212,6 +229,10 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
               />
             </TabsContent>
 
+            <TabsContent value="tutela">
+              <TutelaTab nnyaId={nnyaId} legajoActivo={legajoActivo} />
+            </TabsContent>
+
             <TabsContent value="incidentes">
               <IncidentesTab legajoId={id} nnyaId={nnyaId} legajoActivo={legajoActivo} />
             </TabsContent>
@@ -238,6 +259,19 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
           </div>
         </Tabs>
       </div>
+
+      {/* Dialog: editar legajo */}
+      <Dialog open={openEditar} onOpenChange={setOpenEditar}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader><DialogTitle>Editar legajo {legajo.numero_legajo}</DialogTitle></DialogHeader>
+          <LegajoForm
+            initialData={legajo}
+            onSubmit={onEditar}
+            onCancel={() => setOpenEditar(false)}
+            loading={actualizarDatos.isPending}
+          />
+        </DialogContent>
+      </Dialog>
 
       {/* Dialog: cerrar legajo */}
       <Dialog open={openCierre} onOpenChange={setOpenCierre}>

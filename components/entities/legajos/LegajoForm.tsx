@@ -14,10 +14,11 @@ interface LegajoFormProps {
   nnyaId?: string  // preselected when creating from NNyA profile
   initialData?: Legajo  // presente en modo edición
   onSubmit: (values: LegajoFormValues) => void
+  onCancel?: () => void
   loading?: boolean
 }
 
-export function LegajoForm({ nnyaId, initialData, onSubmit, loading }: LegajoFormProps) {
+export function LegajoForm({ nnyaId, initialData, onSubmit, onCancel, loading }: LegajoFormProps) {
   const isEditing = !!initialData
   const hideNnyaSelect = !!nnyaId || isEditing
   const { data: nnyas = [] } = useNnyas(true) // solo activos
@@ -65,7 +66,12 @@ export function LegajoForm({ nnyaId, initialData, onSubmit, loading }: LegajoFor
           <Textarea {...register('observaciones')} rows={3} />
         </FormField>
       </FormGrid>
-      <div className="flex justify-end pt-2">
+      <div className="flex justify-end gap-2 pt-2">
+        {onCancel && (
+          <Button type="button" variant="ghost" onClick={onCancel} disabled={loading}>
+            Cancelar
+          </Button>
+        )}
         <Button type="submit" disabled={loading}>
           {isEditing
             ? (loading ? 'Guardando...' : 'Guardar cambios')

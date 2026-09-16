@@ -15,6 +15,10 @@ export const nnyaSchema = z.object({
   obra_social: z.string().max(100).optional().or(z.literal('')),
   numero_expediente: z.string().max(50).optional().or(z.literal('')),
   estado_actual: z.enum(['En residencia', 'En proceso de egreso', 'Egresado', 'Fallecido']),
+  fecha_egreso: z.string().optional().or(z.literal('')),
+}).refine((v) => (v.estado_actual === 'Egresado') === !!v.fecha_egreso, {
+  message: 'La fecha de egreso es obligatoria cuando el estado es "Egresado" (y solo entonces)',
+  path: ['fecha_egreso'],
 })
 
 export type NnyaFormValues = z.infer<typeof nnyaSchema>
