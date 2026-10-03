@@ -1,3 +1,5 @@
+> **Nota de alineación (2026-09-21):** este archivo es una **transcripción de una sesión anterior de Claude Code** (mayo de 2026), no un plan de pruebas mantenido. Refleja el sistema de ese momento: incluye el rol Educador (eliminado en la migración `20260522000027`; hoy los roles son solo `Admin` y `Equipo Tecnico`). El manual de pruebas vigente es `MANUAL_TESTING.md`. Se conserva solo como registro histórico.
+
 claude
  ▐▛███▜▌   Claude Code v2.1.148
 ▝▜█████▛▘  Sonnet 4.6 · Claude Pro
