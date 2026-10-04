@@ -8,7 +8,7 @@ import { Toaster } from '@/components/ui/toaster'
 import {
   Users, User, FileText, Home, BookOpen, Shield, UserCheck,
   LogOut, AlertTriangle, CalendarClock, Siren, PartyPopper, Contact2,
-  ClipboardCheck, KanbanSquare, UserCog, HeartHandshake,
+  ClipboardCheck, KanbanSquare, UserCog, HeartHandshake, ScrollText,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAlertasPendientesCount } from '@/hooks/alertas/useAlertasPendientesCount'
@@ -35,6 +35,7 @@ const NAV_ADMIN_TECNICO = [
 ]
 
 const NAV_ADMIN_ONLY = [
+  { href: '/reportes-senaf', label: 'Informe SENAF', icon: ScrollText },
   { href: '/usuarios', label: 'Usuarios', icon: User },
   { href: '/roles', label: 'Roles', icon: Shield },
 ]

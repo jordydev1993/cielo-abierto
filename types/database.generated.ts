@@ -1131,6 +1131,81 @@ export type Database = {
           },
         ]
       }
+      reportes_senaf: {
+        Row: {
+          advertencias: Json
+          aprobado_at: string | null
+          aprobado_por: string | null
+          borrador: Json
+          created_at: string
+          datos: Json
+          estado: string
+          generado_por: string
+          id: string
+          modelo: string | null
+          observaciones_direccion: string | null
+          origen_borrador: string
+          periodo_anio: number
+          periodo_mes: number
+          texto_final: Json
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          advertencias?: Json
+          aprobado_at?: string | null
+          aprobado_por?: string | null
+          borrador: Json
+          created_at?: string
+          datos: Json
+          estado?: string
+          generado_por: string
+          id?: string
+          modelo?: string | null
+          observaciones_direccion?: string | null
+          origen_borrador: string
+          periodo_anio: number
+          periodo_mes: number
+          texto_final: Json
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          advertencias?: Json
+          aprobado_at?: string | null
+          aprobado_por?: string | null
+          borrador?: Json
+          created_at?: string
+          datos?: Json
+          estado?: string
+          generado_por?: string
+          id?: string
+          modelo?: string | null
+          observaciones_direccion?: string | null
+          origen_borrador?: string
+          periodo_anio?: number
+          periodo_mes?: number
+          texto_final?: Json
+          updated_at?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reportes_senaf_aprobado_por_fkey"
+            columns: ["aprobado_por"]
+            isOneToOne: false
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reportes_senaf_generado_por_fkey"
+            columns: ["generado_por"]
+            isOneToOne: false
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       roles: {
         Row: {
           activo: boolean
@@ -1684,6 +1759,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      fn_agregados_senaf: {
+        Args: { p_anio: number; p_mes: number }
+        Returns: Json
+      }
       get_my_role: { Args: never; Returns: string }
     }
     Enums: {

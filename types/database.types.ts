@@ -138,3 +138,25 @@ export interface SeguimientoPostEgreso
   salud: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
   terapias: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
 }
+
+export interface SeccionInforme {
+  clave: string
+  titulo: string
+  texto: string
+}
+
+export interface AdvertenciaInforme {
+  clave: string | null
+  mensaje: string
+}
+
+export interface ReporteSenaf
+  extends Omit<Row<'reportes_senaf'>, 'estado' | 'origen_borrador' | 'borrador' | 'texto_final' | 'advertencias'> {
+  estado: 'borrador' | 'aprobado'
+  origen_borrador: 'ia' | 'plantilla'
+  borrador: SeccionInforme[]
+  texto_final: SeccionInforme[]
+  advertencias: AdvertenciaInforme[]
+  generador?: { nombre: string; apellido: string } | null
+  aprobador?: { nombre: string; apellido: string } | null
+}

@@ -119,4 +119,9 @@ export const queryKeys = {
     all: ['seguimiento_post_egreso'] as const,
     lists: () => [...queryKeys.seguimientoPostEgreso.all, 'list'] as const,
   },
+  reportesSenaf: {
+    all: ['reportes_senaf'] as const,
+    lists: () => [...queryKeys.reportesSenaf.all, 'list'] as const,
+    detail: (id: string) => [...queryKeys.reportesSenaf.all, id] as const,
+  },
 }

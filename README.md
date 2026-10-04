@@ -53,6 +53,7 @@ levantar el entorno local.
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Cliente y servidor | Clave anónima de Supabase. Pública, protegida por RLS. |
 | `SUPABASE_SERVICE_ROLE_KEY` | `app/api/usuarios/route.ts` (server-only) | **Nunca** exponer al cliente. Se usa solo para crear usuarios como Admin. |
 | `DIDIT_WEBHOOK_SECRET` | `app/api/didit/webhook/route.ts` (server-only) | Verifica la firma HMAC del webhook de Didit (validación RENAPER). |
+| `ANTHROPIC_API_KEY` | `lib/ia/redactarInformeSenaf.ts` (server-only) | **Opcional.** Si está, el borrador del informe SENAF se redacta con Claude; si no, con la plantilla. Cuenta de la Console de Anthropic (pago por uso, aparte de cualquier suscripción). **Nunca** con prefijo `NEXT_PUBLIC_`. |
 
 ## Scripts
 
@@ -62,6 +63,7 @@ levantar el entorno local.
 | `npm run build` | Build de producción |
 | `npm run start` | Sirve el build de producción |
 | `npm run lint` | ESLint |
+| `npm run test:unit` | Tests unitarios con el runner de Node (`tests/unit/`), sin dependencias extra |
 
 Antes de dar por terminada una tarea: `npm run lint`, `npm run build`, y `npx tsc --noEmit`
 si se tocaron tipos (ver flujo de trabajo completo en `AGENTS-WEB.md`).

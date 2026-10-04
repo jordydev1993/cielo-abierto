@@ -41,7 +41,7 @@ Documentos de negocio (fuera del repo, en la carpeta compartida del equipo): `pr
 
 ## Alcance
 
-Módulos de negocio implementados: NNyA, Tutores, Legajos, Intervenciones (tab dentro de Legajo), Turnos, Alertas, Actividades (módulo propio en el sidebar), Incidentes (con predicción de severidad), Diagnósticos, Medicamentos, Informes, Documentos, Audiencias Judiciales, más Usuarios y Roles (administración) y Dashboard con KPIs.
+Módulos de negocio implementados: Informe SENAF (solo Admin), NNyA, Tutores, Legajos, Intervenciones (tab dentro de Legajo), Turnos, Alertas, Actividades (módulo propio en el sidebar), Incidentes (con predicción de severidad), Diagnósticos, Medicamentos, Informes, Documentos, Audiencias Judiciales, más Usuarios y Roles (administración) y Dashboard con KPIs.
 
 ## Fuera de alcance
 
@@ -88,7 +88,7 @@ No agregar dependencias nuevas sin justificar la necesidad primero.
 
 ## Modelo de datos
 
-**28 tablas** en `public` (Postgres/Supabase), gestionadas vía `supabase/migrations/`. RLS activo en todas.
+**29 tablas** en `public` (Postgres/Supabase), gestionadas vía `supabase/migrations/`. RLS activo en todas.
 
 17 originales: `roles`, `usuarios`, `nnya`, `tutores`, `nnya_tutores`, `legajos`, `intervenciones`, `turnos`, `alertas`, `actividades`, `incidentes`, `diagnosticos`, `medicamentos`, `informes`, `documentos`, `audiencias_judiciales`, `audit_log`.
 
@@ -96,23 +96,29 @@ No agregar dependencias nuevas sin justificar la necesidad primero.
 
 1 de mobile (`prompts/015`, migración `20260912000036`): `novedades` — diario liviano de novedades por NNA (F2/F3 mobile), consumida solo por la app mobile, sin UI en la web.
 
+1 de reportería (`prompts/027`, migraciones `20261004191335` y `20261004191723`): `reportes_senaf` — informe institucional mensual por versión (`datos` agregados, `borrador`, `texto_final`, `estado` `borrador`/`aprobado`). Solo `Admin` (RLS), sin DELETE, auditada. Un trigger completa `aprobado_por`/`aprobado_at` con el usuario de la sesión e impide editar un informe aprobado. La función `fn_agregados_senaf(mes, anio)` (SECURITY INVOKER, exige `Admin`) calcula los conteos del mes.
+
 Reglas de negocio completas (máquinas de estado, validaciones por entidad) en `procesos-del-negocio.md`.
 
 **Ojo con migraciones superseded**: `supabase/migrations/20260620000031_clean_schema.sql` ("Reemplaza las migraciones 001-030 en una DB nueva") es la definición de schema **vigente** — puede diferir de migraciones individuales más viejas para la misma tabla (ej. `intervenciones.tipo` tenía un `CHECK` con 7 valores en la migración de mayo, pero `clean_schema.sql` lo redefine como texto libre; los datos semilla reales solo son válidos bajo `clean_schema.sql`). Antes de escribir un schema Zod contra una columna, verificar el `CREATE TABLE` en `clean_schema.sql` — o mejor, consultar los valores reales ya insertados con una query.
 
 ## Contratos de API
 
-Dos route handlers en `app/api/`:
-- `incidentes/prediccion` — predicción de severidad de incidente (usada desde el form de Incidentes).
+Route handlers en `app/api/`:
+- `incidentes/prediccion` — predicción de severidad de incidente (usada desde el form de Incidentes). Son reglas fijas más la moda del historial: **no es IA**.
 - `usuarios` (POST) — creación de usuario admin, usa `SUPABASE_SERVICE_ROLE_KEY` server-side. Exige sesión + rol `Admin` (`prompts/002`).
+- `didit/webhook` (POST) — resultado de la validación RENAPER, firma HMAC con `DIDIT_WEBHOOK_SECRET` (`prompts/016`).
+- `reportes/senaf` (POST `{ mes, anio }`) — genera una versión nueva del informe SENAF: agregados por `fn_agregados_senaf`, borrador con IA si hay `ANTHROPIC_API_KEY` (si no, o si falla, con plantilla), control de cifras y guardado en `reportes_senaf`. Exige sesión + rol `Admin` (`prompts/027`).
+- `reportes/senaf/[id]/pdf` (GET) — PDF del informe, solo si está aprobado. Exige sesión + rol `Admin`.
 
 ## Seguridad
 
-- RLS activo en las 28 tablas.
+- RLS activo en las 29 tablas.
 - Roles de aplicación: `Admin`, `Equipo Tecnico` (vía RPC `get_my_role`).
 - Nunca loguear ni exponer datos sensibles de NNyA innecesariamente.
 - Limitar el acceso a información sensible según rol desde el diseño de cada funcionalidad, no como añadido posterior.
 - **Audit log**: implementado (`prompts/018`). `fn_audit_trigger()` + `trg_audit_*` en las 27 tablas de negocio (todas menos `audit_log` misma) registran cada INSERT/UPDATE/DELETE. Solo `Admin` puede leerlo (`audit_log_admin_read`); nadie puede editarlo ni borrarlo (sin política de UPDATE/DELETE → RLS lo deniega), por eso es inmutable en la práctica.
+- **IA solo con datos agregados — decisión tomada (`prompts/027`, D1)**: el único uso de IA del sistema es la redacción del informe SENAF con Claude (`lib/ia/redactarInformeSenaf.ts`, server-only). Al proveedor solo viajan conteos validados por la lista blanca `agregadosSenafSchema` (`lib/reportes/senaf.ts`, `z.strictObject` + claves de dominio cerrado): nunca nombres, DNI ni texto libre. `ANTHROPIC_API_KEY` solo del lado del servidor. Cada cifra del borrador se controla contra los datos (`verificarCifras`) y el informe vale recién cuando un `Admin` lo aprueba. Los tests de esto están en `tests/unit/senaf.test.ts` (`npm run test:unit`).
 - **DNI en texto plano — decisión tomada (issue #11, `prompts/021`)**: `nnya.dni`, `tutores.dni` y `referentes.dni` son `varchar` plano, `pgcrypto` está instalado pero sin usar. La documentación vieja afirmaba cifrado AES-256; Jordy decidió no implementarlo (cifrar rompería el `UNIQUE(dni)` y la búsqueda parcial sin agregar una columna de hash aparte, y la clave viviría igual dentro de Postgres) y en cambio corregir la documentación que lo afirmaba falsamente. No repetir la afirmación de cifrado como si fuera cierta.
 
 ## Estándares de código
@@ -160,6 +166,7 @@ Estado por fase (detalle en `docs/evolucion/CHECKLIST-FINAL (1).md`):
 | C | UI de evaluación institucional + kanban de propuestas de mejora + notificaciones | ✅ Implementado (`prompts/022`) |
 | D | UI de `turnos_personal` + firma doble de traspaso de guardia + dashboard de cobertura | ✅ Implementado (`prompts/023`) |
 | E | UI de seguimiento post-egreso + cron 30/60 días + dashboard de reinserción | ✅ Implementado (`prompts/026`) |
+| Innovación 5 | Informe mensual SENAF con borrador por IA o plantilla, aprobación y PDF | ✅ Implementado (`prompts/027`) |
 
 ---
 
