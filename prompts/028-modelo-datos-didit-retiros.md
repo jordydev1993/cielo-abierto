@@ -2,766 +2,835 @@
 
 ## Objetivo
 
-Diseñar el modelo de datos necesario para implementar el proceso de retiro de NNyA y la verificación de identidad mediante Didit, respetando el modelo de datos vigente de Argüello Infancias.
+Diseñar el modelo de datos necesario para registrar retiros de NNyA y verificaciones de identidad mediante Didit, reutilizando la estructura existente del sistema y respetando las decisiones D-1 a D-10 definidas por Jordy en `DECISIONES-PENDIENTES-INNOVACIONES.md`.
 
-Este documento es un PLAN. No realiza cambios en la base de datos ni crea migraciones todavía.
+Este documento es únicamente un PLAN. No implementa migraciones ni modifica todavía el esquema de la base de datos.
 
-El diseño debe permitir:
+El modelo debe permitir:
 
-* registrar un retiro y su autorización;
-* registrar hasta 3 intentos de verificación Didit por retiro;
-* conservar todas las sesiones de Didit, incluidas las fallidas;
-* asociar las validaciones RENAPER a la sesión que las originó;
-* representar los cinco estados funcionales exigidos por RNF-12;
-* soportar errores del proveedor aun cuando Didit no haya generado `session_id`;
-* registrar fallback manual de forma trazable y restringida en base de datos;
-* representar autorizaciones y restricciones vigentes del vínculo tutor–NNyA;
-* aplicar minimización de datos y no almacenar información biométrica.
+- registrar un retiro y la autorización utilizada;
+- verificar únicamente tutores autorizados;
+- conservar hasta 3 intentos de verificación Didit por retiro;
+- conservar cada sesión Didit, incluso las fallidas;
+- reutilizar `sesiones_didit` tanto para retiros como para validación de referentes;
+- vincular cada validación RENAPER con la sesión Didit que la originó;
+- representar los 5 estados funcionales de RNF-12;
+- registrar errores del proveedor aunque Didit no llegue a generar un `session_id`;
+- permitir fallback manual únicamente a usuarios con rol `Admin`;
+- conservar trazabilidad histórica de autorizaciones;
+- impedir inconsistencias entre retiro, tutor, NNyA y autorización;
+- aplicar minimización de datos y no persistir información biométrica.
 
 ---
 
 ## Contexto
 
-El proyecto cuenta actualmente con las tablas y mecanismos relevantes:
+El sistema ya cuenta, entre otras, con las siguientes estructuras relevantes:
 
-* `nnya`
-* `tutores`
-* `nnya_tutores`
-* `referentes`
-* `vinculos_tutela`
-* `validaciones_renaper`
-* `usuarios`
-* `roles`
-* `audit_log`
-* `get_my_role()`
-* `fn_audit_trigger()`
-* triggers `trg_audit_*`
+- `nnya`
+- `tutores`
+- `nnya_tutores`
+- `referentes`
+- `vinculos_tutela`
+- `validaciones_renaper`
+- `usuarios`
+- `roles`
+- `audit_log`
+- `get_my_role()`
+- `fn_audit_trigger()`
+- triggers `trg_audit_*`
 
-El webhook de Didit está contemplado en `app/api/didit/webhook` y utiliza firma HMAC con `DIDIT_WEBHOOK_SECRET`.
+También existe el webhook de Didit en:
 
-La fuente de verdad del schema son las migraciones de `supabase/migrations/`, teniendo en cuenta que `20260620000031_clean_schema.sql` es la definición vigente del schema en una DB nueva.
+`app/api/didit/webhook`
 
-Las nuevas relaciones con `nnya_id` deberán respetar `ON DELETE RESTRICT`.
+El webhook valida la firma HMAC mediante `DIDIT_WEBHOOK_SECRET`.
+
+La fuente de verdad del esquema son las migraciones reales de `supabase/migrations/`, especialmente `20260620000031_clean_schema.sql` y las migraciones posteriores.
+
+Las nuevas relaciones hacia información histórica deben priorizar `ON DELETE RESTRICT`.
+
+Las decisiones D-1 a D-10 de `DECISIONES-PENDIENTES-INNOVACIONES.md`, resueltas por Jordy el 06/10, se consideran decisiones vigentes para este plan.
 
 ---
 
 ## Archivos inspeccionados
 
-Para este plan se consideran como fuentes de diseño:
+Para elaborar y corregir este plan se consideran:
 
-* `AGENTS-WEB.md`
-* `supabase/migrations/20260620000031_clean_schema.sql`
-* `supabase/migrations/20260827000033_*.sql`
-* migraciones posteriores que modifican `nnya`, `tutores`, `nnya_tutores`, `validaciones_renaper`, `audit_log` y roles
-* `app/api/didit/webhook`
-* `types/database.generated.ts`
-* `types/database.types.ts`
-* `prompts/016-*`
-* `TAREAS-PENDIENTES-DIDIT-POR-INTEGRANTE.md`
-* `DECISIONES-PENDIENTES-INNOVACIONES.md`
+- `AGENTS-WEB.md`
+- `supabase/migrations/20260620000031_clean_schema.sql`
+- migraciones posteriores relacionadas con `nnya_tutores`, `validaciones_renaper`, auditoría y RLS;
+- `app/api/didit/webhook`
+- tipos generados de base de datos;
+- tipos de dominio relacionados;
+- `prompts/016-webhook-didit.md`
+- `TAREAS-PENDIENTES-DIDIT-POR-INTEGRANTE.md`
+- `DECISIONES-PENDIENTES-INNOVACIONES.md`
+- `PLAN-INTEGRACION-INNOVACIONES.md`
 
-La implementación deberá volver a verificar las definiciones exactas de columnas, constraints, índices y políticas antes de crear la migración.
+Antes de escribir la migración deberán volver a verificarse las definiciones reales de las tablas y constraints afectados.
 
 ---
 
 ## Skills utilizadas
 
-* `database-design`
-* `domain-validation`
-* `role-permission`
-* `documentation`
+Las skills disponibles relacionadas con este trabajo se encuentran en el repo mobile:
 
-La implementación posterior deberá volver a consultar estas skills antes de crear la migración.
+- `skills/database.md`
+- `skills/testing.md`
+- `skills/design.md`
 
----
+Para este plan, la referencia principal es `skills/database.md`.
 
-## Supuestos
-
-1. `retiros` será una tabla propia y no un tipo de `actividades`.
-2. `sesiones_didit` será una tabla compartida para distintos propósitos.
-3. `proposito` distinguirá como mínimo:
-
-   * `retiro`
-   * `validacion_referente`
-4. Un retiro puede tener múltiples sesiones Didit, una por intento.
-5. El máximo funcional es de 3 intentos por retiro.
-6. `cantidad_intentos` no será un contador manual: se derivará contando las sesiones terminadas asociadas al retiro.
-7. La autorización para retirar no se deduce de `nnya_tutores.es_principal`.
-8. `autorizaciones_retiro` representará la autorización y su vigencia.
-9. El rol habilitado para fallback manual queda pendiente de decisión de Jordy (D-2).
-10. La decisión sobre si un referente también puede retirar queda pendiente de definición de Jordy. Por lo tanto, no se fija todavía la obligatoriedad de `tutor_id`.
-11. El DNI utilizado para iniciar una verificación Didit proviene de `tutores.dni`; el operador no lo tipea manualmente.
-12. No se almacenarán selfies, videos de liveness, plantillas biométricas ni copias del DNI.
-13. `validaciones_renaper.respuesta_cruda` no deberá recibir payloads de Didit.
-14. El webhook no tiene una sesión de usuario normal y por lo tanto necesitará una vía server-side autorizada para escribir en las tablas protegidas por RLS.
-15. Los nombres funcionales de los cinco estados RNF-12 son los definidos en `TAREAS-PENDIENTES-DIDIT-POR-INTEGRANTE.md`.
+No se asume la existencia de skills equivalentes dentro del repo web.
 
 ---
 
-## 1. Tabla `sesiones_didit`
+## Supuestos y decisiones confirmadas
 
-Se propone una única tabla compartida para registrar las sesiones de Didit utilizadas por distintos procesos.
+1. `retiros` será una tabla propia.
+2. `sesiones_didit` será una tabla compartida por distintos propósitos de verificación.
+3. `sesiones_didit.proposito` tendrá valores controlados:
+   - `retiro`
+   - `validacion_referente`
+4. Un retiro puede tener varias sesiones Didit.
+5. Se permiten como máximo 3 intentos terminados por retiro.
+6. No se almacenará manualmente un contador de intentos.
+7. La cantidad de intentos se obtiene contando las sesiones terminadas asociadas al retiro.
+8. Según D-3, cuentan como intento terminado:
+   - `Approved`
+   - `Declined`
+   - `Expired`
+   - `Abandoned`
+   - `Kyc Expired`
+9. `In Review` todavía no cuenta como intento.
+10. El flujo de retiro permite únicamente tutores autorizados.
+11. Según D-10, `retiros.tutor_id` será obligatorio.
+12. `nnya_tutores.es_principal` no representa autorización para retirar.
+13. La autorización para retirar se modelará mediante `autorizaciones_retiro`.
+14. El fallback manual será exclusivo del rol `Admin`, según D-2.
+15. El rol se validará en base de datos utilizando `get_my_role()`.
+16. El DNI enviado a Didit siempre se obtendrá desde `tutores.dni`.
+17. El operador nunca escribirá manualmente el DNI que se envía a Didit.
+18. No se almacenarán selfies, videos de prueba de vida, plantillas biométricas ni copias de DNI.
+19. `validaciones_renaper.respuesta_cruda` no almacenará payloads de Didit.
+20. El webhook necesita una vía de escritura server-side autorizada.
+21. Una sesión Didit de propósito `validacion_referente` deberá identificar explícitamente al referente correspondiente.
+22. Cada sesión Didit podrá originar como máximo una `validaciones_renaper`.
+23. Las sesiones desconocidas recibidas por webhook se resolverán según D-4: responder `200`, registrar en log el `session_id` y no escribir datos.
 
-La tabla utilizará `proposito` para diferenciar:
+---
 
-* `retiro`
-* `validacion_referente`
+# Modelo propuesto
 
-La relación con `retiros` se establece desde `sesiones_didit` hacia `retiros`, porque un retiro puede tener varias sesiones.
+## 1. `sesiones_didit`
 
-### Campos propuestos
+Se propone una tabla compartida para representar las sesiones de verificación realizadas mediante Didit.
 
-* `id`: UUID, clave primaria.
-* `retiro_id`: UUID, nullable cuando el propósito no sea `retiro` o cuando corresponda registrar un error previo a la creación de una sesión.
-* `session_id`: identificador de sesión proporcionado por Didit; nullable para errores ocurridos antes de que Didit cree una sesión.
-* `proposito`: valor controlado.
-* `estado_didit`: estado informado por Didit, cuando exista.
-* `estado_rnf12`: estado funcional derivado del estado de Didit.
-* `error_proveedor`: información técnica mínima del error cuando Didit no pueda crear la sesión.
-* `creada_por`: usuario que inició la operación, cuando corresponda.
-* `created_at`
-* `updated_at`
-* `finalizada_at`
+Campos conceptuales:
 
-### Reglas de relación
+- `id UUID PRIMARY KEY`
+- `session_id TEXT NULL`
+- `proposito TEXT NOT NULL`
+- `retiro_id UUID NULL`
+- `referente_id UUID NULL`
+- `estado_didit TEXT`
+- `estado_rnf12 TEXT`
+- `error_proveedor TEXT NULL`
+- `creada_por UUID NOT NULL REFERENCES usuarios(id) ON DELETE RESTRICT`
+- `created_at TIMESTAMPTZ NOT NULL`
+- `updated_at TIMESTAMPTZ NOT NULL`
+- `finalizada_at TIMESTAMPTZ NULL`
 
-Debe existir un `CHECK` que impida contradicciones entre propósito y retiro, siguiendo el patrón:
+### Propósito
 
-```text
-(proposito = 'retiro') = (retiro_id IS NOT NULL)
-```
+Valores permitidos:
+
+- `retiro`
+- `validacion_referente`
+
+Debe existir un `CHECK` equivalente a:
+
+`(proposito = 'retiro') = (retiro_id IS NOT NULL)`
+
+También debe existir:
+
+`(proposito = 'validacion_referente') = (referente_id IS NOT NULL)`
+
+Esto evita que una sesión declare un propósito pero no tenga la entidad correspondiente.
+
+### `session_id` y errores del proveedor
+
+`session_id` debe poder ser `NULL` cuando Didit falle antes de crear la sesión.
+
+Debe existir el `CHECK`:
+
+`(session_id IS NULL) = (error_proveedor IS NOT NULL)`
 
 Por lo tanto:
 
-* una sesión con `proposito = 'retiro'` debe tener `retiro_id`;
-* una sesión con `proposito = 'validacion_referente'` no debe tener `retiro_id`.
+- una sesión creada correctamente por Didit tendrá `session_id` y no tendrá `error_proveedor`;
+- un fallo previo a la creación de sesión tendrá `session_id = NULL` y deberá registrar `error_proveedor`.
 
 `session_id` será único cuando exista.
 
-La relación será:
-
-```text
-retiros 1 ─── N sesiones_didit
-```
-
-Esto permite conservar las sesiones fallidas de los intentos anteriores.
-
-### Intentos
-
-Cada sesión finalizada asociada a un retiro representa un intento de verificación.
-
-`cantidad_intentos` no se almacenará como contador manual.
-
-El número de intentos se calculará contando las sesiones finalizadas correspondientes al retiro.
-
-La regla funcional es:
-
-* intento 1 → primera sesión finalizada;
-* intento 2 → segunda sesión finalizada;
-* intento 3 → tercera sesión finalizada;
-* no se permite iniciar un cuarto intento.
-
-El detalle exacto del estado que convierte una sesión en intento deberá quedar implementado en una función/constraint coherente con los estados definitivos de Didit.
-
-### Estados RNF-12
-
-La sesión deberá representar los cinco estados funcionales definidos por RNF-12:
-
-1. `Pendiente de verificación`
-2. `Identidad verificada`
-3. `Identidad no verificada`
-4. `Requiere revisión`
-5. `Error del proveedor`
-
-El estado funcional deberá derivarse de `estado_didit` en un único lugar.
-
-No se permitirá que ambos campos se actualicen independientemente.
-
-La traducción podrá implementarse mediante una función o trigger de base de datos, pero deberá existir una única fuente de verdad para el mapeo.
-
-### Mapeos conocidos
-
-Los estados de Didit deberán utilizar su forma técnica real, incluyendo mayúscula inicial cuando corresponda:
-
-* `Expired` → `Identidad no verificada`
-* `Abandoned` → `Identidad no verificada`
-* `Kyc Expired` → `Identidad no verificada`
-
-Los demás mapeos funcionales deberán quedar alineados con los estados confirmados por Jordy antes de implementar la migración.
-
-### Error previo a `session_id`
-
-Si Didit falla antes de crear una sesión, no existe `session_id`.
-
-El modelo deberá permitir registrar ese error sin inventar un identificador de Didit.
-
-En ese caso:
-
-* `session_id` puede ser `NULL`;
-* `error_proveedor` registra únicamente la información técnica mínima necesaria;
-* el registro sigue asociado al retiro cuando `proposito = 'retiro'`.
-
-No se deberá guardar un payload completo del proveedor.
+El contenido de `error_proveedor` debe ser mínimo y no contener payloads completos ni información biométrica.
 
 ---
 
-## 2. Tabla `retiros`
+## 2. Estados Didit e intentos
 
-Se propone una tabla propia para registrar cada operación de retiro.
+Se utilizará el mapeo completo de los 10 estados definido en D-1 de `DECISIONES-PENDIENTES-INNOVACIONES.md`.
 
-No se utilizará un tipo de actividad para representar el retiro.
+La migración deberá copiar explícitamente esa tabla de mapeo y no inventar valores adicionales.
 
-### Campos propuestos
+Para el cálculo del máximo de 3 intentos, según D-3 cuentan únicamente las sesiones terminadas con estado Didit:
 
-* `id`: UUID, clave primaria.
-* `nnya_id`: UUID, obligatorio.
-* `tutor_id`: UUID, pendiente de confirmar según la decisión de Jordy sobre referentes.
-* `usuario_id`: UUID, usuario que registra o gestiona la operación.
-* `autorizacion_retiro_id`: UUID, autorización concreta utilizada para este retiro.
-* `resultado_autorizacion`: valor controlado.
-* `motivo_rechazo`: nullable.
-* `estado`: valor controlado.
-* `descripcion`: nullable.
-* `observaciones`: nullable.
-* `created_at`
-* `updated_at`
-* `fecha_inicio`
-* `fecha_fin`
+- `Approved`
+- `Declined`
+- `Expired`
+- `Abandoned`
+- `Kyc Expired`
 
-No tendrá `sesion_didit_id`, porque un retiro puede tener múltiples sesiones.
+`In Review` no cuenta todavía como intento.
 
-Tampoco tendrá un contador manual de intentos.
+El máximo de 3 intentos no puede implementarse mediante un `CHECK`, porque requiere consultar otras filas de `sesiones_didit`.
+
+Debe implementarse mediante trigger o función de base de datos que, antes de permitir un nuevo intento, cuente las sesiones terminadas asociadas al `retiro_id`.
+
+No se almacenará `cantidad_intentos` manualmente en `retiros`.
+
+---
+
+## 3. Estados RNF-12
+
+Los valores funcionales serán exactamente los 5 definidos en `TAREAS-PENDIENTES-DIDIT-POR-INTEGRANTE.md`:
+
+- `Pendiente de verificación`
+- `Identidad verificada`
+- `Identidad no verificada`
+- `Requiere revisión`
+- `Error del proveedor`
+
+`estado_rnf12` debe derivarse de `estado_didit` mediante una única fuente de verdad, por ejemplo una función o trigger.
+
+No debe existir lógica duplicada de traducción en distintas partes de la aplicación.
+
+El mapeo completo debe seguir D-1.
+
+Entre los estados Didit contemplados se incluyen correctamente:
+
+- `Expired`
+- `Abandoned`
+- `Kyc Expired`
+
+---
+
+## 4. `retiros`
+
+Se propone una tabla propia.
+
+Campos conceptuales:
+
+- `id UUID PRIMARY KEY`
+- `nnya_id UUID NOT NULL`
+- `tutor_id UUID NOT NULL`
+- `created_by UUID NOT NULL REFERENCES usuarios(id) ON DELETE RESTRICT`
+- `autorizacion_retiro_id UUID NOT NULL`
+- `resultado_autorizacion TEXT NOT NULL`
+- `motivo_rechazo TEXT NULL`
+- `estado TEXT NOT NULL`
+- `descripcion TEXT NULL`
+- `observaciones TEXT NULL`
+- `autorizado_por UUID NULL REFERENCES usuarios(id) ON DELETE RESTRICT`
+- `autorizado_at TIMESTAMPTZ NULL`
+- `motivo_fallback TEXT NULL`
+- `created_at TIMESTAMPTZ NOT NULL`
+- `updated_at TIMESTAMPTZ NOT NULL`
+- `fecha_inicio TIMESTAMPTZ NOT NULL`
+- `fecha_fin TIMESTAMPTZ NULL`
 
 ### Estado del retiro
 
-Los valores técnicos deberán definirse mediante `CHECK`.
+Valores técnicos:
 
-Como mínimo se contemplan:
+- `en_curso`
+- `realizada`
+- `rechazada`
 
-* `En curso`
-* `Realizada`
-* un estado de rechazo
+Debe existir un `CHECK` equivalente a:
 
-El valor técnico definitivo de cada estado deberá quedar fijado antes de implementar la migración.
+`estado IN ('en_curso', 'realizada', 'rechazada')`
 
 ### Resultado de autorización
 
-`resultado_autorizacion` tendrá un conjunto cerrado de valores mediante `CHECK`.
+`resultado_autorizacion` debe utilizar valores cerrados y explícitos.
 
-Deberá diferenciar como mínimo:
+Como mínimo:
 
-* autorización concedida;
-* autorización rechazada.
+- `autorizada`
+- `rechazada`
 
-Los valores técnicos definitivos deberán coincidir con el flujo de negocio confirmado.
+La migración no debe introducir valores adicionales sin una decisión previa.
 
-### Resultado de identidad
+### Identidad
 
-No se duplicará en `retiros` el estado derivable de la sesión Didit.
+`retiros` no debe duplicar el resultado de identidad almacenado/derivado desde la sesión Didit.
 
-El resultado de identidad se consultará desde `sesiones_didit`, evitando inconsistencias entre el retiro y su última sesión.
+Por lo tanto, no se propone mantener `resultado_validacion_identidad` como una segunda fuente de verdad.
 
-### Integridad
-
-`nnya_id` utilizará:
-
-```text
-ON DELETE RESTRICT
-```
-
-La FK `autorizacion_retiro_id` deberá utilizar `ON DELETE RESTRICT`.
-
-La autorización concreta utilizada debe quedar almacenada para preservar el historial incluso si posteriormente deja de estar vigente.
+La identidad debe resolverse desde las sesiones asociadas al retiro.
 
 ---
 
-## 3. Autorización para retirar
-
-No se debe utilizar `nnya_tutores.es_principal` para determinar si una persona está autorizada a retirar.
-
-Ser tutor principal y estar autorizado para retirar son conceptos diferentes.
-
-Se propone una tabla específica:
-
-### `autorizaciones_retiro`
-
-Campos propuestos:
-
-* `id`: UUID, clave primaria.
-* `nnya_tutor_id`: FK a `nnya_tutores`, obligatorio.
-* `vigente_desde`: timestamp/date, obligatorio.
-* `vigente_hasta`: timestamp/date, nullable.
-* `restricciones`: representación de las restricciones vigentes.
-* `created_by`: usuario que creó la autorización.
-* `created_at`
-* `updated_at`
-
-El campo booleano `autorizado` no se almacenará.
-
-La existencia y vigencia temporal de la autorización representan la autorización.
-
-### Una sola autorización vigente
-
-Debe existir un índice único parcial que garantice una sola autorización vigente por vínculo tutor–NNyA.
-
-Deberá seguir el patrón de índices únicos parciales ya utilizado por el proyecto, como `uq_vinculo_vigente_por_nnya`.
-
-### Integridad con `nnya_tutores`
-
-La FK desde `autorizaciones_retiro.nnya_tutor_id` hacia `nnya_tutores` deberá utilizar:
-
-```text
-ON DELETE RESTRICT
-```
-
-Esto evita que el `ON DELETE CASCADE` existente sobre `nnya_tutores.tutor_id` pueda eliminar silenciosamente el historial de autorizaciones.
-
-### Restricciones
-
-Las restricciones vigentes deberán formar parte explícita del modelo de autorización.
-
-El formato técnico definitivo del campo `restricciones` deberá definirse antes de implementar la migración.
-
----
-
-## 4. Restricciones vigentes del vínculo tutor–NNyA
-
-Las restricciones deberán permitir representar condiciones que limiten una autorización de retiro.
-
-No se deberá inferir la autorización desde `es_principal`.
-
-La autorización concreta utilizada por cada retiro se guardará mediante:
-
-```text
-retiros.autorizacion_retiro_id
-```
-
-Esto permite conservar qué autorización estaba vigente y fue utilizada en una operación determinada.
-
----
-
-## 5. Fallback manual
-
-El modelo contempla un mecanismo de fallback cuando la validación automática mediante Didit no pueda completarse.
-
-`retiros` deberá registrar:
-
-* `autorizado_por`: usuario que realiza la autorización manual;
-* `autorizado_at`: fecha/hora de autorización;
-* `motivo_fallback`: motivo de la autorización manual;
-* `resultado_autorizacion`.
-
-### Reglas
-
-`autorizado_por` será nullable.
-
-Solo podrá completarse cuando:
-
-* se hayan agotado los 3 intentos fallidos; o
-* haya ocurrido un error del proveedor que impida completar la verificación automática.
-
-Deberá existir un `CHECK` que impida registrar `autorizado_por` fuera de esas condiciones.
-
-El rol habilitado para ejecutar el fallback queda pendiente de decisión de Jordy (D-2).
-
-La restricción deberá vivir en la base de datos, no solamente en la UI.
-
-Se propone un trigger de base de datos que utilice `get_my_role()` para verificar el rol antes de permitir la autorización manual.
-
-La implementación deberá respetar exactamente el rol que Jordy defina.
-
-El fallback deberá quedar auditado.
-
----
-
-## 6. Relación con `validaciones_renaper`
-
-La relación se establece desde `validaciones_renaper` hacia `sesiones_didit`.
-
-Se propone:
-
-```text
-validaciones_renaper.sesion_didit_id
-```
-
-La dirección responde al flujo real:
-
-1. se crea/inicia la sesión Didit;
-2. Didit devuelve el resultado;
-3. se procesa la validación RENAPER;
-4. se registra la validación asociada a la sesión.
-
-No se agregará `validacion_renaper_id` a `sesiones_didit`.
-
-### `respuesta_cruda`
-
-La columna existente `validaciones_renaper.respuesta_cruda` guarda JSONB.
-
-No deberá recibir payloads de Didit ni decisiones completas del proveedor.
-
-La información almacenada deberá limitarse a la respuesta necesaria del proceso RENAPER y respetar la política de minimización.
-
-En particular:
-
-* no copiar el payload de Didit;
-* no almacenar selfies;
-* no almacenar videos de liveness;
-* no almacenar plantillas biométricas;
-* no almacenar copias de DNI.
-
-Esto es especialmente importante porque el mecanismo de auditoría puede copiar cambios de la fila al `audit_log`.
-
-### `referente_id`
-
-La implementación deberá respetar que `validaciones_renaper.referente_id` es `NOT NULL`.
-
-Por lo tanto, el caso `momento = 'alta_referente'` deberá contar con un referente previamente existente antes de crear la validación.
-
-No se deberá modificar esa regla en este plan sin una decisión explícita.
-
-### `estado_dni`
-
-El resultado de `id_lookup` deberá traducirse a los valores funcionales de `estado_dni`:
-
-* `vigente`
-* `vencido`
-* `inexistente`
-* `error_servicio`
-
-El mapeo técnico definitivo deberá quedar documentado antes de la migración.
-
----
-
-## 7. DNI utilizado para Didit
-
-El DNI enviado a Didit deberá obtenerse directamente de:
-
-```text
-tutores.dni
-```
-
-El operador no deberá tipear manualmente el DNI para iniciar una verificación.
-
-La identificación del tutor deberá derivarse de la relación existente con el NNyA.
-
-Esta regla evita verificar a una persona y registrar el resultado sobre otra.
-
-No se almacenará una copia adicional del DNI en `sesiones_didit` o `retiros` salvo que una migración posterior demuestre una necesidad concreta y aprobada.
-
----
-
-## 8. Integración con RENAPER
-
-Se reutilizará la tabla existente `validaciones_renaper`.
-
-No se propone crear una segunda tabla de validaciones RENAPER.
+## 5. Relación retiro ↔ sesiones Didit
 
 La relación será:
 
-```text
-sesiones_didit 1 ─── N validaciones_renaper
-```
+`retiros 1:N sesiones_didit`
 
-mediante:
+La FK se ubicará en:
 
-```text
-validaciones_renaper.sesion_didit_id
-```
+`sesiones_didit.retiro_id`
 
-La cardinalidad definitiva deberá respetar las reglas del proceso RENAPER existentes.
+No se utilizará `retiros.sesion_didit_id`.
+
+Esto permite conservar los intentos anteriores y no perder las sesiones fallidas.
 
 ---
 
-## 9. Seguridad y RLS
+## 6. `autorizaciones_retiro`
 
-Las nuevas tablas deberán:
+Se propone una tabla específica para representar la autorización de retiro asociada al vínculo tutor ↔ NNyA.
 
-* tener RLS habilitado;
-* respetar los roles actuales;
-* aplicar mínimo privilegio;
-* impedir accesos innecesarios a información sensible;
-* mantener las restricciones críticas también en la base de datos.
+Campos conceptuales:
 
-### Webhook de Didit
+- `id UUID PRIMARY KEY`
+- `nnya_tutor_id UUID NOT NULL`
+- `estado TEXT NOT NULL`
+- `vigente_desde TIMESTAMPTZ NOT NULL`
+- `vigente_hasta TIMESTAMPTZ NULL`
+- `restricciones` según tipo que se defina para la migración
+- `created_by UUID NOT NULL REFERENCES usuarios(id) ON DELETE RESTRICT`
+- `created_at TIMESTAMPTZ NOT NULL`
+- `updated_at TIMESTAMPTZ NOT NULL`
 
-El webhook no dispone de una sesión de usuario normal.
+### Estado
 
-Por lo tanto, para escribir en `sesiones_didit` y las tablas relacionadas deberá utilizar:
+Se utilizará un predicado fijo para determinar la autorización vigente.
 
-* service role únicamente server-side; o
-* una función `SECURITY DEFINER` cuidadosamente restringida.
+Propuesta:
 
-Nunca se deberá exponer `SUPABASE_SERVICE_ROLE_KEY` al cliente.
+- `vigente`
+- `revocada`
 
-Las políticas RLS deberán contemplar explícitamente el camino de escritura utilizado por el webhook.
+con un `CHECK` equivalente a:
 
----
+`estado IN ('vigente', 'revocada')`
 
-## 10. Auditoría
+El índice único parcial utilizará una condición estable:
 
-Las nuevas tablas deberán integrarse al mecanismo de auditoría existente:
+`WHERE estado = 'vigente'`
 
-* `sesiones_didit`
-* `retiros`
-* `autorizaciones_retiro`
+No se utilizará `now()` en el predicado del índice.
 
-Se deberán crear los correspondientes triggers:
+Debe existir como máximo una autorización con estado `vigente` por `nnya_tutor_id`.
 
-```text
-trg_audit_*
-```
+### Sin booleano redundante
 
-No se deberán almacenar datos biométricos en `audit_log`.
+No se almacenará un campo `autorizado BOOLEAN`.
 
-Especialmente, se deberá evitar que `audit_log` termine conteniendo payloads completos de Didit mediante `respuesta_cruda` u otras columnas.
+El estado/vigencia de la autorización representa esa condición.
 
----
+### Conservación histórica
 
-## 11. Webhook de Didit
+`retiros.autorizacion_retiro_id` conservará cuál fue la autorización utilizada en cada retiro.
 
-El webhook utilizará `session_id` para localizar la sesión correspondiente cuando Didit haya creado una sesión.
+La FK desde `autorizaciones_retiro.nnya_tutor_id` hacia `nnya_tutores` debe usar `ON DELETE RESTRICT`.
 
-Flujo propuesto:
-
-1. validar firma HMAC del webhook;
-2. buscar `session_id`;
-3. actualizar `sesiones_didit`;
-4. derivar `estado_rnf12` desde `estado_didit`;
-5. asociar la validación RENAPER mediante `validaciones_renaper.sesion_didit_id`, cuando corresponda;
-6. reflejar el resultado en el retiro sin duplicar el estado de identidad;
-7. no crear registros huérfanos para sesiones desconocidas.
-
-Si Didit falla antes de generar `session_id`, el error deberá registrarse mediante el mecanismo definido para errores de proveedor, sin inventar un `session_id`.
+Esto evita perder el historial de autorizaciones por el `ON DELETE CASCADE` existente sobre relaciones de `nnya_tutores`.
 
 ---
 
-## 12. Minimización de datos
+## 7. Consistencia entre retiro y autorización
 
-El modelo deberá aplicar una política estricta de minimización.
+`retiros` almacena:
 
-No se almacenarán:
+- `nnya_id`
+- `tutor_id`
+- `autorizacion_retiro_id`
 
-* selfies;
-* videos de prueba de vida/liveness;
-* plantillas biométricas;
-* imágenes o copias del DNI;
-* payloads completos de Didit;
-* información biométrica innecesaria.
+La autorización, mediante `nnya_tutores`, también determina un NNyA y un tutor.
 
-Se almacenará únicamente la información necesaria para:
+La base debe impedir que se utilice la autorización perteneciente a otra combinación tutor/NNyA.
 
-* conocer el resultado de la verificación;
-* mantener el estado funcional;
-* registrar el retiro;
-* registrar la autorización;
-* mantener la trazabilidad y auditoría.
+Esto requiere un trigger o función de base de datos que valide que:
 
-La minimización también deberá aplicarse al `audit_log`.
+- el `nnya_id` del retiro coincide con el NNyA de `nnya_tutores` asociado a `autorizacion_retiro_id`;
+- el `tutor_id` del retiro coincide con el tutor del mismo vínculo.
+
+No alcanza con validarlo únicamente en frontend.
 
 ---
 
-## 13. Decisiones propuestas
+## 8. Restricciones vigentes
 
-1. Crear una tabla propia `retiros`.
-2. Crear una tabla compartida `sesiones_didit`.
-3. Relacionar `sesiones_didit.retiro_id` con `retiros`.
-4. Permitir múltiples sesiones por retiro.
-5. Contar los intentos a partir de sesiones finalizadas, con tope de 3.
-6. Utilizar `proposito` para diferenciar `retiro` y `validacion_referente`.
-7. Impedir contradicciones entre `proposito` y `retiro_id` mediante `CHECK`.
-8. Permitir `session_id` nullable para errores previos a la creación de una sesión.
-9. Derivar `estado_rnf12` desde `estado_didit` en un único lugar.
-10. Utilizar los cinco estados funcionales de RNF-12.
-11. Mapear `Expired`, `Abandoned` y `Kyc Expired` a `Identidad no verificada`, sujeto a confirmación final de Jordy.
-12. Relacionar `validaciones_renaper.sesion_didit_id` con `sesiones_didit`.
-13. Prohibir payloads de Didit en `validaciones_renaper.respuesta_cruda`.
-14. Mantener `referente_id` obligatorio en `validaciones_renaper`.
-15. Definir el mapeo de `id_lookup` a `estado_dni`.
-16. No duplicar en `retiros` el estado de identidad derivable de `sesiones_didit`.
-17. Definir tipos, `NOT NULL` y `CHECK` para los estados y resultados.
-18. Crear `autorizaciones_retiro`.
-19. Representar la autorización mediante vigencia, sin campo booleano redundante.
-20. Garantizar una sola autorización vigente por vínculo mediante índice único parcial.
-21. Usar `ON DELETE RESTRICT` en la FK de `autorizaciones_retiro` hacia `nnya_tutores`.
-22. Guardar en `retiros.autorizacion_retiro_id` la autorización concreta utilizada.
-23. Registrar fallback mediante `autorizado_por`, `autorizado_at` y `motivo_fallback`.
-24. Impedir fallback salvo agotamiento de 3 intentos o error del proveedor.
-25. Controlar el rol de fallback en la base mediante `get_my_role()`.
-26. Dejar pendiente de decisión de Jordy el rol exacto habilitado para fallback.
-27. Obtener el DNI para Didit exclusivamente desde `tutores.dni`.
-28. No permitir que el operador tipee manualmente el DNI utilizado para la verificación.
-29. Aplicar RLS a las nuevas tablas.
-30. Resolver la escritura del webhook mediante service role server-side o `SECURITY DEFINER`.
-31. Integrar las nuevas tablas con `trg_audit_*`.
-32. No almacenar biometría, selfies, liveness, copias de DNI ni payloads completos de Didit.
-33. Mantener `ON DELETE RESTRICT` para las relaciones con `nnya_id`.
-34. Dejar pendiente de decisión de Jordy si un referente también puede realizar retiros y, por lo tanto, si `tutor_id` debe ser obligatorio.
+Las restricciones de retiro pertenecen a la autorización/vínculo correspondiente.
+
+No deben inferirse desde `nnya_tutores.es_principal`.
+
+`autorizaciones_retiro.restricciones` deberá representar las restricciones aplicables.
+
+El tipo definitivo de `restricciones` debe elegirse antes de la migración según los requisitos funcionales concretos, evitando diseñar una estructura excesivamente genérica.
 
 ---
 
-## 14. Puntos a definir antes de implementar
+## 9. Fallback manual
 
-Antes de crear la migración se deberá definir:
+Según D-2, únicamente un usuario con rol:
 
-1. El nombre y tipo definitivos de `restricciones`.
-2. Los valores técnicos definitivos de `estado_rnf12`.
-3. Los valores técnicos definitivos de `proposito`.
-4. Los valores técnicos definitivos de `retiros.estado`.
-5. Los valores técnicos definitivos de `resultado_autorizacion`.
-6. Qué estados de Didit se consideran sesiones finalizadas y por lo tanto cuentan como intento.
-7. El mapeo completo de estados Didit a RNF-12.
-8. El mapeo completo de `id_lookup` a `estado_dni`.
-9. El mecanismo exacto para registrar un error de proveedor previo a `session_id`.
-10. El rol exacto autorizado para fallback manual (D-2).
-11. Si un referente puede realizar retiros.
-12. Si `tutor_id` en `retiros` será obligatorio o nullable según la decisión anterior.
-13. La forma exacta de la política RLS del webhook.
-14. La implementación final del control de rol mediante `get_my_role()`.
-15. La cardinalidad definitiva entre `sesiones_didit` y `validaciones_renaper`.
+`Admin`
 
-Estas definiciones no deben inventarse durante la implementación: si no están confirmadas, deberán resolverse antes de crear la migración.
+puede realizar el fallback manual.
 
----
+El retiro deberá registrar:
 
-## 15. Archivos a crear o modificar después de la aprobación
+- `autorizado_por`
+- `autorizado_at`
+- `motivo_fallback`
 
-Este plan no modifica archivos de implementación.
+El fallback solo puede utilizarse:
 
-Una vez aprobado, la implementación podrá requerir:
+1. después de 3 intentos fallidos terminados; o
+2. ante un error del proveedor que impida completar el flujo normal.
 
-* una nueva migración en `supabase/migrations/`;
-* actualización de `types/database.generated.ts` mediante generación automática;
-* actualización de `types/database.types.ts` si corresponde;
-* adaptación del webhook `app/api/didit/webhook`;
-* documentación o constantes relacionadas con los nuevos estados;
-* tests o chequeos necesarios para validar las restricciones de seguridad.
+Esta regla no puede resolverse mediante un `CHECK`, porque requiere consultar `sesiones_didit`.
 
-No se deberá editar manualmente `types/database.generated.ts`.
+Debe implementarse mediante trigger o función de base de datos.
+
+El mismo control deberá verificar mediante `get_my_role()` que quien ejecuta el fallback tenga rol `Admin`.
+
+La UI podrá ocultar o deshabilitar la acción para otros roles, pero la restricción real debe vivir en base de datos.
+
+Toda utilización del fallback debe quedar auditada.
 
 ---
 
-## 16. Seguridad
+## 10. DNI utilizado por Didit
+
+El DNI utilizado para iniciar la verificación Didit de un retiro deberá obtenerse exclusivamente desde:
+
+`tutores.dni`
+
+El operador no podrá ingresar manualmente un DNI diferente.
+
+La regla evita verificar la identidad de una persona y posteriormente registrar el retiro a nombre de otra.
+
+No se duplicará el DNI en `retiros` ni en `sesiones_didit` salvo que exista posteriormente una necesidad aprobada y documentada.
+
+---
+
+## 11. Integración con `validaciones_renaper`
+
+La relación será:
+
+`validaciones_renaper.sesion_didit_id`
+
+No se agregará `validacion_renaper_id` en `sesiones_didit`.
+
+La relación sesión ↔ validación será 1:1.
+
+Por lo tanto:
+
+`validaciones_renaper.sesion_didit_id`
+
+deberá tener:
+
+`UNIQUE (sesion_didit_id)`
+
+### Referente
+
+`validaciones_renaper.referente_id` continúa siendo `NOT NULL`.
+
+Para las sesiones con:
+
+`proposito = 'validacion_referente'`
+
+se utilizará:
+
+`sesiones_didit.referente_id`
+
+De esta manera, cuando llegue el webhook se podrá identificar qué referente debe utilizarse al crear `validaciones_renaper`.
+
+No se plantea validar un referente inexistente antes de su alta.
+
+### `consultado_por`
+
+`validaciones_renaper.consultado_por` es `NOT NULL`, pero el webhook de Didit no tiene una sesión de usuario.
+
+Por lo tanto:
+
+`validaciones_renaper.consultado_por`
+
+se copiará desde:
+
+`sesiones_didit.creada_por`
+
+Por este motivo, `sesiones_didit.creada_por` será obligatorio (`NOT NULL`) y tendrá FK a `usuarios(id)` con `ON DELETE RESTRICT`.
+
+---
+
+## 12. Mapeo `id_lookup` → RENAPER
+
+La respuesta de `id_lookup` debe traducirse a los campos funcionales ya existentes en `validaciones_renaper`.
+
+### `estado_dni`
+
+Los valores contemplados son:
+
+- `vigente`
+- `vencido`
+- `inexistente`
+- `error_servicio`
+
+La migración/implementación deberá seguir el mapeo confirmado en las decisiones vigentes y no inferir valores nuevos.
+
+### `resultado`
+
+También debe mapearse:
+
+- `aprobado`
+- `rechazado`
+- `no_concluyente`
+
+### `tiene_antecedentes`
+
+Didit no informa este dato.
+
+Por lo tanto:
+
+`tiene_antecedentes = NULL`
+
+para las validaciones originadas mediante Didit.
+
+No se debe inventar ni inferir este valor.
+
+---
+
+## 13. `respuesta_cruda` y minimización
+
+`validaciones_renaper.respuesta_cruda` no debe utilizarse para almacenar el payload completo de Didit.
+
+Esto debe quedar explícitamente prohibido en la implementación.
+
+La razón es doble:
+
+1. viola la política de minimización de datos;
+2. los cambios pueden terminar replicados en `audit_log`.
+
+No deben almacenarse:
+
+- selfies;
+- videos de prueba de vida;
+- plantillas biométricas;
+- copias o imágenes del DNI;
+- payloads completos de Didit;
+- información biométrica innecesaria.
+
+Solo se almacenará la información mínima necesaria para:
+
+- identificar la operación;
+- conocer el estado funcional;
+- relacionarla con retiro/referente;
+- conservar la autorización utilizada;
+- registrar errores mínimos;
+- mantener trazabilidad y auditoría.
+
+---
+
+## 14. Webhook Didit
+
+El webhook deberá:
+
+1. validar la firma HMAC;
+2. obtener el `session_id`;
+3. localizar `sesiones_didit`;
+4. actualizar el estado Didit;
+5. derivar el estado RNF-12 desde una única función/fuente;
+6. cuando corresponda, crear o actualizar la `validaciones_renaper` asociada;
+7. utilizar `sesiones_didit.referente_id` para las validaciones de referente;
+8. utilizar `sesiones_didit.creada_por` como `consultado_por`;
+9. no guardar payloads biométricos;
+10. no duplicar el resultado de identidad en `retiros`.
+
+### Sesiones desconocidas
+
+Según D-4, si llega un webhook con un `session_id` que el sistema no conoce:
+
+- responder HTTP `200`;
+- registrar en logs el `session_id`;
+- no insertar ni modificar registros.
+
+No se crearán sesiones huérfanas a partir de webhooks desconocidos.
+
+---
+
+## 15. RLS y escritura del webhook
+
+Las nuevas tablas deberán tener RLS habilitado.
+
+Las políticas deben seguir el principio de mínimo privilegio.
+
+El webhook no tiene sesión normal de usuario, por lo que no puede depender de las mismas políticas RLS utilizadas por el frontend.
+
+La escritura server-side deberá resolverse mediante una de las alternativas aprobadas para implementación:
+
+- service role exclusivamente del lado servidor; o
+- función `SECURITY DEFINER` cuidadosamente restringida.
+
+La `SUPABASE_SERVICE_ROLE_KEY`, si se utiliza, nunca debe exponerse al cliente.
+
+Las políticas y funciones deberán permitir el trabajo del webhook sin abrir permisos innecesarios a usuarios autenticados.
+
+---
+
+## 16. Auditoría
+
+Las tablas nuevas deberán integrarse al sistema existente mediante los triggers `trg_audit_*` y `fn_audit_trigger()` según el patrón actual del proyecto.
+
+La auditoría debe conservar:
+
+- creación/modificación del retiro;
+- autorización utilizada;
+- cambios relevantes de estado;
+- fallback manual;
+- usuario responsable.
+
+La auditoría no debe almacenar:
+
+- biometría;
+- selfies;
+- videos;
+- copias de DNI;
+- payloads completos de Didit.
+
+---
+
+## 17. Reglas que requieren trigger o función
+
+No todas las reglas pueden implementarse con `CHECK`.
+
+Requieren trigger o función porque consultan otras filas/tablas:
+
+1. máximo de 3 intentos terminados por retiro;
+2. fallback únicamente después de 3 intentos fallidos o error del proveedor;
+3. fallback únicamente por rol `Admin`, validado mediante `get_my_role()`;
+4. consistencia entre `retiros.nnya_id`, `retiros.tutor_id` y `autorizacion_retiro_id`;
+5. derivación centralizada de `estado_rnf12` desde `estado_didit`, si se decide persistir ambos.
+
+Los `CHECK` se reservarán para reglas internas de una misma fila, como:
+
+- valores permitidos de `proposito`;
+- valores permitidos de `retiros.estado`;
+- valores permitidos de `autorizaciones_retiro.estado`;
+- coherencia `proposito` ↔ `retiro_id`;
+- coherencia `proposito` ↔ `referente_id`;
+- coherencia `session_id` ↔ `error_proveedor`.
+
+---
+
+## 18. Archivos a crear/modificar después de la aprobación
+
+Este plan no implementa cambios.
+
+Una vez aprobado, la implementación deberá evaluar/modificar:
+
+- nueva migración en `supabase/migrations/`;
+- tipos generados de Supabase;
+- tipos de dominio si corresponde;
+- `app/api/didit/webhook`;
+- funciones/helpers server-side relacionados con Didit;
+- documentación relacionada;
+- tests de las reglas de negocio.
+
+Los tipos generados no deben editarse manualmente. Deben regenerarse después de aplicar la migración.
+
+---
+
+## Requisitos
 
 La implementación deberá cumplir como mínimo:
 
-* RLS en todas las tablas nuevas;
-* mínimo privilegio;
-* control de roles en base de datos para operaciones críticas;
-* service role exclusivamente server-side;
-* no exposición de `SUPABASE_SERVICE_ROLE_KEY`;
-* DNI de Didit obtenido desde `tutores.dni`;
-* ningún DNI ingresado manualmente para la verificación;
-* no almacenamiento de biometría;
-* no almacenamiento de selfies;
-* no almacenamiento de liveness;
-* no almacenamiento de copias de DNI;
-* no almacenamiento de payloads completos de Didit;
-* auditoría mediante `trg_audit_*`;
-* `ON DELETE RESTRICT` en relaciones críticas.
+1. tabla propia `retiros`;
+2. tabla compartida `sesiones_didit`;
+3. `proposito` controlado;
+4. `retiro_id` para sesiones de retiro;
+5. `referente_id` para sesiones de validación de referente;
+6. `tutor_id NOT NULL` en retiros;
+7. máximo 3 intentos terminados;
+8. conservación de todos los intentos;
+9. fallback únicamente Admin;
+10. autorización explícita independiente de `es_principal`;
+11. historial de autorización utilizada;
+12. validación de coherencia retiro/autorización;
+13. integración 1:1 sesión ↔ `validaciones_renaper`;
+14. `creada_por NOT NULL`;
+15. DNI proveniente de `tutores.dni`;
+16. minimización de datos;
+17. RLS;
+18. auditoría;
+19. escritura segura del webhook;
+20. `ON DELETE RESTRICT` donde corresponda a información histórica.
 
 ---
 
-## 17. Criterios de aceptación
+## Seguridad
 
-El plan se considerará correctamente definido cuando:
-
-1. Un retiro pueda tener hasta 3 sesiones Didit y ninguna sesión fallida se pierda.
-2. Los intentos puedan contarse a partir de las sesiones finalizadas.
-3. `proposito` no pueda contradecir la presencia de `retiro_id`.
-4. Una sesión sin `session_id` pueda representar un error ocurrido antes de la creación de la sesión.
-5. `estado_rnf12` tenga una única fuente de derivación.
-6. Los cinco estados RNF-12 estén definidos.
-7. `Expired`, `Abandoned` y `Kyc Expired` tengan un mapeo explícito.
-8. `validaciones_renaper` pueda apuntar a la sesión Didit que originó la validación.
-9. `respuesta_cruda` no pueda utilizarse para almacenar payloads de Didit.
-10. El caso `alta_referente` respete el `referente_id NOT NULL` existente.
-11. El mapeo de `id_lookup` a `estado_dni` esté definido.
-12. Los estados de `retiros` y resultados de autorización tengan valores cerrados.
-13. No existan campos redundantes cuyo valor pueda contradecir otra fuente de verdad.
-14. Exista una única autorización vigente por vínculo.
-15. El retiro conserve la autorización concreta utilizada.
-16. La FK de autorización hacia `nnya_tutores` utilice `ON DELETE RESTRICT`.
-17. El fallback requiera 3 intentos fallidos o error del proveedor.
-18. El fallback tenga `autorizado_por`, `autorizado_at` y motivo.
-19. El control del rol de fallback exista en la base de datos.
-20. El DNI de Didit provenga de `tutores.dni`.
-21. El webhook tenga una vía explícita y segura para escribir pese a RLS.
-22. Las nuevas tablas estén auditadas.
-23. No se almacenen datos biométricos ni payloads completos de Didit.
-24. Las relaciones críticas con `nnya_id` utilicen `ON DELETE RESTRICT`.
-25. La decisión sobre referentes que pueden retirar quede resuelta antes de fijar la nulabilidad de `tutor_id`.
+- RLS en todas las tablas nuevas.
+- Mínimo privilegio.
+- Fallback validado en base de datos.
+- `get_my_role()` para validar rol `Admin`.
+- Service role únicamente server-side si se utiliza.
+- Nunca exponer secretos al cliente.
+- DNI obtenido desde `tutores.dni`.
+- No permitir DNI manual para iniciar la verificación.
+- No guardar selfies.
+- No guardar videos de prueba de vida.
+- No guardar plantillas biométricas.
+- No guardar copias de DNI.
+- No guardar payloads completos de Didit.
+- No copiar payloads Didit a `validaciones_renaper.respuesta_cruda`.
+- Auditoría de operaciones sensibles.
+- `ON DELETE RESTRICT` para preservar historial.
 
 ---
 
-## 18. Chequeos
+## Criterios de aceptación
 
-Antes de implementar la migración se deberá verificar:
+El plan queda listo para implementación cuando se verifique que:
 
-* `CREATE TABLE` real de `validaciones_renaper`;
-* constraints existentes de `nnya_tutores`;
-* índices únicos parciales existentes para reutilizar el patrón;
-* implementación actual de `get_my_role()`;
-* políticas RLS existentes;
-* implementación del webhook Didit;
-* trigger `fn_audit_trigger()`;
-* estructura de `audit_log`;
-* tipos reales de DNI;
-* estados reales utilizados por Didit;
-* estados y valores existentes en las tablas relacionadas.
+1. `retiros` es una tabla propia.
+2. `retiros.tutor_id` es obligatorio.
+3. Solo tutores autorizados pueden asociarse a retiros.
+4. `sesiones_didit` admite los propósitos `retiro` y `validacion_referente`.
+5. Una sesión de retiro tiene `retiro_id`.
+6. Una sesión de referente tiene `referente_id`.
+7. Se conservan todas las sesiones Didit de un retiro.
+8. El máximo de 3 se calcula desde sesiones terminadas.
+9. Cuentan `Approved`, `Declined`, `Expired`, `Abandoned` y `Kyc Expired`.
+10. `In Review` no cuenta todavía.
+11. No existe contador manual de intentos.
+12. Un error previo a crear la sesión puede registrarse sin `session_id`.
+13. Se cumple `(session_id IS NULL) = (error_proveedor IS NOT NULL)`.
+14. Los 5 estados RNF-12 están definidos.
+15. El estado RNF-12 se deriva desde una única fuente.
+16. Se utiliza el mapeo completo D-1 de 10 estados.
+17. La relación con RENAPER se realiza mediante `validaciones_renaper.sesion_didit_id`.
+18. `sesion_didit_id` es único en `validaciones_renaper`.
+19. El referente se obtiene desde `sesiones_didit.referente_id`.
+20. `consultado_por` se obtiene desde `sesiones_didit.creada_por`.
+21. `creada_por` es obligatorio y referencia `usuarios`.
+22. Se define el mapeo de `estado_dni`.
+23. Se define el mapeo de `resultado`.
+24. `tiene_antecedentes` queda `NULL` para Didit.
+25. `respuesta_cruda` no almacena payloads Didit.
+26. `retiros.estado` tiene valores cerrados.
+27. `proposito` tiene valores cerrados.
+28. La autorización de retiro no depende de `es_principal`.
+29. Existe como máximo una autorización `vigente` por vínculo.
+30. No se utiliza `now()` en un índice parcial.
+31. El retiro conserva `autorizacion_retiro_id`.
+32. La FK histórica hacia `nnya_tutores` utiliza `RESTRICT`.
+33. Un trigger impide utilizar la autorización de otro tutor o NNyA.
+34. El fallback registra `autorizado_por`, `autorizado_at` y `motivo_fallback`.
+35. El fallback solo se permite después de 3 fallos o error del proveedor.
+36. El fallback solo puede realizarlo un `Admin`.
+37. El rol se valida en base de datos.
+38. El DNI enviado a Didit proviene de `tutores.dni`.
+39. Un operador no puede ingresar otro DNI manualmente.
+40. Un webhook desconocido responde `200`, registra el `session_id` en log y no escribe datos.
+41. El webhook tiene una estrategia server-side compatible con RLS.
+42. Las tablas nuevas quedan auditadas.
+43. No se almacenan datos biométricos.
+44. No se almacenan payloads completos de Didit.
+45. Las relaciones históricas relevantes utilizan `ON DELETE RESTRICT`.
 
-Después de implementar, deberán ejecutarse los chequeos definidos por `AGENTS-WEB.md`:
+---
 
-```text
+## Chequeos
+
+Este documento es únicamente un plan y no modifica código ni base de datos, por lo que en esta etapa no corresponde ejecutar chequeos de implementación.
+
+Después de implementar la migración deberán ejecutarse, como mínimo:
+
+```bash
 npm run lint
 npm run build
 npx tsc --noEmit
 ```
 
-Este plan no ejecuta todavía esos chequeos porque no implementa cambios.
+También deberá verificarse la migración contra una base de desarrollo antes de aplicarla en un entorno compartido.
 
 ---
 
-## 19. Verificación manual posterior a la implementación
+## Verificación manual futura
 
-Una vez aprobada e implementada la migración, se deberá verificar como mínimo:
+Después de implementar el modelo se deberá verificar manualmente:
 
-1. Crear un retiro y una primera sesión Didit.
-2. Registrar una sesión fallida y comprobar que queda conservada.
-3. Registrar un segundo intento y comprobar que ambos siguen asociados al mismo retiro.
-4. Impedir un cuarto intento.
-5. Comprobar la derivación del estado RNF-12.
-6. Simular un error de proveedor sin `session_id`.
-7. Verificar que una validación RENAPER queda asociada mediante `sesion_didit_id`.
-8. Comprobar que un payload Didit no pueda terminar en `respuesta_cruda`.
-9. Comprobar que no se almacenen datos biométricos.
-10. Crear dos autorizaciones vigentes para el mismo vínculo y comprobar que la segunda sea rechazada.
-11. Realizar un retiro y comprobar que queda registrada la autorización concreta utilizada.
-12. Intentar eliminar un `nnya` relacionado y comprobar que `ON DELETE RESTRICT` protege la trazabilidad.
-13. Intentar ejecutar fallback con un rol no autorizado y comprobar que la base lo rechaza.
-14. Comprobar que el webhook puede actualizar las tablas utilizando únicamente el mecanismo server-side autorizado.
-15. Verificar los registros generados en `audit_log`.
-16. Verificar que el DNI enviado a Didit provenga de `tutores.dni` y no de un campo ingresado manualmente.
+1. crear un retiro con tutor autorizado;
+2. comprobar que un tutor no autorizado no pueda utilizarse;
+3. iniciar una sesión Didit;
+4. registrar una sesión fallida y conservarla;
+5. iniciar un segundo y tercer intento;
+6. comprobar que no pueda iniciarse un cuarto intento terminado;
+7. verificar que `In Review` no incremente todavía el contador;
+8. verificar el mapeo de los 10 estados Didit;
+9. verificar los 5 estados RNF-12;
+10. simular un error del proveedor sin `session_id`;
+11. comprobar el CHECK `session_id/error_proveedor`;
+12. realizar una validación de referente y comprobar que conserva `referente_id`;
+13. comprobar que el webhook utiliza `creada_por` como `consultado_por`;
+14. comprobar la relación 1:1 con `validaciones_renaper`;
+15. comprobar los mapeos de `estado_dni` y `resultado`;
+16. comprobar que `tiene_antecedentes` quede `NULL`;
+17. comprobar que `respuesta_cruda` no reciba payloads Didit;
+18. comprobar que no se guarden selfies, videos, biometría ni copias de DNI;
+19. comprobar la unicidad de autorización vigente;
+20. comprobar que no se pueda eliminar en cascada información histórica;
+21. intentar usar una autorización perteneciente a otro tutor/NNyA y verificar que la base lo rechace;
+22. intentar fallback antes de cumplir las condiciones y verificar que sea rechazado;
+23. intentar fallback con un rol distinto de `Admin`;
+24. realizar fallback con `Admin` y comprobar la auditoría;
+25. verificar que el DNI enviado a Didit sea el de `tutores.dni`;
+26. enviar un webhook con sesión desconocida y comprobar `200` sin escritura;
+27. verificar que el webhook pueda escribir mediante el mecanismo server-side aprobado;
+28. verificar los registros generados en `audit_log`.
 
 ---
 
-## 20. Deuda conocida
+## Decisiones cerradas incorporadas
 
-Quedan expresamente fuera de este plan hasta decisión de Jordy:
+Este plan incorpora las decisiones D-1 a D-10 relevantes, entre ellas:
 
-* si un referente puede realizar retiros;
-* el rol exacto autorizado para fallback manual;
-* cualquier cambio sobre `validaciones_renaper.referente_id NOT NULL`;
-* cualquier cambio sobre la política actual de DNI;
-* cualquier modificación de los estados de negocio no solicitada por RNF-12.
+- fallback únicamente `Admin`;
+- `tutor_id` obligatorio;
+- solo tutores autorizados pueden retirar;
+- mapeo Didit según D-1;
+- definición de qué estados cuentan como intento según D-3;
+- tratamiento de sesión desconocida según D-4;
+- propósitos técnicos definidos;
+- estados técnicos del retiro definidos;
+- 5 estados RNF-12 definidos.
 
-No se deberán resolver automáticamente estas cuestiones durante la implementación.
+No deben volver a presentarse estas decisiones como pendientes en la migración.
 
 ---
 
 ## Próximo paso
 
-Este documento no implementa cambios en la base de datos.
+No implementar todavía.
 
-Una vez revisado y aprobado por Jordy, se deberá crear la migración correspondiente en el repositorio web y actualizar los tipos/documentación necesarios.
+Primero Jordy debe aprobar esta versión corregida del Plan 028.
 
-La migración deberá respetar todas las decisiones aprobadas en este plan y no deberá almacenar datos biométricos, copias de DNI ni payloads completos de Didit.
+Después de la aprobación se podrá preparar la migración correspondiente, regenerar los tipos necesarios, adaptar el webhook y agregar las verificaciones/tests definidos en este documento.
