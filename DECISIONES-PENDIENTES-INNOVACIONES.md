@@ -21,8 +21,12 @@
 | D-8 | Hito de 90 días en seguimiento post-egreso | Sofi (`CHECK` + trigger), Cami | Aprobar |
 | D-9 | Qué significa "Verificado" en propuestas de mejora | Sofi (`CHECK` + columnas), Cami | Lo marca un `Admin`, solo desde "Completado", con registro de quién/cuándo |
 | D-10 | ¿Un referente puede retirar al NNyA, o solo tutores? | Sofi (`retiros.tutor_id`), Meli, Cami | Solo tutores autorizados: `tutor_id` obligatorio |
+| D-11 | Mapeo de `id_lookup` a `validaciones_renaper` (`resultado`, `estado_dni`) | Meli (#23) | Tabla de § D-11, confirmada en sandbox el 07/10 |
+| D-12 | Corrección de D-3 y del workflow de Didit | Meli (#23), Sofi | La falla de RENAPER no cuenta como intento; `max_attempts` de Didit a 1 |
+| D-13 | Minimización en Didit: datos devueltos y retención | Jordy (consola de Didit) | Restringir datos devueltos; retención acotada |
+| D-14 | Cómo se garantiza que el DNI verificado es el del tutor | Meli (#23) | El webhook compara `personal_number` con el DNI esperado |
 
-D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`).
+D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23).
 
 ---
 
@@ -154,6 +158,48 @@ Atada a esto, del § 1 de `PLAN-INTEGRACION-INNOVACIONES.md`: **¿el alta de ref
 **Decisión:** solo tutores autorizados. `retiros.tutor_id` es **obligatorio** y no se modela un retiro hecho por un referente.
 
 Los referentes (`vinculos_tutela`, afectivos o de revinculación) pasan por el proceso de **re-vinculación** (documento 2 de la misma práctica, RF-05/RF-06), que usa Didit para verificar identidad pero no es un retiro. Si un referente tiene que poder retirar, primero se lo registra como tutor autorizado tras la aprobación judicial, igual que cualquier otro.
+
+---
+
+## D-11 a D-14 — Resultado real de Didit `id_lookup` (resueltas el 2026-10-07)
+
+**Cómo se obtuvo:** 3 sesiones de prueba en la app "arguelloinfancias (Sandbox)" (modo de prueba, sin costo), con los escenarios `approve`, `lookup_provider_error` y `lookup_no_match`. Didit entregó las 9 notificaciones al webhook de producción y todas respondieron `200` (cierra el paso 6 de `prompts/032`). Las sesiones se borraron después, sin plantilla biométrica conservada.
+
+**Qué devuelve Didit** (`decision.id_verifications[0]`):
+- `status`: `Approved` / `Declined`.
+- `fallback_from.reason`: `no_match`, `partial_match` o `provider_error` cuando hay rechazo. **Viene en el webhook.**
+- `id_lookup`: `outcome`, `comparison` (DNI, nombre y fecha de nacimiento, campo por campo), `source_errors`, `attempts`/`max_attempts`. **En el webhook llega `null` en los rechazos**; completo solo por la API de decisión. Usar `fallback_from.reason`.
+- `personal_number`: el DNI consultado (presente en `Approved`).
+- No viene `record_status` en sandbox: el estado "vencido" solo se va a ver con RENAPER real.
+- ⚠️ Viene la URL de la selfie (firmada, 4 h). No se guarda ni se loguea.
+
+### D-11 — Mapeo hacia `validaciones_renaper`
+
+| Didit | `resultado` | `estado_dni` |
+|---|---|---|
+| `Approved` | `aprobado` | `vigente` |
+| `Declined` · `no_match` | `rechazado` | `inexistente` |
+| `Declined` · `partial_match` | `rechazado` | `vigente` (el DNI existe; falla la selfie o los datos) |
+| `Declined` · `provider_error` | `no_concluyente` | `error_servicio` |
+| `Expired`, `Abandoned`, `Kyc Expired` | no se crea la validación | — |
+
+`vencido` queda sin mapear hasta ver la respuesta de RENAPER real: ningún caso se traduce a `vencido` por ahora.
+
+### D-12 — Corrección de D-3 e intentos de Didit
+
+- Un `Declined` con `fallback_from.reason = 'provider_error'` es **"Error del proveedor"**, **no cuenta como intento** y habilita el fallback manual (D-1, D-2). Una caída de RENAPER no le gasta intentos a la persona.
+- En sandbox, una sola sesión con `no_match` consumió **3 intentos internos** de Didit. Para que "3 intentos" (RF18) signifique 3, `max_attempts` del método `id_lookup` baja de 3 a **1**.
+  - **Estado (07/10):** borrador v3 del workflow con `max_attempts: 1`, **sin publicar**. Al guardar, Didit cambia solo `skip_liveness_and_face_match` de `true` a `false`; hay que confirmar en la consola que eso no agrega prueba de vida ni comparación facial antes de publicar. La v2 sigue activa.
+  - Revisar también `max_retry_attempts: 3` a nivel workflow (reintento de la sesión completa en 7 días), que es otra capa de reintentos.
+
+### D-13 — Minimización en Didit (RNF-06, RNF-07)
+
+- **Datos devueltos:** `returned_data` está sin restringir, así que el webhook recibe nombre, fecha de nacimiento, domicilio y la URL de la selfie. Restringirlo en el panel "Returned data" del workflow a lo que usa el webhook (estado, `fallback_from`, `personal_number`), verificando con una sesión de prueba que esos campos sigan llegando.
+- **Retención:** la app tiene retención **ilimitada**. Acotarla en Ajustes → General → Retención de datos.
+
+### D-14 — DNI del tutor
+
+`expected_details.identification_number` existe y se envía con `tutores.dni` (o `referentes.dni`), pero Didit **no bloquea** que la persona tipee otro DNI: una diferencia aparece como advertencia, no como rechazo. Por eso el webhook, antes de aceptar un `Approved`, **compara `personal_number` con el DNI esperado** de la sesión, y si no coincide lo trata como rechazo.
 
 ---
 
