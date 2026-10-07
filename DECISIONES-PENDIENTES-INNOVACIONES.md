@@ -25,8 +25,11 @@
 | D-12 | Corrección de D-3 y del workflow de Didit | Meli (#23), Sofi | La falla de RENAPER no cuenta como intento; `max_attempts` de Didit a 1 |
 | D-13 | Minimización en Didit: datos devueltos y retención | Jordy (consola de Didit) | Restringir datos devueltos; retención acotada |
 | D-14 | Cómo se garantiza que el DNI verificado es el del tutor | Meli (#23) | El webhook compara `personal_number` con el DNI esperado |
+| D-15 | Innovación 1: ¿valida antecedentes? | Todos (alcance), exposición | No: Didit valida identidad; los antecedentes siguen por vía judicial |
+| D-16 | Innovación 1: qué pasa si se rechaza la validación de un referente | Sofi (trigger), Meli, Cami | El vínculo queda en `propuesto` hasta una validación `aprobado` |
+| D-17 | Referentes que retiran al NNyA en los encuentros progresivos | Proceso, Sofi | Se dan de alta como tutor autorizado tras la aprobación judicial (no cambia D-10) |
 
-D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23).
+D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5.
 
 ---
 
@@ -200,6 +203,27 @@ Los referentes (`vinculos_tutela`, afectivos o de revinculación) pasan por el p
 ### D-14 — DNI del tutor
 
 `expected_details.identification_number` existe y se envía con `tutores.dni` (o `referentes.dni`), pero Didit **no bloquea** que la persona tipee otro DNI: una diferencia aparece como advertencia, no como rechazo. Por eso el webhook, antes de aceptar un `Approved`, **compara `personal_number` con el DNI esperado** de la sesión, y si no coincide lo trata como rechazo.
+
+---
+
+## D-15 a D-17 — Innovación 1 contra los procesos 1.1 y 1.5 (resueltas el 2026-10-07)
+
+**Contexto:** la definición original de la innovación (`docs/evolucion/00-RESUMEN-EJECUTIVO-FINAL.md`) dice: *"Cuándo: Ingreso (1.1) + Egreso (1.5). Qué valida: antecedentes + vigencia de DNI. Si rechaza: bloquea el proceso."* Ninguno de los dos procesos menciona validar identidad: es una actividad que agrega la innovación. Encaja en el **proceso 1.5**: entrevistas con los referentes familiares (plan de transición), entrega del NNyA en el egreso y encuentros progresivos (visitas, fines de semana). En el 1.1 el anclaje es débil: el ingreso es del NNyA y no incluye el registro de tutores.
+
+### D-15 — Antecedentes fuera del alcance
+
+RENAPER no informa antecedentes penales (son del Registro Nacional de Reincidencia), y la prueba en sandbox lo confirmó: `tiene_antecedentes` queda `NULL` (D-11). **La innovación valida identidad (y vigencia del DNI cuando RENAPER real la informe), no antecedentes.** Los antecedentes se siguen obteniendo por la vía judicial, dentro de la evaluación que hace el Juzgado. Se dice así en la exposición y en la documentación.
+
+### D-16 — Rechazo en el alta de un referente
+
+Resuelve el punto abierto 2 de `docs/evolucion/03-PROMPTS-A0-A1-A2-DEFINITIVO-v2.md`. Un vínculo de tutela con un referente (`revinculacion_familiar` o `referente_afectivo`) **queda en estado `propuesto` y no puede pasar a `vigente`** hasta que el referente tenga una validación con `resultado = 'aprobado'`. Se implementa con un trigger sobre `vinculos_tutela`: el estado ya existe, no hace falta schema nuevo.
+
+- `no_concluyente` (RENAPER caído) no aprueba: se reintenta, o se aplica el fallback manual de un `Admin` (D-2), que queda auditado.
+- `rechazado` no aprueba.
+
+### D-17 — Referentes que retiran al NNyA
+
+El proceso 1.5 prevé encuentros progresivos (la familia se lleva al NNyA los fines de semana), y eso es un retiro. D-10 (solo tutores autorizados, RN-01) **no cambia**: un referente familiar que va a retirar al NNyA **se da de alta como tutor autorizado** cuando el Juzgado aprueba la revinculación, y desde ahí pasa por el flujo de retiro con validación Didit. Es un paso del proceso, no un cambio de modelo.
 
 ---
 
