@@ -28,8 +28,9 @@
 | D-15 | Innovación 1: ¿valida antecedentes? | Todos (alcance), exposición | No: Didit valida identidad; los antecedentes siguen por vía judicial |
 | D-16 | Innovación 1: qué pasa si se rechaza la validación de un referente | Sofi (trigger), Meli, Cami | El vínculo queda en `propuesto` hasta una validación `aprobado` |
 | D-17 | Referentes que retiran al NNyA en los encuentros progresivos | Proceso, Sofi | Se dan de alta como tutor autorizado tras la aprobación judicial (no cambia D-10) |
+| D-18 | Innovación 3: ¿seguimiento post-egreso siempre u opcional por orden judicial? | Sofi (#19), Cami (#25) | Siempre, pero diferenciado: tipo de egreso, orden judicial y remisión al Juzgado |
 
-D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5.
+D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
 ---
 
@@ -224,6 +225,25 @@ Resuelve el punto abierto 2 de `docs/evolucion/03-PROMPTS-A0-A1-A2-DEFINITIVO-v2
 ### D-17 — Referentes que retiran al NNyA
 
 El proceso 1.5 prevé encuentros progresivos (la familia se lleva al NNyA los fines de semana), y eso es un retiro. D-10 (solo tutores autorizados, RN-01) **no cambia**: un referente familiar que va a retirar al NNyA **se da de alta como tutor autorizado** cuando el Juzgado aprueba la revinculación, y desde ahí pasa por el flujo de retiro con validación Didit. Es un paso del proceso, no un cambio de modelo.
+
+---
+
+## D-18 — Seguimiento post-egreso contra el proceso 1.5 (resuelta el 2026-10-07)
+
+**Contexto:** el proceso 1.5 dice *"Seguimiento post-egreso (opcional): en casos determinados por el Juzgado, el Equipo Técnico realiza un seguimiento de 30 a 60 días. Se documentan observaciones y se remiten a la autoridad judicial"*, y distingue tres tipos de egreso: reintegración familiar, traslado a otro dispositivo y cumplimiento del plazo institucional. Hoy el trigger `fn_crear_seguimiento_post_egreso` crea los hitos en **todo** egreso, no hay tipo de egreso y no se registra la remisión al Juzgado. Además, un seguimiento que nunca correspondía aparece como "pendiente vencido" y distorsiona los indicadores.
+
+**Decisión: seguimiento siempre, pero diferenciado.** Se mantiene la creación automática (es el valor de la innovación: métricas de reinserción de todos los casos) y se agrega:
+
+1. **Tipo de egreso** en `nnya`: `reintegracion_familiar`, `traslado` o `cumplimiento_plazo`, obligatorio al registrar el egreso (mismo patrón que `chk_nnya_fecha_egreso_coherente`).
+2. **Sin seguimiento en los traslados:** el trigger no crea hitos cuando el tipo es `traslado`, porque el seguimiento lo hace el otro dispositivo.
+3. **Orden judicial:** un campo que indica si el Juzgado ordenó el seguimiento. Los indicadores pueden separar los ordenados de los institucionales.
+4. **Remisión al Juzgado:** fecha y usuario de cuándo se remitieron las observaciones, solo para los seguimientos ordenados por el Juzgado. Lo completa la base al registrar la remisión, no el formulario.
+
+Se suma al hito de 90 días (D-8) en la misma migración de Sofi (#19). En la exposición, los 90 días y el seguimiento de los casos sin orden judicial se presentan como **extensión** del proceso, no como algo que el proceso exija.
+
+**A resolver en el plan de Sofi:**
+- Dónde vive el campo de orden judicial: en `nnya` (una vez por egreso) o en cada fila de `seguimiento_post_egreso`.
+- Qué hacer con los egresos que ya existen, que no tienen tipo: el `CHECK` no puede romper esas filas. Opciones: permitir `NULL` solo para egresos anteriores a la migración, o que un `Admin` los complete antes de aplicarla.
 
 ---
 
