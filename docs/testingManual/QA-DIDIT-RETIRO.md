@@ -1,4 +1,4 @@
-# QA — Validación de identidad para retiro de NNyA (Didit)
+﻿# QA — Validación de identidad para retiro de NNyA (Didit)
 
 **Fecha:** 2026-09-29
 **Autora del análisis:** Meli (QA / Testing, integraciones backend, integración Didit)
@@ -20,7 +20,7 @@
 
 ---
 
-## 1. Estado de la integración (verificado por inspección, no por documentación)
+## 1. Estado de la integración (parcial/capa pura verificada por inspección, no por documentación)
 
 ### 1.1 Lo que ya está y no se toca
 
@@ -156,7 +156,7 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 - **Precondiciones:** sesión de usuario (`Admin` o `Equipo Tecnico`) · `nnya` activa con legajo activo · `tutor` vinculado vía `nnya_tutores` **con autorización de retiro vigente** · `DIDIT_API_KEY` y `DIDIT_WEBHOOK_SECRET` en el entorno · workflow de Didit sandbox operativo.
 - **Datos necesarios:** `<nnya_id>` activo · `<tutor_id>` autorizado a retirar · DNI + toma selfie válidos en el padrón RENAPER sandbox · `session_id` devuelto por Didit.
 - **Pasos:** 1) Iniciar sesión. 2) Abrir "Registrar retiro". 3) Seleccionar el NNyA. 4) Seleccionar el tutor autorizado. 5) Lanzar la verificación de identidad. 6) Completar DNI + selfie hasta que Didit emita `Approved`. 7) Confirmar que el retiro queda habilitado. 8) Registrar hora de inicio y descripción. 9) Cerrar el retiro con hora de finalización.
-- **Resultado esperado:** la sesión pasa a `Identidad verificada`; la autorización se resuelve como `Autorizado`; el retiro se habilita y se persiste con `resultado_validacion_identidad = Identidad verificada`, `resultado_autorizacion = Autorizado`, `cantidad_intentos = 1`; queda traza en `audit_log` (RF-09/RF-19); el cierre con hora de finalización queda registrado.
+- **Resultado esperado:** la sesión pasa a `Identidad parcial/capa pura verificada`; la autorización se resuelve como `Autorizado`; el retiro se habilita y se persiste con `resultado_validacion_identidad = Identidad parcial/capa pura verificada`, `resultado_autorizacion = Autorizado`, `cantidad_intentos = 1`; queda traza en `audit_log` (RF-09/RF-19); el cierre con hora de finalización queda registrado.
 - **Prioridad:** 🔴 Crítica
 - **Estado actual:** No implementado. La UI de registro de retiro no existe.
 - **Clasificación:** 🟠 **Bloqueado por Sofi** — necesita `retiros`, tabla de sesiones, campo de autorización, cliente Didit.
@@ -169,7 +169,7 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 - **Precondiciones:** igual que A-01, con autorización de retiro **deliberadamente vigente** para aislar la variable.
 - **Datos necesarios:** `<tutor_id>` autorizado · DNI + toma que RENAPER sandbox rechace.
 - **Pasos:** 1) Iniciar sesión. 2) Seleccionar NNyA y tutor autorizado. 3) Lanzar la verificación. 4) Forzar un resultado no aprobado. 5) Intentar continuar con el retiro de todas formas.
-- **Resultado esperado:** estado `Identidad no verificada`; retiro **no** habilitado; el mensaje de error ya redactado en el PDF §6-B se muestra **tal cual está escrito** (no inventar copy nuevo); `motivo_rechazo` persistido; entrada en `audit_log` del rechazo; **no** se crea un registro de retiro completo. El contador de intentos se incrementa.
+- **Resultado esperado:** estado `Identidad no parcial/capa pura verificada`; retiro **no** habilitado; el mensaje de error ya redactado en el PDF §6-B se muestra **tal cual está escrito** (no inventar copy nuevo); `motivo_rechazo` persistido; entrada en `audit_log` del rechazo; **no** se crea un registro de retiro completo. El contador de intentos se incrementa.
 - **Prioridad:** 🔴 Crítica
 - **Estado actual:** No implementado.
 - **Clasificación:** 🟠 **Bloqueado por Sofi.**
@@ -184,7 +184,7 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 - **Precondiciones:** sesión de usuario · `nnya` activa · `tutor` **vinculado** a ese NNyA pero **sin autorización de retiro vigente** (o con autorización vencida, o con restricción vigente) · datos de identidad **válidos**.
 - **Datos necesarios:** `<tutor_id>` vinculado sin autorización vigente · DNI + selfie válidos.
 - **Pasos:** 1) Iniciar sesión. 2) Seleccionar el NNyA y el tutor **no autorizado**. 3) Verificar identidad → `Approved`. 4) Intentar continuar con el retiro.
-- **Resultado esperado:** identidad = `Identidad verificada` **pero** autorización = `No autorizado`; retiro **rechazado**; el mensaje distingue explícitamente "identidad OK / autorización denegada" — un error genérico dejaría al operador sin saber la causa; `motivo_rechazo` registra el motivo de **autorización**, no de identidad; queda traza en `audit_log`.
+- **Resultado esperado:** identidad = `Identidad parcial/capa pura verificada` **pero** autorización = `No autorizado`; retiro **rechazado**; el mensaje distingue explícitamente "identidad OK / autorización denegada" — un error genérico dejaría al operador sin saber la causa; `motivo_rechazo` registra el motivo de **autorización**, no de identidad; queda traza en `audit_log`.
 - **Prioridad:** 🔴 Crítica
 - **Estado actual:** No implementado. El concepto "autorizado a retirar" no existe (`nnya_tutores.es_principal` no lo representa — RN-01: un tutor puede ser principal y no estar autorizado a retirar, o viceversa).
 - **Clasificación:** 🟠 **Bloqueado por Sofi** (campo/tabla de autorización + restricciones vigentes).
@@ -251,7 +251,7 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 - **Precondiciones:** retiro en `Error del proveedor` · sesión con rol habilitado para el fallback.
 - **Datos necesarios:** `<retiro_id>` en error.
 - **Pasos:** 1) Aplicar el fallback manual. 2) Verificar el registro del retiro. 3) Verificar `audit_log`.
-- **Resultado esperado:** `autorizado_por` queda **no nulo** y apunta al `Admin`/`Equipo Tecnico` que lo autorizó; `audit_log` registra tabla, operación, `registro_id` y `usuario_id` (el trigger `fn_audit_trigger` de la migración `20260915182618` lo cubre automáticamente si la tabla `retiros` entra en su lista); **no** puede aplicarse el fallback si la identidad quedó en `Identidad no verificada` — un `Declined` es un rechazo, no una indisponibilidad del proveedor, y no habilita el fallback.
+- **Resultado esperado:** `autorizado_por` queda **no nulo** y apunta al `Admin`/`Equipo Tecnico` que lo autorizó; `audit_log` registra tabla, operación, `registro_id` y `usuario_id` (el trigger `fn_audit_trigger` de la migración `20260915182618` lo cubre automáticamente si la tabla `retiros` entra en su lista); **no** puede aplicarse el fallback si la identidad quedó en `Identidad no parcial/capa pura verificada` — un `Declined` es un rechazo, no una indisponibilidad del proveedor, y no habilita el fallback.
 - **Prioridad:** 🔴 Alta
 - **Estado actual:** No implementado. El campo `autorizado_por` no existe.
 - **Clasificación:** 🟠 **Bloqueado por Sofi** (campo `autorizado_por` + tabla `retiros` que entre en los triggers de `audit_log`); secundario: depende de P-02.
@@ -261,9 +261,9 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 ### H-01 — Autorización de retiro independiente de la validación de identidad
 
 - **Objetivo:** cubrir lo mismo que C-01 pero desde el backend, sin depender de la UI. Separar los dos ejes para que la cobertura no dependa de cómo Cami construya la pantalla.
-- **Precondiciones:** retiro creado; sesión de identidad en `Identidad verificada`; autorización de retiro ausente.
-- **Datos necesarios:** `session_id` en estado verificado + `<tutor_id>` sin autorización.
-- **Pasos:** 1) Forzar el estado de la sesión a verificado vía el webhook (firma válida, `status: Approved`). 2) Intentar habilitar el retiro. 3) Verificar qué se persiste.
+- **Precondiciones:** retiro creado; sesión de identidad en `Identidad parcial/capa pura verificada`; autorización de retiro ausente.
+- **Datos necesarios:** `session_id` en estado parcial/capa pura verificada + `<tutor_id>` sin autorización.
+- **Pasos:** 1) Forzar el estado de la sesión a parcial/capa pura verificada vía el webhook (firma válida, `status: Approved`). 2) Intentar habilitar el retiro. 3) Verificar qué se persiste.
 - **Resultado esperado:** la habilitación se rechaza; ambos resultados se registran por separado (`resultado_validacion_identidad` y `resultado_autorizacion` son campos distintos, no uno derivado del otro); el rechazo apunta a la autorización.
 - **Prioridad:** 🔴 Crítica
 - **Estado actual:** No implementado.
@@ -321,7 +321,7 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 - **Estado actual:** ✅ **EJECUTADO Y APROBADO** (nivel función, K-01a) el 2026-09-29. La mitad de endpoint (K-01b) sigue ⏳ pendiente de entorno. Ver §11.
 - **Clasificación:** 🟢 **Ejecutable actualmente** (nivel función, K-01a — **ya ejecutado**) + 🟣 **Pendiente de entorno** (nivel endpoint, K-01b — **no ejecutado**).
 - **Dependencia:** ninguna para K-01a. No toca Supabase, no lee `process.env`. K-01b sí necesita `NEXT_PUBLIC_SUPABASE_*`.
-- **Automatización:** **Total en nivel función — HECHO.** 9 tests en `tests/unit/didit-signature.test.ts` (`K-01a.1`–`K-01a.9`), con `node:test`, que cubren los 5 items de *Pasos* más 4 casos adicionales de canonicalización y body no-JSON. Los 5 items de *Pasos* están cubiertos: `.2` (timestamp ausente), `.3` (firma ausente), `.4` (truncada), `.5` (carácter alterado), `.6` (otro secreto). A nivel de endpoint sigue **pendiente**: los **401**, las cero escrituras y el cero log como evento válido **no están verificados**.
+- **Automatización:** **Total en nivel función — HECHO.** 9 tests en `tests/unit/didit-signature.test.ts` (`K-01a.1`–`K-01a.9`), con `node:test`, que cubren los 5 items de *Pasos* más 4 casos adicionales de canonicalización y body no-JSON. Los 5 items de *Pasos* están cubiertos: `.2` (timestamp ausente), `.3` (firma ausente), `.4` (truncada), `.5` (carácter alterado), `.6` (otro secreto). A nivel de endpoint sigue **pendiente**: los **401**, las cero escrituras y el cero log como evento válido **no están parcial/capa pura verificadas**.
 
 ### K-02 — Replay: `X-Timestamp` vencido
 
@@ -332,7 +332,7 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 - **Resultado esperado:** (a) y (b) → `false`; (c) → `true` (la ventana es inclusiva en el borde, conviene fijarlo con un test para que nadie lo cambie sin querer); (d) → `false` (frena en `verify-signature.ts:31` por `NaN`); (e) → `false` (frena en `verify-signature.ts:28`, en el guard `!timestampHeader`, porque `""` es *falsy* — **no** llega al chequeo del reloj).
 - **Corrección 2026-10-05 (documental):** este documento decía antes que el caso (e) pasaba el chequeo de finitud (`Number("")` es `0`, que es finito) y se frenaba por la ventana de 300s. **Era incorrecto.** `Number("")` nunca se evalúa: `""` es falsy y el guard de headers corta antes. El valor esperado `false` no cambia; cambia el motivo. El caso (e) se clasifica como **validación del guard de header**, no de la ventana anti-replay.
 - **Prioridad:** 🔴 Crítica
-- **Estado actual:** ✅ **EJECUTADO Y APROBADO** el 2026-09-29. La ventana de 300s está verificada en el borde, en ambos sentidos. Ver §11.
+- **Estado actual:** ✅ **EJECUTADO Y APROBADO** el 2026-09-29. La ventana de 300s está parcial/capa pura verificada en el borde, en ambos sentidos. Ver §11.
 - **Clasificación:** 🟢 **Ejecutable actualmente — ya ejecutado.**
 - **Dependencia:** ninguna.
 - **Automatización:** Total — HECHA. 5 tests en `tests/unit/didit-signature.test.ts` (`K-02.1`–`K-02.5`), con `node:test`, uno por cada variante de *Pasos*. El borde (c) queda fijado con un test, de modo que un cambio futuro en la ventana de 300s rompe la suite en lugar de pasar inadvertido. El caso (e) fija el guard de header, no la ventana.
@@ -387,8 +387,8 @@ RNF-12 pide **5 estados**. Didit emite **10 valores exactos, case-sensitive** (`
 | Estado RNF-12 | `status` de Didit que lo producirían | Problema |
 |---|---|---|
 | **Pendiente de verificación** | `Not Started`, `In Progress`, `Awaiting User`, `Resubmitted` | No terminal. `Resubmitted` es un reintento → ¿reinicia el contador? (P-04) |
-| **Identidad verificada** | `Approved` | Único estado que habilita, y **solo si además** hay autorización (RF-05/06) |
-| **Identidad no verificada** | `Declined` | Terminal. Habilita reintento hasta el 3º |
+| **Identidad parcial/capa pura verificada** | `Approved` | Único estado que habilita, y **solo si además** hay autorización (RF-05/06) |
+| **Identidad no parcial/capa pura verificada** | `Declined` | Terminal. Habilita reintento hasta el 3º |
 | **Requiere revisión** | `In Review` | ⚠️ **Didit nunca lo emite con `id_lookup`.** Según `INFORME-VALIDACION…:118`, el grafo quedó en un solo nodo OCR. Solo se alcanza por el fallback manual propio |
 | **Error del proveedor** | `Abandoned` ⚠️ · `Expired` ⚠️ · `Kyc Expired` ⚠️ | **Ninguno de los tres es un error del proveedor** |
 
@@ -409,7 +409,7 @@ Los 5 estados de RNF-12 **no cubren limpiamente** el ciclo de vida que emite Did
 | (ii) Agregar estados a RNF-12 | Es la solución más fiel, pero **modifica un requerimiento funcional de la Práctica 3** → decisión de Jordy |
 | (iii) Guardar el `status` crudo de Didit y derivar el estado de negocio | La más flexible; suma un campo, que es territorio de Sofi |
 
-### Minimización (RNF-06/07) — verificado
+### Minimización (RNF-06/07) — parcial/capa pura verificada
 
 Los 5 estados de negocio solo necesitan `status` + timestamps. **No requieren guardar selfie, video de prueba de vida, plantilla biométrica ni copia de DNI.** El diseño es compatible con la política de minimización que Sofi debe definir. Confirmado además que el código actual **no persiste nada** del objeto `decision` y **no lo loguea** (RNF-04 ✓).
 
@@ -505,9 +505,9 @@ Un solo archivo: **`tests/unit/didit-signature.test.ts`**. Runner `node:test` (`
 > **⚠️ Esta etapa quedó sin objeto.** Reparaba archivos (`playwright.config.ts`, `tests/01`–`04`, reglas de `.gitignore`) que **el `master` `84c4d23` no adoptó y que ya no existen en el repositorio**. Se conserva el análisis de [§12](#12-análisis-de-la-infraestructura-de-playwright--2026-09-29) porque el conocimiento sigue vigente —el bloqueante de `proxy.ts` sin variables de Supabase, y la decisión pendiente autenticado vs anónimo—, pero **ningún ítem de esta lista es trabajo pendiente**: no hay archivos sobre los que aplicar nada. El ítem 2 (`.gitignore`) nunca llegó a commitearse y **no se traslada** al master actual.
 
 1. ⏳ **Diferido.** Agregar `webServer` a `playwright.config.ts`. Implementable hoy, pero **no recomendable sin env**: `next dev` levantaría y cada request daría 500, convirtiendo el fallo rápido actual en timeouts de assert de 30s × 8 tests.
-2. ✅ **HECHO.** Agregar `playwright-report/`, `test-results/`, `dev.log`, `test-output.txt`, `test-results-summary.txt` a `.gitignore`. Verificado con `git check-ignore -v` sobre las 5 rutas (exit 0).
+2. ✅ **HECHO.** Agregar `playwright-report/`, `test-results/`, `dev.log`, `test-output.txt`, `test-results-summary.txt` a `.gitignore`. parcial/capa pura verificada con `git check-ignore -v` sobre las 5 rutas (exit 0).
 3. 🚧 **BLOQUEADO por la decisión de auth** (§12.4). Son **6 asserts que fallan** — 4 en `tests/02:17,19,20,21`, 2 en `tests/03:19,20` — y su corrección depende de definir si los tests deben probar comportamiento **autenticado** o **anónimo**. El assert de `tests/04:32` **no falla** y no debe tocarse. El `const url = page.url()` muerto queda diferido.
-4. ✅ **No aplica.** Import relativo en vez de alias `@/`: verificado por grep que `tests/01`–`04` **no usan `@/`**.
+4. ✅ **No aplica.** Import relativo en vez de alias `@/`: parcial/capa pura verificada por grep que `tests/01`–`04` **no usan `@/`**.
 
 ### Etapa E-4 — ⏳ pendiente de entorno — contrato del webhook (🟣, bloqueado por entorno)
 
@@ -531,7 +531,7 @@ A-01, B-01, C-01, D-01 + D-01/F-01/G-01/G-02/H-01/H-02/L-01/M-01 + E-01 a E-05 u
 | Endpoint de consulta de estado (`:71`) | ⬜ Bloqueado por Sofi | — |
 | Verificar vínculo + autorización (`:72`) | ⬜ Bloqueado por Sofi | El concepto no existe |
 | Timeout y errores (`:73`) | ⬜ **No bloqueado por Sofi para el cliente HTTP** | El wrapper con `AbortSignal` se puede escribir ya; el caso I-01 no se cierra sin el enum |
-| Audit log real (`:74`) | ✅ **Resuelto** | Ver H-3/H-4. Verificado en la migración `20260915182618` |
+| Audit log real (`:74`) | ✅ **Resuelto** | Ver H-3/H-4. parcial/capa pura verificada en la migración `20260915182618` |
 | Tests de los 4 flujos (`:75`) | ⏳ **En curso — este documento** | 17 casos analizados; **0 ejecutables de A–D**; 3 casos ejecutables hoy en la capa de seguridad, de los cuales **2 ya se ejecutaron** en E-2 (K-01a, K-02) |
 
 **Balance:** de 8 tareas, **1 resuelta** (audit log), **1 en curso sin bloqueos** (timeout: el cliente), **1 en curso parcialmente bloqueada** (tests), **5 bloqueadas por Sofi**.
@@ -584,7 +584,7 @@ Desglose de los 85:
 | `useForm<AudienciaFormValues>` | 1 |
 | `render` | 1 |
 
-- **`tests/unit/didit-signature.test.ts` introduce 0 errores.** Verificado corriendo ESLint sobre el archivo aislado: exit 0.
+- **`tests/unit/didit-signature.test.ts` introduce 0 errores.** parcial/capa pura verificada corriendo ESLint sobre el archivo aislado: exit 0.
 - **No se corrigieron.** Quedan fuera del alcance de Meli/E-2, y `AGENTS-WEB.md:86` prohíbe refactors no relacionados que no fueron solicitados. Se registran como **deuda preexistente** (R-11 en el plan) para que se decida por separado.
 
 ### Cobertura alcanzada
@@ -692,7 +692,7 @@ Este documento y el plan informaban **"3 asserts incorrectos"**. **Es incorrecto
 | ✅ **IMPLEMENTABLE Y VERIFICABLE AHORA** | 2. `.gitignore` | **HECHO 2026-09-29.** Verificable al 100% sin env ni navegador, con `git check-ignore -v`. Riesgo cero: `.gitignore:39` ya cubre `.env*` y `:56-57` ya tiene `*.sql` con su excepción. Único ítem cerrable por completo hoy |
 | ⚠️ **IMPLEMENTABLE, VERIFICABLE PARCIALMENTE** | 1. `webServer` | Se puede escribir (es config, no app). Verificable parcialmente: se comprueba que Playwright levanta el server en vez de dar `ERR_CONNECTION_REFUSED`. **No** es verificable que algún test pase. **Efecto adverso:** con `webServer` pero sin env, `next dev` arranca, cada request da 500 y los 8 tests mueren por timeout de assert (30s c/u con `fullyParallel: true`) → varios minutos de ruido inútil. Es un modo de fallo **peor**, no mejor. **No recomendado hasta tener env** |
 | 🚧 **BLOQUEADO POR DECISIÓN** | 3. Los 6 asserts de 02/03 | Ver §12.4. **No se tocan** |
-| 🔹 **NO-OP** | 4. Import relativo en vez de `@/` | Verificado por grep: `tests/01`–`04` **no tienen ningún import de `@/`**, solo importan de `@playwright/test`. La precaución ya quedó aplicada en E-2 con el archivo de firma, que importa `../../lib/didit/verify-signature.ts`. Con la migración a `node:test` esto pasó a ser **obligatorio**, no opcional: el type-stripping nativo no resuelve el alias `@/`, y por eso el import lleva extensión `.ts` (`allowImportingTsExtensions`) |
+| 🔹 **NO-OP** | 4. Import relativo en vez de `@/` | parcial/capa pura verificada por grep: `tests/01`–`04` **no tienen ningún import de `@/`**, solo importan de `@playwright/test`. La precaución ya quedó aplicada en E-2 con el archivo de firma, que importa `../../lib/didit/verify-signature.ts`. Con la migración a `node:test` esto pasó a ser **obligatorio**, no opcional: el type-stripping nativo no resuelve el alias `@/`, y por eso el import lleva extensión `.ts` (`allowImportingTsExtensions`) |
 | 🔹 **DIFERIDO** | 3b. Los 3 `const url = page.url()` muertos | Sin riesgo, pero su único efecto observable son *warnings* de `@typescript-eslint/no-unused-vars`, y el lint global ya está rojo con 85 errores preexistentes, así que no es demostrable |
 
 ### 12.6 Atajo evaluado y descartado
@@ -702,11 +702,11 @@ Se evaluó **fabricar variables de Supabase falsas** vía `webServer.env` (sin `
 1. Implica escribir una URL y una key ficticias en un archivo versionado, lo que choca con la regla de no versionar credenciales y crea un precedente que después hay que distinguir de las reales.
 2. Aun si funcionara, solo destrabaría los tests de redirect: los 6 asserts de contenido de sidebar seguirían fallando porque necesitan una sesión real con rol.
 
-No es un atajo, es una vía muerta parcial. **No verificado empíricamente**, así que no se afirma que sea imposible: se afirma que **no se recomienda**.
+No es un atajo, es una vía muerta parcial. **No parcial/capa pura verificada empíricamente**, así que no se afirma que sea imposible: se afirma que **no se recomienda**.
 
 ### 12.7 Conclusión
 
-**E-3 no puede completarse ni verificarse** sin las variables de Supabase. Lo único cerrable hoy era `.gitignore`, y quedó hecho y verificado. El resto requiere entorno y, en el caso de los asserts, una decisión funcional previa.
+**E-3 no puede completarse ni verificarse** sin las variables de Supabase. Lo único cerrable hoy era `.gitignore`, y quedó hecho y parcial/capa pura verificada. El resto requiere entorno y, en el caso de los asserts, una decisión funcional previa.
 
 ---
 
@@ -715,7 +715,8 @@ No es un atajo, es una vía muerta parcial. **No verificado empíricamente**, as
 | Estado RNF-12 | Caso que lo cubrirá | Estado |
 |---|---|---|
 | Pendiente de verificación | E-01 | ⏳ No creado — depende de P-01 |
-| Identidad verificada | E-02 + A-01 | ⏳ No creado — depende de P-01 |
-| Identidad no verificada | E-03 + B-01 | ⏳ No creado — depende de P-01 |
+| Identidad parcial/capa pura verificada | E-02 + A-01 | ⏳ No creado — depende de P-01 |
+| Identidad no parcial/capa pura verificada | E-03 + B-01 | ⏳ No creado — depende de P-01 |
 | Requiere revisión | E-04 + G-01/G-02 | ⏳ No creado — depende de P-01 y P-02 |
 | Error del proveedor | E-05 + D-01 | ⏳ No creado — depende de P-01 |
+
