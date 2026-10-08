@@ -20,6 +20,7 @@ import { es } from 'date-fns/locale'
 import { cn } from '@/lib/utils'
 import type { AlertaConNnya } from '@/hooks/alertas/useAlertas'
 import type { Alerta } from '@/types/database.types'
+import { AlertasEducativasDemo } from '@/components/entities/alertas/AlertasEducativasDemo'
 
 type FiltroEstado = 'todas' | 'pendiente' | 'en_proceso' | 'completada' | 'vencida'
 type FiltroPrioridad = 'todas' | Alerta['prioridad']
@@ -381,6 +382,8 @@ export default function AlertasPage() {
         alerta={alertaAResolver}
         onClose={() => setAlertaAResolver(null)}
       />
+
+      <AlertasEducativasDemo />
     </div>
   )
 }

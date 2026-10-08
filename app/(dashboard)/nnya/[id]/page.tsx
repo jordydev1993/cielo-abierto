@@ -9,6 +9,7 @@ import { ChevronLeft, Pencil } from 'lucide-react'
 import { useNnya } from '@/hooks/nnya/useNnya'
 import { useNnyaTutores } from '@/hooks/nnya_tutores/useNnyaTutores'
 import { useLegajosByNnya } from '@/hooks/legajos/useLegajosByNnya'
+import { TimelineNnyaDemo } from '@/components/entities/nnya/TimelineNnyaDemo'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import type { Nnya } from '@/types/database.types'
@@ -137,6 +138,8 @@ export default function NnyaDetallePage({ params }: { params: Promise<{ id: stri
           </ul>
         )}
       </div>
+
+      <TimelineNnyaDemo />
     </div>
   )
 }
