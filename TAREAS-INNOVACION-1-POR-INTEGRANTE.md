@@ -1,6 +1,6 @@
 # Innovación 1 — Lo que falta por integrante
 
-**Fecha:** 2026-10-07
+**Fecha:** 2026-10-07 · **Actualizado:** 2026-10-08
 **Innovación:** validación de identidad con RENAPER vía Didit, para dos usos: el **retiro** de un NNyA por su tutor autorizado y el **alta de referentes** en la revinculación familiar (proceso 1.5).
 **Decisiones vigentes:** D-1 a D-17 en `DECISIONES-PENDIENTES-INNOVACIONES.md`. **Modelo de datos:** `prompts/028-modelo-datos-didit-retiros.md` (aprobado).
 
@@ -54,7 +54,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 
 **Revisión**
 - [ ] Revisar y aprobar: la migración de Sofi (#18), los planes de Meli (029 a 031) y el diseño de Cami (#26).
-- [ ] Si Meli y Cami siguen sin aceptar, reenviarles la invitación al repo.
+- [ ] Si Cami sigue sin aceptar, reenviarle la invitación al repo (Meli ya la aceptó).
 
 ---
 
@@ -75,8 +75,8 @@ Cami ── diseño con datos de ejemplo ─────────────
 ## Meli — requisitos, integración backend y QA
 
 **Para empezar**
-- [ ] **Aceptar la invitación al repo** `cielo-abierto` (pendiente desde septiembre).
-- [ ] **Subir lo que ya tiene:** planes 029 a 031 y los 14 tests de firma, pasados a `tests/unit/` con `node:test` (issue #21).
+- [x] **Aceptar la invitación al repo** `cielo-abierto`. ✅ 08/10
+- [x] **Subir lo que ya tiene:** planes 029 a 031, matriz de QA y 14 tests de firma en `tests/unit/` con `node:test`. ✅ PR #28, 08/10 (`npm run test:unit`: 26/26)
 
 **Requisitos (antes de que Cami diseñe)**
 - [ ] Actualizar los RF y RNF de la Práctica 3 (documento de re-vinculación):
@@ -105,7 +105,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [ ] **Borrar la sesión en Didit** una vez registrado el resultado (RF-10), si se decide así.
 
 **Tests**
-- [ ] **E-4:** contrato del webhook sin Supabase (firma, `401`, `400`, `200`, sesión desconocida).
+- [ ] **E-4:** contrato del webhook sin Supabase. 🟡 Parcial (PR #28): 5 tests de la capa pura (firma, JSON y schema). Falta probar el handler `POST` por HTTP (`401`, `400`, `200`, sesión desconocida).
 - [ ] **Escenarios A-D de la Práctica 3** y los derivados, con sesiones de sandbox (`approve`, `lookup_no_match`, `lookup_partial_match`, `lookup_provider_error`). Borrarlas al terminar.
 
 ---
@@ -136,3 +136,11 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [ ] Todo queda en el audit log.
 - [ ] Hay tests verdes del webhook y de los escenarios A-D.
 - [ ] Los RF y RNF de la Práctica 3 coinciden con lo implementado.
+
+---
+
+## Avance
+
+| Fecha | Quién | Qué |
+|---|---|---|
+| 08/10 | Meli | PR #28: planes 029 a 031, matriz de QA de Didit, 14 tests de firma y 5 de E-4 (capa pura) en `node:test`. Cierra el #21. Aceptó la invitación al repo |
