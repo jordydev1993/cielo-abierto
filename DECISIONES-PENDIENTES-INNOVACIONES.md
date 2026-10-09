@@ -29,6 +29,9 @@
 | D-16 | Innovación 1: qué pasa si se rechaza la validación de un referente | Sofi (trigger), Meli, Cami | El vínculo queda en `propuesto` hasta una validación `aprobado` |
 | D-17 | Referentes que retiran al NNyA en los encuentros progresivos | Proceso, Sofi | Se dan de alta como tutor autorizado tras la aprobación judicial (no cambia D-10) |
 | D-18 | Innovación 3: ¿seguimiento post-egreso siempre u opcional por orden judicial? | Sofi (#19), Cami (#25) | Siempre, pero diferenciado: tipo de egreso, orden judicial y remisión al Juzgado |
+| D-19 | Qué significa "Requiere revisión" (RNF-12) | Meli (#23), Sofi, Cami (#26) | Estado del trámite al agotar los 3 intentos: espera la decisión de un `Admin` |
+| D-20 | ¿3 sesiones vencidas o abandonadas habilitan el fallback? | Meli (#23), Sofi | Sí: 3 intentos agotados habilitan el fallback, sea cual sea el motivo |
+| D-21 | `max_retry_attempts` del workflow de Didit | Jordy (consola) | Al mínimo que acepte Didit, junto con el workflow v3 |
 
 D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
@@ -244,6 +247,46 @@ Se suma al hito de 90 días (D-8) en la misma migración de Sofi (#19). En la ex
 **A resolver en el plan de Sofi:**
 - Dónde vive el campo de orden judicial: en `nnya` (una vez por egreso) o en cada fila de `seguimiento_post_egreso`.
 - Qué hacer con los egresos que ya existen, que no tienen tipo: el `CHECK` no puede romper esas filas. Opciones: permitir `NULL` solo para egresos anteriores a la migración, o que un `Admin` los complete antes de aplicarla.
+
+---
+
+## D-19 a D-21 — Revisión de Meli del relevamiento de la innovación 1 (resueltas el 2026-10-09)
+
+**Contexto:** Meli revisó el relevamiento de la innovación 1 (documento compartido del 08/10) y pidió 6 ajustes. Jordy los aceptó todos. Tres solo precisan decisiones anteriores:
+
+- **RF20 a RF22:** `retiros` no guarda el resultado de identidad ni la cantidad de intentos, porque salen de `sesiones_didit` (Plan 028). El retiro pasa de `en_curso` a `realizada` o `rechazada`, con `motivo_rechazo` cuando corresponde. `resultado_autorizacion` usa los valores del Plan 028: `pendiente`, `autorizada` y `rechazada`.
+- **Comparar el DNI (D-14):** el DNI esperado sale de `tutores.dni` en el retiro y de `referentes.dni` en el alta de un referente.
+- **RNF-13 (D-1, D-12):** un error del proveedor o un timeout al crear la sesión no gasta intento. Meli corrige los casos D-01 e I-01 de `docs/testingManual/QA-DIDIT-RETIRO.md`.
+
+Los otros tres cambian o completan D-1:
+
+### D-19 — "Requiere revisión"
+
+Meli comprobó que Didit no emite `In Review` con `id_lookup`, así que con D-1 ese estado no aparecería nunca. Desde ahora, **"Requiere revisión" es el estado del trámite al agotar los 3 intentos** y significa que espera la decisión de un `Admin`.
+
+- No es un resultado de Didit: la última sesión sigue siendo "Identidad no verificada" y el mapeo de D-11 no cambia.
+- El fallback manual (D-2) se habilita desde "Requiere revisión" o desde "Error del proveedor".
+- "Error del proveedor" no pasa solo a "Requiere revisión": no gasta intento y se puede reintentar.
+
+### D-20 — Sesiones vencidas y fallback
+
+D-1 decía que el fallback "nunca" se habilita por una sesión vencida o abandonada, pero esas sesiones cuentan como intento. **3 intentos agotados habilitan el fallback aunque sean sesiones vencidas o abandonadas.** Una sola sesión vencida no lo habilita. El riesgo de abuso es bajo: el fallback lo hace solo un `Admin`, con motivo obligatorio y auditado.
+
+### D-21 — Reintentos del workflow de Didit
+
+`max_retry_attempts: 3` (reintento de la sesión completa dentro de los 7 días) agrega intentos que nuestro backend no ve. Baja **al mínimo que acepte Didit (0 si se puede)**, junto con la publicación del workflow v3 (`max_attempts: 1`, D-12). Cada intento es una sesión nueva que cuenta nuestro backend.
+
+### Respuestas de Meli aprobadas (2026-10-09)
+
+Jordy aprobó las respuestas de Meli a las preguntas abiertas del relevamiento. Quedan como requisitos de la innovación 1:
+
+- **Quién inicia la revinculación:** el `Equipo Tecnico` crea la sesión de Didit, solo un `Admin` pasa el vínculo a `vigente` y el educador solo ve el estado. En el sistema el educador también tiene el rol `Equipo Tecnico`, así que esto último es una regla del proceso, no un permiso.
+- **Consulta del estado:** manda el webhook. La pantalla consulta cada 3 a 5 segundos como respaldo, con un tope de 60 a 90 segundos; después muestra "Seguimos esperando" y un botón "Actualizar". La consulta nunca contradice un webhook ya recibido.
+- **Timeout al crear la sesión:** 15 segundos. Un solo reintento automático, solo ante fallas de red o errores 5xx de Didit; si vuelve a fallar, "Error del proveedor" (D-12). Sin reintentos ante 4xx.
+- **"Requiere revisión":** lo atiende solo un `Admin`, desde una lista de sesiones en revisión con el tutor o referente, el DNI, la fecha y el motivo. Desde ahí aprueba, rechaza o aplica el fallback (D-19).
+- **Borrado en Didit:** la sesión se borra apenas se guarda el resultado (RF-10, RNF-06/07). Los 30 días de retención (D-13) quedan como respaldo si el borrado falla.
+- **RNF del retiro:** RNF-01 a RNF-13 se aplican también al retiro, porque los dos flujos comparten `sesiones_didit` (D-5).
+- **Escenarios de error:** además de A a E y "el DNI no coincide": firma inválida (`401`); sesión desconocida o webhook duplicado (`200` sin escribir, D-4); timeout o error del proveedor al crear la sesión (D-12); DNI con formato inválido (`400`); sesión que vence sin resultado; falla al guardar en la base; DNI verificado distinto del esperado (D-14); revisión o coincidencia ambigua; varios intentos para la misma persona (D-3).
 
 ---
 
