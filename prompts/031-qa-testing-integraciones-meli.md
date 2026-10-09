@@ -1,4 +1,4 @@
-﻿# 030 — QA, testing e integraciones backend (Meli)
+# 030 — QA, testing e integraciones backend (Meli)
 
 **Estado:** Una etapa cerrada (E-2), dos bloqueadas. E-3 quedó **sin objeto** al migrar al master.
 **Fecha del relevamiento:** 2026-09-29 · rama `master` · HEAD `b4ab8e3`
@@ -66,7 +66,7 @@ Toda la información de esta sección está confirmada por lectura directa del c
 
 ### La función testeable: `verifyDiditSignature`
 
-`lib/didit/verify-signature.ts` (52 líneas) es una **función pura**. parcial/capa pura verificada línea por línea: no lee `process.env` (el secreto entra como parámetro), no importa Supabase, no hace red y no toca base de datos.
+`lib/didit/verify-signature.ts` (52 líneas) es una **función pura**. Verificado línea por línea: no lee `process.env` (el secreto entra como parámetro), no importa Supabase, no hace red y no toca base de datos.
 
 Por eso es el único activo del feature testeable sin servidor, sin `.env` y sin conexión a Supabase. Su cadena de guards es: headers ausentes → `false`; `Number.isFinite` sobre el timestamp → `false`; `Math.abs(now - ts) > 300` → `false`; `JSON.parse` del body → `false` en catch; canonicalización recursiva; HMAC-SHA256 en hex; pre-check de longitud de buffer; `timingSafeEqual`.
 
@@ -82,15 +82,15 @@ El webhook está exento del redirect de middleware en `proxy.ts:35` (`isDiditWeb
 
 `proxy.ts:7` llama `createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, ...)`. Ese constructor **lanza sincrónicamente** si falta la URL o la key, y el matcher de `proxy.ts:52-55` cubre toda ruta salvo assets estáticos.
 
-Consecuencia parcial/capa pura verificada: sin esas dos variables, `next dev` **arranca** pero **toda** request que matchea el matcher —incluida `/api/didit/webhook`— devuelve `500` antes de llegar a la ruta. Este checkout **no tiene ningún archivo `.env*`**.
+Consecuencia verificada: sin esas dos variables, `next dev` **arranca** pero **toda** request que matchea el matcher —incluida `/api/didit/webhook`— devuelve `500` antes de llegar a la ruta. Este checkout **no tiene ningún archivo `.env*`**.
 
 La segunda mitad de `proxy.ts` (`proxy.ts:37-40`) redirige a `/login` cualquier ruta distinta de `/login` cuando no hay usuario. Sin sesión, `/dashboard` nunca renderiza.
 
-### Infraestructura de testing — ⚠️ estado parcial/capa pura verificada sobre `b4ab8e3` (ya NO vigente)
+### Infraestructura de testing — ⚠️ estado verificado sobre `b4ab8e3` (ya NO vigente)
 
 > **⚠️ La tabla siguiente describe `b4ab8e3`. En el `master` `84c4d23` no hay `playwright.config.ts` ni `tests/01`–`04`.** Se conserva como registro del relevamiento.
 
-| Pieza | Estado parcial/capa pura verificada en `b4ab8e3` |
+| Pieza | Estado verificado en `b4ab8e3` |
 |---|---|
 | `playwright.config.ts` | 17 líneas. `testDir: './tests'`, `baseURL: http://localhost:3000`, `timeout: 30000`, `expect.timeout: 5000`, `fullyParallel: true`, reporter `list` + `html` a `playwright-report/`. **No tiene `webServer`.** No define `projects`. **No se trasladó al master.** |
 | `tests/01`–`04` | 4 specs, 10 tests en total, **2 skippeados**. 8 no-skippeados. **No se trasladaron al master.** |
@@ -139,12 +139,12 @@ No se leyeron ni modificaron: `supabase/`, migraciones, `package.json`, `tsconfi
 
 | Funcionalidad | Estado confirmado en código | Brecha frente al pedido |
 |---|---|---|
-| **1. Infraestructura Playwright** | `playwright.config.ts` existe y es coherente (`testDir`, `baseURL`, `timeout`, reporter), pero **no define `webServer`**. Sin él, los 8 tests no-skippeados de `01`–`04` fallan con `net::ERR_CONNECTION_REFUSED` (parcial/capa pura verificada en `test-results-summary.txt`) | Falta `webServer` y faltan `projects`. Agregar `webServer` **sin** `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` empeora el modo de fallo: `next dev` levanta, cada request da 500 en `proxy.ts:7` y los 8 tests mueren por timeout de assert (30s c/u con `fullyParallel: true`). Hoy el fallo es rápido y legible; con `webServer` serían minutos de ruido |
+| **1. Infraestructura Playwright** | `playwright.config.ts` existe y es coherente (`testDir`, `baseURL`, `timeout`, reporter), pero **no define `webServer`**. Sin él, los 8 tests no-skippeados de `01`–`04` fallan con `net::ERR_CONNECTION_REFUSED` (verificado en `test-results-summary.txt`) | Falta `webServer` y faltan `projects`. Agregar `webServer` **sin** `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` empeora el modo de fallo: `next dev` levanta, cada request da 500 en `proxy.ts:7` y los 8 tests mueren por timeout de assert (30s c/u con `fullyParallel: true`). Hoy el fallo es rápido y legible; con `webServer` serían minutos de ruido |
 | **2. Tests E2E existentes** | 4 specs, 10 tests, 2 skippeados. Leídos completos. Con servidor levantado fallan **6 asserts de verdad**: 4 en `tests/02-nav-roles.test.ts:17,19,20,21` (`Inicio`, `Legajos`, `Tutores`, `Referentes`) y 2 en `tests/03-dashboard-kpis.test.ts:19,20` (`Legajos`, `Alertas`). Esos labels viven en `app/(dashboard)/layout.tsx` y solo se renderizan **con sesión y rol** | Los asserts esperan contenido del sidebar sin tener sesión. Falta definir si `tests/02` y `tests/03` deben probar comportamiento **autenticado** o **anónimo**. Con la decisión tomada, `tests/03` deja de ser un test de dashboard y pasa a ser una reescritura, no una corrección |
-| **3. Seguridad de firma del webhook Didit** | `lib/didit/verify-signature.ts` completa: guards de headers, `Number.isFinite` del timestamp, canonicalización recursiva, HMAC-SHA256 hex, pre-check de longitud, `timingSafeEqual`. `route.ts:6-9,15-18` la orquesta. **Capa preexistente y deployada** (`prompts/016`, commit `ed6de39`) — no es trabajo de esta parte | El nivel **función** está parcial/capa pura verificada con 14 tests. El nivel **endpoint** no: los `401`, las cero escrituras y el cero log como evento válido siguen sin comprobar (caso K-01b) |
-| **4. Prevención de replay** | Ventana de 300s en `verify-signature.ts:34` (`Math.abs(nowSeconds - timestamp) > 300`). parcial/capa pura verificada en el borde en ambos sentidos: 301s → `false` (K-02.2), 299s → `true` (K-02.3) | El borde de 299s es sensible a **±1s**: si el event loop se demorara 2s entre que el test calcula el timestamp y que la función lee `Date.now()`, el caso falla. Observación documentada dentro del propio test. Si llegara a fallar, el arreglo es subir el número a 290, **nunca** tocar la implementación |
+| **3. Seguridad de firma del webhook Didit** | `lib/didit/verify-signature.ts` completa: guards de headers, `Number.isFinite` del timestamp, canonicalización recursiva, HMAC-SHA256 hex, pre-check de longitud, `timingSafeEqual`. `route.ts:6-9,15-18` la orquesta. **Capa preexistente y deployada** (`prompts/016`, commit `ed6de39`) — no es trabajo de esta parte | El nivel **función** está verificado con 14 tests. El nivel **endpoint** no: los `401`, las cero escrituras y el cero log como evento válido siguen sin comprobar (caso K-01b) |
+| **4. Prevención de replay** | Ventana de 300s en `verify-signature.ts:34` (`Math.abs(nowSeconds - timestamp) > 300`). Verificada en el borde en ambos sentidos: 301s → `false` (K-02.2), 299s → `true` (K-02.3) | El borde de 299s es sensible a **±1s**: si el event loop se demorara 2s entre que el test calcula el timestamp y que la función lee `Date.now()`, el caso falla. Observación documentada dentro del propio test. Si llegara a fallar, el arreglo es subir el número a 290, **nunca** tocar la implementación |
 | **5. Contrato del webhook Didit** | El comportamiento está implementado y es correcto: sin secreto → `500`; firma inválida → `401`; body no-JSON → `400`; fuera de schema → `400`; `webhook_type ≠ status.updated` → `200` sin procesar. Loguea solo `session_id` + `status` (RNF-04) | **0 tests.** J-01, K-01b y L-01 sin cubrir. Bloqueado por entorno: los tests necesitan el servidor de Next, y el servidor necesita las variables de Supabase. Además, el caso del `500` sin secreto requiere un proyecto de Playwright adicional con `webServer.env` sin esa variable |
-| **6. Flujo funcional de retiro / autorización** | **No existe.** `route.ts:41-48` es un `// TODO(Meli):` con tres pasos. No hay tabla `retiros`, ni tabla de sesiones de verificación Didit, ni campo "autorizado a retirar" (`nnya_tutores` solo tiene `es_principal`, `clean_schema.sql:78-85`). parcial/capa pura verificada sobre las 38 migraciones: `grep` de `retiro\|didit\|sesiones` sobre `supabase/` → 0 resultados | Brecha total. Depende del modelo de datos de Sofi y de las decisiones funcionales P-01 a P-04 de Jordy. No es un problema de código: escribir la lógica sin modelo sería inventar comportamiento |
+| **6. Flujo funcional de retiro / autorización** | **No existe.** `route.ts:41-48` es un `// TODO(Meli):` con tres pasos. No hay tabla `retiros`, ni tabla de sesiones de verificación Didit, ni campo "autorizado a retirar" (`nnya_tutores` solo tiene `es_principal`, `clean_schema.sql:78-85`). Verificado sobre las 38 migraciones: `grep` de `retiro\|didit\|sesiones` sobre `supabase/` → 0 resultados | Brecha total. Depende del modelo de datos de Sofi y de las decisiones funcionales P-01 a P-04 de Jordy. No es un problema de código: escribir la lógica sin modelo sería inventar comportamiento |
 | **7. Escenarios funcionales A–D** | Especificados con precondiciones, pasos y resultado esperado en `QA-DIDIT-RETIRO.md`. **0 de 4 son ejecutables hoy** (A-01, B-01, C-01, D-01) | Bloqueados por el modelo de datos. Aparte: el widget de Didit usa cámara y no tiene modo headless documentado → el E2E real es semi-manual. Y los **DNI de prueba válidos en RENAPER sandbox no están documentados en el repo**: sin eso, ni siquiera el camino feliz se puede probar a mano |
 
 ---
@@ -155,7 +155,7 @@ No se leyeron ni modificaron: `supabase/`, migraciones, `package.json`, `tsconfi
 
 **Qué se entregó:** `docs/testingManual/QA-DIDIT-RETIRO.md` con una **matriz de 17 casos**, cada uno con los 10 campos pedidos: ID, objetivo, precondiciones, datos necesarios, pasos, resultado esperado, prioridad, estado, dependencia y automatización.
 
-**Por qué una matriz y no una lista de tests:** con A–D bloqueados por el modelo de datos, el aporte de QA no puede ser "tests escritos", sino dejar escrito *qué tiene que ser cierto* para que la funcionalidad se pueda considerar parcial/capa pura verificada. La matriz separa explícitamente la especificación de la ejecución, y permite auditar contra ella más adelante.
+**Por qué una matriz y no una lista de tests:** con A–D bloqueados por el modelo de datos, el aporte de QA no puede ser "tests escritos", sino dejar escrito *qué tiene que ser cierto* para que la funcionalidad se pueda considerar verificada. La matriz separa explícitamente la especificación de la ejecución, y permite auditar contra ella más adelante.
 
 **Los 17 casos:** A-01, B-01, C-01, D-01 (los 4 escenarios funcionales) · F-01, F-02 (intentos) · G-01, G-02 (fallback manual) · H-01, H-02 (autorización) · I-01 (timeout) · J-01 (payload firmado inválido) · K-01 (firma, dividido en K-01a función / K-01b endpoint) · K-02 (replay) · L-01 (`session_id` inexistente) · M-01 (idempotencia) · M-02 (logs sin biometría).
 
@@ -191,7 +191,7 @@ corrida 2:  14 passed (1.1s)
 corrida 3:  14 passed (1.0s)
 ```
 
-Re-parcial/capa pura verificada al armar este documento: `14 passed (1.3s)`. La variación de duración es esperable; el resultado no.
+Re-verificado al armar este documento: `14 passed (1.3s)`. La variación de duración es esperable; el resultado no.
 
 **Qué se verificó, y por qué no es un log.** Los 14 tests no son 14 repeticiones: cada uno aísla una variable distinta de la cadena de guards.
 
@@ -220,7 +220,7 @@ Re-parcial/capa pura verificada al armar este documento: `14 passed (1.3s)`. La 
 
 **Verificación anti-vacío de la suite:** es bidireccional — 4 tests esperan `true` y 10 esperan `false`. Una implementación que devolviera siempre `false` rompería 4; una que devolviera siempre `true` rompería 10. Además, si el import estuviera roto, los tests que esperan `false` lanzarían una excepción en lugar de devolver `false`, así que la suite no puede "pasar" por un import caído.
 
-**Lo que NO cubre E-2:** el nivel endpoint. Los `401`, las cero escrituras y el cero log como evento válido no están parcial/capa pura verificadas — eso es K-01b y necesita servidor.
+**Lo que NO cubre E-2:** el nivel endpoint. Los `401`, las cero escrituras y el cero log como evento válido no están verificados — eso es K-01b y necesita servidor.
 
 **Lo que NO se hizo:** no se tocó `lib/didit/verify-signature.ts`, ni `app/api/didit/webhook/route.ts`, ni `playwright.config.ts`, ni los tests `01`–`04`. Sin migraciones, sin schema, sin RLS, sin `SERVICE_ROLE_KEY`, sin dependencias nuevas, sin `.env`, sin commit, sin push.
 
@@ -357,7 +357,7 @@ Se registran acá como pendientes, **sin resolver**:
 
 ## Riesgos y contradicciones detectadas
 
-Se documentan, no se corrigen. Todos ya parcial/capa pura verificadas por lectura o por ejecución.
+Se documentan, no se corrigen. Todos ya verificados por lectura o por ejecución.
 
 | # | Riesgo / contradicción | Ubicación | Por qué importa |
 |---|---|---|---|
@@ -436,7 +436,7 @@ Todos ejecutados sobre este checkout (rama `master`, HEAD `b4ab8e3`).
 | `npx tsc --noEmit` | ✅ **exit 0** |
 | `npm run build` | ✅ **exit 0** |
 | `npm run lint` (global) | ❌ **exit 1 — 85 errores + 15 warnings, todos preexistentes en código de la app** |
-| `tests/unit/didit-signature.test.ts` introduce errores de lint | ✅ **0** (parcial/capa pura verificada con ESLint sobre el archivo aislado) |
+| `tests/unit/didit-signature.test.ts` introduce errores de lint | ✅ **0** (verificado con ESLint sobre el archivo aislado) |
 | `git check-ignore -v` sobre las 5 rutas de testing | ✅ las 5 resuelven contra `.gitignore:15,16,34,35,36`, exit 0 |
 
 **Desglose de los 85 errores del lint global:** 81 `@typescript-eslint/no-explicit-any`, 2 `react/no-unescaped-entities`, 1 `@typescript-eslint/no-empty-object-type`, 1 `useForm<AudienciaFormValues>`, 1 `render`. **No se corrigen**: son deuda preexistente y `AGENTS-WEB.md:86` prohíbe refactors no relacionados.
@@ -455,8 +455,8 @@ Todos ejecutados sobre este checkout (rama `master`, HEAD `b4ab8e3`).
 - **No se probó contra producción.** El endpoint tiene un webhook de producción configurado en el panel de Didit, pero nada se le envió desde este trabajo.
 - **Ningún test escribe en la base.** `app/api/didit/webhook/route.ts` no importa cliente de Supabase, así que los tests de contrato no lo necesitarán tampoco.
 - **No se versionaron secretos**, reales ni ficticios fuera del archivo de test.
-- **RNF-04 (logs sin biometría) parcial/capa pura verificada por lectura, no por ejecución:** `route.ts:39` loguea solo `session_id` y `status`, nunca el objeto `decision`. El caso M-02 existe para **proteger** ese comportamiento cuando se agregue la lógica de negocio; queda como verificación manual, no como test.
-- **RNF-05 (firma) parcial/capa pura verificada sin tocar la implementación.** Los tests comprueban que no se pueda aceptar un webhook sin firma válida ni reenviar uno vencido. `timingSafeEqual` (`verify-signature.ts:51`) queda intacto.
+- **RNF-04 (logs sin biometría) verificado por lectura, no por ejecución:** `route.ts:39` loguea solo `session_id` y `status`, nunca el objeto `decision`. El caso M-02 existe para **proteger** ese comportamiento cuando se agregue la lógica de negocio; queda como verificación manual, no como test.
+- **RNF-05 (firma) verificada sin tocar la implementación.** Los tests comprueban que no se pueda aceptar un webhook sin firma válida ni reenviar uno vencido. `timingSafeEqual` (`verify-signature.ts:51`) queda intacto.
 
 
 
