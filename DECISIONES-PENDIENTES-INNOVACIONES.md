@@ -36,6 +36,7 @@
 | D-23 | Configuración de la consola de Didit | Jordy | Workflow v3, datos devueltos mínimos y retención de 30 días |
 | D-24 | Dispositivo de verificación | Cami (#26), Meli | Celular del adulto por QR; tablet de la residencia como respaldo |
 | D-25 | Texto de consentimiento (Ley 25.326) | Meli, Cami | Borrador ahora, revisión legal antes de usar datos reales |
+| D-26 | ¿Qué pasa si el adulto no acepta el consentimiento? | Sofi (#18), Meli (#23), Cami (#26) | Verificación manual por un `Admin`, auditada y con motivo |
 
 D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
@@ -314,7 +315,18 @@ El adulto verifica **con su propio celular, escaneando un QR**. Si no tiene celu
 
 Se escribe un borrador ahora y lo revisa alguien con formación legal antes de usarlo con datos reales (requisito previo 2 de la Práctica 3: los datos biométricos y los de RENAPER son sensibles). El texto dice quién trata los datos (la residencia), para qué (verificar la identidad en el retiro o la revinculación), qué datos se usan (DNI, selfie y consulta a RENAPER a través de Didit, un proveedor del exterior), qué se guarda (solo el resultado; la sesión en Didit se borra apenas se registra) y los derechos de acceso, rectificación y supresión ante la Agencia de Acceso a la Información Pública.
 
-**Pendiente, lo decide Meli:** qué pasa si el adulto no acepta. Para que el consentimiento sea libre tiene que haber una alternativa. Propuesta de partida: verificación manual del DNI físico por un `Admin`, con motivo obligatorio y auditada, igual que el fallback (D-2).
+**Estado (09/10):** el workflow v3 está publicado como versión activa, con consulta a RENAPER (`max_attempts: 1`), prueba de vida pasiva (1 intento) y `max_retry_attempts: 0` (USD 0,25 por sesión). Faltan, a mano en la consola, restringir los datos devueltos y bajar la retención, y después la sesión de prueba.
+
+### D-26 — Si el adulto no acepta el consentimiento
+
+Para que el consentimiento sea libre, negarse no puede impedir el retiro ni la revinculación. Si el adulto no acepta, **la identidad se verifica a mano**:
+
+- Lo hace solo un `Admin`: compara el DNI físico con el registrado (`tutores.dni` o `referentes.dni`) y la foto del documento con la persona.
+- Queda auditado, con motivo obligatorio ("no aceptó el consentimiento") y método `manual`, para distinguirlo de una verificación con Didit.
+- No gasta intento, porque no hubo verificación.
+- Reusa el camino del fallback (D-2): no suma pantallas ni roles, solo un motivo nuevo.
+
+El riesgo es que se use para esquivar la biometría; lo acotan el rol `Admin` y la auditoría. Se suma al texto del consentimiento (D-25), a la migración de Sofi (motivo y método) y al contrato para Cami.
 
 ---
 
