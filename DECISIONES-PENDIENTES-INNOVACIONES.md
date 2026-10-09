@@ -37,6 +37,8 @@
 | D-24 | Dispositivo de verificación | Cami (#26), Meli | Celular del adulto por QR; tablet de la residencia como respaldo |
 | D-25 | Texto de consentimiento (Ley 25.326) | Meli, Cami | Borrador ahora, revisión legal antes de usar datos reales |
 | D-26 | ¿Qué pasa si el adulto no acepta el consentimiento? | Sofi (#18), Meli (#23), Cami (#26) | Verificación manual por un `Admin`, auditada y con motivo |
+| D-27 | Validez de la sesión de Didit | Jordy (consola), Cami | 1 hora (antes 7 días) |
+| D-28 | Datos devueltos de la verificación de ID (corrige D-13) | Meli (#23) | Didit manda todo; el webhook filtra con lista cerrada |
 
 D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
@@ -315,7 +317,7 @@ El adulto verifica **con su propio celular, escaneando un QR**. Si no tiene celu
 
 Se escribe un borrador ahora y lo revisa alguien con formación legal antes de usarlo con datos reales (requisito previo 2 de la Práctica 3: los datos biométricos y los de RENAPER son sensibles). El texto dice quién trata los datos (la residencia), para qué (verificar la identidad en el retiro o la revinculación), qué datos se usan (DNI, selfie y consulta a RENAPER a través de Didit, un proveedor del exterior), qué se guarda (solo el resultado; la sesión en Didit se borra apenas se registra) y los derechos de acceso, rectificación y supresión ante la Agencia de Acceso a la Información Pública.
 
-**Estado (09/10):** el workflow v3 está publicado como versión activa, con consulta a RENAPER (`max_attempts: 1`), prueba de vida pasiva (1 intento) y `max_retry_attempts: 0` (USD 0,25 por sesión). Faltan, a mano en la consola, restringir los datos devueltos y bajar la retención, y después la sesión de prueba.
+**Estado (09/10): cerrado.** Versión activa: v9 del workflow. Consulta a RENAPER (`max_attempts: 1`), prueba de vida pasiva (1 intento), `max_retry_attempts: 0`, búsqueda de rostros apagada, validez de la sesión de 1 hora (D-27), retención de 1 mes con la plantilla biométrica borrada junto con la sesión, USD 0,25 por sesión. Datos devueltos: ninguno de la prueba de vida y todos los de la verificación de ID (D-28). Probado con 4 sesiones de sandbox, borradas después.
 
 ### D-26 — Si el adulto no acepta el consentimiento
 
@@ -327,6 +329,23 @@ Para que el consentimiento sea libre, negarse no puede impedir el retiro ni la r
 - Reusa el camino del fallback (D-2): no suma pantallas ni roles, solo un motivo nuevo.
 
 El riesgo es que se use para esquivar la biometría; lo acotan el rol `Admin` y la auditoría. Se suma al texto del consentimiento (D-25), a la migración de Sofi (motivo y método) y al contrato para Cami.
+
+### D-27 — Validez de la sesión
+
+Baja de 7 días a **1 hora**. La verificación se hace en el momento, con el adulto en la residencia; un link válido una semana es una ventana innecesaria.
+
+### D-28 — Datos devueltos de la verificación de ID (corrige D-13)
+
+**Hecho (pruebas en sandbox del 09/10):** con los datos de la verificación de ID restringidos, `fallback_from` llega `null` en los rechazos, aunque se tilden "Coincidencias" o "Campos adicionales"; ninguna casilla lo controla. Sin restricción vuelve completo (`{"reason":"no_match","method":"id_lookup","action":"decline"}`). Sin ese motivo no se puede cumplir D-12.
+
+**Decisión:** Didit manda **todos los datos de la verificación de ID** y la minimización se hace en nuestro webhook. La prueba de vida sigue sin devolver nada. Llegan también nombre, fecha de nacimiento, foto de RENAPER y, dentro de `id_lookup`, un link a la selfie (firmado, 4 horas). Condiciones para Meli (#23):
+
+1. El webhook valida con una lista cerrada (`zod`) y solo lee `status`, `fallback_from.reason` y `personal_number`.
+2. Nunca guarda el cuerpo crudo ni el objeto `decision`, y no loguea más que `session_id` y `status`.
+3. Se borra la sesión en Didit apenas se guarda el resultado (RF-10).
+4. Un test controla que ni la selfie ni el nombre lleguen a la base ni a los logs.
+
+Si Didit ofrece una forma de devolver solo `fallback_from`, se vuelve a restringir.
 
 ---
 
