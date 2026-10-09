@@ -32,6 +32,10 @@
 | D-19 | Qué significa "Requiere revisión" (RNF-12) | Meli (#23), Sofi, Cami (#26) | Estado del trámite al agotar los 3 intentos: espera la decisión de un `Admin` |
 | D-20 | ¿3 sesiones vencidas o abandonadas habilitan el fallback? | Meli (#23), Sofi | Sí: 3 intentos agotados habilitan el fallback, sea cual sea el motivo |
 | D-21 | `max_retry_attempts` del workflow de Didit | Jordy (consola) | Al mínimo que acepte Didit, junto con el workflow v3 |
+| D-22 | ¿Prueba de vida en la verificación? | Jordy (consola), Meli (#23) | Sí, pasiva |
+| D-23 | Configuración de la consola de Didit | Jordy | Workflow v3, datos devueltos mínimos y retención de 30 días |
+| D-24 | Dispositivo de verificación | Cami (#26), Meli | Celular del adulto por QR; tablet de la residencia como respaldo |
+| D-25 | Texto de consentimiento (Ley 25.326) | Meli, Cami | Borrador ahora, revisión legal antes de usar datos reales |
 
 D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
@@ -287,6 +291,30 @@ Jordy aprobó las respuestas de Meli a las preguntas abiertas del relevamiento. 
 - **Borrado en Didit:** la sesión se borra apenas se guarda el resultado (RF-10, RNF-06/07). Los 30 días de retención (D-13) quedan como respaldo si el borrado falla.
 - **RNF del retiro:** RNF-01 a RNF-13 se aplican también al retiro, porque los dos flujos comparten `sesiones_didit` (D-5).
 - **Escenarios de error:** además de A a E y "el DNI no coincide": firma inválida (`401`); sesión desconocida o webhook duplicado (`200` sin escribir, D-4); timeout o error del proveedor al crear la sesión (D-12); DNI con formato inválido (`400`); sesión que vence sin resultado; falla al guardar en la base; DNI verificado distinto del esperado (D-14); revisión o coincidencia ambigua; varios intentos para la misma persona (D-3).
+
+---
+
+## D-22 a D-25 — Definiciones de Jordy para la innovación 1 (resueltas el 2026-10-09)
+
+Destraban RF05, RF08 y RF09 de la Práctica 3 y el diseño de Cami (#26).
+
+### D-22 — Prueba de vida
+
+Se agrega al workflow, **en su versión pasiva** (sin gestos). Cumple RF09 y RN-02 de la Práctica 3 y cierra el riesgo principal: hoy la selfie se compara con la foto de RENAPER, pero nada controla que sea una persona real frente a la cámara. El cambio que Didit hace solo en el borrador v3 (`skip_liveness_and_face_match` a `false`) pasa a ser el buscado. Hay que probar en sandbox cómo llega un rechazo por prueba de vida: si trae un motivo nuevo en `fallback_from.reason`, se suma al mapeo de D-11.
+
+### D-23 — Consola de Didit
+
+En una sola sesión: publicar el workflow v3 (`max_attempts: 1`, D-12, con la prueba de vida de D-22), bajar `max_retry_attempts` al mínimo (D-21), restringir los datos devueltos a `status`, `fallback_from` y `personal_number`, y bajar la retención a 30 días (D-13). Después, una sesión de prueba para confirmar que esos campos siguen llegando al webhook.
+
+### D-24 — Dispositivo
+
+El adulto verifica **con su propio celular, escaneando un QR**. Si no tiene celular o datos, usa **una tablet de la residencia**. La PC con webcam queda descartada: peor calidad de selfie, y Didit igual suele ofrecer pasar al celular. Para Cami: la pantalla muestra el QR y "esperando resultado"; en la tablet es el mismo flujo en otra pestaña.
+
+### D-25 — Consentimiento
+
+Se escribe un borrador ahora y lo revisa alguien con formación legal antes de usarlo con datos reales (requisito previo 2 de la Práctica 3: los datos biométricos y los de RENAPER son sensibles). El texto dice quién trata los datos (la residencia), para qué (verificar la identidad en el retiro o la revinculación), qué datos se usan (DNI, selfie y consulta a RENAPER a través de Didit, un proveedor del exterior), qué se guarda (solo el resultado; la sesión en Didit se borra apenas se registra) y los derechos de acceso, rectificación y supresión ante la Agencia de Acceso a la Información Pública.
+
+**Pendiente, lo decide Meli:** qué pasa si el adulto no acepta. Para que el consentimiento sea libre tiene que haber una alternativa. Propuesta de partida: verificación manual del DNI físico por un `Admin`, con motivo obligatorio y auditada, igual que el fallback (D-2).
 
 ---
 
