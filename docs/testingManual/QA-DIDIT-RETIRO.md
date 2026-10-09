@@ -88,6 +88,8 @@ HTTP recibido: **500**.
 **Consecuencia:** los tests de contrato del webhook necesitan el servidor de Next, y el servidor necesita `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`, que no están disponibles. Esos tests quedan **pendientes de entorno**. No se lo rodea con hacks: se documenta.
 
 > **Actualización (2026-10-06):** el bloqueante de entorno quedó **RESUELTO por D-7** (`DECISIONES-PENDIENTES-INNOVACIONES.md`): usar **Supabase local** con las migraciones de `supabase/migrations/`. El análisis empírico de esta sección se conserva como registro; no altera resultados históricos.
+>
+> **Actualización (2026-10-08) — el webhook no necesita Supabase:** el Plan 032 exceptúa `/api/didit/webhook` del middleware (`proxy.ts` sale con `NextResponse.next()` antes de crear el cliente de Supabase). La prueba HTTP real de E-4 (§9, §11) corre **sin** `NEXT_PUBLIC_SUPABASE_*` y lo confirma indirectamente. El bloqueante descrito arriba **ya no aplica al webhook** (solo al resto de las rutas).
 
 ### 2.3 Consecuencia sobre el criterio CA-5 de `prompts/016`
 
@@ -145,6 +147,8 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 **Totales:** 🟢 3 (K-01a, K-02, M-02) · 🟣 2 (J-01, K-01b) · 🔴 3 (F-02, G-01, L-01) · 🟠 9.
 
 **Estado de ejecución tras E-2 (2026-09-29):** ✅ **K-01a** y ✅ **K-02** están **EJECUTADOS Y APROBADOS** a nivel de función (14/14 tests en verde, ver §11). Los otros **15 casos siguen pendientes**, incluido **K-01b**, que es la mitad de endpoint de K-01 y continúa bloqueado por entorno.
+
+**Actualización E-4 HTTP (2026-10-08):** ✅ **K-01b** (mitad endpoint de K-01) y ✅ **J-01** quedaron **EJECUTADOS Y APROBADOS** con la integración HTTP real (`tests/integration/didit-webhook-http.test.ts`, ver §11). **L-01** sigue dependiendo de la lógica de negocio de #23: solo se verificó su comportamiento **actual** (200 no-op).
 
 **Los 4 escenarios A, B, C y D están todos bloqueados por Sofi.** No hay forma de ejecutarlos antes.
 
@@ -519,9 +523,14 @@ Un solo archivo: **`tests/unit/didit-signature.test.ts`**. Runner `node:test` (`
 3. 🚧 **BLOQUEADO por la decisión de auth** (§12.4). Son **6 asserts que fallan** — 4 en `tests/02:17,19,20,21`, 2 en `tests/03:19,20` — y su corrección depende de definir si los tests deben probar comportamiento **autenticado** o **anónimo**. El assert de `tests/04:32` **no falla** y no debe tocarse. El `const url = page.url()` muerto queda diferido.
 4. ✅ **No aplica.** Import relativo en vez de alias `@/`: verificado por grep que `tests/01`–`04` **no usan `@/`**.
 
-### Etapa E-4 — ⏳ pendiente de entorno — contrato del webhook (🟣, bloqueado por entorno)
+### Etapa E-4 — ✅ COMPLETA (2026-10-08) — contrato del webhook (HTTP real)
 
-`tests/06-didit-webhook-contract.test.ts`. Cubre **J-01**, **K-01b** y **L-01**. Requiere `NEXT_PUBLIC_SUPABASE_*` disponibles. El secreto de `DIDIT_WEBHOOK_SECRET` **siempre ficticio**. El caso del `500` (sin secreto) necesita un **proyecto de Playwright adicional** con `webServer.env` sin esa variable.
+`tests/integration/didit-webhook-http.test.ts`, con `node:test` + `fetch` nativo contra `next dev` local en `127.0.0.1` (helper `tests/support/next-server.ts`). Cubre **J-01**, **K-01b** y el comportamiento **actual** de **L-01**. El secreto es **siempre ficticio**; **no** se configuran `NEXT_PUBLIC_SUPABASE_*`.
+
+- **El bloqueo anterior por Supabase quedó obsoleto:** el Plan 032 exceptúa `/api/didit/webhook` del middleware, así que la prueba corre sin Supabase. Ver §2.2.
+- **10/10 tests en verde** (1 sin secreto + 8 con secreto, agrupados en 2 pruebas). Ver §11.
+- **Hallazgo:** el caso "body no-JSON" responde **401**, no 400. `verifyDiditSignature` parsea JSON antes (`verify-signature.ts:38`), así que el branch `route.ts:21-25` es **inalcanzable**. El test fija el comportamiento **actual**; **no** se corrigió `route.ts`.
+- **Sigue pendiente la lógica de negocio (#23, `TODO(Meli)`).** Por eso **L-01** (y M-01) solo fijan el comportamiento **actual**; E-4 deberá **re-ejecutarse** tras #23.
 
 ### Etapa E-5 — ⏳ pendiente del modelo de Sofi — los 4 escenarios (🟠, bloqueado por Sofi)
 
@@ -613,10 +622,36 @@ No se tocó `lib/didit/verify-signature.ts`, `app/api/didit/webhook/route.ts`, `
 | Etapa | Estado | Motivo |
 |---|---|---|
 | E-3 | 🚧 **Parcial — bloqueada por entorno** | Ver §12. Solo `.gitignore` quedó hecho |
-| E-4 | ⏳ Pendiente de entorno | Requiere `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` (ver §2.2) |
+| E-4 | ✅ **COMPLETADA (2026-10-08)** | HTTP real contra `next dev` local, **sin Supabase** (Plan 032). 10/10 en verde. Ver §11 |
 | E-5 | ⏳ Pendiente del modelo de Sofi | Requiere tabla `retiros` y tabla de sesiones de verificación, que no existen |
 
 **M-02** (logs sin biometría) sigue siendo 🟢 pero **manual**, y **no se ejecutó** en E-2: es la base para una verificación manual de logs de servidor, no un test automatizado.
+
+### Registro de ejecución (E-4 · HTTP real · 2026-10-08)
+
+**Artefacto:** `tests/integration/didit-webhook-http.test.ts` (+ helper `tests/support/next-server.ts`). **Secreto ficticio** (`'test-secret-not-a-real-credential'`); **sin** `NEXT_PUBLIC_SUPABASE_*` (el webhook está exceptuado del middleware, Plan 032).
+
+**Servidores:** dos arranques de `next dev` en `127.0.0.1` — uno **sin** `DIDIT_WEBHOOK_SECRET` (caso 500) y otro **con** el secreto ficticio (resto). Readiness por poll; cleanup del árbol de procesos en `finally` (Windows: `taskkill /T /F`). Verificado: sin procesos huérfanos y puertos liberados.
+
+| # | Caso | Esperado | Resultado |
+|---|---|---|---|
+| 1 | Sin `DIDIT_WEBHOOK_SECRET` | `500 {"error":"Webhook no configurado."}` | ✅ |
+| 2 | `x-signature-v2` ausente | `401 {"error":"Firma inválida."}` | ✅ |
+| 3 | Firma inválida (otro secreto) | `401` | ✅ |
+| 4 | `x-timestamp` no numérico | `401` | ✅ |
+| 5 | `x-timestamp` vencido (>300s) | `401` | ✅ |
+| 6 | Body no parseable como JSON | `401` (**no 400**; ver hallazgo) | ✅ |
+| 7 | JSON válido fuera de schema (`environment:'prod'`) | `400 {"error":"Payload inesperado."}` | ✅ |
+| 8 | `webhook_type ≠ status.updated` | `200 {"received":true}` | ✅ |
+| 9 | `status.updated` válido | `200 {"received":true}` + log acotado | ✅ |
+
+**Resultado:** **10 passed / 0 failed** (~12s). El log de `status.updated` contiene `session_id=<id>` y `status=Approved`, y **no** el secreto ni `decision`/`selfie`.
+
+**Hallazgo (inconsistencia con la doc previa):** J-01(a) esperaba `400 "Body inválido"` para un body no-JSON; el comportamiento **actual** es **401**, porque la firma se verifica antes de parsear y `verifyDiditSignature` hace `JSON.parse` para canonicalizar (`verify-signature.ts:38`). El branch `route.ts:21-25` es **inalcanzable**. **No se corrigió** `route.ts`.
+
+**#23 sigue NO implementado:** la lógica de negocio del webhook es un `TODO(Meli)`. Los casos que dependen de ella (**L-01**, M-01) solo fijan el comportamiento **actual**.
+
+**No se tocó:** `route.ts`, `proxy.ts`, Supabase, migraciones. Sin dependencias nuevas, sin Playwright, sin commit ni push.
 
 ---
 
