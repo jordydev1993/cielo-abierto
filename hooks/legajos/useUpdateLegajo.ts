@@ -74,9 +74,9 @@ export function useCerrarLegajo() {
       const { data, error } = await supabase
         .from('legajos')
         .update({
+          // fecha_cierre la fija la base (trg_legajos_reglas_estado, prompts/037)
           estado: values.estado,
           motivo_cierre: values.motivo_cierre,
-          fecha_cierre: new Date().toISOString().split('T')[0],
           updated_at: new Date().toISOString(),
         })
         .eq('id', id)
@@ -85,8 +85,33 @@ export function useCerrarLegajo() {
       if (error) throw new Error(mapCierreError(error.message))
       return data
     },
-    onSuccess: (data, { nnyaId }) => {
+    onSuccess: (data, { id, nnyaId }) => {
       qc.invalidateQueries({ queryKey: queryKeys.legajos.lists() })
+      qc.invalidateQueries({ queryKey: queryKeys.legajos.detail(id) })
+      qc.invalidateQueries({ queryKey: queryKeys.legajos.byNnya(nnyaId) })
+    },
+  })
+}
+
+// Cerrado -> archivado, 12 meses después del cierre. La base valida el plazo y que no
+// cambie ningún otro dato (trg_legajos_reglas_estado, prompts/037).
+export function useArchivarLegajo() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ id }: { id: string; nnyaId: string }) => {
+      const supabase = createClient()
+      const { data, error } = await supabase
+        .from('legajos')
+        .update({ estado: 'archivado', updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select()
+        .single()
+      if (error) throw new Error(error.message)
+      return data
+    },
+    onSuccess: (_, { id, nnyaId }) => {
+      qc.invalidateQueries({ queryKey: queryKeys.legajos.lists() })
+      qc.invalidateQueries({ queryKey: queryKeys.legajos.detail(id) })
       qc.invalidateQueries({ queryKey: queryKeys.legajos.byNnya(nnyaId) })
     },
   })
