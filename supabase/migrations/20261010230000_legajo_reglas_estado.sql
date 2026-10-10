@@ -58,6 +58,24 @@ CREATE TRIGGER trg_legajos_reglas_estado
   FOR EACH ROW
   EXECUTE FUNCTION public.fn_legajos_reglas_estado();
 
+-- Un legajo nunca se borra: se cierra con motivo. Borrarlo eliminaría en cascada
+-- su historia (incidentes, informes, diagnósticos, etc. tienen legajo_id ON DELETE CASCADE).
+CREATE OR REPLACE FUNCTION public.fn_legajos_prohibir_delete()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
+BEGIN
+  RAISE EXCEPTION 'Un legajo no se puede eliminar: si ya no corresponde, hay que cerrarlo con motivo.';
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_legajos_prohibir_delete ON public.legajos;
+CREATE TRIGGER trg_legajos_prohibir_delete
+  BEFORE DELETE ON public.legajos
+  FOR EACH ROW
+  EXECUTE FUNCTION public.fn_legajos_prohibir_delete();
+
 -- Un incidente solo se cierra con las acciones tomadas registradas.
 -- Verificado el 10/10: los 2 incidentes cerrados de producción ya las tienen.
 ALTER TABLE public.incidentes

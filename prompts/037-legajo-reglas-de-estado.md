@@ -41,6 +41,8 @@ Hacer cumplir en la base las reglas del proceso que protegen la historia del cas
 
 El legajo cerrado existente no se toca: el trigger actúa sobre cambios futuros.
 
+**DELETE prohibido:** `fn_legajos_prohibir_delete()`, `BEFORE DELETE`, rechaza todo borrado de legajos, sin importar el estado. La app no borra legajos en ningún lado, y la política `legajos_admin_tecnico_all` hoy lo permite a ambos roles. Como 7 tablas tienen `legajo_id ... ON DELETE CASCADE` (entre ellas `incidentes`), borrar un legajo eliminaría su historia. Un legajo que no corresponde se cierra con motivo, igual que la baja lógica del NNyA. Decidido por Jordy el 2026-10-10.
+
 ### 2. Incidentes: poder resolverlos
 
 Sin esto, L-EX-13 bloquea para siempre el cierre de cualquier legajo con incidentes. En el listado o formulario de incidentes:
@@ -93,10 +95,11 @@ En el listado de legajos y en la ficha, un badge cuando el NNyA tiene una alerta
 5. Un legajo cerrado hace menos de 12 meses no se puede archivar; uno cerrado hace más, sí.
 6. Un incidente se puede pasar a `en_seguimiento` y a `cerrado` (este último con acciones tomadas), y después su legajo se puede cerrar.
 7. El indicador aparece con una alerta de incidente pendiente y se apaga al resolverla.
+8. Ningún legajo se puede borrar (`activo`, `cerrado` ni `archivado`); la base lo rechaza.
 
 ## Verificación
 
-- Criterios 1 a 5 contra la base, con bloques que fuerzan `ROLLBACK` (o Supabase local).
+- Criterios 1 a 5 y 8 contra la base, con bloques que fuerzan `ROLLBACK` (o Supabase local).
 - Criterios 6 y 7 en la app.
 - `npm run lint` (archivos tocados), `npx tsc --noEmit`, `npm run build`.
 - `get_advisors` de seguridad sin avisos nuevos.
