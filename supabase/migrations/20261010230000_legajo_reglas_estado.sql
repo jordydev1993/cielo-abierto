@@ -58,8 +58,8 @@ CREATE TRIGGER trg_legajos_reglas_estado
   FOR EACH ROW
   EXECUTE FUNCTION public.fn_legajos_reglas_estado();
 
--- Un legajo nunca se borra: se cierra con motivo. Borrarlo eliminaría en cascada
--- su historia (incidentes, informes, diagnósticos, etc. tienen legajo_id ON DELETE CASCADE).
+-- Un legajo nunca se borra: se cierra con motivo. Las FKs de legajo_id ya son RESTRICT
+-- (prompts/036), pero un legajo sin registros asociados todavía se podía borrar.
 CREATE OR REPLACE FUNCTION public.fn_legajos_prohibir_delete()
 RETURNS TRIGGER
 LANGUAGE plpgsql

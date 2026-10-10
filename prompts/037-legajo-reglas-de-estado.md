@@ -41,7 +41,7 @@ Hacer cumplir en la base las reglas del proceso que protegen la historia del cas
 
 El legajo cerrado existente no se toca: el trigger actúa sobre cambios futuros.
 
-**DELETE prohibido:** `fn_legajos_prohibir_delete()`, `BEFORE DELETE`, rechaza todo borrado de legajos, sin importar el estado. La app no borra legajos en ningún lado, y la política `legajos_admin_tecnico_all` hoy lo permite a ambos roles. Como 7 tablas tienen `legajo_id ... ON DELETE CASCADE` (entre ellas `incidentes`), borrar un legajo eliminaría su historia. Un legajo que no corresponde se cierra con motivo, igual que la baja lógica del NNyA. Decidido por Jordy el 2026-10-10.
+**DELETE prohibido:** `fn_legajos_prohibir_delete()`, `BEFORE DELETE`, rechaza todo borrado de legajos, sin importar el estado. La app no borra legajos en ningún lado, y la política `legajos_admin_tecnico_all` hoy lo permite a ambos roles. Las 7 FKs hacia `legajos` ya son `RESTRICT` (`prompts/036`, verificado en producción el 10/10), así que un legajo con registros asociados no se puede borrar; pero uno sin registros (por ejemplo, recién abierto) sí, y con él se pierde el número y la apertura del caso. Un legajo que no corresponde se cierra con motivo, igual que la baja lógica del NNyA. Decidido por Jordy el 2026-10-10.
 
 ### 2. Incidentes: poder resolverlos
 
