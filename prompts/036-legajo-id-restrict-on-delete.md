@@ -36,7 +36,7 @@ Verificado en producción el 10/10/2026 (solo lectura, `pg_constraint`):
 
 ## Cambio propuesto
 
-Una migración nueva `supabase/migrations/<timestamp>_legajo_id_restrict_on_delete.sql`, una sola transacción, mismo patrón que la de incidentes, para las 6 tablas:
+Migración `supabase/migrations/20261010220118_legajo_id_restrict_on_delete.sql` (aplicada en producción el 10/10, verificada con `pg_constraint`), una sola transacción, mismo patrón que la de incidentes, para las 6 tablas:
 
 ```sql
 ALTER TABLE public.turnos DROP CONSTRAINT turnos_legajo_id_fkey;
