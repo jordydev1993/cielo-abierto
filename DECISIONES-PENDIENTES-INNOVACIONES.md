@@ -39,6 +39,9 @@
 | D-26 | ¿Qué pasa si el adulto no acepta el consentimiento? | Sofi (#18), Meli (#23), Cami (#26) | Verificación manual por un `Admin`, auditada y con motivo |
 | D-27 | Validez de la sesión de Didit | Jordy (consola), Cami | 1 hora (antes 7 días) |
 | D-28 | Datos devueltos de la verificación de ID (corrige D-13) | Meli (#23) | Didit manda todo; el webhook filtra con lista cerrada |
+| D-29 | Innovación 4: quién firma el egreso | Sofi, Cami, Meli | 3 firmas (Dirección, legal, técnica) sin roles nuevos; la base no deja cerrar sin las 3 |
+| D-30 | Innovación 6: umbral de ausencias escolares | Sofi, Cami, Meli | 3 injustificadas en 30 días corridos, carga manual, alerta por trigger |
+| D-31 | Innovación 8: proveedor de calendario | Cami, Meli | Exportar `.ics` con datos mínimos, sin OAuth |
 
 D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
@@ -346,6 +349,53 @@ Baja de 7 días a **1 hora**. La verificación se hace en el momento, con el adu
 4. Un test controla que ni la selfie ni el nombre lleguen a la base ni a los logs.
 
 Si Didit ofrece una forma de devolver solo `fallback_from`, se vuelve a restringir.
+
+---
+
+## D-29 a D-31 — Innovaciones 4, 6 y 8 (resueltas el 2026-10-10)
+
+Las tres estaban bloqueadas por decisión de Jordy (`PLAN-INTEGRACION-INNOVACIONES.md` § 1). Se eligió la opción recomendada en cada una.
+
+### D-29 — Innovación 4: firmas del egreso
+
+**Contexto:** el proceso 1.5 exige "aprobación del Informe de Egreso por Dirección" para pasar el legajo a Cerrado (`documentacion/procesos-del-negocio.md` § 5); la innovación pide tres firmas: Dirección, legal y técnica. El sistema tiene solo dos roles (`Admin` y `Equipo Tecnico`): no existen Director ni Abogado como roles.
+
+**Decisión:** tres firmas **sin roles nuevos**.
+
+- Tabla de aprobaciones del egreso (`aprobaciones_egreso` o similar) con `legajo_id`, `tipo` (`direccion`, `legal`, `tecnica`), `usuario_id`, fecha y observaciones; usuario y fecha los pone la base.
+- La firma de `direccion` la hace un `Admin`; `legal` y `tecnica`, usuarios de `Equipo Tecnico`. Tres personas distintas.
+- La base no deja cerrar el legajo sin las tres firmas: se suma al trigger de reglas de estado de `prompts/037`.
+- Mismo patrón que la firma doble de `turnos_personal`. No cambia el RBAC ni las políticas existentes.
+
+**Fuera de alcance:** la resolución judicial o administrativa de egreso que el proceso exige para menores, y la firma dual (Trabajador Social + Director) para resolver incidentes.
+
+**Destraba a:** Sofi (modelo y trigger), Cami (pantalla de las 3 firmas), Meli (QA).
+
+### D-30 — Innovación 6: umbral de ausencias escolares
+
+**Contexto:** no hay integración con escuelas ni fuente en los procesos que fije un umbral. La carga es manual.
+
+**Decisión:** alerta educativa al llegar a **3 inasistencias injustificadas en 30 días corridos**.
+
+- Tabla `ausencias_escolares` (`nnya_id`, fecha, justificada, motivo) con carga manual; reusar `alertas` no alcanza para alertar por acumulación.
+- Un trigger crea la alerta (`tipo = 'educativa'`, prioridad media), con el mismo patrón que `fn_crear_alerta_incidente_grave`, sin repetirla mientras haya una pendiente para el mismo NNyA.
+- Es un umbral conservador para detectar temprano; se puede ajustar con el uso real.
+
+**Destraba a:** Sofi (tabla y trigger), Cami (formulario de carga), Meli (QA).
+
+### D-31 — Innovación 8: calendario
+
+**Contexto:** una integración OAuth (Google o Microsoft) obliga a guardar tokens del lado servidor y a decidir qué datos de turnos médicos de menores salen a un servicio externo.
+
+**Decisión:** **exportar `.ics`, sin OAuth.**
+
+- Botón "Agregar a mi calendario" en turnos y reuniones de evaluación que descarga un `.ics` generado en el cliente; funciona con Google, Outlook y Apple.
+- Datos mínimos: fecha, hora, lugar y las iniciales del NNyA; nunca diagnóstico ni motivo médico.
+- Sin tokens, sin secretos y sin tabla nueva.
+
+**Fuera de alcance:** la sincronización automática. Se reevalúa si la residencia confirma qué cuentas usa.
+
+**Destraba a:** Cami (botón y generación del `.ics`), Meli (QA).
 
 ---
 
