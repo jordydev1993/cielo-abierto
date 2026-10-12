@@ -11,7 +11,10 @@ type StartOptions = {
   port: number
   /**
    * Secreto ficticio para el proceso. Si es `undefined`, la variable
-   * `DIDIT_WEBHOOK_SECRET` se elimina del entorno del servidor (caso 500).
+   * `DIDIT_WEBHOOK_SECRET` se fuerza a cadena vacía en el entorno del servidor
+   * (caso 500). Con cadena vacía el valor ya existe en `process.env`, por lo
+   * que `@next/env` no lo sobreescribe con el de `.env.local`: el 500 queda
+   * determinista aunque exista un `.env.local` con un secreto.
    */
   secret?: string
   readyTimeoutMs?: number
@@ -54,7 +57,7 @@ export async function startNextServer(options: StartOptions): Promise<StartedNex
   delete env.NEXT_PUBLIC_SUPABASE_URL
   delete env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (secret === undefined) {
-    delete env.DIDIT_WEBHOOK_SECRET
+    env.DIDIT_WEBHOOK_SECRET = ''
   } else {
     env.DIDIT_WEBHOOK_SECRET = secret
   }
