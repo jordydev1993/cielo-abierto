@@ -1,7 +1,7 @@
 # 040 — `audit_log`: que solo escriba el trigger
 
 **Tarjeta:** sin tarjeta (hallazgo del 11/10 al probar prompts/037 a 039) — Jordy — Alta
-**Estado:** aprobado por Jordy el 12/10. Probado en la réplica local (PGlite, schema de producción): 56/56 casos, los 45 de prompts/037 a 039 y 11 de este plan. Aplicado en producción el 12/10 y verificado por SQL de solo lectura (criterio 5 y privilegios). Pendiente: criterio 4 en la app desplegada.
+**Estado:** aprobado por Jordy el 12/10. Probado en la réplica local (PGlite, schema de producción): 56/56 casos, los 45 de prompts/037 a 039 y 11 de este plan. Aplicado en producción el 12/10 y verificado por SQL de solo lectura (criterio 5 y privilegios). Criterio 4 verificado en la app desplegada el 12/10: una edición de actividad como Equipo Técnico generó su fila (UPDATE en `actividades`, usuario con rol Equipo Tecnico).
 
 ## Objetivo
 
