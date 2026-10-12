@@ -42,6 +42,7 @@
 | D-29 | Innovación 4: quién firma el egreso | Sofi, Cami, Meli | 3 firmas (Dirección, legal, técnica) sin roles nuevos; la base no deja cerrar sin las 3 |
 | D-30 | Innovación 6: umbral de ausencias escolares | Sofi, Cami, Meli | 3 injustificadas en 30 días corridos, carga manual, alerta por trigger |
 | D-31 | Innovación 8: proveedor de calendario | Cami, Meli | Exportar `.ics` con datos mínimos, sin OAuth |
+| D-32 | Seguridad: protección contra contraseñas filtradas | Jordy | No se activa (requiere plan Pro); riesgo aceptado mientras el alta la haga solo un `Admin` |
 
 D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
@@ -396,6 +397,26 @@ Las tres estaban bloqueadas por decisión de Jordy (`PLAN-INTEGRACION-INNOVACION
 **Fuera de alcance:** la sincronización automática. Se reevalúa si la residencia confirma qué cuentas usa.
 
 **Destraba a:** Cami (botón y generación del `.ics`), Meli (QA).
+
+---
+
+## D-32 — Protección contra contraseñas filtradas (resuelta el 2026-10-12)
+
+**Contexto:** el advisor `auth_leaked_password_protection` de Supabase recomienda rechazar contraseñas que aparecen en filtraciones conocidas (HaveIBeenPwned). Al intentar activarla, Supabase respondió: *"Configuring leaked password protection via HaveIBeenPwned.org is available on Pro Plans and up"*. El proyecto está en el plan Free.
+
+Verificado en el código de `master` el 12/10:
+
+- Los usuarios los crea solo un `Admin`, desde `app/api/usuarios/route.ts` (chequea `get_my_role` antes de llamar a `auth.admin.createUser`).
+- La web no tiene registro público ni pantalla para que un usuario cambie o recupere su contraseña (sin `signUp`, `updateUser` ni `resetPasswordForEmail`).
+- `lib/validations/usuarios.schema.ts` exige 8 caracteres como mínimo.
+
+**Decisión:** **no se activa y se acepta el riesgo** por ahora.
+
+- La contraseña la elige el `Admin` al dar el alta, no el usuario, así que el control queda en una sola persona.
+- Se activa si el proyecto pasa al plan Pro.
+- Queda junto con MFA y el rate limiting como objetivo de seguridad no implementado (`AGENTS.md` § Seguridad).
+
+**Alternativa descartada por ahora:** consultar HaveIBeenPwned desde `app/api/usuarios` antes de crear el usuario (k-anonymity, sin dependencias). Se puede retomar si se agrega una pantalla de cambio de contraseña o el registro deja de ser solo del `Admin`.
 
 ---
 
