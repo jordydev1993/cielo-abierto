@@ -9,7 +9,8 @@ export const legajoSchema = z.object({
 
 export const legajoCierreSchema = z.object({
   motivo_cierre: z.string().min(5, { error: 'Ingresá el motivo de cierre' }),
-  estado: z.enum(['cerrado', 'archivado']),
+  // Solo se cierra: archivar es una acción aparte, 12 meses después (prompts/037).
+  estado: z.literal('cerrado'),
 })
 
 export type LegajoFormValues = z.infer<typeof legajoSchema>
