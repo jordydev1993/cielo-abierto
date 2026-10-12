@@ -32,7 +32,7 @@ export function DocumentoUpload({ legajoId, nnyaId }: DocumentoUploadProps) {
 
   const handleFile = (f: File) => {
     if (f.size > 10 * 1024 * 1024) {
-      toast({ title: 'Archivo demasiado grande', description: 'El límite es 10 MB (DOC-EX-01)', variant: 'destructive' })
+      toast({ title: 'Archivo demasiado grande', description: 'El límite es 10 MB (D-EX-06)', variant: 'destructive' })
       return
     }
     setFile(f)

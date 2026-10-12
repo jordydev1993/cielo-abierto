@@ -16,7 +16,7 @@ export function useActualizarAudiencia() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async ({ id, estado, fechaHora, resultado, observaciones }: ActualizarAudienciaInput) => {
-      // AJ-EX-04: no se puede registrar resolución para una audiencia con fecha futura
+      // AJ-EX-04: la resolución se registra solo sobre una audiencia programada que ya ocurrió
       if (estado === 'realizada' && new Date(fechaHora) > new Date()) {
         throw new Error(
           'No se puede registrar una resolución para una audiencia con fecha futura. (AJ-EX-04)'
@@ -24,6 +24,18 @@ export function useActualizarAudiencia() {
       }
 
       const supabase = createClient()
+      const { data: actual, error: actualError } = await supabase
+        .from('audiencias_judiciales')
+        .select('estado')
+        .eq('id', id)
+        .single()
+      if (actualError) throw actualError
+      if (actual.estado !== 'programada') {
+        throw new Error(
+          'Solo se puede actualizar una audiencia programada: esta ya fue realizada, suspendida o cancelada. (AJ-EX-04)'
+        )
+      }
+
       const { data, error } = await supabase
         .from('audiencias_judiciales')
         .update({

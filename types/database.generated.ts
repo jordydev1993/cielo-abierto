@@ -603,6 +603,7 @@ export type Database = {
         Row: {
           contenido: string
           created_at: string
+          destinatario: string | null
           elaborado_por: string | null
           estado: string
           fecha_informe: string
@@ -616,6 +617,7 @@ export type Database = {
         Insert: {
           contenido: string
           created_at?: string
+          destinatario?: string | null
           elaborado_por?: string | null
           estado?: string
           fecha_informe?: string
@@ -629,6 +631,7 @@ export type Database = {
         Update: {
           contenido?: string
           created_at?: string
+          destinatario?: string | null
           elaborado_por?: string | null
           estado?: string
           fecha_informe?: string
@@ -738,6 +741,7 @@ export type Database = {
           fecha_cierre: string | null
           id: string
           motivo_cierre: string | null
+          motivo_ingreso: string | null
           nnya_id: string
           numero_legajo: string
           observaciones: string | null
@@ -750,6 +754,7 @@ export type Database = {
           fecha_cierre?: string | null
           id?: string
           motivo_cierre?: string | null
+          motivo_ingreso?: string | null
           nnya_id: string
           numero_legajo: string
           observaciones?: string | null
@@ -762,6 +767,7 @@ export type Database = {
           fecha_cierre?: string | null
           id?: string
           motivo_cierre?: string | null
+          motivo_ingreso?: string | null
           nnya_id?: string
           numero_legajo?: string
           observaciones?: string | null

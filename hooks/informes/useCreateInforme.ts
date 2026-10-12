@@ -29,6 +29,7 @@ export function useCreateInforme() {
           nnya_id: values.nnya_id,
           legajo_id: values.legajo_id,
           tipo: values.tipo,
+          destinatario: values.destinatario,
           titulo: values.titulo,
           contenido: values.contenido,
           fecha_informe: values.fecha_informe,

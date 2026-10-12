@@ -18,7 +18,6 @@ const TIPOS = ['Psicosocial', 'Médico', 'Educativo', 'Judicial', 'Egreso', 'Seg
 
 function EstadoBadge({ estado }: { estado: Informe['estado'] }) {
   if (estado === 'finalizado') return <Badge variant="success">Enviado</Badge>
-  if (estado === 'revisado') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">Revisado</Badge>
   return <Badge variant="outline">Borrador</Badge>
 }
 
@@ -98,7 +97,6 @@ export default function InformesPage() {
           <SelectContent>
             <SelectItem value="todos">Todos los estados</SelectItem>
             <SelectItem value="finalizado">Enviados</SelectItem>
-            <SelectItem value="revisado">Revisados</SelectItem>
             <SelectItem value="borrador">Borradores</SelectItem>
           </SelectContent>
         </Select>

@@ -1,7 +1,7 @@
 'use client'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { informeSchema, type InformeFormValues } from '@/lib/validations/informes.schema'
+import { informeSchema, DESTINATARIOS_INFORME, type InformeFormValues } from '@/lib/validations/informes.schema'
 import { FormField, FormGrid } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -35,6 +35,7 @@ export function InformeForm({ legajoId, nnyaId, onSubmit, onCancel, loading }: I
       legajo_id: legajoId,
       nnya_id: nnyaId,
       tipo: '',
+      destinatario: undefined,
       titulo: '',
       contenido: '',
       fecha_informe: today,
@@ -51,6 +52,19 @@ export function InformeForm({ legajoId, nnyaId, onSubmit, onCancel, loading }: I
               <SelectContent>
                 {TIPOS_INFORME.map((t) => (
                   <SelectItem key={t} value={t}>{t}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )} />
+        </FormField>
+
+        <FormField label="Destinatario" error={errors.destinatario?.message} required>
+          <Controller name="destinatario" control={control} render={({ field }) => (
+            <Select onValueChange={field.onChange} value={field.value ?? ''}>
+              <SelectTrigger><SelectValue placeholder="Seleccionar..." /></SelectTrigger>
+              <SelectContent>
+                {DESTINATARIOS_INFORME.map((d) => (
+                  <SelectItem key={d} value={d}>{d}</SelectItem>
                 ))}
               </SelectContent>
             </Select>

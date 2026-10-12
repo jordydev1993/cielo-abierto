@@ -28,11 +28,13 @@ export function LegajoForm({ nnyaId, initialData, onSubmit, onCancel, loading }:
       nnya_id: initialData.nnya_id,
       numero_legajo: initialData.numero_legajo,
       fecha_apertura: initialData.fecha_apertura,
+      motivo_ingreso: initialData.motivo_ingreso ?? '',
       observaciones: initialData.observaciones ?? '',
     } : {
       nnya_id: nnyaId ?? '',
       numero_legajo: '',
       fecha_apertura: new Date().toISOString().split('T')[0],
+      motivo_ingreso: '',
       observaciones: '',
     },
   })
@@ -61,6 +63,9 @@ export function LegajoForm({ nnyaId, initialData, onSubmit, onCancel, loading }:
         </FormField>
         <FormField label="Fecha de apertura" error={errors.fecha_apertura?.message} required>
           <Input {...register('fecha_apertura')} type="date" />
+        </FormField>
+        <FormField label="Motivo de ingreso" error={errors.motivo_ingreso?.message} required className="sm:col-span-2">
+          <Textarea {...register('motivo_ingreso')} rows={2} placeholder="Ej: derivación de SENAF por resolución de medida excepcional" />
         </FormField>
         <FormField label={isEditing ? 'Observaciones' : 'Observaciones iniciales'} error={errors.observaciones?.message} className="sm:col-span-2">
           <Textarea {...register('observaciones')} rows={3} />

@@ -14,6 +14,7 @@ export function useUpdateLegajoDatos() {
         .update({
           numero_legajo: values.numero_legajo,
           fecha_apertura: values.fecha_apertura,
+          motivo_ingreso: values.motivo_ingreso,
           observaciones: values.observaciones || null,
           updated_at: new Date().toISOString(),
         })
@@ -57,7 +58,7 @@ export function useCerrarLegajo() {
         )
       }
 
-      // L-EX-10: verificar que exista un Informe de Egreso antes de cerrar
+      // L-EX-12: verificar que exista un Informe de Egreso antes de cerrar
       const { count: informesEgreso, error: infErr } = await supabase
         .from('informes')
         .select('*', { count: 'exact', head: true })
@@ -67,7 +68,7 @@ export function useCerrarLegajo() {
       if (infErr) throw new Error('Error al verificar el Informe de Egreso')
       if (!informesEgreso || informesEgreso === 0) {
         throw new Error(
-          'No se puede cerrar el legajo. Debe generar y adjuntar el Informe de Egreso primero. (L-EX-10)'
+          'No se puede cerrar el legajo. Debe generar y adjuntar el Informe de Egreso primero. (L-EX-12)'
         )
       }
 
