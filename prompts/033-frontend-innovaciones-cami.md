@@ -1,11 +1,11 @@
 # 033 — Plan frontend de innovaciones independientes (Cami)
 
-**Estado:** Plan listo para aprobación; aún no implementado.
+**Estado:** Demos frontend implementadas; integraciones operativas pendientes.
 **Fecha del relevamiento:** 2026-10-07
 **Responsable:** Cami (UI/UX + frontend)
 **Alcance autorizado:** solo frontend/demo para Timeline de NNyA y Alertas educativas.
 
-> Este documento reemplaza el estado operativo del plan anterior `prompts/018-frontend-innovaciones-cami.md` y no lo sobreescribe. Registra que el plan 033 es la versión vigente del trabajo de Cami.
+> Este documento reemplaza el plan `prompts/018-frontend-innovaciones-cami.md`, eliminado por obsoleto. `prompts/018-audit-log-real.md` conserva su número y no está relacionado con este plan.
 
 ## 1. Objetivo
 
@@ -19,7 +19,7 @@ No se avanza sobre ninguna otra innovación ni sobre integración externa.
 
 ## 2. Alcance autorizado
 
-### Implementar ahora
+### Demos implementadas
 
 1. Timeline de NNyA demo
    - Visualización cronológica ficticia dentro del detalle del NNyA.
@@ -33,15 +33,13 @@ No se avanza sobre ninguna otra innovación ni sobre integración externa.
    - Listado de ejemplos de alertas educativas con estado, fecha y descripción.
    - Estado React local; no persiste ni dispara mutations reales.
 
-### Esperar nuevas definiciones
+### Fuera del alcance actual
 
 3. Hito de 90 días
-   - Pendiente de decisión de Jordy.
-   - No se implementa como estado real ni persistido.
+   - No forma parte de estas demos ni se implementa como estado real o persistido.
 
 4. Estado “Verificado”
-   - Pendiente de decisión de Jordy.
-   - No se implementa ni se conoce aún la regla de negocio ni la presentación real.
+   - No forma parte de estas demos ni se implementa como estado persistido; la regla de negocio requiere definición.
 
 ### Eliminado del plan
 
@@ -86,12 +84,18 @@ Queda explícitamente fuera del alcance este plan:
 - `app/(dashboard)/reportes-senaf/page.tsx` y `app/(dashboard)/reportes-senaf/[id]/page.tsx` ya existen con módulo real de SENAF, aprobado por `prompts/027`.
 - El proyecto ya tiene `npm run test:unit` y `npm run lint`/`npm run build` disponibles.
 
-### No existe y queda pendiente
+### Funcionalidades reales que siguen pendientes
 
 - No existe un hito 90 real en la base ni en la UI.
 - No existe un estado “Verificado” persistido ni como valor del dominio.
-- No hay un flujo de RENAPER/Didit en la capa de frontend para Cami aún.
+- La pantalla y el flujo real de retiros con RENAPER/Didit no forman parte de estas demos.
 - No hay una estructura de alertas educativas operativas con ausencia escolar.
+
+Las demos de Timeline y alertas educativas descritas en este plan sí están implementadas en la rama. Esto no convierte sus fixtures en información real ni implica que existan las integraciones, reglas de negocio o persistencia operativas.
+
+### Definiciones necesarias para un timeline real
+
+El relevamiento anterior mencionó como posibles fuentes `legajos`, `intervenciones`, `incidentes`, `diagnosticos`, `vinculos_tutela` y `nnya.fecha_egreso`. Son candidatas para evaluar, no fuentes aprobadas ni conectadas por la demo. Antes de construir un timeline real, el equipo debe definir qué eventos se incluyen, cómo se comparan y ordenan sus fechas, cómo tratar datos faltantes y qué reglas de privacidad y acceso aplican. La fixture actual no resuelve esas decisiones.
 
 ## 5. Decisiones ya tomadas
 
@@ -109,23 +113,24 @@ Queda explícitamente fuera del alcance este plan:
 - El trabajo es local, no requiere cambios en Supabase ni migraciones.
 - El estado demo será local al componente, sin query keys ni invalidación de cache.
 
-## 7. Archivos a crear
+## 7. Archivos implementados
 
 - `components/entities/nnya/TimelineNnyaDemo.tsx`
 - `components/entities/alertas/AlertasEducativasDemo.tsx`
+- `components/entities/nnya/timeline-demo-data.ts`
+- `components/entities/alertas/alertas-educativas-demo-data.ts`
+- `tests/unit/innovacion1-demo.test.ts` — comprueba las fixtures y sus propiedades; no renderiza componentes React.
 
-Opcionalmente, si hiciera falta ajustar una composición reutilizable de UI, se podrá crear un helper pequeño local, pero sin mover lógica del dominio ni tocar hooks reales.
-
-## 8. Archivos a modificar
+## 8. Archivos modificados
 
 - `app/(dashboard)/nnya/[id]/page.tsx`
 - `app/(dashboard)/alertas/page.tsx`
 
-Se evita tocar cualquier otra pantalla o flujo operativo. Si se requiere un ajuste de estilo muy puntual, se hará con el menor alcance posible.
+La demo de retiros está documentada e implementada por separado en `prompts/034-frontend-demo-retiros-innovacion-1.md`; no amplía el alcance de este plan. No se modificaron hooks de negocio, endpoints, base de datos, tipos ni políticas para implementar estas demos.
 
-## 9. Requisitos de implementación
+## 9. Requisitos satisfechos por las demos
 
-### 9.1 Timeline de NNyA
+### 9.1 Timeline de NNyA demo
 
 - Insertar una sección claramente demarcada en el detalle del NNyA.
 - El mensaje debe dejar en claro que es una demostración: “Demostración — datos ficticios; no representa el historial real de este NNyA.”
@@ -182,64 +187,44 @@ Se evita tocar cualquier otra pantalla o flujo operativo. Si se requiere un ajus
 
 ## 12. Pruebas
 
-### Unitarias / componentales
-
-Si existe convención clara en el repo, se agregan pruebas mínimas para:
-- Timeline renderiza.
-- La marca de demostración aparece.
-- Se renderizan los eventos ficticios.
-- El orden es cronológico.
-- El componente no requiere datos de Supabase.
-
-Para alertas educativas demo:
-- El formulario renderiza.
-- Permite cargar una ausencia local.
-- La ausencia aparece en la UI.
-- No se llama a mutación real.
-- Las fixtures demo están separadas de las alertas reales.
+`tests/unit/innovacion1-demo.test.ts` comprueba propiedades de las fixtures (orden cronológico, textos ficticios, estados de verificación y campos de demostración). No contiene pruebas de renderizado React ni de interacción del formulario; esos comportamientos requieren verificación manual.
 
 ### Validación del repo
 
-Se ejecutarán las validaciones reales del proyecto después de la aprobación del plan y solo si se implementa el código:
-- `npm run test:unit`
-- `npx tsc --noEmit`
-- `npm run build`
-- `npm run lint` (si existe)
+Resultados ejecutados el 12/10/2026:
+- `npm run test:unit`: pasó, 30/30.
+- `npx tsc --noEmit`: pasó.
+- `npm run build`: pasó; Next.js advirtió que detectó múltiples lockfiles y eligió `C:\Users\Admin\package-lock.json` como raíz.
+- `npm run lint`: falló globalmente con 83 errores y 9 warnings, en su mayoría existentes y no relacionados con estas demos.
+- ESLint directo sobre los archivos nuevos de demo y su prueba: pasó sin errores.
 
 ## 13. Riesgos y dependencias
 
 - El mayor riesgo es mezclar la demo con datos reales del sistema.
-- Si se quiere un 90 real o un “Verificado” real, la decisión corresponde a Jordy y a trabajo backend/modelo.
+- Las propuestas de una demo SENAF, un hito de 90 días y un estado “Verificado” del plan anterior no pertenecen al alcance vigente.
 - La falta de definición de políticas de negocio para alertas educativas puede llevar a una demo demasiado “inventada”; por eso debe quedar claramente marcada como ficticia.
-- La integración con Didit/Renaper no corresponde a Cami todavía.
+- La integración real con Didit/RENAPER permanece fuera del alcance y depende de decisiones y contratos confirmados por el equipo.
 
-## 14. Estado final de implementación
+## 14. Estado de implementación
 
-El alcance final de esta tarea, si se aprueba el plan, será:
-- Timeline demo en `/nnya/[id]`.
-- Alertas educativas demo en `/alertas`.
-- Todo lo demás queda fuera del alcance y documentado como pendiente.
+Implementado:
+- Timeline ficticio en `/nnya/[id]`.
+- Formulario local y ejemplos ficticios de alertas educativas en `/alertas`.
 
-## 15. Requisito de aprobación
+Las integraciones reales, la persistencia y las reglas de negocio siguen pendientes y no son parte de estas demos.
 
-Conforme a `AGENTS-WEB.md`, este plan requiere aprobación explícita del líder antes de cualquier modificación de código.
+## 15. Aprobación y alcance
 
-**Estado de aprobación requerido:** “✓ Aprobado” o “✕ Cambiar X”.
-
-Sin esa aprobación, no se implementa código.
+La implementación de las demos no autoriza ampliar su alcance a funcionalidades reales. Cualquier cambio de negocio, persistencia o integración debe seguir el proceso de aprobación vigente en `AGENTS-WEB.md`.
 
 ## 16. Pendientes del equipo
 
-- Jordy: confirmar el alcance de 90 días y “Verificado”.
-- Sofi: definir modelo de datos y endpoints para dependencias futuras.
-- Meli: preparar integraciones y testing si corresponde.
-- Cami: solo implementa frontend demo y no se expande más allá de la demo.
+- Definir las fuentes, tipos de eventos, orden, privacidad y manejo de datos faltantes antes de desarrollar un timeline real.
+- Definir captura, catálogo, reglas y persistencia antes de implementar alertas educativas operativas.
+- Mantener cualquier desarrollo real de Didit/RENAPER sujeto a un contrato confirmado y a decisiones de producto.
 
 ## 17. Estado del plan
 
-- Timeline: implementable como demo frontend sin backend.
-- Alertas educativas: implementable como demo frontend sin backend.
-- 90 días: pendiente de decisión.
-- Verificado: pendiente de decisión.
-- SENAF: eliminado del alcance porque ya está implementado.
-- RENAPER/Didit: fuera de alcance para Cami hasta que Sofi/Meli completan dependencias.
+- Timeline y alertas educativas: demos frontend implementadas con datos ficticios, sin persistencia operativa.
+- SENAF demo, hito de 90 días y estado “Verificado”: fuera del alcance actual.
+- RENAPER/Didit y cualquier flujo real de retiros: fuera de este plan y pendientes de definiciones e integración.
