@@ -2,7 +2,7 @@
 
 import { use } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { legajoCierreSchema, type LegajoCierreValues, type LegajoFormValues } from '@/lib/validations/legajos.schema'
@@ -11,13 +11,12 @@ import { AccessGuard } from '@/components/shared/AccessGuard'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { FormField } from '@/components/ui/form'
 import { ChevronLeft, Lock, LayoutDashboard, AlertTriangle, CalendarClock, FileText, Activity, Archive, Pencil, Briefcase, Shield } from 'lucide-react'
 import { useLegajo } from '@/hooks/legajos/useLegajo'
-import { useCerrarLegajo, useUpdateLegajoDatos } from '@/hooks/legajos/useUpdateLegajo'
+import { useArchivarLegajo, useCerrarLegajo, useUpdateLegajoDatos } from '@/hooks/legajos/useUpdateLegajo'
 import { useIncidentesByLegajo } from '@/hooks/incidentes/useIncidentesByLegajo'
 import { useIntervencionesByNnya } from '@/hooks/intervenciones/useIntervencionesByNnya'
 import { useAlertasByNnya } from '@/hooks/alertas/useAlertasByNnya'
@@ -52,6 +51,14 @@ function formatFecha(fecha: string | null) {
   catch { return fecha }
 }
 
+// Un legajo cerrado se puede archivar 12 meses después del cierre (prompts/037).
+function fechaArchivable(fechaCierre: string | null): Date | null {
+  if (!fechaCierre) return null
+  const d = new Date(fechaCierre + 'T00:00:00')
+  d.setFullYear(d.getFullYear() + 1)
+  return d
+}
+
 function TabBadge({ count }: { count: number }) {
   if (count === 0) return null
   return (
@@ -78,6 +85,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
 
   const { data: legajo, isLoading } = useLegajo(id)
   const cerrar = useCerrarLegajo()
+  const archivar = useArchivarLegajo()
   const actualizarDatos = useUpdateLegajoDatos()
   const [openCierre, setOpenCierre] = useState(false)
   const [openEditar, setOpenEditar] = useState(false)
@@ -94,7 +102,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
   const { data: diagnosticos = [] } = useDiagnosticosByLegajo(id)
   const { data: medicamentos = [] } = useMedicamentosByLegajo(id)
 
-  const { register, handleSubmit, control, reset, formState: { errors } } = useForm<LegajoCierreValues>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<LegajoCierreValues>({
     resolver: zodResolver(legajoCierreSchema),
     defaultValues: { estado: 'cerrado', motivo_cierre: '' },
   })
@@ -121,12 +129,28 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
     }
   }
 
+  const onArchivar = async () => {
+    if (!legajo) return
+    try {
+      await archivar.mutateAsync({ id, nnyaId: legajo.nnya_id })
+      toast({ title: 'Legajo archivado', variant: 'success' })
+    } catch (e) {
+      toast({ title: 'No se puede archivar el legajo', description: (e as Error).message, variant: 'destructive' })
+    }
+  }
+
   if (isLoading) return <div className="p-8 text-slate-500">Cargando...</div>
   if (!legajo) return <div className="p-8 text-slate-500">Legajo no encontrado</div>
 
   const nnya = legajo.nnya as any
   const legajoActivo = legajo.estado === 'activo'
   const alertasPendientes = alertas.filter((a) => a.estado === 'pendiente' || a.estado === 'en_proceso').length
+  // Indicador "Incidente pendiente": alerta de incidente grave sin resolver (prompts/037)
+  const incidentePendiente = alertas.some(
+    (a) => a.tipo === 'incidente' && (a.estado === 'pendiente' || a.estado === 'en_proceso'),
+  )
+  const archivableDesde = fechaArchivable(legajo.fecha_cierre)
+  const puedeArchivar = legajo.estado === 'cerrado' && !!archivableDesde && archivableDesde <= new Date()
 
   return (
     <div className="flex flex-col h-full">
@@ -141,6 +165,9 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
             <div className="flex items-center gap-3 flex-wrap">
               <h1 className="text-xl font-semibold text-slate-900">Legajo {legajo.numero_legajo}</h1>
               {estadoBadge(legajo.estado)}
+              {incidentePendiente && (
+                <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Incidente pendiente</Badge>
+              )}
             </div>
             {nnya && (
               <p className="text-sm text-slate-500 mt-0.5">
@@ -163,6 +190,21 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
                 <Button variant="destructive" size="sm" onClick={() => setOpenCierre(true)}>
                   <Lock className="h-4 w-4 mr-1.5" />Cerrar legajo
                 </Button>
+              </div>
+            </AccessGuard>
+          )}
+
+          {legajo.estado === 'cerrado' && (
+            <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
+              <div className="flex flex-col items-end gap-1 shrink-0">
+                <Button variant="outline" size="sm" onClick={onArchivar} disabled={!puedeArchivar || archivar.isPending}>
+                  <Archive className="h-4 w-4 mr-1.5" />{archivar.isPending ? 'Archivando...' : 'Archivar'}
+                </Button>
+                {!puedeArchivar && archivableDesde && (
+                  <span className="text-xs text-slate-400">
+                    Se puede archivar desde el {format(archivableDesde, 'dd/MM/yyyy', { locale: es })}
+                  </span>
+                )}
               </div>
             </AccessGuard>
           )}
@@ -212,7 +254,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
                   Este legajo se encuentra <strong>{legajo.estado}</strong>.
                   {legajo.estado === 'archivado'
                     ? ' Se encuentra en el archivo histórico — no se permiten modificaciones.'
-                    : ' No se pueden registrar nuevas actividades.'}
+                    : ' No admite modificaciones ni nuevos registros; se puede archivar 12 meses después del cierre.'}
                 </span>
               </div>
             )}
@@ -278,17 +320,9 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
         <DialogContent className="sm:max-w-md">
           <DialogHeader><DialogTitle>Cerrar legajo {legajo.numero_legajo}</DialogTitle></DialogHeader>
           <form onSubmit={handleSubmit(onCerrar)} className="space-y-4 pt-2">
-            <FormField label="Estado final" error={errors.estado?.message} required>
-              <Controller name="estado" control={control} render={({ field }) => (
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger><SelectValue placeholder="Seleccionar..." /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="cerrado">Cerrado — el NNyA puede reingresar</SelectItem>
-                    <SelectItem value="archivado">Archivado — pasa al archivo histórico</SelectItem>
-                  </SelectContent>
-                </Select>
-              )} />
-            </FormField>
+            <p className="text-sm text-slate-600">
+              El legajo pasa a <strong>cerrado</strong> y queda de solo lectura. Se puede archivar 12 meses después del cierre.
+            </p>
             <FormField label="Motivo de cierre" error={errors.motivo_cierre?.message} required>
               <Textarea {...register('motivo_cierre')} rows={4} placeholder="Describí el motivo del cierre..." />
             </FormField>

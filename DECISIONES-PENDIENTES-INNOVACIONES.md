@@ -29,6 +29,20 @@
 | D-16 | Innovación 1: qué pasa si se rechaza la validación de un referente | Sofi (trigger), Meli, Cami | El vínculo queda en `propuesto` hasta una validación `aprobado` |
 | D-17 | Referentes que retiran al NNyA en los encuentros progresivos | Proceso, Sofi | Se dan de alta como tutor autorizado tras la aprobación judicial (no cambia D-10) |
 | D-18 | Innovación 3: ¿seguimiento post-egreso siempre u opcional por orden judicial? | Sofi (#19), Cami (#25) | Siempre, pero diferenciado: tipo de egreso, orden judicial y remisión al Juzgado |
+| D-19 | Qué significa "Requiere revisión" (RNF-12) | Meli (#23), Sofi, Cami (#26) | Estado del trámite al agotar los 3 intentos: espera la decisión de un `Admin` |
+| D-20 | ¿3 sesiones vencidas o abandonadas habilitan el fallback? | Meli (#23), Sofi | Sí: 3 intentos agotados habilitan el fallback, sea cual sea el motivo |
+| D-21 | `max_retry_attempts` del workflow de Didit | Jordy (consola) | Al mínimo que acepte Didit, junto con el workflow v3 |
+| D-22 | ¿Prueba de vida en la verificación? | Jordy (consola), Meli (#23) | Sí, pasiva |
+| D-23 | Configuración de la consola de Didit | Jordy | Workflow v3, datos devueltos mínimos y retención de 30 días |
+| D-24 | Dispositivo de verificación | Cami (#26), Meli | Celular del adulto por QR; tablet de la residencia como respaldo |
+| D-25 | Texto de consentimiento (Ley 25.326) | Meli, Cami | Borrador ahora, revisión legal antes de usar datos reales |
+| D-26 | ¿Qué pasa si el adulto no acepta el consentimiento? | Sofi (#18), Meli (#23), Cami (#26) | Verificación manual por un `Admin`, auditada y con motivo |
+| D-27 | Validez de la sesión de Didit | Jordy (consola), Cami | 1 hora (antes 7 días) |
+| D-28 | Datos devueltos de la verificación de ID (corrige D-13) | Meli (#23) | Didit manda todo; el webhook filtra con lista cerrada |
+| D-29 | Innovación 4: quién firma el egreso | Sofi, Cami, Meli | 3 firmas (Dirección, legal, técnica) sin roles nuevos; la base no deja cerrar sin las 3 |
+| D-30 | Innovación 6: umbral de ausencias escolares | Sofi, Cami, Meli | 3 injustificadas en 30 días corridos, carga manual, alerta por trigger |
+| D-31 | Innovación 8: proveedor de calendario | Cami, Meli | Exportar `.ics` con datos mínimos, sin OAuth |
+| D-32 | Seguridad: protección contra contraseñas filtradas | Jordy | No se activa (requiere plan Pro); riesgo aceptado mientras el alta la haga solo un `Admin` |
 
 D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
@@ -244,6 +258,165 @@ Se suma al hito de 90 días (D-8) en la misma migración de Sofi (#19). En la ex
 **A resolver en el plan de Sofi:**
 - Dónde vive el campo de orden judicial: en `nnya` (una vez por egreso) o en cada fila de `seguimiento_post_egreso`.
 - Qué hacer con los egresos que ya existen, que no tienen tipo: el `CHECK` no puede romper esas filas. Opciones: permitir `NULL` solo para egresos anteriores a la migración, o que un `Admin` los complete antes de aplicarla.
+
+---
+
+## D-19 a D-21 — Revisión de Meli del relevamiento de la innovación 1 (resueltas el 2026-10-09)
+
+**Contexto:** Meli revisó el relevamiento de la innovación 1 (documento compartido del 08/10) y pidió 6 ajustes. Jordy los aceptó todos. Tres solo precisan decisiones anteriores:
+
+- **RF20 a RF22:** `retiros` no guarda el resultado de identidad ni la cantidad de intentos, porque salen de `sesiones_didit` (Plan 028). El retiro pasa de `en_curso` a `realizada` o `rechazada`, con `motivo_rechazo` cuando corresponde. `resultado_autorizacion` usa los valores del Plan 028: `pendiente`, `autorizada` y `rechazada`.
+- **Comparar el DNI (D-14):** el DNI esperado sale de `tutores.dni` en el retiro y de `referentes.dni` en el alta de un referente.
+- **RNF-13 (D-1, D-12):** un error del proveedor o un timeout al crear la sesión no gasta intento. Meli corrige los casos D-01 e I-01 de `docs/testingManual/QA-DIDIT-RETIRO.md`.
+
+Los otros tres cambian o completan D-1:
+
+### D-19 — "Requiere revisión"
+
+Meli comprobó que Didit no emite `In Review` con `id_lookup`, así que con D-1 ese estado no aparecería nunca. Desde ahora, **"Requiere revisión" es el estado del trámite al agotar los 3 intentos** y significa que espera la decisión de un `Admin`.
+
+- No es un resultado de Didit: la última sesión sigue siendo "Identidad no verificada" y el mapeo de D-11 no cambia.
+- El fallback manual (D-2) se habilita desde "Requiere revisión" o desde "Error del proveedor".
+- "Error del proveedor" no pasa solo a "Requiere revisión": no gasta intento y se puede reintentar.
+
+### D-20 — Sesiones vencidas y fallback
+
+D-1 decía que el fallback "nunca" se habilita por una sesión vencida o abandonada, pero esas sesiones cuentan como intento. **3 intentos agotados habilitan el fallback aunque sean sesiones vencidas o abandonadas.** Una sola sesión vencida no lo habilita. El riesgo de abuso es bajo: el fallback lo hace solo un `Admin`, con motivo obligatorio y auditado.
+
+### D-21 — Reintentos del workflow de Didit
+
+`max_retry_attempts: 3` (reintento de la sesión completa dentro de los 7 días) agrega intentos que nuestro backend no ve. Baja **al mínimo que acepte Didit (0 si se puede)**, junto con la publicación del workflow v3 (`max_attempts: 1`, D-12). Cada intento es una sesión nueva que cuenta nuestro backend.
+
+### Respuestas de Meli aprobadas (2026-10-09)
+
+Jordy aprobó las respuestas de Meli a las preguntas abiertas del relevamiento. Quedan como requisitos de la innovación 1:
+
+- **Quién inicia la revinculación:** el `Equipo Tecnico` crea la sesión de Didit, solo un `Admin` pasa el vínculo a `vigente` y el educador solo ve el estado. En el sistema el educador también tiene el rol `Equipo Tecnico`, así que esto último es una regla del proceso, no un permiso.
+- **Consulta del estado:** manda el webhook. La pantalla consulta cada 3 a 5 segundos como respaldo, con un tope de 60 a 90 segundos; después muestra "Seguimos esperando" y un botón "Actualizar". La consulta nunca contradice un webhook ya recibido.
+- **Timeout al crear la sesión:** 15 segundos. Un solo reintento automático, solo ante fallas de red o errores 5xx de Didit; si vuelve a fallar, "Error del proveedor" (D-12). Sin reintentos ante 4xx.
+- **"Requiere revisión":** lo atiende solo un `Admin`, desde una lista de sesiones en revisión con el tutor o referente, el DNI, la fecha y el motivo. Desde ahí aprueba, rechaza o aplica el fallback (D-19).
+- **Borrado en Didit:** la sesión se borra apenas se guarda el resultado (RF-10, RNF-06/07). Los 30 días de retención (D-13) quedan como respaldo si el borrado falla.
+- **RNF del retiro:** RNF-01 a RNF-13 se aplican también al retiro, porque los dos flujos comparten `sesiones_didit` (D-5).
+- **Escenarios de error:** además de A a E y "el DNI no coincide": firma inválida (`401`); sesión desconocida o webhook duplicado (`200` sin escribir, D-4); timeout o error del proveedor al crear la sesión (D-12); DNI con formato inválido (`400`); sesión que vence sin resultado; falla al guardar en la base; DNI verificado distinto del esperado (D-14); revisión o coincidencia ambigua; varios intentos para la misma persona (D-3).
+
+---
+
+## D-22 a D-25 — Definiciones de Jordy para la innovación 1 (resueltas el 2026-10-09)
+
+Destraban RF05, RF08 y RF09 de la Práctica 3 y el diseño de Cami (#26).
+
+### D-22 — Prueba de vida
+
+Se agrega al workflow, **en su versión pasiva** (sin gestos). Cumple RF09 y RN-02 de la Práctica 3 y cierra el riesgo principal: hoy la selfie se compara con la foto de RENAPER, pero nada controla que sea una persona real frente a la cámara. El cambio que Didit hace solo en el borrador v3 (`skip_liveness_and_face_match` a `false`) pasa a ser el buscado. Hay que probar en sandbox cómo llega un rechazo por prueba de vida: si trae un motivo nuevo en `fallback_from.reason`, se suma al mapeo de D-11.
+
+### D-23 — Consola de Didit
+
+En una sola sesión: publicar el workflow v3 (`max_attempts: 1`, D-12, con la prueba de vida de D-22), bajar `max_retry_attempts` al mínimo (D-21), restringir los datos devueltos a `status`, `fallback_from` y `personal_number`, y bajar la retención a 30 días (D-13). Después, una sesión de prueba para confirmar que esos campos siguen llegando al webhook.
+
+### D-24 — Dispositivo
+
+El adulto verifica **con su propio celular, escaneando un QR**. Si no tiene celular o datos, usa **una tablet de la residencia**. La PC con webcam queda descartada: peor calidad de selfie, y Didit igual suele ofrecer pasar al celular. Para Cami: la pantalla muestra el QR y "esperando resultado"; en la tablet es el mismo flujo en otra pestaña.
+
+### D-25 — Consentimiento
+
+Se escribe un borrador ahora y lo revisa alguien con formación legal antes de usarlo con datos reales (requisito previo 2 de la Práctica 3: los datos biométricos y los de RENAPER son sensibles). El texto dice quién trata los datos (la residencia), para qué (verificar la identidad en el retiro o la revinculación), qué datos se usan (DNI, selfie y consulta a RENAPER a través de Didit, un proveedor del exterior), qué se guarda (solo el resultado; la sesión en Didit se borra apenas se registra) y los derechos de acceso, rectificación y supresión ante la Agencia de Acceso a la Información Pública.
+
+**Estado (09/10): cerrado.** Versión activa: v9 del workflow. Consulta a RENAPER (`max_attempts: 1`), prueba de vida pasiva (1 intento), `max_retry_attempts: 0`, búsqueda de rostros apagada, validez de la sesión de 1 hora (D-27), retención de 1 mes con la plantilla biométrica borrada junto con la sesión, USD 0,25 por sesión. Datos devueltos: ninguno de la prueba de vida y todos los de la verificación de ID (D-28). Probado con 4 sesiones de sandbox, borradas después.
+
+### D-26 — Si el adulto no acepta el consentimiento
+
+Para que el consentimiento sea libre, negarse no puede impedir el retiro ni la revinculación. Si el adulto no acepta, **la identidad se verifica a mano**:
+
+- Lo hace solo un `Admin`: compara el DNI físico con el registrado (`tutores.dni` o `referentes.dni`) y la foto del documento con la persona.
+- Queda auditado, con motivo obligatorio ("no aceptó el consentimiento") y método `manual`, para distinguirlo de una verificación con Didit.
+- No gasta intento, porque no hubo verificación.
+- Reusa el camino del fallback (D-2): no suma pantallas ni roles, solo un motivo nuevo.
+
+El riesgo es que se use para esquivar la biometría; lo acotan el rol `Admin` y la auditoría. Se suma al texto del consentimiento (D-25), a la migración de Sofi (motivo y método) y al contrato para Cami.
+
+### D-27 — Validez de la sesión
+
+Baja de 7 días a **1 hora**. La verificación se hace en el momento, con el adulto en la residencia; un link válido una semana es una ventana innecesaria.
+
+### D-28 — Datos devueltos de la verificación de ID (corrige D-13)
+
+**Hecho (pruebas en sandbox del 09/10):** con los datos de la verificación de ID restringidos, `fallback_from` llega `null` en los rechazos, aunque se tilden "Coincidencias" o "Campos adicionales"; ninguna casilla lo controla. Sin restricción vuelve completo (`{"reason":"no_match","method":"id_lookup","action":"decline"}`). Sin ese motivo no se puede cumplir D-12.
+
+**Decisión:** Didit manda **todos los datos de la verificación de ID** y la minimización se hace en nuestro webhook. La prueba de vida sigue sin devolver nada. Llegan también nombre, fecha de nacimiento, foto de RENAPER y, dentro de `id_lookup`, un link a la selfie (firmado, 4 horas). Condiciones para Meli (#23):
+
+1. El webhook valida con una lista cerrada (`zod`) y solo lee `status`, `fallback_from.reason` y `personal_number`.
+2. Nunca guarda el cuerpo crudo ni el objeto `decision`, y no loguea más que `session_id` y `status`.
+3. Se borra la sesión en Didit apenas se guarda el resultado (RF-10).
+4. Un test controla que ni la selfie ni el nombre lleguen a la base ni a los logs.
+
+Si Didit ofrece una forma de devolver solo `fallback_from`, se vuelve a restringir.
+
+---
+
+## D-29 a D-31 — Innovaciones 4, 6 y 8 (resueltas el 2026-10-10)
+
+Las tres estaban bloqueadas por decisión de Jordy (`PLAN-INTEGRACION-INNOVACIONES.md` § 1). Se eligió la opción recomendada en cada una.
+
+### D-29 — Innovación 4: firmas del egreso
+
+**Contexto:** el proceso 1.5 exige "aprobación del Informe de Egreso por Dirección" para pasar el legajo a Cerrado (`documentacion/procesos-del-negocio.md` § 5); la innovación pide tres firmas: Dirección, legal y técnica. El sistema tiene solo dos roles (`Admin` y `Equipo Tecnico`): no existen Director ni Abogado como roles.
+
+**Decisión:** tres firmas **sin roles nuevos**.
+
+- Tabla de aprobaciones del egreso (`aprobaciones_egreso` o similar) con `legajo_id`, `tipo` (`direccion`, `legal`, `tecnica`), `usuario_id`, fecha y observaciones; usuario y fecha los pone la base.
+- La firma de `direccion` la hace un `Admin`; `legal` y `tecnica`, usuarios de `Equipo Tecnico`. Tres personas distintas.
+- La base no deja cerrar el legajo sin las tres firmas: se suma al trigger de reglas de estado de `prompts/037`.
+- Mismo patrón que la firma doble de `turnos_personal`. No cambia el RBAC ni las políticas existentes.
+
+**Fuera de alcance:** la resolución judicial o administrativa de egreso que el proceso exige para menores, y la firma dual (Trabajador Social + Director) para resolver incidentes.
+
+**Destraba a:** Sofi (modelo y trigger), Cami (pantalla de las 3 firmas), Meli (QA).
+
+### D-30 — Innovación 6: umbral de ausencias escolares
+
+**Contexto:** no hay integración con escuelas ni fuente en los procesos que fije un umbral. La carga es manual.
+
+**Decisión:** alerta educativa al llegar a **3 inasistencias injustificadas en 30 días corridos**.
+
+- Tabla `ausencias_escolares` (`nnya_id`, fecha, justificada, motivo) con carga manual; reusar `alertas` no alcanza para alertar por acumulación.
+- Un trigger crea la alerta (`tipo = 'educativa'`, prioridad media), con el mismo patrón que `fn_crear_alerta_incidente_grave`, sin repetirla mientras haya una pendiente para el mismo NNyA.
+- Es un umbral conservador para detectar temprano; se puede ajustar con el uso real.
+
+**Destraba a:** Sofi (tabla y trigger), Cami (formulario de carga), Meli (QA).
+
+### D-31 — Innovación 8: calendario
+
+**Contexto:** una integración OAuth (Google o Microsoft) obliga a guardar tokens del lado servidor y a decidir qué datos de turnos médicos de menores salen a un servicio externo.
+
+**Decisión:** **exportar `.ics`, sin OAuth.**
+
+- Botón "Agregar a mi calendario" en turnos y reuniones de evaluación que descarga un `.ics` generado en el cliente; funciona con Google, Outlook y Apple.
+- Datos mínimos: fecha, hora, lugar y las iniciales del NNyA; nunca diagnóstico ni motivo médico.
+- Sin tokens, sin secretos y sin tabla nueva.
+
+**Fuera de alcance:** la sincronización automática. Se reevalúa si la residencia confirma qué cuentas usa.
+
+**Destraba a:** Cami (botón y generación del `.ics`), Meli (QA).
+
+---
+
+## D-32 — Protección contra contraseñas filtradas (resuelta el 2026-10-12)
+
+**Contexto:** el advisor `auth_leaked_password_protection` de Supabase recomienda rechazar contraseñas que aparecen en filtraciones conocidas (HaveIBeenPwned). Al intentar activarla, Supabase respondió: *"Configuring leaked password protection via HaveIBeenPwned.org is available on Pro Plans and up"*. El proyecto está en el plan Free.
+
+Verificado en el código de `master` el 12/10:
+
+- Los usuarios los crea solo un `Admin`, desde `app/api/usuarios/route.ts` (chequea `get_my_role` antes de llamar a `auth.admin.createUser`).
+- La web no tiene registro público ni pantalla para que un usuario cambie o recupere su contraseña (sin `signUp`, `updateUser` ni `resetPasswordForEmail`).
+- `lib/validations/usuarios.schema.ts` exige 8 caracteres como mínimo.
+
+**Decisión:** **no se activa y se acepta el riesgo** por ahora.
+
+- La contraseña la elige el `Admin` al dar el alta, no el usuario, así que el control queda en una sola persona.
+- Se activa si el proyecto pasa al plan Pro.
+- Queda junto con MFA y el rate limiting como objetivo de seguridad no implementado (`AGENTS.md` § Seguridad).
+
+**Alternativa descartada por ahora:** consultar HaveIBeenPwned desde `app/api/usuarios` antes de crear el usuario (k-anonymity, sin dependencias). Se puede retomar si se agrega una pantalla de cambio de contraseña o el registro deja de ser solo del `Admin`.
 
 ---
 
