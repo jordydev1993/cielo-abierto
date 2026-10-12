@@ -36,8 +36,13 @@ export default function TutoresPage() {
     try {
       await deleteMutation.mutateAsync(toDelete.id)
       toast({ title: 'Tutor eliminado', variant: 'success' })
-    } catch (e: any) {
-      toast({ title: 'Error al eliminar', description: e.message, variant: 'destructive' })
+    } catch (e) {
+      const err = e as { code?: string; message?: string }
+      // 23503: el tutor tiene NNyA asignados (nnya_tutores.tutor_id es RESTRICT, prompts/036)
+      const description = err.code === '23503'
+        ? 'El tutor tiene NNyA asignados. Desasignalo de cada NNyA antes de eliminarlo.'
+        : err.message
+      toast({ title: 'No se puede eliminar', description, variant: 'destructive' })
     } finally {
       setToDelete(null)
     }
