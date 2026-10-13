@@ -1,4 +1,4 @@
-﻿# PLAN: QA / Testing del flujo de retiro con validación de identidad (Didit)
+# PLAN: QA / Testing del flujo de retiro con validación de identidad (Didit)
 
 ## Objetivo
 
@@ -61,7 +61,7 @@ corrida 3:  14 passed (1.0s)
 **Estado por caso:**
 
 - **K-01a — EJECUTADO Y APROBADO** a nivel de función (`verifyDiditSignature`).
-- **K-02 — EJECUTADO Y APROBADO**. Ventana anti-replay de 300s parcial/capa pura verificada en el borde.
+- **K-02 — EJECUTADO Y APROBADO**. Ventana anti-replay de 300s verificada en el borde.
 
 **Observación conservada de K-02.3 (sin tocar la implementación):** el caso `X-Timestamp` de hace 299s es sensible a ±1s. Si el event loop se demorara 2s entre que el test calcula el timestamp y que `verifyDiditSignature` lee `Date.now()`, la diferencia pasa a 301s y el caso falla. En 3 corridas consecutivas no ocurrió (el intervalo real es de microsegundos). Queda documentado **en el propio test**: si fallara, el arreglo es subir el número a 290 (sigue dentro de la ventana), **nunca** tocar la implementación. K-02.2 (301s) es determinista en la dirección segura, porque el reloj solo puede hacer crecer la diferencia.
 
@@ -82,12 +82,12 @@ corrida 3:  14 passed (1.0s)
 ## Contexto
 
 - **Rol:** Meli — QA/Testing, integraciones backend, integración Didit.
-- **Estado real parcial/capa pura verificada de la integración Didit** (inspección de código, 2026-09-29):
+- **Estado real verificado de la integración Didit** (inspección de código, 2026-09-29):
   - **Capa de seguridad 100% completa y deployada:** `app/api/didit/webhook/route.ts` (51 líneas), `lib/didit/verify-signature.ts` (función pura), `lib/validations/didit-webhook.schema.ts`, excepción en `proxy.ts:35`.
   - **Capa de negocio 0%:** no existe tabla `retiros`, ni tabla de sesiones de verificación Didit, ni campo "autorizado a retirar". La lógica de negocio es el comentario `// TODO(Meli):` en `route.ts:41-48`.
   - **0 de 4 escenarios del PDF §6 (A–D) son ejecutables hoy.**
-- **Playwright:** instalado y configurado a medias (plan `prompts/027`, sin commitear). `playwright.config.ts` **no tiene `webServer`** y los 4 specs existentes fallan con `net::ERR_CONNECTION_REFUSED` (parcial/capa pura verificada en `test-results-summary.txt`). Además, **con servidor levantado hay 6 asserts que fallan de verdad** (4 en `tests/02`, 2 en `tests/03`), y su corrección requiere una decisión funcional previa (R-12). Ver [§12](#12-análisis-de-viabilidad-de-e-3--2026-09-29).
-- **Entorno:** este checkout **no tiene ningún archivo `.env*`**. No hay `NEXT_PUBLIC_SUPABASE_*` ni `DIDIT_*`. parcial/capa pura verificada empíricamente (ver "Supuesto 3").
+- **Playwright:** instalado y configurado a medias (plan `prompts/027`, sin commitear). `playwright.config.ts` **no tiene `webServer`** y los 4 specs existentes fallan con `net::ERR_CONNECTION_REFUSED` (verificado en `test-results-summary.txt`). Además, **con servidor levantado hay 6 asserts que fallan de verdad** (4 en `tests/02`, 2 en `tests/03`), y su corrección requiere una decisión funcional previa (R-12). Ver [§12](#12-análisis-de-viabilidad-de-e-3--2026-09-29).
+- **Entorno:** este checkout **no tiene ningún archivo `.env*`**. No hay `NEXT_PUBLIC_SUPABASE_*` ni `DIDIT_*`. Verificado empíricamente (ver "Supuesto 3").
 - **Dependencia externa:** Sofi no cerró el modelo de datos. `TAREAS-PENDIENTES-DIDIT-POR-INTEGRANTE.md:47` lo confirma a 2026-09-13 y las 38 migraciones lo corroboran (no existe `retiros`).
 
 ### Decisiones tomadas por Meli (2026-09-29) que este plan respeta
@@ -130,9 +130,9 @@ corrida 3:  14 passed (1.0s)
 
 ## Supuestos
 
-1. `lib/didit/verify-signature.ts` es **función pura**: recibe el secreto como parámetro, no lee `process.env`, no importa Supabase, no toca red. Por eso es testeable en aislamiento sin servidor ni entorno. **parcial/capa pura verificada por lectura línea por línea.**
+1. `lib/didit/verify-signature.ts` es **función pura**: recibe el secreto como parámetro, no lee `process.env`, no importa Supabase, no toca red. Por eso es testeable en aislamiento sin servidor ni entorno. **Verificado por lectura línea por línea.**
 2. La lógica de negocio que se agregará al webhook **no está escrita** y no se puede escribir sin el modelo de datos. Este plan no la anticipa.
-3. **parcial/capa pura verificada empíricamente (2026-09-29):** `next dev` arranca sin variables de Supabase ("Ready in 1001ms"), pero **toda** request que matchea el `matcher` de `proxy.ts:52-55` —incluido `/api/didit/webhook`— falla con `500` en `proxy.ts:7`:
+3. **Verificado empíricamente (2026-09-29):** `next dev` arranca sin variables de Supabase ("Ready in 1001ms"), pero **toda** request que matchea el `matcher` de `proxy.ts:52-55` —incluido `/api/didit/webhook`— falla con `500` en `proxy.ts:7`:
    ```
    Error: Your project's URL and Key are required to create a Supabase client!
        at proxy (proxy.ts:7:38)
@@ -190,7 +190,7 @@ Ningún otro archivo se toca en esta etapa.
 | `tests/unit/didit-signature.test.ts` | Crear | E-2 | ✅ **Creado** (migrado desde Playwright el 2026-10-05) |
 | `tests/06-didit-webhook-contract.test.ts` | Crear | E-4 | ⏳ Pendiente de entorno |
 | `playwright.config.ts` | Modificar (agregar `webServer`, `projects`) | E-3 | ⏳ Pendiente de entorno (ver §12) |
-| `.gitignore` | Modificar (agregar `playwright-report/`, `test-results/`, `dev.log`, `test-output.txt`, `test-results-summary.txt`) | E-3 | ✅ **Hecho y parcial/capa pura verificada** |
+| `.gitignore` | Modificar (agregar `playwright-report/`, `test-results/`, `dev.log`, `test-output.txt`, `test-results-summary.txt`) | E-3 | ✅ **Hecho y verificado** |
 | `tests/01`–`04` | Modificar (asserts de contenido de `02`/`03`) | E-3 | 🚧 **Bloqueado por R-12** |
 
 ---
@@ -199,7 +199,7 @@ Ningún otro archivo se toca en esta etapa.
 
 ### Para la etapa E-2 ✅ IMPLEMENTADA (era lo único ejecutable hoy)
 
-> **Estado:** los 12 items de esta lista están implementados y parcial/capa pura verificadas en `tests/unit/didit-signature.test.ts` (14 tests: 9 de K-01a + 5 de K-02). Ver [§ Estado de ejecución](#estado-de-ejecución).
+> **Estado:** los 12 items de esta lista están implementados y verificados en `tests/unit/didit-signature.test.ts` (14 tests: 9 de K-01a + 5 de K-02). Ver [§ Estado de ejecución](#estado-de-ejecución).
 
 1. Tests con el runner de Playwright **sin** fixtures de navegador ni de página (tests de función pura). Sin `webServer` en la config.
 2. El secreto de prueba se define como **constante ficticia dentro del archivo de test** (ej. `'test-secret-not-a-real-credential'`). No se lee de `process.env`, no se versiona ninguna credencial real, no se agrega al `.env*`.
@@ -323,7 +323,7 @@ Los 14 tests de `tests/unit/didit-signature.test.ts` son **automatizados** (camp
 | R-2 | **Corregido el 2026-09-29.** No hay "3 asserts incorrectos": hay **6 asserts que fallan de verdad** — 4 en `tests/02-nav-roles.test.ts:17,19,20,21` y 2 en `tests/03-dashboard-kpis.test.ts:19,20`. El tercero que el plan señalaba (`tests/04-auth-flow.test.ts:32`) **NO falla**. Detalle y decisión pendiente en [§12](#12-análisis-de-viabilidad-de-e-3--2026-09-29) | `tests/02`, `tests/03`, `tests/04` |
 | R-3 | **Ampliado el 2026-09-29.** No es solo el webhook: `proxy.ts:7` ejecuta `createServerClient` para **toda** request que matchea `proxy.ts:52-55`, y el constructor lanza sincrónicamente si falta URL o key. Sin `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`, **`/`, `/login` y `/dashboard` devuelven 500**. No hay ninguna página alcanzable → los 8 tests no-skippeados de 01–04 son **todos** verificables solo con esas variables. Para el webhook, el 500 ocurre antes de validar la firma | `proxy.ts:7` |
 | R-4 | El criterio CA-5 de `prompts/016` ("sin `DIDIT_WEBHOOK_SECRET` → 500") **es inalcanzable** si tampoco faltan las vars de Supabase: el middleware falla antes. Mismo código de salida, distinto camino | `app/api/didit/webhook/route.ts:6-9` |
-| R-5 | ✅ **RESUELTO el 2026-09-29.** `.gitignore` ahora ignora `playwright-report/`, `test-results/`, `dev.log`, `test-output.txt` y `test-results-summary.txt`. parcial/capa pura verificada con `git check-ignore -v` sobre las 5 rutas (exit 0). Ninguna regla previa modificada | `.gitignore:15,16,34,35,36` |
+| R-5 | ✅ **RESUELTO el 2026-09-29.** `.gitignore` ahora ignora `playwright-report/`, `test-results/`, `dev.log`, `test-output.txt` y `test-results-summary.txt`. Verificado con `git check-ignore -v` sobre las 5 rutas (exit 0). Ninguna regla previa modificada | `.gitignore:15,16,34,35,36` |
 | R-6 | `tsconfig.json:33` excluye `tests` del type-check → los tests no los valida `tsc --noEmit` | `tsconfig.json:33` |
 | R-7 | `@playwright/test ^1.63.0` en `dependencies` y `playwright ^1.60.0` en `devDependencies`, versiones divergentes | `package.json` |
 | R-8 | `next dev` advierte que infiere mal el workspace root por múltiples `package-lock.json` (`C:\Users\melan\package-lock.json`) | consola de Next |
@@ -392,7 +392,7 @@ Texto realmente presente en `/login` — `app/(auth)/layout.tsx` y `app/layout.t
 | ✅ **IMPLEMENTABLE Y VERIFICABLE AHORA** | **2. `.gitignore`** | Agregar las 5 rutas. Verificable al 100% hoy con `git check-ignore -v`, sin env y sin navegador. Riesgo cero: `.gitignore:39` ya cubre `.env*` y `:56-57` ya tiene `*.sql` con su excepción, así que no hay conflicto. **Es el único ítem de E-3 cerrable por completo hoy.** → **HECHO 2026-09-29** |
 | ⚠️ **IMPLEMENTABLE, VERIFICABLE PARCIALMENTE** | **1. `webServer` en `playwright.config.ts`** | Se puede escribir (es config, no app). Verificable parcialmente: se comprueba que Playwright levanta el server en vez de dar `ERR_CONNECTION_REFUSED`. **No** es verificable que algún test pase. **Efecto adverso:** hoy los tests fallan rápido y con error legible; con `webServer` pero sin env, `next dev` arranca, cada request da 500 y los 8 tests mueren por timeout de assert (30s c/u con `fullyParallel: true`) → varios minutos de ruido inútil. Es un modo de fallo **peor**, no mejor |
 | 🚧 **BLOQUEADO POR DECISIÓN** | **3b. Los 6 asserts de 02/03** | Ver R-12 y §12.4. **No se tocan** |
-| 🔹 **NO-OP (cerrado)** | **4. Import relativo en vez de alias `@/`** | parcial/capa pura verificada por grep: `tests/01`–`04` **no tienen ningún import de `@/`**, solo importan de `@playwright/test`. Con la migración a `node:test` esto dejó de ser opcional: el type-stripping nativo de Node **no resuelve el alias `@/`**, así que el import debe ser relativo y **con extensión `.ts`** (`../../lib/didit/verify-signature.ts`), que es lo que habilita el `allowImportingTsExtensions` que el master agregó a `tsconfig.json` |
+| 🔹 **NO-OP (cerrado)** | **4. Import relativo en vez de alias `@/`** | Verificado por grep: `tests/01`–`04` **no tienen ningún import de `@/`**, solo importan de `@playwright/test`. Con la migración a `node:test` esto dejó de ser opcional: el type-stripping nativo de Node **no resuelve el alias `@/`**, así que el import debe ser relativo y **con extensión `.ts`** (`../../lib/didit/verify-signature.ts`), que es lo que habilita el `allowImportingTsExtensions` que el master agregó a `tsconfig.json` |
 | 🔹 **MENOR PRIORIDAD** | **3a. Borrar los 3 `const url = page.url()` muertos** | Implementable y sin riesgo, pero su único efecto observable son *warnings* de `@typescript-eslint/no-unused-vars`, y el lint global ya está rojo con 85 errores (R-11), así que no es demostrable. Diferido |
 
 ### 12.4 R-12 — Decisión funcional pendiente (bloquea los asserts de 02/03)
@@ -413,13 +413,13 @@ Se evaluó **fabricar variables de Supabase falsas** vía `webServer.env` (sin `
 1. Implica escribir una URL y una key ficticias en un archivo versionado, lo que choca con la regla de no versionar credenciales y crea un precedente que después hay que distinguir de las reales.
 2. Aun si funcionara, solo destrabaría los tests de redirect: los 6 asserts de contenido de sidebar seguirían fallando porque necesitan una sesión real con rol.
 
-No es un atajo, es una vía muerta parcial. **No parcial/capa pura verificada empíricamente**, así que no se afirma que sea imposible: se afirma que no se recomienda.
+No es un atajo, es una vía muerta parcial. **No verificado empíricamente**, así que no se afirma que sea imposible: se afirma que no se recomienda.
 
 ### 12.6 Estado de E-3 tras esta sesión
 
 | Ítem | Estado |
 |---|---|
-| 2. `.gitignore` | ✅ **COMPLETADO y parcial/capa pura verificada** |
+| 2. `.gitignore` | ✅ **COMPLETADO y VERIFICADO** |
 | 1. `webServer` | ⏳ Pendiente — se recomienda **no** hacerlo hasta tener env |
 | 3b. Asserts de 02/03 | 🚧 **Bloqueado** por R-12 |
 | 3a. `const url` muertos | 🔹 Diferido, sin valor demostrable |
@@ -441,10 +441,10 @@ No es un atajo, es una vía muerta parcial. **No parcial/capa pura verificada em
 - [x] **Esperar "✓ Aprobado"**
 - [x] Etapa E-2: implementar los tests de firma en `tests/unit/didit-signature.test.ts` — ✅ **14/14 passed** vía `npm run test:unit`, `eslint` y `tsc` del archivo limpios, `npm run build` verde. Lint global con 85 errores preexistentes (R-11), no corregidos.
   - [x] K-01a completado y aprobado a nivel de función
-  - [x] K-02 completado y aprobado (ventana anti-replay 300s parcial/capa pura verificada en el borde)
+  - [x] K-02 completado y aprobado (ventana anti-replay 300s verificada en el borde)
   - [x] Observación de K-02.3 (±1s) documentada en el test, sin tocar la implementación
 - [ ] Etapa E-3: reparar `playwright.config.ts` + `.gitignore` + asserts — 🚧 **parcial, BLOQUEADA por entorno**
-  - [x] `.gitignore`: 5 rutas agregadas y parcial/capa pura verificadas con `git check-ignore -v` (R-5 cerrado)
+  - [x] `.gitignore`: 5 rutas agregadas y verificadas con `git check-ignore -v` (R-5 cerrado)
   - [x] Análisis de viabilidad documentado sin env → §12
   - [x] Ítem 4 (import relativo) confirmado **no-op**: `tests/01`–`04` no usan `@/`
   - [ ] Ítem 1 (`webServer`): ⏳ diferido — empeora el modo de fallo mientras no haya env
