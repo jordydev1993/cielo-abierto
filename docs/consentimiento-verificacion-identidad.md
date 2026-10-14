@@ -1,10 +1,14 @@
 # Consentimiento — verificación de identidad con Didit (innovación 1)
 
-**Estado:** borrador del 14/10/2026 (D-25). **Antes de usarlo con datos reales lo tiene que revisar alguien con formación legal** (requisito previo 2 de la Práctica 3: los datos biométricos y los de RENAPER son datos sensibles).
+> **Texto provisorio para el prototipo académico. No apto para uso con datos reales sin revisión legal.**
+
+**Estado:** texto provisorio del 14/10/2026 (D-25), para el prototipo de la tesis, que usa el sandbox de Didit y datos ficticios. Cumple RF05 de la Práctica 3: la pantalla de consentimiento existe, con sus dos salidas (aceptar, o no aceptar y pasar a la verificación manual de D-26). **Antes de usarlo con datos reales lo tiene que revisar alguien con formación legal** (requisitos previos para producción de la Práctica 3: los datos biométricos y los de RENAPER son datos sensibles).
+
+**Pruebas con personas reales durante la tesis:** si alguien se saca una selfie real en el sandbox (un integrante del equipo, un docente o alguien de la residencia en la demo), se le muestra este texto antes y se borra la sesión en Didit al terminar.
 
 **Dónde se usa:** pantalla de consentimiento previa a la verificación, en el retiro de un NNyA y en el alta de un referente (#26). Si el adulto no acepta, se aplica D-26.
 
-**Pendientes antes de producción:**
+**Pendientes antes de producción** (requisitos de producción, no de la tesis):
 - Nombre, dirección y contacto de la residencia (responsable de los datos y canal para ejercer derechos).
 - **Lugar de procesamiento (respondido por Didit el 14/10):** Didit procesa y guarda los datos en la Unión Europea por defecto, en AWS, sin indicar país ni región. Coincide con las pruebas en sandbox del 09/10, donde la selfie quedó en AWS Irlanda (eu-west-1). El procesamiento en el país solo se ofrece a clientes Enterprise, por contrato. El texto dice "Unión Europea", sin nombrar región.
 - **Empresa contratante:** Didit no la pudo confirmar. Su política de privacidad (07/10/2026) nombra a Didit Identity, Inc. (Estados Unidos) para Latinoamérica, y una versión anterior a Didit Identity Spain, S.L. Hasta que Didit lo confirme por escrito (hello@didit.me), el texto dice solo "Didit".
