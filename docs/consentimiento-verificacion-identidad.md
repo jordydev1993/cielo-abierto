@@ -6,7 +6,8 @@
 
 **Pendientes antes de producción:**
 - Nombre, dirección y contacto de la residencia (responsable de los datos y canal para ejercer derechos).
-- País donde Didit procesa los datos. Las pruebas en sandbox del 09/10 mostraron archivos guardados en un servidor de AWS en Europa (eu-west-1); hay que confirmarlo con Didit antes de afirmar un país.
+- País donde Didit procesa los datos. La política de privacidad de Didit (actualizada el 07/10/2026) nombra a Didit Identity, Inc. (Delaware, Estados Unidos) como empresa contratante para Latinoamérica y no dice en qué países procesa, salvo Australia. Las pruebas en sandbox del 09/10 mostraron la selfie guardada en AWS Irlanda (eu-west-1). Hay que preguntarle a Didit (chat de la consola o security@didit.me) el país, la empresa contratante para Argentina, si se puede fijar la región y la lista de subencargados. Cuando responda, agregar el país al texto.
+- Revisión legal de la transferencia internacional (Ley 25.326, art. 12): si el país de destino tiene protección adecuada según la Agencia de Acceso a la Información Pública, y qué implica que la empresa contratante sea de Estados Unidos.
 
 ---
 
@@ -36,7 +37,7 @@ El texto entre corchetes del primer párrafo cambia según el flujo: retiro o al
 > - número de DNI y sexo, para consultar el RENAPER;
 > - una selfie y una prueba de que sos una persona real (sin gestos).
 >
-> **Quién los procesa:** Didit, un servicio de verificación de identidad. Didit consulta el RENAPER y nos devuelve el resultado.
+> **Quién los procesa:** Didit Identity, Inc., una empresa de Estados Unidos que presta el servicio de verificación de identidad. Didit consulta el RENAPER y nos devuelve el resultado. Tus datos se procesan fuera de Argentina.
 >
 > **Qué se guarda y cuánto tiempo:**
 > - la residencia guarda solo el resultado de la verificación, la fecha y quién la inició;
@@ -57,3 +58,4 @@ El texto entre corchetes del primer párrafo cambia según el flujo: retiro o al
 | La residencia guarda solo el resultado; no la selfie ni los datos de RENAPER | D-28 (el webhook descarta todo salvo estado, motivo y DNI) |
 | Borrado apenas se registra el resultado; máximo un mes | Respuestas aprobadas del 09/10 (RF-10) y retención de 1 mes en Didit (D-23) |
 | Alternativa manual si no acepta | D-26 |
+| Didit Identity, Inc., de Estados Unidos; datos procesados fuera de Argentina | Política de privacidad de Didit (07/10/2026) y pruebas en sandbox del 09/10 (AWS eu-west-1) |
