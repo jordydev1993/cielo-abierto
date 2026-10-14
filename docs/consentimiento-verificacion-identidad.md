@@ -6,8 +6,10 @@
 
 **Pendientes antes de producción:**
 - Nombre, dirección y contacto de la residencia (responsable de los datos y canal para ejercer derechos).
-- País donde Didit procesa los datos. La política de privacidad de Didit (actualizada el 07/10/2026) nombra a Didit Identity, Inc. (Delaware, Estados Unidos) como empresa contratante para Latinoamérica y no dice en qué países procesa, salvo Australia. Las pruebas en sandbox del 09/10 mostraron la selfie guardada en AWS Irlanda (eu-west-1). Hay que preguntarle a Didit (chat de la consola o security@didit.me) el país, la empresa contratante para Argentina, si se puede fijar la región y la lista de subencargados. Cuando responda, agregar el país al texto.
-- Revisión legal de la transferencia internacional (Ley 25.326, art. 12): si el país de destino tiene protección adecuada según la Agencia de Acceso a la Información Pública, y qué implica que la empresa contratante sea de Estados Unidos.
+- **Lugar de procesamiento (respondido por Didit el 14/10):** Didit procesa y guarda los datos en la Unión Europea por defecto, en AWS, sin indicar país ni región. Coincide con las pruebas en sandbox del 09/10, donde la selfie quedó en AWS Irlanda (eu-west-1). El procesamiento en el país solo se ofrece a clientes Enterprise, por contrato. El texto dice "Unión Europea", sin nombrar región.
+- **Empresa contratante:** Didit no la pudo confirmar. Su política de privacidad (07/10/2026) nombra a Didit Identity, Inc. (Estados Unidos) para Latinoamérica, y una versión anterior a Didit Identity Spain, S.L. Hasta que Didit lo confirme por escrito (hello@didit.me), el texto dice solo "Didit".
+- **DPA y subencargados:** Didit tiene un DPA publicado; la lista de subencargados se pide a Didit.
+- **Revisión legal de la transferencia internacional (Ley 25.326, art. 12):** si la Unión Europea cuenta como destino con protección adecuada según la Agencia de Acceso a la Información Pública, y qué cambia si la empresa contratante es de Estados Unidos.
 
 ---
 
@@ -37,7 +39,7 @@ El texto entre corchetes del primer párrafo cambia según el flujo: retiro o al
 > - número de DNI y sexo, para consultar el RENAPER;
 > - una selfie y una prueba de que sos una persona real (sin gestos).
 >
-> **Quién los procesa:** Didit Identity, Inc., una empresa de Estados Unidos que presta el servicio de verificación de identidad. Didit consulta el RENAPER y nos devuelve el resultado. Tus datos se procesan fuera de Argentina.
+> **Quién los procesa:** Didit, un servicio de verificación de identidad. Didit consulta el RENAPER y nos devuelve el resultado. Tus datos se procesan y guardan en la Unión Europea.
 >
 > **Qué se guarda y cuánto tiempo:**
 > - la residencia guarda solo el resultado de la verificación, la fecha y quién la inició;
@@ -58,4 +60,4 @@ El texto entre corchetes del primer párrafo cambia según el flujo: retiro o al
 | La residencia guarda solo el resultado; no la selfie ni los datos de RENAPER | D-28 (el webhook descarta todo salvo estado, motivo y DNI) |
 | Borrado apenas se registra el resultado; máximo un mes | Respuestas aprobadas del 09/10 (RF-10) y retención de 1 mes en Didit (D-23) |
 | Alternativa manual si no acepta | D-26 |
-| Didit Identity, Inc., de Estados Unidos; datos procesados fuera de Argentina | Política de privacidad de Didit (07/10/2026) y pruebas en sandbox del 09/10 (AWS eu-west-1) |
+| Datos procesados y guardados en la Unión Europea | Respuesta de Didit del 14/10 (procesamiento en la UE por defecto, en AWS) y pruebas en sandbox del 09/10 (AWS eu-west-1) |
