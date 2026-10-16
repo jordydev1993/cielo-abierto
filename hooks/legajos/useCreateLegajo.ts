@@ -8,15 +8,20 @@ const ESTADOS_ACTIVOS: string[] = ['activo']
 
 function mapCreateLegajoError(error: { code?: string; message?: string }): Error {
   const msg = error.message ?? ''
-  if (msg.includes('uq_legajo_activo_por_nnya') || msg.includes('unique') || error.code === '23505') {
+  // El número duplicado también es un 23505: se distingue por el nombre de la restricción
+  // (legajos_numero_legajo_key) antes de caer en el caso genérico de unicidad.
+  if (msg.includes('numero_legajo')) {
+    return new Error(
+      'Ya existe un legajo con ese número. Ingresá un número diferente. (L-EX-17)'
+    )
+  }
+  if (msg.includes('uq_legajo_activo_por_nnya') || error.code === '23505') {
     return new Error(
       'El NNyA ya tiene un legajo activo. No se pueden crear múltiples legajos activos para la misma persona. (L-EX-02)'
     )
   }
-  if (msg.includes('numero_legajo') || msg.includes('uq_legajo_numero')) {
-    return new Error(
-      'Ya existe un legajo con ese número. Ingresá un número diferente. (L-EX-03)'
-    )
+  if (msg.includes('motivo de ingreso')) {
+    return new Error('Indicá el motivo de ingreso del NNyA. (L-EX-15)')
   }
   return new Error(msg || 'Error al crear el legajo.')
 }
@@ -46,6 +51,7 @@ export function useCreateLegajo() {
           nnya_id: values.nnya_id,
           numero_legajo: values.numero_legajo,
           fecha_apertura: values.fecha_apertura,
+          motivo_ingreso: values.motivo_ingreso,
           observaciones: values.observaciones || null,
         })
         .select()

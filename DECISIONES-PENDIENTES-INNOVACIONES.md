@@ -35,7 +35,7 @@
 | D-22 | ¿Prueba de vida en la verificación? | Jordy (consola), Meli (#23) | Sí, pasiva |
 | D-23 | Configuración de la consola de Didit | Jordy | Workflow v3, datos devueltos mínimos y retención de 30 días |
 | D-24 | Dispositivo de verificación | Cami (#26), Meli | Celular del adulto por QR; tablet de la residencia como respaldo |
-| D-25 | Texto de consentimiento (Ley 25.326) | Meli, Cami | Borrador ahora, revisión legal antes de usar datos reales |
+| D-25 | Texto de consentimiento (Ley 25.326) | Meli, Cami | Texto provisorio para el prototipo; la revisión legal es requisito de producción |
 | D-26 | ¿Qué pasa si el adulto no acepta el consentimiento? | Sofi (#18), Meli (#23), Cami (#26) | Verificación manual por un `Admin`, auditada y con motivo |
 | D-27 | Validez de la sesión de Didit | Jordy (consola), Cami | 1 hora (antes 7 días) |
 | D-28 | Datos devueltos de la verificación de ID (corrige D-13) | Meli (#23) | Didit manda todo; el webhook filtra con lista cerrada |
@@ -321,7 +321,9 @@ El adulto verifica **con su propio celular, escaneando un QR**. Si no tiene celu
 
 Se escribe un borrador ahora y lo revisa alguien con formación legal antes de usarlo con datos reales (requisito previo 2 de la Práctica 3: los datos biométricos y los de RENAPER son sensibles). El texto dice quién trata los datos (la residencia), para qué (verificar la identidad en el retiro o la revinculación), qué datos se usan (DNI, selfie y consulta a RENAPER a través de Didit, un proveedor del exterior), qué se guarda (solo el resultado; la sesión en Didit se borra apenas se registra) y los derechos de acceso, rectificación y supresión ante la Agencia de Acceso a la Información Pública.
 
-**Estado (09/10): cerrado.** Versión activa: v9 del workflow. Consulta a RENAPER (`max_attempts: 1`), prueba de vida pasiva (1 intento), `max_retry_attempts: 0`, búsqueda de rostros apagada, validez de la sesión de 1 hora (D-27), retención de 1 mes con la plantilla biométrica borrada junto con la sesión, USD 0,25 por sesión. Datos devueltos: ninguno de la prueba de vida y todos los de la verificación de ID (D-28). Probado con 4 sesiones de sandbox, borradas después.
+**Alcance (14/10):** el texto está en `docs/consentimiento-verificacion-identidad.md` y es **provisorio para el prototipo académico**. La tesis usa el sandbox de Didit y datos ficticios, así que no trata datos personales reales de tutores ni referentes; la pantalla igual tiene que existir porque es un requisito funcional (RF05). La revisión legal, los datos de la residencia, la empresa contratante de Didit y la transferencia internacional pasan a ser **requisitos de producción** (como los requisitos previos de la Práctica 3), no pendientes de la tesis. Si en las pruebas o en la demo alguien se saca una selfie real, se le muestra el texto antes y se borra la sesión al terminar.
+
+**Estado de la consola de Didit (D-23, 09/10): cerrado.** Versión activa: v9 del workflow. Consulta a RENAPER (`max_attempts: 1`), prueba de vida pasiva (1 intento), `max_retry_attempts: 0`, búsqueda de rostros apagada, validez de la sesión de 1 hora (D-27), retención de 1 mes con la plantilla biométrica borrada junto con la sesión, USD 0,25 por sesión. Datos devueltos: ninguno de la prueba de vida y todos los de la verificación de ID (D-28). Probado con 4 sesiones de sandbox, borradas después.
 
 ### D-26 — Si el adulto no acepta el consentimiento
 
