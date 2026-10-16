@@ -1,9 +1,11 @@
 # 033 — Plan frontend de innovaciones independientes (Cami)
 
-**Estado:** Demos frontend implementadas; integraciones operativas pendientes.
+**Estado (actualizado 2026-10-16):** Timeline y Alertas Educativas viven en rutas demo independientes; la integración operativa sigue pendiente.
 **Fecha del relevamiento:** 2026-10-07
 **Responsable:** Cami (UI/UX + frontend)
 **Alcance autorizado:** solo frontend/demo para Timeline de NNyA y Alertas educativas.
+
+> **Corrección PR #42 (14/10) y actualización de alcance (16/10):** las demos nunca deben renderizarse en las pantallas reales. La asignación frontend de Innovación 1 también incluye maquetar en `/retiros-demo` y en el flujo de referentes las pantallas de consentimiento, selección de dispositivo, espera, estados de verificación, revisión manual y registro/cierre. Son vistas navegables con mocks explícitos; no realizan operaciones reales ni sustituyen el contrato/endpoints de Sofi y Meli.
 
 > Este documento reemplaza el plan `prompts/018-frontend-innovaciones-cami.md`, eliminado por obsoleto. `prompts/018-audit-log-real.md` conserva su número y no está relacionado con este plan.
 
@@ -22,13 +24,13 @@ No se avanza sobre ninguna otra innovación ni sobre integración externa.
 ### Demos implementadas
 
 1. Timeline de NNyA demo
-   - Visualización cronológica ficticia dentro del detalle del NNyA.
-   - Etiqueta visible: “Demostración — datos ficticios; no representa el historial real de este NNyA.”
+   - Visualización cronológica ficticia en `/timeline-nnya-demo`, separada del detalle real del NNyA.
+   - Etiqueta visible: “Demostración — datos ficticios; no representa el historial real de ningún NNyA.”
    - Fixture local de 3 a 5 eventos ficticios, ordenados cronológicamente.
    - Sin consultar Supabase ni mezclar datos con el estado real de la página.
 
 2. Alertas educativas demo
-   - Sección identificada como “Demostración de alertas educativas”.
+   - Página independiente `/alertas-educativas-demo`, separada de la lista real `/alertas`.
    - Carga local de una ausencia ficticia con fecha, motivo y descripción opcional.
    - Listado de ejemplos de alertas educativas con estado, fecha y descripción.
    - Estado React local; no persiste ni dispara mutations reales.
@@ -50,8 +52,8 @@ No se avanza sobre ninguna otra innovación ni sobre integración externa.
 ### No corresponde a Cami
 
 6. RENAPER / Didit / Meli / Sofi
-   - El trabajo de integración externa queda fuera del alcance actual de Cami.
-   - Debe esperarse la definición del modelo de Sofi y los endpoints de Meli antes de que esto corresponda a frontend.
+   - La integración externa real queda fuera del alcance actual de Cami.
+   - Las pantallas frontend mock para Innovación 1 se agregaron al alcance el 16/10/2026; no llaman APIs y no sustituyen los endpoints de Sofi/Meli.
 
 ## 3. Fuera de alcance
 
@@ -60,7 +62,7 @@ Queda explícitamente fuera del alcance este plan:
 - Reportería SENAF demo.
 - Hito real de 90 días.
 - Estado persistido “Verificado”.
-- RENAPER/Didit.
+- Integración operativa RENAPER/Didit.
 - Integraciones externas.
 - Cambios de backend.
 - Cambios de Supabase.
@@ -117,14 +119,16 @@ El relevamiento anterior mencionó como posibles fuentes `legajos`, `intervencio
 
 - `components/entities/nnya/TimelineNnyaDemo.tsx`
 - `components/entities/alertas/AlertasEducativasDemo.tsx`
+- `app/(dashboard)/timeline-nnya-demo/page.tsx`
+- `app/(dashboard)/alertas-educativas-demo/page.tsx`
 - `components/entities/nnya/timeline-demo-data.ts`
 - `components/entities/alertas/alertas-educativas-demo-data.ts`
 - `tests/unit/innovacion1-demo.test.ts` — comprueba las fixtures y sus propiedades; no renderiza componentes React.
 
 ## 8. Archivos modificados
 
-- `app/(dashboard)/nnya/[id]/page.tsx`
-- `app/(dashboard)/alertas/page.tsx`
+- `app/(dashboard)/nnya/[id]/page.tsx` — elimina el render de Timeline demo.
+- `app/(dashboard)/alertas/page.tsx` — elimina el render de Alertas Educativas demo.
 
 La demo de retiros está documentada e implementada por separado en `prompts/034-frontend-demo-retiros-innovacion-1.md`; no amplía el alcance de este plan. No se modificaron hooks de negocio, endpoints, base de datos, tipos ni políticas para implementar estas demos.
 
@@ -133,7 +137,7 @@ La demo de retiros está documentada e implementada por separado en `prompts/034
 ### 9.1 Timeline de NNyA demo
 
 - Insertar una sección claramente demarcada en el detalle del NNyA.
-- El mensaje debe dejar en claro que es una demostración: “Demostración — datos ficticios; no representa el historial real de este NNyA.”
+- El mensaje debe dejar en claro que es una demostración: “Demostración — datos ficticios; no representa el historial real de ningún NNyA.”
 - Utilizar entre 3 y 5 eventos locales ficticios, coherentes cronológicamente.
 - Incluir al menos: fecha, tipo/categoría, descripción breve.
 - Orden cronológico consistente.
@@ -168,7 +172,8 @@ La demo de retiros está documentada e implementada por separado en `prompts/034
 
 ### Timeline
 
-- La pantalla `/nnya/[id]` renderiza sin errores.
+- La pantalla `/nnya/[id]` no importa ni renderiza datos o componentes de la demo.
+- La demo de Timeline es accesible en `/timeline-nnya-demo`.
 - Existe una marca visible de demo.
 - Se muestran 3 a 5 eventos ficticios.
 - Los eventos están ordenados cronológicamente.
@@ -177,8 +182,8 @@ La demo de retiros está documentada e implementada por separado en `prompts/034
 
 ### Alertas educativas
 
-- La pantalla `/alertas` sigue funcionando con las alertas reales.
-- Existe una sección de demo claramente identificada.
+- La pantalla `/alertas` sigue funcionando solo con las alertas reales.
+- La demo educativa es accesible en `/alertas-educativas-demo` y está claramente identificada.
 - El formulario local carga una ausencia ficticia.
 - La ausencia se muestra localmente en la UI.
 - No se escribe nada en Supabase.
@@ -208,10 +213,10 @@ Resultados ejecutados el 12/10/2026:
 ## 14. Estado de implementación
 
 Implementado:
-- Timeline ficticio en `/nnya/[id]`.
-- Formulario local y ejemplos ficticios de alertas educativas en `/alertas`.
+- Timeline ficticio en `/timeline-nnya-demo`.
+- Formulario local y ejemplos ficticios de alertas educativas en `/alertas-educativas-demo`.
 
-Las integraciones reales, la persistencia y las reglas de negocio siguen pendientes y no son parte de estas demos.
+Las pantallas reales `/nnya/[id]` y `/alertas` no renderizan demos. Las integraciones reales, la persistencia y las reglas de negocio siguen pendientes y no son parte de estas demos.
 
 ## 15. Aprobación y alcance
 

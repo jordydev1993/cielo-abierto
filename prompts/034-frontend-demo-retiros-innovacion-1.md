@@ -1,8 +1,12 @@
 # 034 — Demos frontend para Innovación 1 y continuidad del Plan 033
 
-**Estado:** Demos frontend implementadas en `feat/demos-innovaciones`; retiros reales e integración Didit pendientes.
+**Estado (actualizado 2026-10-16):** Demos frontend navegables; retiros reales e integración Didit pendientes.
 **Fecha del relevamiento:** 2026-10-08
 **Alcance:** demostraciones frontend aisladas para el issue #26 y las dos demos aún autorizadas por el Plan 033. Sin integración ni persistencia real.
+
+> **Actualización 2026-10-16:** este documento conserva abajo el alcance histórico del relevamiento del 08/10. La aclaración de la responsable frontend amplió la maqueta: `/timeline-nnya-demo` y `/alertas-educativas-demo` son rutas separadas; `/retiros-demo` ahora presenta un recorrido visual navegable de consentimiento, QR/tablet, estados, revisión Admin, registro y cierre; Referentes abre la vista «Validar identidad» y los vínculos nuevos/propuestos permanecen en `propuesto`. Los mocks no guardan datos ni habilitan operaciones reales. La consulta/creación de sesiones, resultados, intentos, auditoría, autorización de tutores y persistencia siguen dependiendo de Sofi/Meli. Los mensajes A–D literales no están disponibles en las fuentes del repo.
+
+> También se aplicaron las sugerencias no bloqueantes del review de PR #42: “Identidad no verificada” indica que consume un intento; “Requiere revisión” aclara los tres intentos agotados y la espera de Admin; la demo educativa distingue ausencias justificadas, sin calcular ni generar alertas reales (D-30).
 
 ## 1. Objetivo
 
@@ -24,11 +28,11 @@ El código de demostración se mantendrá separado de las consultas y mutaciones
   5. `Error del proveedor`
 - `DECISIONES-PENDIENTES-INNOVACIONES.md` distingue `Error del proveedor` (problema al crear sesión, no consume un intento) de `Identidad no verificada` (resultado fallido). Los badges de la demo usan esos nombres sin inferir estados adicionales.
 - El documento `prompts/033-requisitos-contrato-didit.md` de la rama separada de Meli se revisó como plan/borrador: se identifica con la tarjeta #23, declara que los endpoints no existen y marca decisiones abiertas. No acredita que exista un contrato final asociado a la tarjeta #30 ni habilita a tratar sus rutas o formatos propuestos como endpoints disponibles. No se hizo merge ni cherry-pick de esa rama.
-- QR en el celular, consentimiento y la definición de quién atiende y cómo se resuelve “Requiere revisión” permanecen pendientes de definición e implementación real. Los estados que aparecen en la demo son presentación visual, no evidencia de que el contrato esté cerrado.
+- QR en el celular, consentimiento y atención Admin de “Requiere revisión” están definidos por D-19, D-24, D-25 y D-26 y maquetados como mocks. La sesión, consulta del resultado y acciones reales siguen pendientes de endpoints.
 - No existe pantalla, tabla, ruta, ni componente de retiros en la UI actual. `app/(dashboard)/nnya/[id]/page.tsx` muestra tutores reales vinculados, pero solo conoce `es_principal`; esa propiedad no equivale a autorización para retirar.
 - La autorización para retirar, su vigencia y las restricciones todavía no existen en el modelo. `TAREAS-PENDIENTES-SOFI.md` y el informe de validación lo confirman. La lista presentada será exclusivamente un fixture demostrativo, no una afirmación de reglas de negocio ni de datos reales.
 - `components/ui/badge.tsx` es la primitiva de Badge vigente y ya ofrece variantes tokenizadas `success`, `warning`, `destructive`, `secondary`, `info` y `outline`.
-- `/alertas` ya consulta y muta alertas reales mediante hooks. La demo educativa se añadirá en una sección separada, sin compartir sus listas, formularios, estado ni mutaciones.
+- `/alertas` consulta y muta alertas reales; la demo educativa está en `/alertas-educativas-demo`, sin compartir listas, formularios, estado ni mutaciones.
 - La ruta `/retiros-demo` dentro de `(dashboard)` hereda el layout actual: `proxy.ts` valida la sesión con Supabase y el sidebar consulta conteos globales de alertas/propuestas. La demo no añade consultas de negocio de retiro; esta autenticación y navegación compartida no constituyen integración de retiros.
 - No existe `.claude/skills/` en el workspace.
 
@@ -52,7 +56,7 @@ No hay skills relevantes instaladas en `.claude/skills/`.
 - Se conserva la autenticación y el layout actuales del dashboard; las consultas globales que ese layout ya realiza no alimentarán los componentes demo ni se modificarán en esta tarea.
 - Los ejemplos de tutor, vínculo, autorización, vigencia y restricciones llevan una marca de datos ficticios. Los valores describen solamente la maqueta y no implementan ni anticipan reglas de autorización.
 - El formulario de ausencia educativa solo actualiza estado React local y se reinicia al recargar.
-- El registro de retiro es únicamente visual; horas y estado “Realizada” provienen del fixture, sin acciones de persistencia.
+- El registro de retiro es únicamente visual; «Editar» muestra el cierre local con hora de regreso y estado “Realizada”, sin persistencia.
 - La expresión “los 4 ajustes” del pedido se aplica manteniendo fuera los cuatro temas listados expresamente: SENAF, hito de 90 días, estado “Verificado” y Didit/RENAPER real.
 - PR #24 no se pudo consultar en GitHub (la API respondió 404); esto no altera los requisitos locales explícitos del Plan 033.
 
@@ -119,7 +123,7 @@ No se modificaron `hooks/referentes/useCreateValidacionRenaper.ts`, endpoints, `
 - La pantalla real de identidad, el consentimiento y la selección del dispositivo de verificación no están implementados en esta demo.
 - No inventar endpoints, payloads, errores técnicos, roles, polling ni respuestas del proveedor.
 - No integrar Didit/RENAPER, webhook ni Supabase para la funcionalidad de retiro.
-- No reemplazar ni modificar `useCreateValidacionRenaper`.
+- La interfaz ya no invoca `useCreateValidacionRenaper`; el hook se conserva sin uso desde esta pantalla mientras la integración Didit no tenga contrato.
 - No alterar backend, RLS, tipos, migraciones ni reglas de negocio; no añadir dependencias.
 
 ### 8.7 Dependencias pendientes para retiros reales
@@ -141,7 +145,7 @@ No se modificaron `hooks/referentes/useCreateValidacionRenaper.ts`, endpoints, `
 - El detalle de NNyA muestra de tres a cinco eventos ficticios y una advertencia clara sin alterar sus datos reales.
 - `/alertas` conserva sus flujos reales y muestra aparte una demo educativa con carga de ausencia solo local.
 - La ruta demo de retiro presenta tutores, estados de autorización, vigencia y restricciones claramente marcados como ficticios, además del registro de retiro.
-- Los cinco badges muestran los nombres exactos y diferencian de manera comprensible error del proveedor de identidad no verificada.
+- Los cinco badges muestran los nombres exactos y diferencian error del proveedor de identidad no verificada; A-D literal no disponible en los archivos del repo.
 - No se dispara ninguna query o mutation específica de Supabase desde los componentes de demostración; no se cambia el hook existente de RENAPER.
 - No se modifican backend, endpoints, Supabase, tipos, migraciones, dependencias ni estados fuera de los cinco definidos.
 - El diseño mantiene accesibilidad básica (texto explícito, estados no diferenciados solo por color, controles etiquetados) y responde en tablet y desktop.
@@ -154,10 +158,10 @@ Para validar la demo implementada:
 - `npx tsc --noEmit`
 - `npm run build`
 - `npm run lint`
-- Revisar manualmente `/nnya/[id]`, `/alertas` y `/retiros-demo` en desktop y viewport tablet.
+- Revisar manualmente `/nnya/[id]`, `/alertas`, `/timeline-nnya-demo`, `/alertas-educativas-demo`, `/retiros-demo` y el flujo de referentes en desktop y viewport tablet.
 - Confirmar visualmente que los datos ficticios no se mezclen con datos reales, que las restricciones estén expuestas, que la distinción de los dos estados sea inequívoca y que la ausencia desaparezca al recargar.
 - Revisar `git status --short`, `git diff --stat` y `git diff --check`.
 
 ## 12. Estado de implementación
 
-La demo visual de retiros, Timeline y alertas educativas está implementada en esta rama; no equivale a la implementación del flujo real de retiros ni de Didit. Cualquier ampliación funcional o integración real requiere definición y aprobación conforme a `AGENTS-WEB.md`.
+Las demos de Timeline y alertas educativas están aisladas en rutas propias. `/retiros-demo` y la acción de referentes incluyen las vistas de consentimiento, selección de dispositivo, espera, estados y fallback de ejemplo. Ninguna equivale a la implementación del flujo real de retiros ni de Didit.

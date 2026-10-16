@@ -8,17 +8,13 @@ import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Plus, Search } from 'lucide-react'
 import { useReferentes } from '@/hooks/referentes/useReferentes'
-import { useCreateValidacionRenaper } from '@/hooks/referentes/useCreateValidacionRenaper'
 import { ReferenteTable } from '@/components/entities/referentes/ReferenteTable'
-import { ValidarRenaperForm } from '@/components/entities/referentes/ValidarRenaperForm'
-import { toast } from '@/components/ui/toaster'
+import { DiditIdentityFlow } from '@/components/entities/retiros/DiditIdentityFlow'
 import type { Referente } from '@/types/database.types'
-import type { ValidacionRenaperFormValues } from '@/lib/validations/validaciones-renaper.schema'
 
 export default function ReferentesPage() {
   const router = useRouter()
   const { data: referentes = [], isLoading } = useReferentes()
-  const crearValidacion = useCreateValidacionRenaper()
   const [search, setSearch] = useState('')
   const [aValidar, setAValidar] = useState<Referente | null>(null)
 
@@ -32,17 +28,6 @@ export default function ReferentesPage() {
         )
       })
     : referentes
-
-  const handleValidar = async (values: ValidacionRenaperFormValues) => {
-    if (!aValidar) return
-    try {
-      await crearValidacion.mutateAsync({ referenteId: aValidar.id, values })
-      toast({ title: 'Validación registrada', variant: 'success' })
-      setAValidar(null)
-    } catch (e: any) {
-      toast({ title: 'Error al registrar la validación', description: e.message, variant: 'destructive' })
-    }
-  }
 
   return (
     <AccessGuard
@@ -75,21 +60,16 @@ export default function ReferentesPage() {
           data={filtered}
           loading={isLoading}
           onEdit={(r) => router.push(`/referentes/${r.id}/editar`)}
-          onValidarRenaper={(r) => setAValidar(r)}
+          onValidarIdentidad={(r) => setAValidar(r)}
         />
 
         <Dialog open={!!aValidar} onOpenChange={(o) => !o && setAValidar(null)}>
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>
-              <DialogTitle>Validar RENAPER — {aValidar?.apellido}, {aValidar?.nombre}</DialogTitle>
+              <DialogTitle>Validar identidad — {aValidar?.apellido}, {aValidar?.nombre}</DialogTitle>
             </DialogHeader>
             {aValidar && (
-              <ValidarRenaperForm
-                referente={aValidar}
-                onSubmit={handleValidar}
-                onCancel={() => setAValidar(null)}
-                loading={crearValidacion.isPending}
-              />
+              <DiditIdentityFlow proposito="referente" />
             )}
           </DialogContent>
         </Dialog>

@@ -2,6 +2,7 @@ export const TUTORES_AUTORIZADOS_DEMO = [
   {
     id: 'tutor-demo-a',
     nombre: 'Nombre ficticio A',
+    nnyaIds: ['nnya-demo-a'],
     vinculo: 'Vínculo de ejemplo A',
     estadoAutorizacion: 'Vigente (dato ficticio)',
     vigencia: '01/10/2026 al 31/12/2026 (rango de ejemplo; no se calcula)',
@@ -10,6 +11,7 @@ export const TUTORES_AUTORIZADOS_DEMO = [
   {
     id: 'tutor-demo-b',
     nombre: 'Nombre ficticio B',
+    nnyaIds: ['nnya-demo-b'],
     vinculo: 'Vínculo de ejemplo B',
     estadoAutorizacion: 'Vigente (dato ficticio)',
     vigencia: '15/09/2026 al 15/12/2026 (rango de ejemplo; no se calcula)',
@@ -17,11 +19,20 @@ export const TUTORES_AUTORIZADOS_DEMO = [
   },
 ] as const
 
+export const NNYA_RETIRO_DEMO = [
+  { id: 'nnya-demo-a', nombre: 'NNyA ficticio A' },
+  { id: 'nnya-demo-b', nombre: 'NNyA ficticio B' },
+] as const
+
 export const RETIRO_DEMO = {
   fecha: '08/10/2026',
   horaInicio: '09:15',
-  horaFinalizacion: '10:05',
-  estado: 'Realizada',
+  horaFinalizacion: '',
+  estado: 'En curso',
+  nnya: 'NNyA ficticio A',
+  tutor: 'Nombre ficticio A',
+  descripcion: 'Salida de ejemplo para una actividad recreativa.',
+  observaciones: 'Registro enteramente ficticio; no corresponde a un caso real.',
 } as const
 
 export const ESTADOS_VERIFICACION_DEMO = [
@@ -48,11 +59,11 @@ export const ESTADO_VERIFICACION_PRESENTACION: Record<
   },
   'Identidad no verificada': {
     variant: 'destructive',
-    descripcion: 'Ejemplo visual de un resultado de validación de identidad fallida.',
+    descripcion: 'Ejemplo visual de un resultado fallido que consume un intento.',
   },
   'Requiere revisión': {
     variant: 'warning',
-    descripcion: 'Ejemplo visual de un resultado que requiere revisión.',
+    descripcion: 'Estado del trámite al agotar los tres intentos; queda a la espera de la decisión de un Admin.',
   },
   'Error del proveedor': {
     variant: 'secondary',

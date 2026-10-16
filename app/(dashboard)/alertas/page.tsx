@@ -20,7 +20,6 @@ import { es } from 'date-fns/locale'
 import { cn } from '@/lib/utils'
 import type { AlertaConNnya } from '@/hooks/alertas/useAlertas'
 import type { Alerta } from '@/types/database.types'
-import { AlertasEducativasDemo } from '@/components/entities/alertas/AlertasEducativasDemo'
 
 type FiltroEstado = 'todas' | 'pendiente' | 'en_proceso' | 'completada' | 'vencida'
 type FiltroPrioridad = 'todas' | Alerta['prioridad']
@@ -82,8 +81,12 @@ function ResolverModal({ alerta, onClose }: ResolverModalProps) {
       await resolver.mutateAsync({ id: alerta.id, observacion: observacion.trim() })
       toast({ title: 'Alerta resuelta', variant: 'success' })
       handleClose()
-    } catch (e: any) {
-      toast({ title: 'Error al resolver', description: e.message, variant: 'destructive' })
+    } catch (error: unknown) {
+      toast({
+        title: 'Error al resolver',
+        description: error instanceof Error ? error.message : 'Ocurrió un error desconocido al resolver la alerta.',
+        variant: 'destructive',
+      })
     }
   }
 
@@ -172,8 +175,12 @@ export default function AlertasPage() {
     try {
       await procesar.mutateAsync(alerta.id)
       toast({ title: 'Alerta puesta en proceso', variant: 'success' })
-    } catch (e: any) {
-      toast({ title: 'Error', description: e.message, variant: 'destructive' })
+    } catch (error: unknown) {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Ocurrió un error desconocido al procesar la alerta.',
+        variant: 'destructive',
+      })
     }
   }
 
@@ -383,7 +390,6 @@ export default function AlertasPage() {
         onClose={() => setAlertaAResolver(null)}
       />
 
-      <AlertasEducativasDemo />
     </div>
   )
 }

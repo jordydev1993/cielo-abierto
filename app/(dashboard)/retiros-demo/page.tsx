@@ -2,7 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { EstadoVerificacionBadge } from '@/components/entities/retiros/EstadoVerificacionBadge'
 import { RetiroDemo } from '@/components/entities/retiros/RetiroDemo'
-import { TutoresAutorizadosDemo } from '@/components/entities/retiros/TutoresAutorizadosDemo'
+import { DiditReviewQueue } from '@/components/entities/retiros/DiditReviewQueue'
+import { InnovacionDemoNavigation } from '@/components/entities/retiros/InnovacionDemoNavigation'
 import {
   ESTADOS_VERIFICACION_DEMO,
   ESTADO_VERIFICACION_PRESENTACION,
@@ -24,8 +25,9 @@ export default function RetirosDemoPage() {
         </p>
       </header>
 
-      <TutoresAutorizadosDemo />
+      <InnovacionDemoNavigation />
       <RetiroDemo />
+      <DiditReviewQueue />
 
       <section aria-labelledby="estados-verificacion-demo-title">
         <Card>
@@ -48,6 +50,10 @@ export default function RetirosDemoPage() {
                 </li>
               ))}
             </ul>
+            <p className="mt-4 text-sm text-on-surface-variant">
+              Los mensajes literales A–D de la Práctica 3 no están incluidos en las fuentes disponibles del repo.
+              Esta demo no los inventa; deben incorporarse desde el documento fuente antes de conectar resultados reales.
+            </p>
           </CardContent>
         </Card>
       </section>

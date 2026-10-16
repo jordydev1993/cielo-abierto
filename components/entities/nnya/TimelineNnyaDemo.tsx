@@ -14,7 +14,7 @@ export function TimelineNnyaDemo() {
             <Badge variant="info">Datos de demostración</Badge>
           </div>
           <p className="text-sm text-on-surface-variant">
-            Demostración — datos ficticios; no representa el historial real de este NNyA.
+              Demostración — datos ficticios; no representa el historial real de ningún NNyA.
           </p>
         </CardHeader>
         <CardContent>

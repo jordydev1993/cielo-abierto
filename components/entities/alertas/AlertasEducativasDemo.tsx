@@ -12,6 +12,7 @@ interface AusenciaDemo {
   id: number
   fecha: string
   motivo: string
+  justificada: boolean
   descripcion: string
 }
 
@@ -20,6 +21,7 @@ export function AlertasEducativasDemo() {
   const [ausencias, setAusencias] = useState<AusenciaDemo[]>([])
   const [fecha, setFecha] = useState('')
   const [motivo, setMotivo] = useState('')
+  const [justificada, setJustificada] = useState(false)
   const [descripcion, setDescripcion] = useState('')
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -33,11 +35,13 @@ export function AlertasEducativasDemo() {
         id: anteriores.length,
         fecha,
         motivo: motivo.trim(),
+        justificada,
         descripcion: descripcion.trim(),
       },
     ])
     setFecha('')
     setMotivo('')
+    setJustificada(false)
     setDescripcion('')
   }
 
@@ -85,6 +89,16 @@ export function AlertasEducativasDemo() {
                 />
               </div>
               <div className="space-y-1.5 sm:col-span-2">
+                <label className="flex items-center gap-2 text-sm text-on-surface">
+                  <input
+                    type="checkbox"
+                    checked={justificada}
+                    onChange={(event) => setJustificada(event.target.checked)}
+                  />
+                  Ausencia justificada
+                </label>
+              </div>
+              <div className="space-y-1.5 sm:col-span-2">
                 <label htmlFor={`${formId}-descripcion`} className="text-sm font-medium text-on-surface">
                   Descripción <span className="font-normal text-on-surface-variant">(opcional)</span>
                 </label>
@@ -115,6 +129,9 @@ export function AlertasEducativasDemo() {
                         {ausencia.fecha.split('-').reverse().join('/')}
                       </time>
                       <Badge variant="secondary">Ausencia de ejemplo</Badge>
+                      <Badge variant={ausencia.justificada ? 'success' : 'warning'}>
+                        {ausencia.justificada ? 'Justificada (ejemplo)' : 'Injustificada (ejemplo)'}
+                      </Badge>
                     </div>
                     <p className="mt-1 text-sm text-on-surface">{ausencia.motivo}</p>
                     {ausencia.descripcion && (
@@ -137,11 +154,17 @@ export function AlertasEducativasDemo() {
                     <time dateTime={alerta.fecha} className="text-xs text-on-surface-variant">
                       {alerta.fecha.split('-').reverse().join('/')}
                     </time>
+                    <Badge variant={alerta.justificada ? 'success' : 'warning'}>
+                      {alerta.justificada ? 'Justificada (ejemplo)' : 'Injustificada (ejemplo)'}
+                    </Badge>
                   </div>
                   <p className="mt-1 text-sm text-on-surface-variant">{alerta.descripcion}</p>
                 </li>
               ))}
             </ul>
+            <p className="text-xs text-on-surface-variant">
+              D-30 define tres ausencias injustificadas en 30 días; esta demo no acumula registros ni genera alertas reales.
+            </p>
           </div>
         </CardContent>
       </Card>
