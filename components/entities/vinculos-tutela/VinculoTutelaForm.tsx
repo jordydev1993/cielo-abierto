@@ -103,14 +103,28 @@ export function VinculoTutelaForm({ initialData, onSubmit, onCancel, loading }: 
             <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="propuesto">Propuesto</SelectItem>
-                <SelectItem value="vigente">Vigente</SelectItem>
-                <SelectItem value="finalizado">Finalizado</SelectItem>
-                <SelectItem value="revocado">Revocado</SelectItem>
+                <SelectItem value="propuesto" disabled={!!initialData && initialData.estado !== 'propuesto'}>
+                  Propuesto
+                </SelectItem>
+                <SelectItem value="vigente" disabled={initialData?.estado !== 'vigente'}>
+                  Vigente
+                </SelectItem>
+                <SelectItem value="finalizado" disabled={!initialData}>
+                  Finalizado
+                </SelectItem>
+                <SelectItem value="revocado" disabled={!initialData}>
+                  Revocado
+                </SelectItem>
               </SelectContent>
             </Select>
           )} />
         </FormField>
+        {(!isEditing || initialData?.estado === 'propuesto') && (
+          <p className="text-xs text-on-surface-variant sm:col-span-2">
+            El vínculo permanece propuesto hasta contar con una validación de identidad aprobada. La integración
+            Didit y la aprobación correspondiente aún no están disponibles en esta pantalla.
+          </p>
+        )}
 
         <FormField label="Resolución de respaldo" error={errors.resolucion_respaldo?.message} className="sm:col-span-2">
           <Textarea {...register('resolucion_respaldo')} rows={2} placeholder="Referencia al expediente/resolución judicial..." />
