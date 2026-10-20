@@ -8,15 +8,21 @@ import { Input } from '@/components/ui/input'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Plus, Search } from 'lucide-react'
 import { useReferentes } from '@/hooks/referentes/useReferentes'
+import { useCreateValidacionRenaper } from '@/hooks/referentes/useCreateValidacionRenaper'
 import { ReferenteTable } from '@/components/entities/referentes/ReferenteTable'
+import { ValidarRenaperForm } from '@/components/entities/referentes/ValidarRenaperForm'
 import { DiditIdentityFlow } from '@/components/entities/retiros/DiditIdentityFlow'
+import { toast } from '@/components/ui/toaster'
 import type { Referente } from '@/types/database.types'
+import type { ValidacionRenaperFormValues } from '@/lib/validations/validaciones-renaper.schema'
 
 export default function ReferentesPage() {
   const router = useRouter()
   const { data: referentes = [], isLoading } = useReferentes()
+  const crearValidacion = useCreateValidacionRenaper()
   const [search, setSearch] = useState('')
   const [aValidar, setAValidar] = useState<Referente | null>(null)
+  const [demoDidit, setDemoDidit] = useState<Referente | null>(null)
 
   const filtered = search.trim()
     ? referentes.filter((r) => {
@@ -28,6 +34,23 @@ export default function ReferentesPage() {
         )
       })
     : referentes
+
+  const handleValidar = async (values: ValidacionRenaperFormValues) => {
+    if (!aValidar) return
+    try {
+      await crearValidacion.mutateAsync({ referenteId: aValidar.id, values })
+      toast({ title: 'Validación registrada', variant: 'success' })
+      setAValidar(null)
+    } catch (error: unknown) {
+      const description =
+        error instanceof Error
+          ? error.message
+          : typeof error === 'object' && error !== null && 'message' in error && typeof error.message === 'string'
+            ? error.message
+            : 'Ocurrió un error inesperado.'
+      toast({ title: 'Error al registrar la validación', description, variant: 'destructive' })
+    }
+  }
 
   return (
     <AccessGuard
@@ -61,14 +84,31 @@ export default function ReferentesPage() {
           loading={isLoading}
           onEdit={(r) => router.push(`/referentes/${r.id}/editar`)}
           onValidarIdentidad={(r) => setAValidar(r)}
+          onDemoDidit={(r) => setDemoDidit(r)}
         />
 
         <Dialog open={!!aValidar} onOpenChange={(o) => !o && setAValidar(null)}>
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>
-              <DialogTitle>Validar identidad — {aValidar?.apellido}, {aValidar?.nombre}</DialogTitle>
+              <DialogTitle>Validar RENAPER — {aValidar?.apellido}, {aValidar?.nombre}</DialogTitle>
             </DialogHeader>
             {aValidar && (
+              <ValidarRenaperForm
+                referente={aValidar}
+                onSubmit={handleValidar}
+                onCancel={() => setAValidar(null)}
+                loading={crearValidacion.isPending}
+              />
+            )}
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={!!demoDidit} onOpenChange={(o) => !o && setDemoDidit(null)}>
+          <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Demostración Didit — {demoDidit?.apellido}, {demoDidit?.nombre}</DialogTitle>
+            </DialogHeader>
+            {demoDidit && (
               <DiditIdentityFlow proposito="referente" />
             )}
           </DialogContent>

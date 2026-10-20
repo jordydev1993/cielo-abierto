@@ -106,7 +106,7 @@ export function VinculoTutelaForm({ initialData, onSubmit, onCancel, loading }: 
                 <SelectItem value="propuesto" disabled={!!initialData && initialData.estado !== 'propuesto'}>
                   Propuesto
                 </SelectItem>
-                <SelectItem value="vigente" disabled={initialData?.estado !== 'vigente'}>
+                <SelectItem value="vigente">
                   Vigente
                 </SelectItem>
                 <SelectItem value="finalizado" disabled={!initialData}>
