@@ -538,6 +538,21 @@ A-01, B-01, C-01, D-01 + D-01/F-01/G-01/G-02/H-01/H-02/L-01/M-01 + E-01 a E-05 u
 
 **Antes de ejecutar A-01 en manual:** conseguir en el panel de Didit los **DNI de prueba válidos en RENAPER sandbox**. No están documentados en el repo y no se inventan. Sin eso, el camino feliz no se puede probar a mano.
 
+> **Actualización (2026-10-21) — cómo se elige el resultado en el sandbox.** En el sandbox, Didit no consulta a RENAPER: el resultado se elige **al crear la sesión**, con el parámetro `sandbox_scenario` (no en el panel ni en la pantalla de verificación). Así se crearon las sesiones de prueba del 07/10 (D-11), con la herramienta `didit_session_create` del conector de Didit.
+>
+> | `sandbox_scenario` | Resultado | Caso | Probado |
+> |---|---|---|---|
+> | `approve` | `Approved` | A-01, C-01 | ✅ 07/10 |
+> | `lookup_no_match` | `Declined`, `fallback_from.reason = no_match`; cuenta como intento | B-01, F-01 | ✅ 07/10 |
+> | `lookup_partial_match` | `Declined`, `partial_match`; cuenta como intento | B-01 | ⏳ (está en la documentación de Didit) |
+> | `lookup_provider_error` | `Declined`, `provider_error`; no cuenta como intento (D-12) | D-01 | ✅ 07/10 |
+>
+> `decline_id_lookup` y `decline_id_lookup_no_match` **no son valores válidos** (se probaron el 07/10).
+>
+> El DNI esperado (`expected_details.identification_number`) **no rechaza la sesión**: Didit solo genera una advertencia. El control real es la comparación de `personal_number` en nuestro webhook (D-14).
+>
+> Para la QA de punta a punta, el endpoint de crear sesión (#23) acepta un `sandbox_scenario` opcional **solo en sandbox** (decisión de Jordy del 21/10, ver `prompts/045`). Para la QA se usa solo el sandbox (sin costo), con DNI de prueba, y DNI de integrantes del equipo solo si un escenario lo necesita.
+
 ---
 
 ## 10. Trazabilidad con `TAREAS-PENDIENTES-DIDIT-POR-INTEGRANTE.md` § Meli
