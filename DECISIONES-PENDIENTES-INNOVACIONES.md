@@ -43,6 +43,7 @@
 | D-30 | Innovación 6: umbral de ausencias escolares | Sofi, Cami, Meli | 3 injustificadas en 30 días corridos, carga manual, alerta por trigger |
 | D-31 | Innovación 8: proveedor de calendario | Cami, Meli | Exportar `.ics` con datos mínimos, sin OAuth |
 | D-32 | Seguridad: protección contra contraseñas filtradas | Jordy | No se activa (requiere plan Pro); riesgo aceptado mientras el alta la haga solo un `Admin` |
+| D-33 | Innovación 1: mensajes de la pantalla de retiro | Cami (#26), Sofi (#23), Meli (#33) | Los 5 mensajes literales de la Práctica 3 §6 (A a E) y 5 mensajes nuevos para los casos que agregaron las decisiones |
 
 D-1 a D-5 y D-10 destraban el modelo de Sofi (`prompts/028`). D-11 a D-14 son para la lógica del webhook (Meli, #23). D-15 a D-17 alinean la innovación 1 con el proceso 1.5, y D-18 la innovación 3.
 
@@ -419,6 +420,44 @@ Verificado en el código de `master` el 12/10:
 - Queda junto con MFA y el rate limiting como objetivo de seguridad no implementado (`AGENTS.md` § Seguridad).
 
 **Alternativa descartada por ahora:** consultar HaveIBeenPwned desde `app/api/usuarios` antes de crear el usuario (k-anonymity, sin dependencias). Se puede retomar si se agrega una pantalla de cambio de contraseña o el registro deja de ser solo del `Admin`.
+
+---
+
+## D-33 — Mensajes de la pantalla de retiro (resuelta el 2026-10-21)
+
+**Contexto:** el Plan 035 (§7.4 y pregunta abierta A.1) decía que el texto de los mensajes de la Práctica 3 no estaba en el repo. Está en la entrega del 02/09 (`practicas 3 - 02_09.pdf`, §6 "Flujos alternativos y escenarios de error"), en la carpeta de documentación del equipo. Al compararlo apareció además un problema de letras:
+
+- En la **Práctica 3 §6**, las letras A a E nombran **mensajes**: A es la identidad no validada y no hay mensaje para el caso aprobado.
+- En el **QA de Meli** (`docs/testingManual/QA-DIDIT-RETIRO.md`), A-01 a D-01 nombran **casos de prueba**, ordenados como la tabla "Resultado de las validaciones" de la Práctica 3: A-01 es el camino feliz.
+- El **Plan 035 §7.4** usó las letras del QA para hablar de los mensajes, así que cada letra apuntaba al mensaje de otro caso.
+
+**Decisión:** las letras A a E se refieren siempre a los mensajes de la Práctica 3 §6. Los casos de QA conservan sus códigos (A-01, B-01…), que no son mensajes.
+
+### Mensajes de la Práctica 3 §6 (se usan tal cual)
+
+| Mensaje | Caso | Texto | Caso de QA | `code` del contrato |
+|---|---|---|---|---|
+| A | Identidad no validada | "No fue posible validar la identidad del tutor." | B-01 | `IDENTITY_NOT_VERIFIED` |
+| B | Tutor no autorizado | "La persona identificada no se encuentra autorizada para retirar al NNyA." | C-01 | `IDENTITY_VERIFIED_NOT_AUTHORIZED` |
+| C | Didit no disponible | "No fue posible completar la validación de identidad. Intente nuevamente." | D-01 | `PROVIDER_ERROR` |
+| D | Datos obligatorios incompletos | "Complete los campos obligatorios para registrar el retiro." | — | Validación del formulario |
+| E | Cierre sin hora de fin | "Debe ingresar la hora de finalización para completar el retiro." | — | Validación del formulario |
+
+"Intente nuevamente" en C es coherente con D-12: el error del proveedor no gasta intento.
+
+### Mensajes nuevos (casos que agregaron las decisiones)
+
+Mismo trato de "usted" que la Práctica 3.
+
+| Caso | Texto | Origen | `code` del contrato |
+|---|---|---|---|
+| Identidad verificada y tutor autorizado | "Identidad verificada. Puede registrar el retiro." | Práctica 3 §5, paso 15 (sin mensaje) | `IDENTITY_VERIFIED_AUTHORIZED` |
+| El DNI verificado no es el esperado | "El DNI verificado no coincide con el del tutor seleccionado." | D-14 | `DNI_MISMATCH` |
+| Se agotaron los 3 intentos | "Se alcanzó el máximo de 3 intentos. El retiro queda en revisión hasta que Dirección lo resuelva." | D-19, D-20 | `REQUIRES_REVIEW` / `MAX_ATTEMPTS_REACHED` |
+| El adulto no acepta el consentimiento | "Sin consentimiento, la identidad debe verificarla Dirección de forma manual." | D-26 | — |
+| Fallback disponible (solo `Admin`) | "Puede verificar la identidad de forma manual. Ingrese el motivo." | D-2, D-19 | `FALLBACK_AVAILABLE` |
+
+**Destraba a:** Cami (#26, textos de la pantalla), Sofi (#23, `message` del envelope del Plan 035 §7.5), Meli (#33, resultado esperado de los casos B-01, C-01 y D-01).
 
 ---
 

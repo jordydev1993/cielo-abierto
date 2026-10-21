@@ -1,8 +1,10 @@
 # Innovación 1 — Lo que falta por integrante
 
-**Fecha:** 2026-10-07 · **Actualizado:** 2026-10-08
+**Fecha:** 2026-10-07 · **Actualizado:** 2026-10-19
 **Innovación:** validación de identidad con RENAPER vía Didit, para dos usos: el **retiro** de un NNyA por su tutor autorizado y el **alta de referentes** en la revinculación familiar (proceso 1.5).
-**Decisiones vigentes:** D-1 a D-17 en `DECISIONES-PENDIENTES-INNOVACIONES.md`. **Modelo de datos:** `prompts/028-modelo-datos-didit-retiros.md` (aprobado).
+**Decisiones vigentes:** D-1 a D-28 y D-33 en `DECISIONES-PENDIENTES-INNOVACIONES.md`. **Contrato:** `prompts/035-requisitos-contrato-didit.md`.
+
+> **Estado al 19/10:** lo que frena todo es la migración #18 (PR #29, cambios pedidos el 10/10). Detrás esperan el #23 (webhook y endpoints, ahora de Sofi), la integración de las pantallas (#26) y la QA de los escenarios (#33). **Modelo de datos:** `prompts/028-modelo-datos-didit-retiros.md` (aprobado).
 
 > Cada tarea que toque código o schema sigue el ciclo de `AGENTS-WEB.md`: plan en `prompts/`, aprobación de Jordy, implementación y PR desde una rama propia.
 
@@ -42,25 +44,30 @@ Cami ── diseño con datos de ejemplo ─────────────
 
 ## Jordy — producto, decisiones y consola de Didit
 
-**Consola de Didit**
-- [ ] **Publicar el borrador v3 del workflow** (`max_attempts: 1`, D-12). Antes, confirmar que no agregó prueba de vida ni comparación facial: Didit cambia solo `skip_liveness_and_face_match` a `false`.
-- [ ] **Retención de datos:** pasar de "Ilimitado" a un plazo corto (D-13). Recomendado: 30 días.
-- [ ] **Datos devueltos:** restringir el panel "Returned data" a lo que usa el webhook (D-13). Después, sesión de prueba para confirmar que siguen llegando `status`, `fallback_from` y `personal_number`.
+**Consola de Didit** ✅ 09/10 (D-23)
+- [x] **Publicar el workflow:** activa la v9, con consulta a RENAPER (`max_attempts: 1`), prueba de vida pasiva (D-22), `max_retry_attempts: 0` (D-21) y sesión válida por 1 hora (D-27).
+- [x] **Retención de datos:** 1 mes, con la plantilla biométrica borrada junto con la sesión.
+- [x] **Datos devueltos:** según D-28 (corrige D-13), Didit manda todos los datos de la verificación de ID y el webhook filtra con una lista cerrada; restringirlos dejaba `fallback_from` en `null`. Probado con 4 sesiones de sandbox, borradas después.
 
-**Definiciones que bloquean a Meli y Cami**
-- [ ] **Dispositivo:** ¿la persona verifica con su propio celular (QR), con una tablet de la residencia o se habilita la PC?
-- [ ] **Prueba de vida:** ¿la exige la entrega académica? Si sí, hay que agregarla al workflow (informe del 13/09, § 8).
-- [ ] **Texto de consentimiento** que se le muestra al adulto antes de verificar (Ley 25.326, requisito previo 4 de la Práctica 3).
+**Definiciones que bloquean a Meli y Cami** ✅ 09/10
+- [x] **Dispositivo:** celular del adulto por QR; tablet de la residencia como respaldo (D-24).
+- [x] **Prueba de vida:** sí, pasiva (D-22).
+- [x] **Texto de consentimiento:** provisorio para el prototipo en `docs/consentimiento-verificacion-identidad.md`; la revisión legal pasa a ser requisito de producción (D-25). Si el adulto no acepta, verificación manual por un `Admin` (D-26).
+- [x] **Mensajes de la pantalla de retiro:** los 5 literales de la Práctica 3 §6 (A a E) y 5 nuevos, en D-33 (21/10). Cierra la pregunta abierta A.1 del Plan 035 (PR #47).
 
 **Revisión**
-- [ ] Revisar y aprobar: la migración de Sofi (#18), los planes de Meli (029 a 031) y el diseño de Cami (#26).
-- [ ] Si Cami sigue sin aceptar, reenviarle la invitación al repo (Meli ya la aceptó).
+- [x] Planes de Meli 029 a 031 (PR #28) y Plan 035 (PR #43): mergeados.
+- [ ] Migración de Sofi (#18, PR #29): cambios pedidos el 10/10, recordatorio el 12/10. Sin commits nuevos desde el 08/10.
+- [ ] Pantallas de Cami (PR #42): segunda revisión el 18/10 con 2 cambios en pantallas reales (`/referentes` y el formulario de vínculos).
+- [x] Invitaciones al repo: Meli y Cami ya trabajan en `cielo-abierto`.
 
 ---
 
 ## Sofi — modelo de datos
 
-- [ ] **Migración #18** según el Plan 028, en una rama nueva y probada en Supabase local. Tiene que resolver los 4 puntos de la aprobación:
+> **19/10:** la migración está en el PR #29 (08/10), probada en Supabase local, con D-12 y el trigger de D-16. Tiene cambios pedidos desde el 10/10. Orden sugerido: actualizar la rama con `master`, resolver los puntos de seguridad 1 y 2, después los puntos 3 a 6 (D-26, D-19, tope de intentos de referentes y D-12) y al final los menores y las pruebas. Desde el 15/10 también tiene el #23 (ver la sección de Meli), que arranca cuando se mergee la migración.
+
+- [ ] **Migración #18** según el Plan 028, en una rama nueva y probada en Supabase local. 🟡 PR #29 con cambios pedidos. Tiene que resolver los 4 puntos de la aprobación:
   1. El retiro rechaza una autorización revocada o vencida (RN-01).
   2. `resultado_autorizacion` con valor `pendiente` mientras el retiro está `en_curso`.
   3. El mapeo `id_lookup` → `estado_dni` ya está definido en **D-11**: usarlo.
@@ -78,19 +85,19 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] **Aceptar la invitación al repo** `cielo-abierto`. ✅ 08/10
 - [x] **Subir lo que ya tiene:** planes 029 a 031, matriz de QA y 14 tests de firma en `tests/unit/` con `node:test`. ✅ PR #28, 08/10 (`npm run test:unit`: 26/26)
 
-**Requisitos (antes de que Cami diseñe)**
-- [ ] Actualizar los RF y RNF de la Práctica 3 (documento de re-vinculación):
+**Requisitos (antes de que Cami diseñe)** ✅ PR #43, 13/10 (Plan 035, §2 a §5)
+- [x] Actualizar los RF y RNF de la Práctica 3 (documento de re-vinculación). Queda abierto el valor de algunos RNF; el copy se cerró con D-33 (§5.2 y §9 del Plan 035):
   - **Desactualizados:** método (es `id_lookup`, no documento + liveness), RF-10 sin regla de borrado, URL de la selfie que llega al webhook.
   - **RF que faltan:** intentos (D-3, D-12), fallback (D-2), comparar el DNI (D-14), vínculo `propuesto` (D-16), cuándo se valida (D-15, D-17), consultar el estado, dispositivo, consentimiento, quién atiende "Requiere revisión".
   - **RNF a precisar:** valores de timeout y reintentos (RNF-13), tiempo hasta el resultado, vencimiento de la sesión (Didit: 7 días), plazo de retención, usabilidad en celular, antecedentes fuera de alcance (D-15).
 
-**Contrato para Cami** (en el plan)
-- [ ] **Crear sesión:** ruta, qué recibe (`retiro_id` o `referente_id`), qué devuelve (URL o token de Didit, nuestro `id`), qué responde si Didit falla, qué roles.
-- [ ] **Consultar estado:** estado RNF-12, intentos usados, motivo, si el fallback está habilitado. Definir polling o alternativa.
-- [ ] **Fallback manual:** acción del Admin, con motivo obligatorio.
-- [ ] **Errores:** qué recibe la pantalla para los 4 mensajes de la Práctica 3 (§ 6, A-D) y para "el DNI no coincide".
+**Contrato para Cami** ✅ PR #43 (Plan 035, §7 y §8). El envelope y los códigos de error (§7.5) son una propuesta todavía no implementada.
+- [x] **Crear sesión:** ruta, qué recibe (`retiro_id` o `referente_id`), qué devuelve (URL o token de Didit, nuestro `id`), qué responde si Didit falla, qué roles.
+- [x] **Consultar estado:** estado RNF-12, intentos usados, motivo, si el fallback está habilitado. Definir polling o alternativa.
+- [x] **Fallback manual:** acción del Admin, con motivo obligatorio.
+- [x] **Errores:** qué recibe la pantalla para los 4 mensajes de la Práctica 3 (§ 6, A-D) y para "el DNI no coincide".
 
-**Implementación (#23, después de la migración)**
+**Implementación (#23, después de la migración)**: delegada a Sofi el 10/10 y confirmada el 15/10. Meli revisa el PR contra el contrato y corre la QA (#33).
 - [ ] **Endpoint para crear la sesión:** DNI desde la base en `expected_details.identification_number` (D-14), `vendor_data` con nuestro `id`, timeout y manejo de errores (RNF-13). Si Didit no crea la sesión, registrar "Error del proveedor" sin `session_id`.
 - [ ] **Lógica del webhook** (el `TODO(Meli)` de `route.ts`):
   - buscar la sesión;
@@ -105,8 +112,8 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [ ] **Borrar la sesión en Didit** una vez registrado el resultado (RF-10), si se decide así.
 
 **Tests**
-- [ ] **E-4:** contrato del webhook sin Supabase. 🟡 Parcial (PR #28): 5 tests de la capa pura (firma, JSON y schema). Falta probar el handler `POST` por HTTP (`401`, `400`, `200`, sesión desconocida).
-- [ ] **Escenarios A-D de la Práctica 3** y los derivados, con sesiones de sandbox (`approve`, `lookup_no_match`, `lookup_partial_match`, `lookup_provider_error`). Borrarlas al terminar.
+- [x] **E-4:** contrato del webhook sin Supabase. 5 tests de la capa pura (PR #28) y el handler `POST` por HTTP en `tests/integration/didit-webhook-http.test.ts` (PR #43).
+- [ ] **Escenarios A-D** (#33) de la Práctica 3** y los derivados, con sesiones de sandbox (`approve`, `lookup_no_match`, `lookup_partial_match`, `lookup_provider_error`). Borrarlas al terminar.
 
 ---
 
@@ -118,7 +125,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 **Diseño (cuando Meli tenga el contrato; se puede maquetar con datos de ejemplo)**
 - [x] **Registrar retiro:** pantalla demo navegable para seleccionar NNyA ficticio y tutor de ejemplo; restricciones visibles. No consulta autorizaciones reales.
 - [x] **Verificación:** consentimiento, QR en celular/tablet de respaldo y estado de espera maquetados en `/retiros-demo`; sin sesión Didit ni polling real.
-- [x] **Resultado:** los cinco estados RNF-12 se pueden inspeccionar como mocks identificados; error del proveedor se distingue y no consume intentos. El texto literal A-D no está en las fuentes del repo y no se inventa.
+- [x] **Resultado:** los cinco estados RNF-12 se pueden inspeccionar como mocks identificados; error del proveedor se distingue y no consume intentos. Los mensajes aprobados de D-33 están pendientes de incorporarse a la UI.
 - [x] **Fallback manual:** UI de revisión/fallback restringida a Admin en frontend demo; motivo requerido; acciones solo locales, sin auditoría real.
 - [x] **Registro y cierre del retiro:** campos de demostración para hora de inicio, descripción y observaciones, más acción local «Editar» con hora de regreso y estado «Realizada».
 - [x] **Referentes:** acción «Validar identidad» abre la maqueta Didit; los vínculos propuestos no pueden pasar a vigentes desde el formulario hasta contar con validación aprobada.
@@ -126,7 +133,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 **Integración (#26, después de los endpoints de Meli)**
 - [ ] Conectar las pantallas a los endpoints reales y probarlas con sesiones de sandbox.
 
-**Actualización frontend (16/10/2026):** los seis puntos de diseño anteriores están completados como demos navegables con datos ficticios; no constituyen un retiro/validación real. Siguen pendientes los endpoints de Sofi/Meli, el contrato y el copy literal A-D de la fuente original.
+**Actualización frontend (16/10/2026):** los seis puntos de diseño anteriores están completados como demos navegables con datos ficticios; no constituyen un retiro/validación real. Siguen pendientes los endpoints de Sofi/Meli y la incorporación en la UI de los mensajes aprobados en D-33 y §7.4.
 
 ---
 
@@ -146,3 +153,10 @@ Cami ── diseño con datos de ejemplo ─────────────
 | Fecha | Quién | Qué |
 |---|---|---|
 | 08/10 | Meli | PR #28: planes 029 a 031, matriz de QA de Didit, 14 tests de firma y 5 de E-4 (capa pura) en `node:test`. Cierra el #21. Aceptó la invitación al repo |
+| 08/10 | Sofi | PR #29: migración #18 (`retiros`, `sesiones_didit`, `autorizaciones_retiro`), con D-12 y el trigger de D-16, probada en Supabase local |
+| 09/10 | Jordy | D-19 a D-28 resueltas. Consola de Didit cerrada (workflow v9, prueba de vida pasiva, sesión de 1 hora, retención de 1 mes) |
+| 10/10 | Jordy | Revisión del PR #29: cambios pedidos (2 de seguridad, 4 de reglas y menores). El #23 pasa a Sofi |
+| 13/10 | Meli | PR #43: requisitos, contrato para Cami (Plan 035) y tests HTTP del webhook (E-4). Cierra el #30 |
+| 14/10 | Jordy | Consentimiento provisorio para el prototipo (D-25). Revisión del PR #42: mover las demos de timeline y alertas a rutas propias |
+| 16/10 | Cami | PR #42: las 6 pantallas de diseño completas como demo (`/retiros-demo`), y las demos de timeline y alertas en rutas propias |
+| 18/10 | Jordy | Segunda revisión del PR #42: faltan 2 cambios en pantallas reales (restaurar la validación manual en `/referentes` y no bloquear "Vigente" en el formulario de vínculos) |

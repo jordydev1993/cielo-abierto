@@ -175,7 +175,7 @@ Un caso puede tener un bloqueante primario y otro secundario; se marca el primar
 - **Precondiciones:** igual que A-01, con autorización de retiro **deliberadamente vigente** para aislar la variable.
 - **Datos necesarios:** `<tutor_id>` autorizado · DNI + toma que RENAPER sandbox rechace.
 - **Pasos:** 1) Iniciar sesión. 2) Seleccionar NNyA y tutor autorizado. 3) Lanzar la verificación. 4) Forzar un resultado no aprobado. 5) Intentar continuar con el retiro de todas formas.
-- **Resultado esperado:** estado `Identidad no verificada`; retiro **no** habilitado; el mensaje de error ya redactado en el PDF §6-B se muestra **tal cual está escrito** (no inventar copy nuevo); `motivo_rechazo` persistido; entrada en `audit_log` del rechazo; **no** se crea un registro de retiro completo. El contador de intentos se incrementa.
+- **Resultado esperado:** estado `Identidad no verificada`; retiro **no** habilitado; el mensaje A del PDF §6 ("No fue posible validar la identidad del tutor.", ver D-33) se muestra **tal cual está escrito** (no inventar copy nuevo); `motivo_rechazo` persistido; entrada en `audit_log` del rechazo; **no** se crea un registro de retiro completo. El contador de intentos se incrementa.
 - **Prioridad:** 🔴 Crítica
 - **Estado actual:** No implementado.
 - **Clasificación:** 🟠 **Bloqueado por Sofi.**
