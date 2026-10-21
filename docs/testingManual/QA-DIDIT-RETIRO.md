@@ -829,3 +829,34 @@ incluyendo las migraciones nuevas de master y
 Todas las pruebas utilizaron datos ficticios y
 finalizaron con `ROLLBACK`.
 
+---
+
+## Pruebas de seguridad en SQL — `tests/sql/didit-seguridad.sql` (prompts/046)
+
+**Fecha:** 21/10/2026 · **Entorno:** Supabase local (Docker) · **Resultado:** 12/12 ✅
+
+Reemplaza a las pruebas manuales del PR #29 por un script en el repo, con los casos nuevos de D-14 y `error_proveedor`. Para correrlo, con Supabase local levantado (`npx supabase start`):
+
+```bash
+npm run test:sql
+```
+
+Corre todo en una transacción con `ROLLBACK`, con datos ficticios (DNI `99…`), y corta al empezar si encuentra el usuario real. Imprime `OK S1` a `OK S12`, o corta en el primer `FALLO`.
+
+| # | Caso | Esperado |
+|---|---|---|
+| S1 | Equipo Tecnico inserta una sesión `Approved` | Bloqueado por RLS |
+| S2 | Equipo Tecnico inserta una sesión con `dni_coincide` | Bloqueado por RLS |
+| S3 | Equipo Tecnico modifica una sesión | 0 filas (sin política de UPDATE) |
+| S4 | Retiro a `autorizada` / `realizada` sin sesión verificada | Bloqueado |
+| S5 | `Approved` con otro DNI → retiro `autorizada` | Bloqueado (D-14) |
+| S6 | `Approved` con el DNI esperado → retiro `autorizada` | Permitido |
+| S7 | `Approved` sin `dni_coincide` | `CHECK` |
+| S8 | `error_proveedor = 'no_match'` | `CHECK` |
+| S9 | `provider_error` sin `session_id` | `CHECK` |
+| S10 | 3 `Approved` con otro DNI | `requiere_revision`; el 4.º intento se rechaza |
+| S11 | 2 `provider_error` + 1 `no_match` | Sigue `en_curso` (D-12) |
+| S12 | Fallback por Equipo Tecnico / por Admin | Bloqueado / permitido (D-2) |
+
+**Control de la prueba:** con la regla de D-14 rota a propósito en la base local (`Approved` como verificado sin mirar el DNI), el script corta en `FALLO S5/S6`.
+

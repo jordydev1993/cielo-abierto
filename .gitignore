@@ -50,3 +50,5 @@ supabase/.temp/
 /backups/
 *.sql
 !supabase/migrations/*.sql
+# Pruebas en SQL: solo datos ficticios y ROLLBACK (prompts/046)
+!tests/sql/*.sql
