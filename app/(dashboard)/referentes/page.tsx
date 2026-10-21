@@ -11,7 +11,6 @@ import { useReferentes } from '@/hooks/referentes/useReferentes'
 import { useCreateValidacionRenaper } from '@/hooks/referentes/useCreateValidacionRenaper'
 import { ReferenteTable } from '@/components/entities/referentes/ReferenteTable'
 import { ValidarRenaperForm } from '@/components/entities/referentes/ValidarRenaperForm'
-import { DiditIdentityFlow } from '@/components/entities/retiros/DiditIdentityFlow'
 import { toast } from '@/components/ui/toaster'
 import type { Referente } from '@/types/database.types'
 import type { ValidacionRenaperFormValues } from '@/lib/validations/validaciones-renaper.schema'
@@ -22,7 +21,6 @@ export default function ReferentesPage() {
   const crearValidacion = useCreateValidacionRenaper()
   const [search, setSearch] = useState('')
   const [aValidar, setAValidar] = useState<Referente | null>(null)
-  const [demoDidit, setDemoDidit] = useState<Referente | null>(null)
 
   const filtered = search.trim()
     ? referentes.filter((r) => {
@@ -84,7 +82,6 @@ export default function ReferentesPage() {
           loading={isLoading}
           onEdit={(r) => router.push(`/referentes/${r.id}/editar`)}
           onValidarIdentidad={(r) => setAValidar(r)}
-          onDemoDidit={(r) => setDemoDidit(r)}
         />
 
         <Dialog open={!!aValidar} onOpenChange={(o) => !o && setAValidar(null)}>
@@ -99,17 +96,6 @@ export default function ReferentesPage() {
                 onCancel={() => setAValidar(null)}
                 loading={crearValidacion.isPending}
               />
-            )}
-          </DialogContent>
-        </Dialog>
-
-        <Dialog open={!!demoDidit} onOpenChange={(o) => !o && setDemoDidit(null)}>
-          <DialogContent className="sm:max-w-lg">
-            <DialogHeader>
-              <DialogTitle>Demostración Didit — {demoDidit?.apellido}, {demoDidit?.nombre}</DialogTitle>
-            </DialogHeader>
-            {demoDidit && (
-              <DiditIdentityFlow proposito="referente" />
             )}
           </DialogContent>
         </Dialog>

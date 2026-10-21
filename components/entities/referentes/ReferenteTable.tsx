@@ -2,7 +2,7 @@
 import { DataTable, type Column } from '@/components/shared/DataTable'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { QrCode, ShieldCheck } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { useUltimaValidacionRenaper } from '@/hooks/referentes/useUltimaValidacionRenaper'
@@ -53,10 +53,9 @@ interface ReferenteTableProps {
   loading?: boolean
   onEdit?: (row: Referente) => void
   onValidarIdentidad?: (row: Referente) => void
-  onDemoDidit?: (row: Referente) => void
 }
 
-export function ReferenteTable({ data, loading, onEdit, onValidarIdentidad, onDemoDidit }: ReferenteTableProps) {
+export function ReferenteTable({ data, loading, onEdit, onValidarIdentidad }: ReferenteTableProps) {
   return (
     <DataTable
       columns={columns}
@@ -74,17 +73,6 @@ export function ReferenteTable({ data, loading, onEdit, onValidarIdentidad, onDe
               aria-label={`Registrar validación manual de ${row.apellido}, ${row.nombre}`}
             >
               <ShieldCheck className="h-4 w-4" />
-            </Button>
-          )}
-          {onDemoDidit && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onDemoDidit(row)}
-              title="Abrir demostración Didit"
-              aria-label={`Abrir demostración Didit para ${row.apellido}, ${row.nombre}`}
-            >
-              <QrCode className="h-4 w-4" />
             </Button>
           )}
         </>
