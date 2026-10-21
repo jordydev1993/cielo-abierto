@@ -4,7 +4,12 @@ import { Button } from '@/components/ui/button'
 import { Pencil } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
-import type { VinculoTutela } from '@/types/database.types'
+import type { Referente, Usuario, VinculoTutela } from '@/types/database.types'
+
+type VinculoTutelaConPersona = VinculoTutela & {
+  referente?: Pick<Referente, 'apellido' | 'nombre'> | null
+  usuario?: Pick<Usuario, 'apellido' | 'nombre'> | null
+}
 
 const TIPO_LABEL: Record<VinculoTutela['tipo'], string> = {
   tutela_residencia: 'Tutela de residencia',
@@ -26,7 +31,7 @@ function formatFecha(fecha: string | null) {
 }
 
 interface VinculoTutelaListProps {
-  vinculos: VinculoTutela[]
+  vinculos: VinculoTutelaConPersona[]
   onEdit?: (row: VinculoTutela) => void
 }
 
@@ -38,10 +43,10 @@ export function VinculoTutelaList({ vinculos, onEdit }: VinculoTutelaListProps) 
   return (
     <div className="divide-y divide-slate-100">
       {vinculos.map((v) => {
-        const persona = (v as any).referente
-          ? `${(v as any).referente.apellido}, ${(v as any).referente.nombre} (referente)`
-          : (v as any).usuario
-            ? `${(v as any).usuario.apellido}, ${(v as any).usuario.nombre} (usuario responsable)`
+        const persona = v.referente
+          ? `${v.referente.apellido}, ${v.referente.nombre} (referente)`
+          : v.usuario
+            ? `${v.usuario.apellido}, ${v.usuario.nombre} (usuario responsable)`
             : '—'
         return (
           <div key={v.id} className="py-3 space-y-1.5">
@@ -57,6 +62,11 @@ export function VinculoTutelaList({ vinculos, onEdit }: VinculoTutelaListProps) 
               )}
             </div>
             <p className="text-sm text-slate-600">{persona}</p>
+            {v.estado === 'propuesto' && (
+              <p className="text-xs text-slate-500">
+                Pendiente de validación de identidad
+              </p>
+            )}
             <p className="text-xs text-slate-400">
               Vigente {formatFecha(v.vigente_desde)} — {formatFecha(v.vigente_hasta)}
             </p>

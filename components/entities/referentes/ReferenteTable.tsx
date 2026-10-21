@@ -42,7 +42,7 @@ const columns: Column<Referente>[] = [
   },
   {
     key: 'renaper',
-    header: 'Última validación RENAPER',
+    header: 'Última validación registrada',
     className: 'w-56',
     render: (r) => <UltimaValidacionCell referenteId={r.id} />,
   },
@@ -52,23 +52,31 @@ interface ReferenteTableProps {
   data: Referente[]
   loading?: boolean
   onEdit?: (row: Referente) => void
-  onValidarRenaper?: (row: Referente) => void
+  onValidarIdentidad?: (row: Referente) => void
 }
 
-export function ReferenteTable({ data, loading, onEdit, onValidarRenaper }: ReferenteTableProps) {
+export function ReferenteTable({ data, loading, onEdit, onValidarIdentidad }: ReferenteTableProps) {
   return (
     <DataTable
       columns={columns}
       data={data}
       loading={loading}
       onEdit={onEdit}
-      extraActions={(row) =>
-        onValidarRenaper ? (
-          <Button variant="ghost" size="icon" onClick={() => onValidarRenaper(row)} title="Validar RENAPER">
-            <ShieldCheck className="h-4 w-4" />
-          </Button>
-        ) : null
-      }
+      extraActions={(row) => (
+        <>
+          {onValidarIdentidad && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onValidarIdentidad(row)}
+              title="Registrar validación manual"
+              aria-label={`Registrar validación manual de ${row.apellido}, ${row.nombre}`}
+            >
+              <ShieldCheck className="h-4 w-4" />
+            </Button>
+          )}
+        </>
+      )}
       emptyMessage="No hay referentes registrados"
     />
   )

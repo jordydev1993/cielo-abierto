@@ -123,15 +123,17 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [ ] **Aceptar la invitación al repo** `cielo-abierto`.
 
 **Diseño (cuando Meli tenga el contrato; se puede maquetar con datos de ejemplo)**
-- [ ] **Registrar retiro:** elegir el NNyA → lista de **tutores con autorización vigente**, con sus restricciones visibles → iniciar la verificación.
-- [ ] **Verificación:** pantalla de consentimiento → acceso a Didit según el dispositivo que defina Jordy (QR, link o pestaña) → "esperando resultado" con los intentos restantes.
-- [ ] **Resultado:** los 5 estados de RNF-12 con badges distintos (`docs/design-system.md`) y los mensajes de D-33 (Plan 035 §7.4). "Error del proveedor" se ve distinto de "Identidad no verificada", porque no gasta intento.
-- [ ] **Fallback manual:** visible solo para Admin y solo cuando corresponde (3 intentos fallidos o error del proveedor), con motivo obligatorio.
-- [ ] **Registro y cierre del retiro:** hora de inicio, descripción y observaciones → después, hora de fin y "Realizada".
-- [ ] **Referentes:** reemplazar `ValidarRenaperForm` (carga manual) por "Validar identidad" con Didit, y mostrar el vínculo en `propuesto` hasta que la validación esté aprobada (D-16).
+- [x] **Registrar retiro:** pantalla demo navegable para seleccionar NNyA ficticio y tutor de ejemplo; restricciones visibles. No consulta autorizaciones reales.
+- [x] **Verificación:** consentimiento, QR en celular/tablet de respaldo y estado de espera maquetados en `/retiros-demo`; sin sesión Didit ni polling real.
+- [x] **Resultado:** los cinco estados RNF-12 se pueden inspeccionar como mocks identificados; error del proveedor se distingue y no consume intentos. Los mensajes aprobados de D-33 están pendientes de incorporarse a la UI.
+- [x] **Fallback manual:** UI de revisión/fallback restringida a Admin en frontend demo; motivo requerido; acciones solo locales, sin auditoría real.
+- [x] **Registro y cierre del retiro:** campos de demostración para hora de inicio, descripción y observaciones, más acción local «Editar» con hora de regreso y estado «Realizada».
+- [x] **Referentes:** acción «Validar identidad» abre la maqueta Didit. La demostración no simula ni la pantalla real aplica el bloqueo de `propuesto` a `vigente`; implementar la regla D-16 queda pendiente para la integración Didit de los Issues #23 y #26.
 
 **Integración (#26, después de los endpoints de Meli)**
 - [ ] Conectar las pantallas a los endpoints reales y probarlas con sesiones de sandbox.
+
+**Actualización frontend (16/10/2026):** los seis puntos de diseño anteriores están completados como demos navegables con datos ficticios; no constituyen un retiro/validación real. Siguen pendientes los endpoints de Sofi/Meli y la incorporación en la UI de los mensajes aprobados en D-33 y §7.4.
 
 ---
 

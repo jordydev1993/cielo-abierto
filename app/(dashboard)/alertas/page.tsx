@@ -81,8 +81,12 @@ function ResolverModal({ alerta, onClose }: ResolverModalProps) {
       await resolver.mutateAsync({ id: alerta.id, observacion: observacion.trim() })
       toast({ title: 'Alerta resuelta', variant: 'success' })
       handleClose()
-    } catch (e: any) {
-      toast({ title: 'Error al resolver', description: e.message, variant: 'destructive' })
+    } catch (error: unknown) {
+      toast({
+        title: 'Error al resolver',
+        description: error instanceof Error ? error.message : 'Ocurrió un error desconocido al resolver la alerta.',
+        variant: 'destructive',
+      })
     }
   }
 
@@ -171,8 +175,12 @@ export default function AlertasPage() {
     try {
       await procesar.mutateAsync(alerta.id)
       toast({ title: 'Alerta puesta en proceso', variant: 'success' })
-    } catch (e: any) {
-      toast({ title: 'Error', description: e.message, variant: 'destructive' })
+    } catch (error: unknown) {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Ocurrió un error desconocido al procesar la alerta.',
+        variant: 'destructive',
+      })
     }
   }
 
@@ -381,6 +389,7 @@ export default function AlertasPage() {
         alerta={alertaAResolver}
         onClose={() => setAlertaAResolver(null)}
       />
+
     </div>
   )
 }

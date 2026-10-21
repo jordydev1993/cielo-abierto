@@ -39,8 +39,14 @@ export default function ReferentesPage() {
       await crearValidacion.mutateAsync({ referenteId: aValidar.id, values })
       toast({ title: 'Validación registrada', variant: 'success' })
       setAValidar(null)
-    } catch (e: any) {
-      toast({ title: 'Error al registrar la validación', description: e.message, variant: 'destructive' })
+    } catch (error: unknown) {
+      const description =
+        error instanceof Error
+          ? error.message
+          : typeof error === 'object' && error !== null && 'message' in error && typeof error.message === 'string'
+            ? error.message
+            : 'Ocurrió un error inesperado.'
+      toast({ title: 'Error al registrar la validación', description, variant: 'destructive' })
     }
   }
 
@@ -75,7 +81,7 @@ export default function ReferentesPage() {
           data={filtered}
           loading={isLoading}
           onEdit={(r) => router.push(`/referentes/${r.id}/editar`)}
-          onValidarRenaper={(r) => setAValidar(r)}
+          onValidarIdentidad={(r) => setAValidar(r)}
         />
 
         <Dialog open={!!aValidar} onOpenChange={(o) => !o && setAValidar(null)}>
