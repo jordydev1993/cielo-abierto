@@ -61,8 +61,8 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] Pantallas de Cami (PR #42): aprobadas y mergeadas el 21/10 (`42d85a8`).
 
 **Implementación (pasó a Jordy el 21/10)**
-- [ ] **Supabase local:** `supabase/config.toml` versionado y `supabase db reset` funcionando desde una base vacía.
-- [ ] **Migración de D-14 y `error_proveedor`** (pedidos de la revisión del PR #29, comentario en el #23): columna `dni_coincide`, estado RNF-12 y trigger de Seguridad 2 sobre `estado_rnf12`, `CHECK` cerrado de `error_proveedor`, script de las pruebas de seguridad. Regenerar los tipos.
+- [x] **Supabase local:** `supabase/config.toml` versionado y `supabase db reset` funcionando desde una base vacía. ✅ PR #50, 21/10
+- [x] **Migración de D-14 y `error_proveedor`** (`prompts/046`): columna `dni_coincide`, estado RNF-12 y trigger de Seguridad 2 sobre `estado_rnf12`, `CHECK` cerrado de `error_proveedor`, pruebas en `tests/sql/didit-seguridad.sql` (`npm run test:sql`, 12/12) y tipos regenerados. ✅ 21/10
 - [ ] **#23:** endpoints (crear sesión con `sandbox_scenario`, consultar estado, fallback) y lógica del webhook (ver la sección de Meli).
 - [ ] **#26:** conectar las pantallas, los mensajes de D-33 y el selector de escenario de sandbox.
 - [ ] **#33:** QA según `prompts/045`.
