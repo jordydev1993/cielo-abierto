@@ -70,13 +70,14 @@ CREATE TABLE retiros (
   motivo_rechazo TEXT,
 
   estado TEXT NOT NULL DEFAULT 'en_curso'
-    CHECK (
-      estado IN (
-        'en_curso',
-        'realizada',
-        'rechazada'
-      )
-    ),
+  CHECK (
+    estado IN (
+      'en_curso',
+      'requiere_revision',
+      'realizada',
+      'rechazada'
+    )
+  ),
 
   fecha_inicio TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   fecha_fin TIMESTAMPTZ,
@@ -88,8 +89,34 @@ CREATE TABLE retiros (
   autorizado_por UUID
     REFERENCES usuarios(id) ON DELETE RESTRICT,
 
-  autorizado_at TIMESTAMPTZ,
+    autorizado_at TIMESTAMPTZ,
   motivo_fallback TEXT,
+
+  -- D-26: consentimiento y verificacion manual.
+  consentimiento_didit TEXT
+    CHECK (
+      consentimiento_didit IS NULL
+      OR consentimiento_didit IN ('aceptado', 'rechazado')
+    ),
+
+  metodo_verificacion TEXT
+    CHECK (
+      metodo_verificacion IS NULL
+      OR metodo_verificacion IN ('didit', 'manual')
+    ),
+
+-- D-26: la verificacion manual requiere autorizacion documentada.
+-- El motivo habilitante y el rol Admin se validan en el trigger.
+  CONSTRAINT retiros_verificacion_manual_check
+    CHECK (
+      metodo_verificacion IS DISTINCT FROM 'manual'
+      OR (
+        autorizado_por IS NOT NULL
+        AND autorizado_at IS NOT NULL
+        AND motivo_fallback IS NOT NULL
+        AND BTRIM(motivo_fallback) <> ''
+    )
+  ),
 
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -365,6 +392,63 @@ BEGIN
 END;
 $$;
 
+-- D-19: Requiere revision despues de 3 intentos fallidos.
+
+CREATE OR REPLACE FUNCTION fn_marcar_retiro_revision_didit()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
+DECLARE
+  v_intentos_fallidos INTEGER;
+  v_tiene_aprobacion BOOLEAN;
+BEGIN
+  IF NEW.proposito <> 'retiro' THEN
+    RETURN NEW;
+  END IF;
+
+  SELECT
+    COUNT(*) FILTER (
+      WHERE estado_didit IN (
+        'Declined',
+        'Expired',
+        'Abandoned',
+        'Kyc Expired'
+      )
+      AND NOT (
+        estado_didit = 'Declined'
+        AND error_proveedor IS NOT DISTINCT FROM 'provider_error'
+      )
+    ),
+    COALESCE(
+      BOOL_OR(estado_didit = 'Approved'),
+      FALSE
+    )
+  INTO v_intentos_fallidos, v_tiene_aprobacion
+  FROM sesiones_didit
+  WHERE retiro_id = NEW.retiro_id
+    AND proposito = 'retiro';
+
+  IF v_intentos_fallidos >= 3
+     AND NOT v_tiene_aprobacion THEN
+    UPDATE retiros
+    SET estado = 'requiere_revision',
+        updated_at = NOW()
+    WHERE id = NEW.retiro_id
+      AND estado = 'en_curso';
+  END IF;
+
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_marcar_retiro_revision_didit
+  AFTER INSERT OR UPDATE OF estado_didit, error_proveedor
+  ON sesiones_didit
+  FOR EACH ROW
+  EXECUTE FUNCTION fn_marcar_retiro_revision_didit();
+
+  -- Impedir un cuarto intento de verificacion Didit.
 CREATE TRIGGER trg_validar_max_intentos_didit
   BEFORE INSERT OR UPDATE OF estado_didit, error_proveedor
   ON sesiones_didit
@@ -385,12 +469,14 @@ DECLARE
   v_intentos_fallidos INTEGER;
   v_tiene_error_proveedor BOOLEAN;
 BEGIN
-  -- Si no se está utilizando fallback manual, no hay nada que validar.
-  IF NEW.autorizado_por IS NULL
-     AND NEW.autorizado_at IS NULL
-     AND NEW.motivo_fallback IS NULL THEN
-    RETURN NEW;
-  END IF;
+  -- Si no se solicita una verificacion manual ni un fallback,
+-- no hay datos de autorizacion que validar.
+IF NEW.metodo_verificacion IS DISTINCT FROM 'manual'
+   AND NEW.autorizado_por IS NULL
+   AND NEW.autorizado_at IS NULL
+   AND NEW.motivo_fallback IS NULL THEN
+  RETURN NEW;
+END IF;
 
   -- Los tres datos del fallback deben existir juntos.
   IF NEW.autorizado_por IS NULL
@@ -452,12 +538,20 @@ BEGIN
     AND error_proveedor = 'provider_error'
   );
 
+    -- D-26: el rechazo del consentimiento habilita
+  -- la verificacion manual por un Admin.
+  IF NEW.metodo_verificacion = 'manual'
+     AND NEW.consentimiento_didit = 'rechazado' THEN
+    RETURN NEW;
+  END IF;
+
+  -- D-20: fallback por error del proveedor
+  -- o por tres intentos fallidos.
   IF NOT v_tiene_error_proveedor
      AND v_intentos_fallidos < 3 THEN
     RAISE EXCEPTION
-      'El fallback solo está permitido por error del proveedor o después de 3 intentos fallidos';
+      'El fallback requiere 3 intentos fallidos, error del proveedor o consentimiento rechazado';
   END IF;
-
   RETURN NEW;
 END;
 $$;
@@ -466,7 +560,9 @@ CREATE TRIGGER trg_validar_fallback_retiro
   BEFORE INSERT OR UPDATE OF
     autorizado_por,
     autorizado_at,
-    motivo_fallback
+    motivo_fallback,
+    consentimiento_didit,
+    metodo_verificacion
   ON retiros
   FOR EACH ROW
   EXECUTE FUNCTION fn_validar_fallback_retiro();
