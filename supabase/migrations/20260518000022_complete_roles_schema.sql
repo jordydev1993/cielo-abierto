@@ -1,6 +1,4 @@
--- Agrega columnas faltantes a la tabla roles.
--- La migración 000001 solo definió id_rol/nombre/descripcion; estas columnas
--- son requeridas por el resto del sistema (types, hooks, UI) pero nunca se crearon.
-ALTER TABLE roles ADD COLUMN IF NOT EXISTS activo     BOOLEAN     NOT NULL DEFAULT TRUE;
-ALTER TABLE roles ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
-ALTER TABLE roles ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+-- Reemplazada por 20260620000031_clean_schema.sql, que define el esquema completo en una base nueva.
+-- Esta migración era del esquema anterior (por ejemplo, usuarios.id_usuario) y fallaba en una base vacía.
+-- Se conserva sin contenido para el historial de producción, donde ya está aplicada (Supabase registra
+-- las migraciones por versión). El contenido original está en el historial de git.

@@ -1,21 +1,4 @@
--- Fix: get_my_role() ahora normaliza el rol 'Direccion' → 'Admin'.
--- El rol 'Direccion' existe en la institución pero no figura en las políticas
--- RLS (que solo conocen 'Admin', 'Equipo Tecnico'). Sin este mapeo
--- los usuarios con ese rol no pueden hacer INSERT/UPDATE/DELETE en ninguna tabla.
-CREATE OR REPLACE FUNCTION get_my_role()
-RETURNS TEXT
-LANGUAGE sql
-STABLE
-SECURITY DEFINER
-SET search_path = public
-AS $$
-  SELECT CASE r.nombre
-    WHEN 'Direccion' THEN 'Admin'
-    ELSE r.nombre
-  END
-  FROM usuarios u
-  JOIN roles r ON r.id = u.rol_id
-  WHERE u.auth_user_id = auth.uid()
-    AND u.activo = TRUE
-  LIMIT 1;
-$$;
+-- Reemplazada por 20260620000031_clean_schema.sql, que define el esquema completo en una base nueva.
+-- Esta migración era del esquema anterior (por ejemplo, usuarios.id_usuario) y fallaba en una base vacía.
+-- Se conserva sin contenido para el historial de producción, donde ya está aplicada (Supabase registra
+-- las migraciones por versión). El contenido original está en el historial de git.
