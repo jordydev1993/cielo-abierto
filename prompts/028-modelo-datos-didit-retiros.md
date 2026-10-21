@@ -834,3 +834,67 @@ No implementar todavía.
 Primero Jordy debe aprobar esta versión corregida del Plan 028.
 
 Después de la aprobación se podrá preparar la migración correspondiente, regenerar los tipos necesarios, adaptar el webhook y agregar las verificaciones/tests definidos en este documento.
+
+---
+
+## Ampliación del Plan 028 — D-19, D-20 y D-26
+
+### D-19 — Requiere revisión al agotar intentos
+
+Cuando un retiro acumule tres intentos contabilizables
+sin lograr verificar la identidad, el trámite deberá
+quedar en estado funcional "Requiere revisión".
+
+El trámite permanecerá pendiente de la decisión
+de un usuario con rol Admin.
+
+La cantidad de intentos seguirá calculándose desde
+las sesiones Didit, sin almacenar un contador duplicado.
+
+### D-20 — Fallback por intentos agotados
+
+Se habilitará el fallback cuando existan tres intentos
+fallidos contabilizables, incluyendo sesiones con estado:
+
+- Declined
+- Expired
+- Abandoned
+- Kyc Expired
+
+Los errores del proveedor excluidos por D-12 no
+consumirán intentos.
+
+El fallback continuará siendo exclusivo de Admin
+y deberá registrar su responsable, fecha y motivo.
+
+### D-26 — Consentimiento rechazado
+
+Si el adulto no acepta el consentimiento para Didit,
+un Admin podrá realizar la verificación manual.
+
+La operación deberá registrar:
+
+- Usuario Admin responsable.
+- Fecha de la decisión.
+- Motivo de la verificación manual.
+- Método de verificación: manual.
+
+El rechazo del consentimiento no consumirá
+ninguno de los tres intentos Didit.
+
+La decisión deberá quedar auditada.
+
+### Criterios de aceptación adicionales
+
+1. Tres intentos fallidos dejan el trámite en
+   "Requiere revisión".
+2. Expired, Abandoned y Kyc Expired se contabilizan
+   para habilitar el fallback.
+3. Un error provider_error excluido por D-12 no
+   consume intento.
+4. Solo Admin puede resolver el fallback.
+5. El consentimiento rechazado permite la vía
+   manual sin consumir intentos.
+6. La verificación manual conserva motivo,
+   método y responsable.
+7. No se almacenan datos biométricos.

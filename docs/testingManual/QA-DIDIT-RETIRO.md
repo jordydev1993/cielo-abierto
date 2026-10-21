@@ -782,3 +782,50 @@ No es un atajo, es una vía muerta parcial. **No verificado empíricamente**, as
 | Requiere revisión | E-04 + G-01/G-02 | ⏳ No creado — depende de P-01 y P-02 |
 | Error del proveedor | E-05 + D-01 | ⏳ No creado — depende de P-01 |
 
+---
+
+## Pruebas de seguridad — PR #29
+
+**Fecha:** 21/10/2026  
+**Entorno:** Supabase local con Docker (sin conexión a producción).  
+**Rol utilizado:** Equipo Tecnico.  
+**Resultado:** Pruebas satisfactorias.
+
+### Seguridad 1 — sesiones_didit_insert
+
+Se intentó insertar directamente una sesión Didit con
+`estado_didit = 'Approved'` utilizando un usuario
+autenticado con rol `Equipo Tecnico`.
+
+**Resultado:** Operación bloqueada por RLS.
+
+Evidencia:
+`PRUEBA EXITOSA: RLS bloqueo Approved`
+
+### Seguridad 2 — retiros_update
+
+Se creó un retiro ficticio sin verificación de identidad
+aprobada y se intentaron dos actualizaciones directas
+con el rol `Equipo Tecnico`:
+
+1. Cambiar `resultado_autorizacion` a `autorizada`.
+2. Cambiar `estado` a `realizada`.
+
+**Resultado:** Ambas operaciones fueron bloqueadas
+por el trigger de validación de identidad.
+
+Evidencias:
+- `PRUEBA EXITOSA: autorizada bloqueada`
+- `PRUEBA EXITOSA: realizada bloqueada`
+
+### Validación de migraciones
+
+Se ejecutó `supabase db reset` en el entorno local,
+incluyendo las migraciones nuevas de master y
+`20261021180000_didit_retiros.sql`.
+
+**Resultado:** `Finished supabase db reset.`
+
+Todas las pruebas utilizaron datos ficticios y
+finalizaron con `ROLLBACK`.
+
