@@ -1,14 +1,4 @@
--- Asegura que el FK entre usuarios.rol_id y roles.id exista con nombre conocido.
--- PostgREST necesita el constraint para resolver joins embebidos ('*, roles(nombre)').
-DO $$
-BEGIN
-  IF NOT EXISTS (
-    SELECT 1 FROM pg_constraint
-    WHERE conname = 'usuarios_rol_id_fkey'
-      AND conrelid = 'usuarios'::regclass
-  ) THEN
-    ALTER TABLE usuarios
-      ADD CONSTRAINT usuarios_rol_id_fkey
-      FOREIGN KEY (rol_id) REFERENCES roles(id);
-  END IF;
-END $$;
+-- Reemplazada por 20260620000031_clean_schema.sql, que define el esquema completo en una base nueva.
+-- Esta migración era del esquema anterior (por ejemplo, usuarios.id_usuario) y fallaba en una base vacía.
+-- Se conserva sin contenido para el historial de producción, donde ya está aplicada (Supabase registra
+-- las migraciones por versión). El contenido original está en el historial de git.

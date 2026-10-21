@@ -4,7 +4,7 @@
 **Innovación:** validación de identidad con RENAPER vía Didit, para dos usos: el **retiro** de un NNyA por su tutor autorizado y el **alta de referentes** en la revinculación familiar (proceso 1.5).
 **Decisiones vigentes:** D-1 a D-28 y D-33 en `DECISIONES-PENDIENTES-INNOVACIONES.md`. **Contrato:** `prompts/035-requisitos-contrato-didit.md`.
 
-> **Estado al 19/10:** lo que frena todo es la migración #18 (PR #29, cambios pedidos el 10/10). Detrás esperan el #23 (webhook y endpoints, ahora de Sofi), la integración de las pantallas (#26) y la QA de los escenarios (#33). **Modelo de datos:** `prompts/028-modelo-datos-didit-retiros.md` (aprobado).
+> **Estado al 21/10:** la migración #18 (PR #29) y las pantallas de diseño (PR #42) están en `master`. **Lo que queda pasó a Jordy:** el #23 (webhook y endpoints, antes de Sofi), la integración de las pantallas (#26, antes de Cami) y la QA de los escenarios (#33, antes de Meli). Orden: Supabase local → migración de D-14 → endpoints → webhook → pantallas → QA (`prompts/045`). **Modelo de datos:** `prompts/028-modelo-datos-didit-retiros.md` (aprobado).
 
 > Cada tarea que toque código o schema sigue el ciclo de `AGENTS-WEB.md`: plan en `prompts/`, aprobación de Jordy, implementación y PR desde una rama propia.
 
@@ -57,17 +57,24 @@ Cami ── diseño con datos de ejemplo ─────────────
 
 **Revisión**
 - [x] Planes de Meli 029 a 031 (PR #28) y Plan 035 (PR #43): mergeados.
-- [ ] Migración de Sofi (#18, PR #29): cambios pedidos el 10/10, recordatorio el 12/10. Sin commits nuevos desde el 08/10.
-- [ ] Pantallas de Cami (PR #42): segunda revisión el 18/10 con 2 cambios en pantallas reales (`/referentes` y el formulario de vínculos).
+- [x] Migración de Sofi (#18, PR #29): aprobada y mergeada el 21/10 (`bb68185`).
+- [x] Pantallas de Cami (PR #42): aprobadas y mergeadas el 21/10 (`42d85a8`).
+
+**Implementación (pasó a Jordy el 21/10)**
+- [ ] **Supabase local:** `supabase/config.toml` versionado y `supabase db reset` funcionando desde una base vacía.
+- [ ] **Migración de D-14 y `error_proveedor`** (pedidos de la revisión del PR #29, comentario en el #23): columna `dni_coincide`, estado RNF-12 y trigger de Seguridad 2 sobre `estado_rnf12`, `CHECK` cerrado de `error_proveedor`, script de las pruebas de seguridad. Regenerar los tipos.
+- [ ] **#23:** endpoints (crear sesión con `sandbox_scenario`, consultar estado, fallback) y lógica del webhook (ver la sección de Meli).
+- [ ] **#26:** conectar las pantallas, los mensajes de D-33 y el selector de escenario de sandbox.
+- [ ] **#33:** QA según `prompts/045`.
 - [x] Invitaciones al repo: Meli y Cami ya trabajan en `cielo-abierto`.
 
 ---
 
 ## Sofi — modelo de datos
 
-> **19/10:** la migración está en el PR #29 (08/10), probada en Supabase local, con D-12 y el trigger de D-16. Tiene cambios pedidos desde el 10/10. Orden sugerido: actualizar la rama con `master`, resolver los puntos de seguridad 1 y 2, después los puntos 3 a 6 (D-26, D-19, tope de intentos de referentes y D-12) y al final los menores y las pruebas. Desde el 15/10 también tiene el #23 (ver la sección de Meli), que arranca cuando se mergee la migración.
+> **21/10:** la migración quedó mergeada (PR #29, `bb68185`), con seguridad 1 y 2, D-12, D-19, D-26, tope de intentos de referentes y `In Review` → `Pendiente`, probada en Supabase local. El #23 pasó a Jordy.
 
-- [ ] **Migración #18** según el Plan 028, en una rama nueva y probada en Supabase local. 🟡 PR #29 con cambios pedidos. Tiene que resolver los 4 puntos de la aprobación:
+- [x] **Migración #18** según el Plan 028, en una rama nueva y probada en Supabase local. ✅ PR #29, 21/10. Resolvió los 4 puntos de la aprobación:
   1. El retiro rechaza una autorización revocada o vencida (RN-01).
   2. `resultado_autorizacion` con valor `pendiente` mientras el retiro está `en_curso`.
   3. El mapeo `id_lookup` → `estado_dni` ya está definido en **D-11**: usarlo.
@@ -97,7 +104,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] **Fallback manual:** acción del Admin, con motivo obligatorio.
 - [x] **Errores:** qué recibe la pantalla para los 4 mensajes de la Práctica 3 (§ 6, A-D) y para "el DNI no coincide".
 
-**Implementación (#23, después de la migración)**: delegada a Sofi el 10/10 y confirmada el 15/10. Meli revisa el PR contra el contrato y corre la QA (#33).
+**Implementación (#23, después de la migración)**: delegada a Sofi el 10/10; pasó a Jordy el 21/10, igual que la QA (#33).
 - [ ] **Endpoint para crear la sesión:** DNI desde la base en `expected_details.identification_number` (D-14), `vendor_data` con nuestro `id`, timeout y manejo de errores (RNF-13). Si Didit no crea la sesión, registrar "Error del proveedor" sin `session_id`.
 - [ ] **Lógica del webhook** (el `TODO(Meli)` de `route.ts`):
   - buscar la sesión;
@@ -113,7 +120,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 
 **Tests**
 - [x] **E-4:** contrato del webhook sin Supabase. 5 tests de la capa pura (PR #28) y el handler `POST` por HTTP en `tests/integration/didit-webhook-http.test.ts` (PR #43).
-- [ ] **Escenarios A-D** (#33) de la Práctica 3** y los derivados, con sesiones de sandbox (`approve`, `lookup_no_match`, `lookup_partial_match`, `lookup_provider_error`). Borrarlas al terminar.
+- [ ] **Escenarios A-D** (#33) de la Práctica 3 y los derivados, con sesiones de sandbox (`approve`, `lookup_no_match`, `lookup_partial_match`, `lookup_provider_error`). Borrarlas al terminar. Pasó a Jordy el 21/10: plan en `prompts/045`.
 
 ---
 
@@ -130,8 +137,8 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] **Registro y cierre del retiro:** campos de demostración para hora de inicio, descripción y observaciones, más acción local «Editar» con hora de regreso y estado «Realizada».
 - [x] **Referentes:** acción «Validar identidad» abre la maqueta Didit. La demostración no simula ni la pantalla real aplica el bloqueo de `propuesto` a `vigente`; implementar la regla D-16 queda pendiente para la integración Didit de los Issues #23 y #26.
 
-**Integración (#26, después de los endpoints de Meli)**
-- [ ] Conectar las pantallas a los endpoints reales y probarlas con sesiones de sandbox.
+**Integración (#26, después de los endpoints del #23)**: pasó a Jordy el 21/10.
+- [ ] Conectar las pantallas a los endpoints reales y probarlas con sesiones de sandbox, con los mensajes de D-33 y el selector de escenario de sandbox (`prompts/045`, Supuesto 5).
 
 **Actualización frontend (16/10/2026):** los seis puntos de diseño anteriores están completados como demos navegables con datos ficticios; no constituyen un retiro/validación real. Siguen pendientes los endpoints de Sofi/Meli y la incorporación en la UI de los mensajes aprobados en D-33 y §7.4.
 
@@ -160,3 +167,6 @@ Cami ── diseño con datos de ejemplo ─────────────
 | 14/10 | Jordy | Consentimiento provisorio para el prototipo (D-25). Revisión del PR #42: mover las demos de timeline y alertas a rutas propias |
 | 16/10 | Cami | PR #42: las 6 pantallas de diseño completas como demo (`/retiros-demo`), y las demos de timeline y alertas en rutas propias |
 | 18/10 | Jordy | Segunda revisión del PR #42: faltan 2 cambios en pantallas reales (restaurar la validación manual en `/referentes` y no bloquear "Vigente" en el formulario de vínculos) |
+| 21/10 | Jordy | D-33 (PR #47). Mergeados el PR #42 de Cami y el PR #29 de Sofi. Plan de la QA (PR #48 y #49). El #23, el #26 y el #33 pasan a Jordy |
+| 21/10 | Cami | PR #42: correcciones de la revisión, rama al día con `master` y texto de vínculos propuestos ajustado |
+| 21/10 | Sofi | PR #29: seguridad 1 y 2 con pruebas, D-12, D-19, D-26, tope de referentes y migración renombrada a `20261021180000` |

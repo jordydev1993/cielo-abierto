@@ -1,6 +1,4 @@
--- Permite que el trigger fn_audit_trigger inserte en audit_log sin restricciones RLS.
--- El trigger es SECURITY DEFINER (corre como postgres), pero este policy garantiza
--- que también funcione si Supabase aplica FORCE ROW LEVEL SECURITY.
-CREATE POLICY "audit_log_system_insert" ON audit_log
-  FOR INSERT
-  WITH CHECK (true);
+-- Reemplazada por 20260620000031_clean_schema.sql, que define el esquema completo en una base nueva.
+-- Esta migración era del esquema anterior (por ejemplo, usuarios.id_usuario) y fallaba en una base vacía.
+-- Se conserva sin contenido para el historial de producción, donde ya está aplicada (Supabase registra
+-- las migraciones por versión). El contenido original está en el historial de git.

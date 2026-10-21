@@ -74,6 +74,21 @@ El schema vive en `supabase/migrations/` — es la fuente de verdad, no solo el 
 remoto. `supabase/migrations/20260620000031_clean_schema.sql` es la definición de schema
 **vigente** ("reemplaza las migraciones 001-030 en una DB nueva"); ante cualquier duda
 sobre una columna, ese archivo manda por sobre migraciones individuales más viejas.
+Las migraciones 001-030 quedaron sin contenido (solo un comentario): fallaban en una base
+vacía y se conservan para el historial de producción, donde ya están aplicadas.
+
+### Supabase local (para probar migraciones)
+
+Requiere Docker Desktop corriendo. La configuración está en `supabase/config.toml`.
+
+```bash
+npx supabase start      # levanta la base local y aplica todas las migraciones
+npx supabase db reset   # vuelve a crear la base desde cero
+npx supabase stop       # la frena
+```
+
+`start` muestra la URL y las claves locales. Para usarlas en la app, cargarlas en
+`.env.local`; nunca usar la base de producción para pruebas.
 
 Los tipos de dominio en `types/database.types.ts` se derivan de
 `types/database.generated.ts` (generado con `supabase gen types` / el MCP de Supabase, no
