@@ -64,7 +64,7 @@ export function VinculoTutelaList({ vinculos, onEdit }: VinculoTutelaListProps) 
             <p className="text-sm text-slate-600">{persona}</p>
             {v.estado === 'propuesto' && (
               <p className="text-xs text-slate-500">
-                Permanece propuesto hasta una validación de identidad aprobada.
+                Pendiente de validación de identidad
               </p>
             )}
             <p className="text-xs text-slate-400">

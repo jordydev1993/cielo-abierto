@@ -128,7 +128,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] **Resultado:** los cinco estados RNF-12 se pueden inspeccionar como mocks identificados; error del proveedor se distingue y no consume intentos. Los mensajes aprobados de D-33 están pendientes de incorporarse a la UI.
 - [x] **Fallback manual:** UI de revisión/fallback restringida a Admin en frontend demo; motivo requerido; acciones solo locales, sin auditoría real.
 - [x] **Registro y cierre del retiro:** campos de demostración para hora de inicio, descripción y observaciones, más acción local «Editar» con hora de regreso y estado «Realizada».
-- [x] **Referentes:** acción «Validar identidad» abre la maqueta Didit; los vínculos propuestos no pueden pasar a vigentes desde el formulario hasta contar con validación aprobada.
+- [x] **Referentes:** acción «Validar identidad» abre la maqueta Didit. La demostración no simula ni la pantalla real aplica el bloqueo de `propuesto` a `vigente`; implementar la regla D-16 queda pendiente para la integración Didit de los Issues #23 y #26.
 
 **Integración (#26, después de los endpoints de Meli)**
 - [ ] Conectar las pantallas a los endpoints reales y probarlas con sesiones de sandbox.
