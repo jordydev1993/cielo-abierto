@@ -246,18 +246,21 @@ Meli revisó el relevamiento de la innovación 1 (documento compartido del 08/10
 
 ### 7.4 Errores que recibe la pantalla
 
-Los 4 mensajes A–D de la Práctica 3 §6 se usan **tal cual están escritos** (`TAREAS-PENDIENTES…:85`), pero **el copy literal no está en el repo inspeccionado**: se lo referencia sin reproducirlo. Se agrega un **código estable** propuesto para que el frontend discrimine sin depender del texto. `resultado_autorizacion` usa **únicamente** los valores del Plan 028: `autorizada` | `rechazada`.
+Los textos que ve la pantalla están definidos en **D-33** (21/10): los 5 mensajes de la Práctica 3 §6 (A a E) **tal cual están escritos** y 5 mensajes nuevos para los casos que agregaron las decisiones. **Las letras A a E nombran los mensajes de la Práctica 3 §6**, no los casos de QA (A-01 a D-01 de `QA-DIDIT-RETIRO.md`). Se agrega un **código estable** propuesto para que el frontend discrimine sin depender del texto. `resultado_autorizacion` usa **únicamente** los valores del Plan 028: `autorizada` | `rechazada`.
 
-| Caso | `code` propuesto | `estado_rnf12` | `resultado_autorizacion` | Efecto / copy de UI |
-|---|---|---|---|---|
-| A — identidad válida + autorización vigente | `IDENTITY_VERIFIED_AUTHORIZED` | `Identidad verificada` | `autorizada` | **Permitir el retiro.** Literal A de la Práctica 3 (**no disponible en el repo**). |
-| B — identidad no validada | `IDENTITY_NOT_VERIFIED` | `Identidad no verificada` | — | **No permitir el retiro.** Antes del límite puede reintentarse; al alcanzar **3 intentos terminados** → **`Requiere revisión`** (D-19). `Expired`/`Abandoned` **también cuentan** (D-1/D-20). Literal B (**no disponible**). |
-| C — identidad válida + tutor no autorizado / autorización no vigente | `IDENTITY_VERIFIED_NOT_AUTHORIZED` | `Identidad verificada` | `rechazada` | **No permitir el retiro.** Literal C (**no disponible**). |
-| D — error del proveedor (Didit caído / timeout) | `PROVIDER_ERROR` | `Error del proveedor` | — | **No permitir el retiro.** **No consume intento** (D-12) y **habilita el fallback exclusivo `Admin`** (D-2). Literal D (**no disponible**). |
-| DNI no coincide | `DNI_MISMATCH` | (rechazo: comparación `personal_number`; ver D-14) | `rechazada` | **propuesta / pendiente** (D-14 confirma el comportamiento, **no** el copy). |
-| `Requiere revisión` | `REQUIRES_REVIEW` | `Requiere revisión` | — | Al agotar 3 intentos (D-19); lo atiende solo un `Admin` (N-10). |
-| Máximo de intentos | `MAX_ATTEMPTS_REACHED` | `Requiere revisión` | — | Coincide con D-19: al agotar 3 intentos, el trámite queda en revisión. |
-| Fallback disponible | `FALLBACK_AVAILABLE` | — | — | — |
+| Caso | `code` propuesto | `estado_rnf12` | `resultado_autorizacion` | Efecto | Mensaje (D-33) |
+|---|---|---|---|---|---|
+| Identidad válida + autorización vigente (QA A-01) | `IDENTITY_VERIFIED_AUTHORIZED` | `Identidad verificada` | `autorizada` | **Permitir el retiro.** | Nuevo: "Identidad verificada. Puede registrar el retiro." |
+| Identidad no validada (QA B-01) | `IDENTITY_NOT_VERIFIED` | `Identidad no verificada` | — | **No permitir el retiro.** Antes del límite puede reintentarse; al alcanzar **3 intentos terminados** → **`Requiere revisión`** (D-19). `Expired`/`Abandoned` **también cuentan** (D-1/D-20). | **A:** "No fue posible validar la identidad del tutor." |
+| Identidad válida + tutor no autorizado / autorización no vigente (QA C-01) | `IDENTITY_VERIFIED_NOT_AUTHORIZED` | `Identidad verificada` | `rechazada` | **No permitir el retiro.** | **B:** "La persona identificada no se encuentra autorizada para retirar al NNyA." |
+| Error del proveedor: Didit caído / timeout (QA D-01) | `PROVIDER_ERROR` | `Error del proveedor` | — | **No permitir el retiro.** **No consume intento** (D-12) y **habilita el fallback exclusivo `Admin`** (D-2). | **C:** "No fue posible completar la validación de identidad. Intente nuevamente." |
+| DNI no coincide | `DNI_MISMATCH` | (rechazo: comparación `personal_number`; ver D-14) | `rechazada` | **No permitir el retiro.** | Nuevo: "El DNI verificado no coincide con el del tutor seleccionado." |
+| `Requiere revisión` | `REQUIRES_REVIEW` | `Requiere revisión` | — | Al agotar 3 intentos (D-19); lo atiende solo un `Admin` (N-10). | Nuevo: "Se alcanzó el máximo de 3 intentos. El retiro queda en revisión hasta que Dirección lo resuelva." |
+| Máximo de intentos | `MAX_ATTEMPTS_REACHED` | `Requiere revisión` | — | Coincide con D-19: al agotar 3 intentos, el trámite queda en revisión. | El mismo de `REQUIRES_REVIEW`. |
+| Fallback disponible | `FALLBACK_AVAILABLE` | — | — | Solo `Admin` (D-2). | Nuevo: "Puede verificar la identidad de forma manual. Ingrese el motivo." |
+| El adulto no acepta el consentimiento | — | — | — | Verificación manual por un `Admin` (D-26). | Nuevo: "Sin consentimiento, la identidad debe verificarla Dirección de forma manual." |
+| Datos obligatorios incompletos | — (validación del formulario) | — | — | No se guarda el retiro. | **D:** "Complete los campos obligatorios para registrar el retiro." |
+| Cierre sin hora de fin | — (validación del formulario) | — | — | El retiro sigue `en_curso`. | **E:** "Debe ingresar la hora de finalización para completar el retiro." |
 
 ### 7.5 Envelope y códigos estables — **PROPUESTA DE CONTRATO — NO IMPLEMENTADA**
 
@@ -278,7 +281,7 @@ Envelope propuesto (conceptual, a acordar antes de implementar). Separa lo machi
 
 - **`code`** es lo que el frontend debe usar para ramificar; **`message`** es solo presentación y puede cambiar.
 - El envelope aplica tanto a respuestas exitosas de sesión como a errores controlados.
-- **Pendiente:** copy exacto de `DNI_MISMATCH`, `REQUIRES_REVIEW` y `MAX_ATTEMPTS_REACHED`.
+- **Copy:** los textos de `message` están definidos en D-33 (tabla §7.4).
 
 ### 7.6 Notas de contrato
 
@@ -296,7 +299,7 @@ Envelope propuesto (conceptual, a acordar antes de implementar). Separa lo machi
 2. Personal presente: identificación del tutor.
 3. **Consentimiento** (N-8 / D-25 — borrador ahora, revisión legal antes de datos reales).
 4. **Verificación** según dispositivo (**D-24**): **celular propio del adulto por QR**; sin celular/datos, **tablet de la residencia**. DNI + selfie vía Didit (con prueba de vida pasiva, D-22); pantalla "esperando resultado" con los intentos restantes. La pantalla consulta el estado cada 3–5 s y, pasado ~1 m 30 s, muestra **"Seguimos esperando"** + "Actualizar" (N-6).
-5. **Resultado** con uno de los 5 estados RNF-12 y el mensaje A–D correspondiente.
+5. **Resultado** con uno de los 5 estados RNF-12 y su mensaje de D-33 (tabla §7.4).
 6. Si aplica: **fallback manual** (solo `Admin`, con motivo; desde el estado "Requiere revisión" o "Error del proveedor").
 7. **Registro:** hora de inicio, descripción y observaciones → "Registrar retiro" (RF20/21).
 8. **Cierre:** hora de finalización + "Realizada" (RF22).
@@ -323,7 +326,7 @@ Las preguntas resueltas por D-19 a D-25 (dispositivo, prueba de vida, consentimi
 
 ### A. Decide Jordy / Producto
 
-1. **Copy literal** de los mensajes A–D de la Práctica 3 y de los códigos adicionales (`DNI_MISMATCH`, `REQUIRES_REVIEW`, `MAX_ATTEMPTS_REACHED`) — no están en el repo.
+1. ~~**Copy literal** de los mensajes A–D de la Práctica 3 y de los códigos adicionales (`DNI_MISMATCH`, `REQUIRES_REVIEW`, `MAX_ATTEMPTS_REACHED`)~~ ✅ **Resuelta por D-33 (21/10):** los textos están en la tabla §7.4.
 
 ### B. Propone Meli / contrato técnico
 
@@ -344,7 +347,7 @@ Las preguntas resueltas por D-19 a D-25 (dispositivo, prueba de vida, consentimi
 ## 10. Dependencias
 
 ```
-Jordy (consola Didit: D-21/D-23; copy de UI)
+Jordy (consola Didit: D-21/D-23; copy de UI: D-33)
         │
 Sofi ── migración #18 (retiros, sesiones_didit, autorizaciones_retiro, trigger D-16)
         │                              │
@@ -357,7 +360,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 - **#23 no se implementa en este paso.** Este plan solo lo especifica.
 - **E-4 (contrato del webhook por HTTP) es independiente** de #18/#23 en su parte de capa pura; falta el `POST` real. No se toca acá.
 - **Cami** puede maquetar con datos de ejemplo **cuando este contrato esté aprobado**, sin esperar #23.
-- **Jordy** ya cerró la consola (D-23) y las definiciones N-7/N-8/N-10; falta el copy de UI.
+- **Jordy** ya cerró la consola (D-23), las definiciones N-7/N-8/N-10 y el copy de UI (D-33).
 
 ---
 
