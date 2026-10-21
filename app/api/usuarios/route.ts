@@ -46,7 +46,8 @@ export async function POST(request: Request) {
     return Response.json({ error: friendly }, { status: 400 })
   }
 
-  const { data, error } = await supabaseAdmin
+  // Con la sesión del Admin, para que fn_audit_trigger registre quién dio el alta (prompts/041).
+  const { data, error } = await supabaseServer
     .from('usuarios')
     .insert({
       nombre,

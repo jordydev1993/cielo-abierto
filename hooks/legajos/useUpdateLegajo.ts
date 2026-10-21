@@ -14,6 +14,7 @@ export function useUpdateLegajoDatos() {
         .update({
           numero_legajo: values.numero_legajo,
           fecha_apertura: values.fecha_apertura,
+          motivo_ingreso: values.motivo_ingreso,
           observaciones: values.observaciones || null,
           updated_at: new Date().toISOString(),
         })
@@ -57,7 +58,7 @@ export function useCerrarLegajo() {
         )
       }
 
-      // L-EX-10: verificar que exista un Informe de Egreso antes de cerrar
+      // L-EX-12: verificar que exista un Informe de Egreso antes de cerrar
       const { count: informesEgreso, error: infErr } = await supabase
         .from('informes')
         .select('*', { count: 'exact', head: true })
@@ -67,16 +68,16 @@ export function useCerrarLegajo() {
       if (infErr) throw new Error('Error al verificar el Informe de Egreso')
       if (!informesEgreso || informesEgreso === 0) {
         throw new Error(
-          'No se puede cerrar el legajo. Debe generar y adjuntar el Informe de Egreso primero. (L-EX-10)'
+          'No se puede cerrar el legajo. Debe generar y adjuntar el Informe de Egreso primero. (L-EX-12)'
         )
       }
 
       const { data, error } = await supabase
         .from('legajos')
         .update({
+          // fecha_cierre la fija la base (trg_legajos_reglas_estado, prompts/037)
           estado: values.estado,
           motivo_cierre: values.motivo_cierre,
-          fecha_cierre: new Date().toISOString().split('T')[0],
           updated_at: new Date().toISOString(),
         })
         .eq('id', id)
@@ -85,8 +86,33 @@ export function useCerrarLegajo() {
       if (error) throw new Error(mapCierreError(error.message))
       return data
     },
-    onSuccess: (data, { nnyaId }) => {
+    onSuccess: (data, { id, nnyaId }) => {
       qc.invalidateQueries({ queryKey: queryKeys.legajos.lists() })
+      qc.invalidateQueries({ queryKey: queryKeys.legajos.detail(id) })
+      qc.invalidateQueries({ queryKey: queryKeys.legajos.byNnya(nnyaId) })
+    },
+  })
+}
+
+// Cerrado -> archivado, 12 meses después del cierre. La base valida el plazo y que no
+// cambie ningún otro dato (trg_legajos_reglas_estado, prompts/037).
+export function useArchivarLegajo() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ id }: { id: string; nnyaId: string }) => {
+      const supabase = createClient()
+      const { data, error } = await supabase
+        .from('legajos')
+        .update({ estado: 'archivado', updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select()
+        .single()
+      if (error) throw new Error(error.message)
+      return data
+    },
+    onSuccess: (_, { id, nnyaId }) => {
+      qc.invalidateQueries({ queryKey: queryKeys.legajos.lists() })
+      qc.invalidateQueries({ queryKey: queryKeys.legajos.detail(id) })
       qc.invalidateQueries({ queryKey: queryKeys.legajos.byNnya(nnyaId) })
     },
   })

@@ -78,7 +78,7 @@ export interface Medicamento extends Omit<Row<'medicamentos'>, 'estado'> {
 }
 
 export interface Informe extends Omit<Row<'informes'>, 'estado'> {
-  estado: 'borrador' | 'revisado' | 'finalizado'
+  estado: 'borrador' | 'finalizado'
 }
 
 export type Documento = Row<'documentos'>

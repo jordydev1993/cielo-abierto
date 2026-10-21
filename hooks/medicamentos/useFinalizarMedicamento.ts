@@ -23,7 +23,13 @@ export function useFinalizarMedicamento() {
         .eq('id', id)
         .select()
         .single()
-      if (error) throw error
+      if (error) {
+        // chk_medicamentos_fechas (prompts/042): un tratamiento que todavía no empezó no se finaliza con fecha de hoy
+        if (error.message.includes('chk_medicamentos_fechas')) {
+          throw new Error('El tratamiento todavía no empezó: no se puede finalizar antes de su fecha de inicio. (M-EX-04)')
+        }
+        throw error
+      }
       return data
     },
     onSuccess: (data, { legajoId }) => {

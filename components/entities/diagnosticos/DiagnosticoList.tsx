@@ -64,7 +64,7 @@ function ConfirmarModal({ diagnostico, nuevoEstado, legajoId, onClose }: Confirm
             </div>
             {esResolucion && (
               <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                El profesional determina el cese de la condición. Este cambio no puede revertirse — si hay una recaída, se debe crear un nuevo diagnóstico. (DGN-EX-05)
+                El profesional determina el cese de la condición. Este cambio no puede revertirse — si hay una recaída, se debe crear un nuevo diagnóstico.
               </p>
             )}
           </div>

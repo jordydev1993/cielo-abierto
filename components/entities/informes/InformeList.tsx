@@ -14,7 +14,6 @@ import type { Informe } from '@/types/database.types'
 
 function EstadoBadge({ estado }: { estado: Informe['estado'] }) {
   if (estado === 'finalizado') return <Badge variant="success">Enviado</Badge>
-  if (estado === 'revisado') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">Revisado</Badge>
   return <Badge variant="outline">Borrador</Badge>
 }
 
@@ -48,7 +47,7 @@ function ConfirmarEnvioModal({ informe, legajoId, onClose }: ConfirmarEnvioModal
           <div className="space-y-3 pt-1">
             <div className="bg-slate-50 rounded-lg p-3 text-sm space-y-1">
               <p className="font-medium text-slate-900">{informe.titulo}</p>
-              <p className="text-slate-500 text-xs">{informe.tipo} · {format(new Date(informe.fecha_informe + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}</p>
+              <p className="text-slate-500 text-xs">{informe.tipo}{informe.destinatario ? ` · para ${informe.destinatario}` : ''} · {format(new Date(informe.fecha_informe + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}</p>
             </div>
             <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
               Una vez enviado, el informe no podrá ser modificado. Esta acción es irreversible. (INF-EX-05)
@@ -102,7 +101,7 @@ export function InformeList({ informes, legajoId, legajoActivo }: InformeListPro
                     <EstadoBadge estado={informe.estado} />
                   </div>
                   <p className="text-xs text-slate-500">
-                    {informe.tipo} · {format(new Date(informe.fecha_informe + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
+                    {informe.tipo}{informe.destinatario ? ` · para ${informe.destinatario}` : ''} · {format(new Date(informe.fecha_informe + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                   </p>
                   <button
                     onClick={() => setInformeExpandido(expandido ? null : informe.id)}
