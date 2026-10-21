@@ -35,6 +35,12 @@ Comprobar de punta a punta, con sesiones del sandbox de Didit, que el retiro de 
 2. Los códigos de §7.4 (`IDENTITY_NOT_VERIFIED`, `PROVIDER_ERROR`, `DNI_MISMATCH`, etc.) se implementan tal cual. El envelope de §7.5 todavía es una propuesta.
 3. Las sesiones de sandbox se fuerzan con los resultados `approve`, `lookup_no_match`, `lookup_partial_match` y `lookup_provider_error`.
 4. `fn_audit_trigger` cubre `retiros` y `sesiones_didit`.
+5. **Escenario de sandbox (decisión de Jordy, 21/10).** `POST /api/didit/sesiones` acepta un `sandbox_scenario` opcional, con estas condiciones:
+   - Solo se usa si la variable de servidor `DIDIT_SANDBOX_SCENARIOS=true` está activa, y esa variable solo se activa con la app de Didit en sandbox (local y preview).
+   - Solo acepta la lista cerrada `approve`, `lookup_no_match`, `lookup_partial_match` y `lookup_provider_error`. Cualquier otro valor da `400`.
+   - Sin la variable, el campo se ignora siempre. En producción nunca se usa.
+   - La pantalla muestra un selector de escenario solo en ese modo.
+   - Se le pidió a Sofi en el #23.
 
 Si alguno no se cumple, se ajusta este plan antes de ejecutar; no se adapta el test para que pase.
 
@@ -97,7 +103,20 @@ T2 es el que más importa: es justo el caso que un `Approved` mal interpretado d
 | 3 × `lookup_no_match`, y después un 4.º pedido | T5, R2 | F-01 |
 | Dejarla vencer o abandonarla | T5 | D-1 / D-20 |
 
-**A confirmar con Meli (Etapa 0):** cómo se fuerza cada resultado en el sandbox, y si el sandbox acepta DNI inventados o exige DNI de prueba propios. Si los exige, se reemplazan los `99…` de T1, T5 y T6, y de R1 y R2, por esos DNI.
+**Decidido (Jordy, 21/10):** por ahora solo el **modo de prueba de Didit (sandbox, sin costo)**; nada en modo `live`. Por defecto se usan los DNI de prueba (`99…`). **Si un escenario lo necesita** (por ejemplo, si el sandbox no acepta DNI inventados o para que `DNI_MISMATCH` salga de una persona real), se usan DNI de integrantes del equipo, con estas reglas:
+
+- Solo integrantes adultos que acepten, después de leer el texto de consentimiento (`docs/consentimiento-verificacion-identidad.md`, D-25). Nunca DNI de terceros.
+- Los DNI reales no se versionan: el script de datos queda con los `99…` y los reales se cargan a mano en Supabase local el día de la prueba.
+- Ninguna evidencia (capturas, logs, resultados en `QA-DIDIT-RETIRO.md`) muestra un DNI real ni una selfie.
+- Cada sesión se borra en Didit al terminar y la base local con `supabase db reset`.
+
+**Cómo se elige el escenario:** al crear la sesión, con `sandbox_scenario` (así se crearon las sesiones del 07/10; detalle en `QA-DIDIT-RETIRO.md` §9, Etapa E-5). Desde la pantalla, a través de nuestro endpoint (Supuesto 5).
+
+**A confirmar en la Etapa 0:**
+- Qué `personal_number` devuelve `approve`: el DNI enviado en `expected_details` o uno fijo. Si es uno fijo, todos los `approve` darían `DNI_MISMATCH` (D-14).
+- Si existe `lookup_partial_match`.
+- Que cada `no_match` consuma un solo intento (`max_attempts: 1`, D-12).
+- Qué hace el sandbox con un DNI real: si devuelve igual el escenario simulado.
 
 ## Etapas
 
@@ -107,7 +126,8 @@ T2 es el que más importa: es justo el caso que un `Approved` mal interpretado d
 - [ ] Esqueleto de `tests/integration/didit-minimizacion.test.ts` (D-28) con la lista de columnas y logs a revisar.
 - [ ] Script de datos de prueba `tests/fixtures/qa-didit-seed.sql`, con los datos de §Usuarios y datos de prueba. Solo para Supabase local: el encabezado del archivo lo aclara y el script corta si encuentra el usuario real `admin@arguelloinfancias.com`.
 - [ ] Plantilla de registro de ejecución en `QA-DIDIT-RETIRO.md` §11: fecha, commit, caso, resultado, evidencia.
-- [ ] Confirmar con Meli cómo se fuerza cada resultado de sandbox en el panel de Didit. Ella ya lo usó.
+- [ ] Resolver los puntos de "A confirmar en la Etapa 0" (§Sesiones de Didit) con una o dos sesiones de sandbox creadas con el conector de Didit, y anotar el resultado en `QA-DIDIT-RETIRO.md`.
+- [x] Escribir cómo se elige el escenario en el sandbox (`QA-DIDIT-RETIRO.md`, 21/10).
 
 ### Etapa 1 — Entorno (cuando estén el PR #29 y el #23)
 
@@ -138,7 +158,7 @@ T2 es el que más importa: es justo el caso que un `Approved` mal interpretado d
 
 ### Etapa 3 — De punta a punta (después del #26)
 
-- [ ] Repetir A-01, B-01, C-01 y D-01 desde la pantalla "Registrar retiro": QR, espera, resultado. Comparar cada mensaje **letra por letra** con D-33.
+- [ ] Repetir A-01, B-01, C-01 y D-01 desde la pantalla "Registrar retiro", eligiendo el escenario con el selector de sandbox: QR, espera, resultado. Comparar cada mensaje **letra por letra** con D-33.
 - [ ] Mensajes D y E del formulario: campos obligatorios y cierre sin hora de fin.
 - [ ] Polling: tope de 60 a 90 s, después "Seguimos esperando" y "Actualizar" (Plan 035 §7.2).
 - [ ] Validación de referente: crea la fila de `validaciones_renaper` sin `respuesta_cruda`.
@@ -157,7 +177,7 @@ T2 es el que más importa: es justo el caso que un `Approved` mal interpretado d
 
 ## Seguridad
 
-- Solo el sandbox de Didit y Supabase local. Nunca la base de producción ni personas reales.
+- Solo el sandbox de Didit (sin costo) y Supabase local. Nunca la base de producción. Personas reales solo según las reglas de §Sesiones de Didit (integrantes que aceptan, con consentimiento, sin versionar sus DNI).
 - Los secretos solo en `.env.local`. Ningún test los imprime.
 - Los datos de prueba se borran al terminar: las sesiones en Didit y la base local con `db reset`.
 
