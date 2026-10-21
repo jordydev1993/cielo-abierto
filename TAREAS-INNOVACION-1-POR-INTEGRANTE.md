@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-10-07 · **Actualizado:** 2026-10-19
 **Innovación:** validación de identidad con RENAPER vía Didit, para dos usos: el **retiro** de un NNyA por su tutor autorizado y el **alta de referentes** en la revinculación familiar (proceso 1.5).
-**Decisiones vigentes:** D-1 a D-28 en `DECISIONES-PENDIENTES-INNOVACIONES.md`. **Contrato:** `prompts/035-requisitos-contrato-didit.md`.
+**Decisiones vigentes:** D-1 a D-28 y D-33 en `DECISIONES-PENDIENTES-INNOVACIONES.md`. **Contrato:** `prompts/035-requisitos-contrato-didit.md`.
 
 > **Estado al 19/10:** lo que frena todo es la migración #18 (PR #29, cambios pedidos el 10/10). Detrás esperan el #23 (webhook y endpoints, ahora de Sofi), la integración de las pantallas (#26) y la QA de los escenarios (#33). **Modelo de datos:** `prompts/028-modelo-datos-didit-retiros.md` (aprobado).
 
@@ -53,7 +53,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] **Dispositivo:** celular del adulto por QR; tablet de la residencia como respaldo (D-24).
 - [x] **Prueba de vida:** sí, pasiva (D-22).
 - [x] **Texto de consentimiento:** provisorio para el prototipo en `docs/consentimiento-verificacion-identidad.md`; la revisión legal pasa a ser requisito de producción (D-25). Si el adulto no acepta, verificación manual por un `Admin` (D-26).
-- [ ] **Copy literal de los mensajes A-D** de la Práctica 3: no está en el repo (pregunta abierta A.1 del Plan 035).
+- [x] **Mensajes de la pantalla de retiro:** los 5 literales de la Práctica 3 §6 (A a E) y 5 nuevos, en D-33 (21/10). Cierra la pregunta abierta A.1 del Plan 035 (PR #47).
 
 **Revisión**
 - [x] Planes de Meli 029 a 031 (PR #28) y Plan 035 (PR #43): mergeados.
@@ -86,7 +86,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] **Subir lo que ya tiene:** planes 029 a 031, matriz de QA y 14 tests de firma en `tests/unit/` con `node:test`. ✅ PR #28, 08/10 (`npm run test:unit`: 26/26)
 
 **Requisitos (antes de que Cami diseñe)** ✅ PR #43, 13/10 (Plan 035, §2 a §5)
-- [x] Actualizar los RF y RNF de la Práctica 3 (documento de re-vinculación). Quedan abiertos el copy A-D y los valores de algunos RNF (§5.2 y §9 del Plan 035):
+- [x] Actualizar los RF y RNF de la Práctica 3 (documento de re-vinculación). Queda abierto el valor de algunos RNF; el copy se cerró con D-33 (§5.2 y §9 del Plan 035):
   - **Desactualizados:** método (es `id_lookup`, no documento + liveness), RF-10 sin regla de borrado, URL de la selfie que llega al webhook.
   - **RF que faltan:** intentos (D-3, D-12), fallback (D-2), comparar el DNI (D-14), vínculo `propuesto` (D-16), cuándo se valida (D-15, D-17), consultar el estado, dispositivo, consentimiento, quién atiende "Requiere revisión".
   - **RNF a precisar:** valores de timeout y reintentos (RNF-13), tiempo hasta el resultado, vencimiento de la sesión (Didit: 7 días), plazo de retención, usabilidad en celular, antecedentes fuera de alcance (D-15).
@@ -125,7 +125,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 **Diseño (cuando Meli tenga el contrato; se puede maquetar con datos de ejemplo)**
 - [ ] **Registrar retiro:** elegir el NNyA → lista de **tutores con autorización vigente**, con sus restricciones visibles → iniciar la verificación.
 - [ ] **Verificación:** pantalla de consentimiento → acceso a Didit según el dispositivo que defina Jordy (QR, link o pestaña) → "esperando resultado" con los intentos restantes.
-- [ ] **Resultado:** los 5 estados de RNF-12 con badges distintos (`docs/design-system.md`) y los mensajes A-D de la Práctica 3 tal cual están escritos. "Error del proveedor" se ve distinto de "Identidad no verificada", porque no gasta intento.
+- [ ] **Resultado:** los 5 estados de RNF-12 con badges distintos (`docs/design-system.md`) y los mensajes de D-33 (Plan 035 §7.4). "Error del proveedor" se ve distinto de "Identidad no verificada", porque no gasta intento.
 - [ ] **Fallback manual:** visible solo para Admin y solo cuando corresponde (3 intentos fallidos o error del proveedor), con motivo obligatorio.
 - [ ] **Registro y cierre del retiro:** hora de inicio, descripción y observaciones → después, hora de fin y "Realizada".
 - [ ] **Referentes:** reemplazar `ValidarRenaperForm` (carga manual) por "Validar identidad" con Didit, y mostrar el vínculo en `propuesto` hasta que la validación esté aprobada (D-16).
