@@ -337,15 +337,22 @@ DECLARE
   v_intentos_terminados INTEGER;
 BEGIN
   -- Esta regla aplica únicamente a sesiones cuyo propósito es retiro.
-  IF NEW.proposito <> 'retiro' THEN
-    RETURN NEW;
-  END IF;
+  IF NEW.proposito NOT IN ('retiro', 'validacion_referente') THEN
+  RETURN NEW;
+END IF;
 
   SELECT COUNT(*)
   INTO v_intentos_terminados
   FROM sesiones_didit
-  WHERE retiro_id = NEW.retiro_id
-    AND id IS DISTINCT FROM NEW.id
+WHERE proposito = NEW.proposito
+  AND (
+    (NEW.proposito = 'retiro'
+      AND retiro_id = NEW.retiro_id)
+    OR
+    (NEW.proposito = 'validacion_referente'
+      AND referente_id = NEW.referente_id)
+  )
+  AND id IS DISTINCT FROM NEW.id
     AND estado_didit IN (
       'Approved',
       'Declined',
@@ -353,16 +360,13 @@ BEGIN
       'Expired',
       'Kyc Expired'
     )
-  AND NOT (
-    estado_didit = 'Declined'
-    AND error_proveedor = 'provider_error'
-  );
+    AND error_proveedor IS NULL;
 
   -- Al crear una nueva sesión, no se permite iniciar un cuarto intento
   -- si ya existen tres sesiones terminadas.
   IF TG_OP = 'INSERT' AND v_intentos_terminados >= 3 THEN
     RAISE EXCEPTION
-      'El retiro ya alcanzó el máximo de 3 intentos de verificación';
+      'Se alcanzó el máximo de 3 intentos de verificación';
   END IF;
 
   -- También se protege el paso de una sesión a estado terminado
@@ -375,17 +379,15 @@ BEGIN
        'Expired',
        'Kyc Expired'
      )
-     AND NOT (
-       NEW.estado_didit = 'Declined'
-       AND NEW.error_proveedor = 'provider_error'
-     )
+     AND NEW.error_proveedor IS NULL
+
      AND (
       OLD.estado_didit IS DISTINCT FROM NEW.estado_didit
       OR OLD.error_proveedor IS DISTINCT FROM NEW.error_proveedor
     )
      AND v_intentos_terminados >= 3 THEN
     RAISE EXCEPTION
-      'El retiro ya alcanzó el máximo de 3 intentos de verificación';
+      'Se alcanzó el máximo de 3 intentos de verificación';
   END IF;
 
   RETURN NEW;
@@ -404,8 +406,8 @@ DECLARE
   v_tiene_aprobacion BOOLEAN;
 BEGIN
   IF NEW.proposito <> 'retiro' THEN
-    RETURN NEW;
-  END IF;
+  RETURN NEW;
+END IF;
 
   SELECT
     COUNT(*) FILTER (
@@ -415,19 +417,17 @@ BEGIN
         'Abandoned',
         'Kyc Expired'
       )
-      AND NOT (
-        estado_didit = 'Declined'
-        AND error_proveedor IS NOT DISTINCT FROM 'provider_error'
-      )
+  AND error_proveedor IS NULL
+
     ),
     COALESCE(
       BOOL_OR(estado_didit = 'Approved'),
       FALSE
     )
   INTO v_intentos_fallidos, v_tiene_aprobacion
+
   FROM sesiones_didit
-  WHERE retiro_id = NEW.retiro_id
-    AND proposito = 'retiro';
+    WHERE retiro_id = NEW.retiro_id;
 
   IF v_intentos_fallidos >= 3
      AND NOT v_tiene_aprobacion THEN
@@ -522,7 +522,7 @@ END IF;
 
   -- Para el fallback por intentos agotados se cuentan únicamente
   -- verificaciones terminadas sin aprobación.
-  SELECT COUNT(*)
+    SELECT COUNT(*)
   INTO v_intentos_fallidos
   FROM sesiones_didit
   WHERE retiro_id = NEW.id
@@ -532,11 +532,8 @@ END IF;
       'Abandoned',
       'Expired',
       'Kyc Expired'
-  )
-  AND NOT (
-    estado_didit = 'Declined'
-    AND error_proveedor = 'provider_error'
-  );
+    )
+    AND error_proveedor IS NULL;
 
     -- D-26: el rechazo del consentimiento habilita
   -- la verificacion manual por un Admin.
@@ -566,6 +563,57 @@ CREATE TRIGGER trg_validar_fallback_retiro
   ON retiros
   FOR EACH ROW
   EXECUTE FUNCTION fn_validar_fallback_retiro();
+
+-- Seguridad: impedir autorizar o realizar retiros sin identidad verificada.
+CREATE OR REPLACE FUNCTION fn_validar_identidad_para_retiro()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
+DECLARE
+  v_estado_ultima_sesion TEXT;
+BEGIN
+  IF NEW.resultado_autorizacion = 'autorizada'
+     OR NEW.estado = 'realizada' THEN
+
+    -- Permitir la verificación manual documentada.
+    IF NEW.metodo_verificacion = 'manual'
+       AND NEW.autorizado_por IS NOT NULL
+       AND NEW.autorizado_at IS NOT NULL
+       AND NULLIF(BTRIM(NEW.motivo_fallback), '') IS NOT NULL THEN
+      RETURN NEW;
+    END IF;
+
+    -- Revisar la última sesión Didit del retiro.
+    SELECT estado_didit
+    INTO v_estado_ultima_sesion
+    FROM sesiones_didit
+    WHERE retiro_id = NEW.id
+      AND proposito = 'retiro'
+    ORDER BY created_at DESC, id DESC
+    LIMIT 1;
+
+    IF v_estado_ultima_sesion IS DISTINCT FROM 'Approved' THEN
+      RAISE EXCEPTION
+        'No se puede autorizar o realizar el retiro sin identidad verificada';
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_validar_identidad_para_retiro
+  BEFORE INSERT OR UPDATE OF
+    resultado_autorizacion,
+    estado,
+    metodo_verificacion,
+    autorizado_por,
+    autorizado_at,
+    motivo_fallback
+  ON retiros
+  FOR EACH ROW
+  EXECUTE FUNCTION fn_validar_identidad_para_retiro();
 
 -- ============================================================
 -- 8. NORMALIZACIÓN DE ESTADOS DIDIT → RNF-12
@@ -619,7 +667,7 @@ BEGIN
       RETURN 'Identidad no verificada';
 
     WHEN 'In Review' THEN
-      RETURN 'Requiere revisión';
+      RETURN 'Pendiente';
 
     ELSE
       RAISE EXCEPTION
@@ -753,6 +801,8 @@ CREATE POLICY "sesiones_didit_insert"
   TO authenticated
   WITH CHECK (
     get_my_role() IN ('Admin', 'Equipo Tecnico')
+    AND estado_didit IS NULL
+    AND finalizada_at IS NULL
   );
   
 -- ============================================================
