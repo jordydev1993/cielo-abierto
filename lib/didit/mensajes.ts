@@ -55,6 +55,14 @@ export const MENSAJES_DIDIT: Record<CodigoDidit, string | null> = {
   NOT_CONFIGURED: 'La verificación con Didit no está configurada.',
 }
 
+/** Forma de la respuesta que recibe la pantalla (Plan 035 §7.5). */
+export interface RespuestaDidit<T = Record<string, unknown>> {
+  ok: boolean
+  code: CodigoDidit
+  message: string | null
+  data?: T
+}
+
 /** Envelope común de las respuestas de /api/didit/sesiones (Plan 035 §7.5). */
 export function respuestaDidit(
   code: CodigoDidit,
