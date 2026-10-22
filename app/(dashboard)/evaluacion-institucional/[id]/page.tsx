@@ -97,7 +97,7 @@ export default function EvaluacionInstitucionalDetailPage({ params }: { params: 
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-semibold text-on-surface">
+              <h1 className="text-title font-semibold text-on-surface">
                 Evaluación {evaluacion.periodo_mes}/{evaluacion.periodo_anio}
               </h1>
               <Badge variant={ESTADO_VARIANT[evaluacion.estado]}>{evaluacion.estado}</Badge>

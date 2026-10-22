@@ -7,7 +7,7 @@ import type { Incidente } from '@/types/database.types'
 
 function GravedadBadge({ gravedad }: { gravedad: Incidente['gravedad'] }) {
   if (gravedad === 'critico') return <Badge variant="destructive">Crítico</Badge>
-  if (gravedad === 'grave') return <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Grave</Badge>
+  if (gravedad === 'grave') return <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Grave</Badge>
   if (gravedad === 'media') return <Badge variant="outline">Media</Badge>
   return <Badge variant="secondary">Leve</Badge>
 }
@@ -20,7 +20,7 @@ const ESTADO_LABEL: Record<Incidente['estado'], string> = {
 
 function EstadoBadge({ estado }: { estado: Incidente['estado'] }) {
   if (estado === 'cerrado') return <Badge variant="secondary">{ESTADO_LABEL[estado]}</Badge>
-  if (estado === 'en_seguimiento') return <Badge className="bg-amber-100 text-amber-700 border border-amber-200">{ESTADO_LABEL[estado]}</Badge>
+  if (estado === 'en_seguimiento') return <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">{ESTADO_LABEL[estado]}</Badge>
   return <Badge variant="outline">{ESTADO_LABEL[estado]}</Badge>
 }
 

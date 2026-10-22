@@ -33,9 +33,9 @@ function EstadoBadge({ turno }: { turno: Turno }) {
   if (turno.estado === 'realizado') return <Badge variant="success">Realizado</Badge>
   if (turno.estado === 'cancelado') return <Badge variant="secondary">Cancelado</Badge>
   if (turno.estado === 'ausente') return <Badge variant="destructive">Ausente</Badge>
-  if (turno.estado === 'confirmado') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">Confirmado</Badge>
+  if (turno.estado === 'confirmado') return <Badge className="bg-primary-container text-on-primary-container border border-serie-1/30">Confirmado</Badge>
   if (esFuturo(turno.fecha_hora)) return <Badge variant="outline">Programado</Badge>
-  return <Badge className="bg-amber-100 text-amber-700 border border-amber-200">Sin confirmar</Badge>
+  return <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Sin confirmar</Badge>
 }
 
 const ESTADO_TABS: { value: FiltroEstado; label: string }[] = [
@@ -171,18 +171,18 @@ export default function TurnosPage() {
   const pasadosCount = turnos.filter((t) => (t.estado === 'programado' || t.estado === 'confirmado') && !esFuturo(t.fecha_hora)).length
 
   return (
-    <div className="p-6 max-w-3xl space-y-6">
+    <div className="px-8 py-6 space-y-6">
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-1 flex-wrap">
-          <h1 className="text-xl font-semibold text-on-surface">Turnos</h1>
+          <h1 className="text-title font-semibold text-on-surface">Turnos</h1>
           {proximosCount > 0 && (
-            <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-primary-container text-on-primary-container text-xs font-semibold px-2 py-0.5 rounded-full">
               {proximosCount} próximo{proximosCount !== 1 ? 's' : ''}
             </span>
           )}
           {pasadosCount > 0 && (
-            <span className="bg-amber-100 text-amber-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-tertiary-fixed text-on-tertiary-fixed text-xs font-semibold px-2 py-0.5 rounded-full">
               {pasadosCount} sin confirmar
             </span>
           )}
@@ -192,16 +192,18 @@ export default function TurnosPage() {
 
       {/* Filtros */}
       <div className="space-y-3">
-        <div className="flex gap-1 bg-surface-container p-1 rounded-lg w-fit">
+        <div role="tablist" aria-label="Estado" className="flex flex-wrap gap-5 border-b border-filete">
           {ESTADO_TABS.map(({ value, label }) => (
             <button
               key={value}
+              role="tab"
+              aria-selected={filtroEstado === value}
               onClick={() => setFiltroEstado(value)}
               className={cn(
-                'px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
+                '-mb-px border-b-2 pb-2.5 pt-1 text-body font-medium transition-colors focus-visible:outline-2',
                 filtroEstado === value
-                  ? 'bg-surface-container-lowest text-on-surface shadow-sm'
-                  : 'text-on-surface-variant hover:text-on-surface-variant'
+                  ? 'border-ink text-on-surface'
+                  : 'border-transparent text-outline hover:text-on-surface'
               )}
             >
               {label}
@@ -286,7 +288,7 @@ export default function TurnosPage() {
                           'h-7 text-xs',
                           futuro
                             ? 'opacity-40 cursor-not-allowed'
-                            : 'border-green-300 text-green-700 hover:bg-green-50'
+                            : 'border-exito/30 text-exito hover:bg-exito-container'
                         )}
                         onClick={() => handleRealizado(turno)}
                         disabled={actualizar.isPending}
@@ -298,7 +300,7 @@ export default function TurnosPage() {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="h-7 text-xs border-red-200 text-red-600 hover:bg-red-50"
+                        className="h-7 text-xs border-error/30 text-error hover:bg-error-container"
                         onClick={() => setTurnoACancelar(turno)}
                         disabled={actualizar.isPending}
                       >

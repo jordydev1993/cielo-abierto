@@ -84,7 +84,7 @@ export default function EditarNnyaPage({ params }: { params: Promise<{ id: strin
           <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2 mb-4">
             <ChevronLeft className="h-4 w-4 mr-1" />Volver
           </Button>
-          <h1 className="text-xl font-semibold text-on-surface mb-6">
+          <h1 className="text-title font-semibold text-on-surface mb-6">
             Editar — {nnya.apellido}, {nnya.nombre}
           </h1>
           <NnyaForm initialData={nnya} onSubmit={handleSubmit} loading={mutation.isPending} />
@@ -112,7 +112,7 @@ export default function EditarNnyaPage({ params }: { params: Promise<{ id: strin
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50 h-7 w-7 p-0"
+                      className="text-error hover:text-error hover:bg-error-container h-7 w-7 p-0"
                       onClick={() => setToQuitar(nt)}
                     >
                       <Trash2 className="h-4 w-4" />

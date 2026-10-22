@@ -1,5 +1,6 @@
 'use client'
 
+import { StatRow } from '@/components/shared/KPICard'
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useInformes } from '@/hooks/informes/useInformes'
@@ -64,11 +65,11 @@ export default function InformesPage() {
   }, [informes, filtroEstado, filtroTipo, busqueda])
 
   return (
-    <div className="p-6 space-y-6 max-w-5xl">
+    <div className="px-8 py-6 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-on-surface">Informes</h1>
+          <h1 className="text-title font-semibold text-on-surface">Informes</h1>
           <p className="text-sm text-on-surface-variant">Vista global de todos los informes institucionales generados.</p>
         </div>
         <Button variant="outline" size="sm" onClick={() => exportCSV(filtrados)}>
@@ -77,17 +78,14 @@ export default function InformesPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          { label: 'Total', value: informes.length },
-          { label: 'Enviados', value: informes.filter((i) => i.estado === 'finalizado').length },
-          { label: 'Borradores', value: informes.filter((i) => i.estado === 'borrador').length },
-        ].map(({ label, value }) => (
-          <div key={label} className="border border-outline-variant rounded-lg p-3 bg-surface-container-lowest">
-            <p className="text-xs text-on-surface-variant">{label}</p>
-            <p className="text-2xl font-bold text-on-surface mt-0.5">{value}</p>
-          </div>
-        ))}
+      <div className="border-b border-filete pb-6">
+        <StatRow
+          stats={[
+            { id: 'total', label: 'Total', valor: informes.length },
+            { id: 'enviados', label: 'Enviados', valor: informes.filter((i) => i.estado === 'finalizado').length },
+            { id: 'borradores', label: 'Borradores', valor: informes.filter((i) => i.estado === 'borrador').length },
+          ]}
+        />
       </div>
 
       {/* Filtros */}

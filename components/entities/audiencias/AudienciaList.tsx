@@ -25,7 +25,7 @@ function esFuturo(fechaHora: string) {
 
 function EstadoBadge({ estado }: { estado: AudienciaJudicial['estado'] }) {
   if (estado === 'realizada') return <Badge variant="success">Realizada</Badge>
-  if (estado === 'suspendida') return <Badge className="bg-amber-100 text-amber-700 border border-amber-200">Suspendida</Badge>
+  if (estado === 'suspendida') return <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Suspendida</Badge>
   if (estado === 'cancelada') return <Badge variant="secondary">Cancelada</Badge>
   return <Badge variant="outline">Programada</Badge>
 }
@@ -189,7 +189,7 @@ export function AudienciaList({ audiencias, legajoId, legajoActivo }: AudienciaL
           const exp = expandida === audiencia.id
 
           return (
-            <div key={audiencia.id} className={cn('bg-surface-container-lowest', audiencia.estado === 'suspendida' && 'bg-amber-50/40')}>
+            <div key={audiencia.id} className={cn('bg-surface-container-lowest', audiencia.estado === 'suspendida' && 'bg-tertiary-fixed')}>
               <div className="p-3 flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0 space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -199,7 +199,7 @@ export function AudienciaList({ audiencias, legajoId, legajoActivo }: AudienciaL
                   <p className="text-xs text-on-surface-variant">{audiencia.tribunal}{audiencia.juzgado ? ` · ${audiencia.juzgado}` : ''}</p>
                   <p className="text-xs text-outline">
                     {format(new Date(audiencia.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
-                    {futuro && audiencia.estado === 'programada' && <span className="ml-1 text-blue-500 font-medium">(próxima)</span>}
+                    {futuro && audiencia.estado === 'programada' && <span className="ml-1 text-serie-1 font-medium">(próxima)</span>}
                   </p>
                   {audiencia.caratula && <p className="text-xs text-on-surface-variant italic">{audiencia.caratula}</p>}
                   {audiencia.resultado && (
@@ -226,7 +226,7 @@ export function AudienciaList({ audiencias, legajoId, legajoActivo }: AudienciaL
                         'h-7 text-xs',
                         futuro
                           ? 'opacity-40 cursor-not-allowed'
-                          : 'border-green-300 text-green-700 hover:bg-green-50'
+                          : 'border-exito/30 text-exito hover:bg-exito-container'
                       )}
                       onClick={() => setAResolver(audiencia)}
                       title={futuro ? 'No se puede registrar resolución de una audiencia con fecha futura (AJ-EX-04)' : 'Registrar resolución'}
@@ -237,7 +237,7 @@ export function AudienciaList({ audiencias, legajoId, legajoActivo }: AudienciaL
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-7 text-xs border-amber-300 text-amber-700 hover:bg-amber-50"
+                      className="h-7 text-xs border-tertiary/30 text-on-tertiary-fixed hover:bg-tertiary-fixed"
                       onClick={() => setASuspender(audiencia)}
                     >
                       <PauseCircle className="h-3 w-3 mr-1" />

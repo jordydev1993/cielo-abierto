@@ -53,10 +53,10 @@ export default function TutoresPage() {
       roles={['Admin', 'Equipo Tecnico']}
       fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}
     >
-      <div className="p-6 space-y-5">
+      <div className="px-8 py-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-on-surface">Tutores / Familiares</h1>
+            <h1 className="text-title font-semibold text-on-surface">Tutores / Familiares</h1>
             <p className="text-sm text-on-surface-variant">{tutores.length} registros</p>
           </div>
           <Button onClick={() => router.push('/tutores/nuevo')}>

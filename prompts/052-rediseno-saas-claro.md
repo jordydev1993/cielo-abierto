@@ -1,6 +1,6 @@
 # 052 — Rediseño completo: SaaS claro y minimalista
 
-> **Estado: EN CURSO (22/10/2026), aprobado por Jordy. Tanda 1 lista.**
+> **Estado: EN CURSO (22/10/2026), aprobado por Jordy. Tandas 1 y 2 listas.**
 >
 > Reemplaza el sistema "Señalética" de `prompts/051` por la dirección que fijó Jordy con una imagen de referencia: un panel SaaS claro y minimalista. Como la dirección viene fijada por el usuario, la skill `impeccable` no sortea una nueva: la referencia gana.
 

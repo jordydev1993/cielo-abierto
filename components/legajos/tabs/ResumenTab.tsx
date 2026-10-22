@@ -36,10 +36,10 @@ function SectionCard({
   color?: string
 }) {
   const colorMap: Record<string, string> = {
-    red: 'text-red-500',
-    amber: 'text-amber-500',
-    blue: 'text-blue-500',
-    green: 'text-green-500',
+    red: 'text-error',
+    amber: 'text-tertiary',
+    blue: 'text-serie-1',
+    green: 'text-exito',
     violet: 'text-violet-500',
     slate: 'text-outline',
   }
@@ -131,14 +131,14 @@ export function ResumenTab({ incidentes, alertas, turnos, informes, diagnosticos
           <div className="space-y-1.5">
             {diagnosticosActivos.slice(0, 2).map((d) => (
               <div key={d.id} className="flex items-center gap-1.5 text-xs">
-                <Activity className="h-3 w-3 text-green-400 shrink-0" />
+                <Activity className="h-3 w-3 text-exito shrink-0" />
                 <span className="text-on-surface-variant truncate">{d.tipo}</span>
-                <Badge className="text-[10px] py-0 bg-green-50 text-green-700 border-green-200 shrink-0">{d.estado.replace('_', ' ')}</Badge>
+                <Badge className="text-[10px] py-0 bg-exito-container text-exito border-exito/30 shrink-0">{d.estado.replace('_', ' ')}</Badge>
               </div>
             ))}
             {medicamentosEnCurso.slice(0, 2).map((m) => (
               <div key={m.id} className="flex items-center gap-1.5 text-xs">
-                <Pill className="h-3 w-3 text-blue-400 shrink-0" />
+                <Pill className="h-3 w-3 text-serie-1 shrink-0" />
                 <span className="text-on-surface-variant truncate">{m.nombre}</span>
                 <span className="text-outline shrink-0">{m.dosis}</span>
               </div>

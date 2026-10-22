@@ -62,7 +62,7 @@ export function AudienciaForm({ legajoId, nnyaId, onSubmit, onCancel, loading }:
         <FormField label="Fecha y hora" error={errors.fecha_hora?.message} required>
           <Input {...register('fecha_hora')} type="datetime-local" min={minDatetime} />
           {errors.fecha_hora && (
-            <p className="text-xs text-amber-600 mt-1">Las audiencias deben programarse con fecha futura.</p>
+            <p className="text-xs text-tertiary mt-1">Las audiencias deben programarse con fecha futura.</p>
           )}
         </FormField>
 

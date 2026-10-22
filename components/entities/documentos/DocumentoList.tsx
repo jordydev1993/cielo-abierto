@@ -19,8 +19,8 @@ function formatBytes(bytes: number | null): string {
 }
 
 function FileIcon({ mime }: { mime: string | null }) {
-  if (mime?.startsWith('image/')) return <FileImage className="h-4 w-4 text-blue-400 shrink-0" />
-  if (mime === 'application/pdf') return <FileText className="h-4 w-4 text-red-400 shrink-0" />
+  if (mime?.startsWith('image/')) return <FileImage className="h-4 w-4 text-serie-1 shrink-0" />
+  if (mime === 'application/pdf') return <FileText className="h-4 w-4 text-error shrink-0" />
   return <File className="h-4 w-4 text-outline shrink-0" />
 }
 
@@ -105,7 +105,7 @@ export function DocumentoList({ documentos, legajoId, legajoActivo }: DocumentoL
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 w-7 p-0 text-outline hover:text-red-500"
+                className="h-7 w-7 p-0 text-outline hover:text-error"
                 title="Eliminar"
                 onClick={() => setConfirmId(doc.id)}
               >
@@ -114,11 +114,11 @@ export function DocumentoList({ documentos, legajoId, legajoActivo }: DocumentoL
             )}
             {confirmId === doc.id && (
               <div className="flex items-center gap-1">
-                <span className="text-xs text-red-600">¿Eliminar?</span>
+                <span className="text-xs text-error">¿Eliminar?</span>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 text-xs text-red-600 hover:bg-red-50 px-2"
+                  className="h-6 text-xs text-error hover:bg-error-container px-2"
                   disabled={deleteMutation.isPending}
                   onClick={() => onDelete(doc)}
                 >

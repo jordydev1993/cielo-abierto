@@ -55,7 +55,7 @@ export default function ReporteSenafDetailPage({ params }: { params: Promise<{ i
 
   return (
     <AccessGuard roles={['Admin']} fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}>
-      <div className="p-6 space-y-5">
+      <div className="px-8 py-6 space-y-6">
         <Button variant="ghost" size="sm" onClick={() => router.push('/reportes-senaf')}>
           <ChevronLeft className="h-4 w-4 mr-1" />
           Volver
@@ -63,7 +63,7 @@ export default function ReporteSenafDetailPage({ params }: { params: Promise<{ i
 
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-xl font-semibold text-on-surface">
+            <h1 className="text-title font-semibold text-on-surface">
               Informe SENAF · {periodo}
             </h1>
             <p className="text-sm text-on-surface-variant">

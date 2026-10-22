@@ -59,8 +59,8 @@ export function UsuarioTable({ data, loading, onEdit, onToggleActivo }: UsuarioT
           onClick={() => onToggleActivo(row)}
           title={row.activo ? 'Desactivar' : 'Activar'}
           className={row.activo
-            ? 'text-on-surface-variant hover:text-red-600 hover:bg-red-50'
-            : 'text-outline hover:text-green-600 hover:bg-green-50'
+            ? 'text-on-surface-variant hover:text-error hover:bg-error-container'
+            : 'text-outline hover:text-exito hover:bg-exito-container'
           }
         >
           {row.activo ? <UserX className="h-4 w-4" /> : <UserCheck className="h-4 w-4" />}

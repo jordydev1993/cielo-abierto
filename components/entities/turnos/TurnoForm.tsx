@@ -68,7 +68,7 @@ export function TurnoForm({ legajoId, nnyaId, onSubmit, onCancel, loading }: Tur
             min={minDatetime}
           />
           {errors.fecha_hora && (
-            <p className="text-xs text-amber-600 mt-1">
+            <p className="text-xs text-tertiary mt-1">
               Los turnos deben agendarse con fecha futura.
             </p>
           )}
