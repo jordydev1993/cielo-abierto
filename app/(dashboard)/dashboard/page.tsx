@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { AvisoDatosEjemplo } from '@/components/shared/AvisoDatosEjemplo'
 import { StatRow } from '@/components/shared/KPICard'
 import { Page, PageHeader } from '@/components/shared/PageHeader'
@@ -10,11 +9,9 @@ import { GraficoLineas } from '@/components/charts/GraficoLineas'
 import { GraficoBarras } from '@/components/charts/GraficoBarras'
 import { GraficoColumnas } from '@/components/charts/GraficoColumnas'
 import { BarrasProgreso } from '@/components/charts/BarrasProgreso'
-import { Badge } from '@/components/ui/badge'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { cn } from '@/lib/utils'
+import { AgendaTarjetas } from '@/components/shared/AgendaTarjetas'
 import {
-  agendaDeHoy, alertasPorTipo, cifras, intervencionesPorArea, poblacionPorMes, postEgresoPorMes,
+  alertasPorTipo, eventosProximos, cifras, intervencionesPorArea, poblacionPorMes, postEgresoPorMes,
 } from '@/lib/mocks/inicio'
 
 // Inicio (prompts/052): solo diseño, con los datos de ejemplo de lib/mocks/inicio.ts.
@@ -102,31 +99,8 @@ export default function DashboardPage() {
         </Panel>
       </div>
 
-      <Panel title="Agenda de hoy" action={<Link href="/turnos" className="text-small font-medium text-on-surface-variant hover:text-on-surface">Ver turnos</Link>}>
-        <Table>
-          <TableHeader>
-            <TableRow className="hover:bg-transparent">
-              <TableHead className="w-20">Hora</TableHead>
-              <TableHead>Qué</TableHead>
-              <TableHead>NNyA</TableHead>
-              <TableHead className="w-36">Tipo</TableHead>
-              <TableHead className="w-32">Estado</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {agendaDeHoy.map((e) => (
-              <TableRow key={`${e.hora}-${e.que}`} className={cn(e.cumplido && 'text-on-surface-variant')}>
-                <TableCell className="font-medium tabular-nums">{e.hora}</TableCell>
-                <TableCell><Link href={e.href} className="hover:underline">{e.que}</Link></TableCell>
-                <TableCell>{e.nnya}</TableCell>
-                <TableCell>{e.tipo}</TableCell>
-                <TableCell>
-                  {e.cumplido ? <Badge variant="success">Cumplido</Badge> : <Badge variant="secondary">Pendiente</Badge>}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <Panel title="Próximos eventos" hint="Turnos, audiencias, retiros y contactos de los próximos días.">
+        <AgendaTarjetas eventos={eventosProximos} />
       </Panel>
     </Page>
   )

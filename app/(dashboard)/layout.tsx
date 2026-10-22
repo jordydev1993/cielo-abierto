@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation'
 import { AuthProvider, useAuth } from '@/context/AuthContext'
 import { QueryProvider } from '@/components/providers/QueryProvider'
 import { Toaster } from '@/components/ui/toaster'
-import { ChevronDown, CircleHelp, LogOut, Search, Star } from 'lucide-react'
+import { ChevronDown, ChevronsUpDown, CircleHelp, LogOut, Search, Star } from 'lucide-react'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 import {
   INICIO, esRutaActiva, favoritosVisibles, gruposVisibles, ubicacion, type GrupoId,
@@ -132,10 +133,7 @@ function Sidebar() {
       </nav>
 
       <div className="border-t border-filete p-3">
-        <button type="button" onClick={() => signOut()} className={cn(enlace, 'w-full')}>
-          <LogOut className="h-4 w-4" aria-hidden="true" />
-          Cerrar sesión
-        </button>
+        <Cuenta onSignOut={signOut} />
       </div>
     </aside>
   )
@@ -148,10 +146,42 @@ function iniciales(email: string | undefined) {
   return (partes.length > 1 ? partes[0][0] + partes[1][0] : nombre.slice(0, 2)).toUpperCase()
 }
 
-// Barra superior: dónde estás (grupo / módulo), ayuda (solo diseño) y la cuenta.
+// Cuenta al pie de la barra lateral (prompts/054): avatar, email y rol, con un menú que
+// tiene "Cerrar sesión". No se agregan opciones que el sistema no tiene.
+function Cuenta({ onSignOut }: { onSignOut: () => void }) {
+  const { user, role } = useAuth()
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex w-full items-center gap-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest p-2 text-left transition-colors hover:bg-surface-container-low focus-visible:outline-2">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-semibold text-white" aria-hidden="true">
+          {iniciales(user?.email)}
+        </span>
+        <span className="min-w-0 flex-1 leading-tight">
+          <span className="block truncate text-small font-medium text-on-surface">{user?.email}</span>
+          <span className="block text-caption text-outline">{role}</span>
+        </span>
+        <ChevronsUpDown className="h-4 w-4 shrink-0 text-outline" aria-hidden="true" />
+        <span className="sr-only">Abrir el menú de la cuenta</span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="top" align="start" className="w-(--radix-dropdown-menu-trigger-width)">
+        <DropdownMenuLabel>
+          <span className="block truncate font-medium text-on-surface">{user?.email}</span>
+          {role}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => onSignOut()}>
+          <LogOut className="h-4 w-4 text-outline" aria-hidden="true" />
+          Cerrar sesión
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+// Barra superior: dónde estás (grupo / módulo) y ayuda (solo diseño). La cuenta está al
+// pie de la barra lateral (prompts/054).
 function BarraSuperior() {
   const pathname = usePathname()
-  const { user, role } = useAuth()
   const { grupo, item } = ubicacion(pathname)
 
   return (
@@ -167,15 +197,6 @@ function BarraSuperior() {
           Ayuda
           <span className="sr-only">(próximamente)</span>
         </button>
-        <div className="flex items-center gap-2.5" title={user?.email ?? ''}>
-          <div className="hidden text-right leading-tight lg:block">
-            <p className="text-small font-medium text-on-surface">{user?.email}</p>
-            <p className="text-caption text-outline">{role}</p>
-          </div>
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-caption font-semibold text-white" aria-hidden="true">
-            {iniciales(user?.email)}
-          </span>
-        </div>
       </div>
     </header>
   )
@@ -186,12 +207,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <QueryProvider>
       <AuthProvider>
         {/* La app vive en un marco blanco redondeado sobre el fondo gris (prompts/052). */}
-        <div className="h-screen bg-surface p-3">
+        <div className="h-screen overflow-hidden bg-surface p-3">
           <div className="flex h-full overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
             <Sidebar />
             <div className="flex min-w-0 flex-1 flex-col">
               <BarraSuperior />
-              <main className="flex-1 overflow-auto">{children}</main>
+              {/* `relative`: los textos sr-only (posición absoluta) quedan dentro del área con scroll
+                  y no estiran la página (corte del marco al bajar, 22/10). */}
+              <main className="relative flex-1 overflow-auto">{children}</main>
             </div>
           </div>
         </div>
