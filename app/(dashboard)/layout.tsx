@@ -207,12 +207,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <QueryProvider>
       <AuthProvider>
         {/* La app vive en un marco blanco redondeado sobre el fondo gris (prompts/052). */}
-        <div className="h-screen bg-surface p-3">
+        <div className="h-screen overflow-hidden bg-surface p-3">
           <div className="flex h-full overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
             <Sidebar />
             <div className="flex min-w-0 flex-1 flex-col">
               <BarraSuperior />
-              <main className="flex-1 overflow-auto">{children}</main>
+              {/* `relative`: los textos sr-only (posición absoluta) quedan dentro del área con scroll
+                  y no estiran la página (corte del marco al bajar, 22/10). */}
+              <main className="relative flex-1 overflow-auto">{children}</main>
             </div>
           </div>
         </div>
