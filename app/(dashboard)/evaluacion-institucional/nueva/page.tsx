@@ -25,8 +25,8 @@ export default function NuevaEvaluacionInstitucionalPage() {
 
   return (
     <AccessGuard roles={['Admin']} fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}>
-      <div className="p-6 max-w-2xl">
-        <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2 mb-4">
+      <div className="max-w-3xl px-8 py-6">
+        <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2.5 mb-3 text-on-surface-variant">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver
         </Button>
         <h1 className="text-title font-semibold text-on-surface mb-6">Convocar evaluación institucional</h1>

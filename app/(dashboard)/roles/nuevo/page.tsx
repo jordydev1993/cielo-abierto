@@ -25,7 +25,7 @@ export default function NuevoRolPage() {
 
   return (
     <AccessGuard roles={['Admin']} fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}>
-      <div className="p-6 max-w-lg">
+      <div className="max-w-3xl px-8 py-6">
         <Button variant="ghost" size="sm" onClick={() => router.back()} className="mb-4 -ml-2">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver
         </Button>

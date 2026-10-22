@@ -57,9 +57,9 @@ export default function NnyaDetallePage({ params }: { params: Promise<{ id: stri
   const legajo = legajos[0]
 
   return (
-    <div className="p-6 max-w-3xl space-y-8">
+    <div className="max-w-3xl space-y-8 px-8 py-6">
       <div>
-        <Button variant="ghost" size="sm" onClick={() => router.push('/nnya')} className="-ml-2 mb-4">
+        <Button variant="ghost" size="sm" onClick={() => router.push('/nnya')} className="-ml-2.5 mb-3 text-on-surface-variant">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver a NNyA
         </Button>
 
