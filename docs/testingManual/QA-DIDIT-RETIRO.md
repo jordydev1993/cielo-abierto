@@ -969,3 +969,22 @@ Sin errores en la consola del navegador. Una advertencia de hidratación (un `Ba
 - Ver qué devuelve `approve` si en Didit se ingresa un DNI distinto del esperado (`DNI_MISMATCH`, caso T6 del plan 045).
 - Los escenarios `lookup_no_match`, `lookup_partial_match` y `lookup_provider_error` con sesiones reales. Igual que `approve`, cada uno necesita completar el flujo en un celular.
 - El aviso real de Didit fue al webhook de producción. Hasta que se apliquen ahí las migraciones del #29 y del #51, ese webhook no puede guardar resultados.
+
+## Los cuatro escenarios con sesiones reales del sandbox — 21/10/2026
+
+Igual que la primera sesión real: Supabase local, workflow `71a46d11-…` y una sesión por escenario, cada una en un retiro nuevo. Jordy completó cada flujo en su celular. El aviso real de Didit (armado con la decisión de la API y firmado con el secreto) se reenvió al webhook local, porque Didit lo manda a producción. **Resultado: 4/4 ✅**
+
+| Escenario | DNI ingresado | Didit | Estado en la base | Respuesta de la API | Intentos | Borrada en Didit |
+|---|---|---|---|---|---|---|
+| `approve` con otro DNI (**DNI_MISMATCH**, T6) | `30111222` | `Approved`, `personal_number = 30111222` | "Identidad no verificada", `dni_coincide = false` | `DNI_MISMATCH`: "El DNI verificado no coincide con el del tutor seleccionado." | 1 usado | ✅ |
+| `lookup_no_match` (B-01) | `99000011` | `Declined`, `fallback_from.reason = no_match` | "Identidad no verificada" | `IDENTITY_NOT_VERIFIED` (mensaje A) | 1 usado | ✅ |
+| `lookup_partial_match` (B-01) | `99000011` | `Declined`, `fallback_from.reason = partial_match` | "Identidad no verificada" | `IDENTITY_NOT_VERIFIED` (mensaje A) | 1 usado | ✅ |
+| `lookup_provider_error` (D-01, D-12) | `99000011` | `Declined`, `fallback_from.reason = provider_error` | "Error del proveedor", `error_proveedor = provider_error` | `PROVIDER_ERROR` (mensaje C); `fallback_habilitado` solo para Admin | **0 usados** | ✅ |
+
+**Confirmado con sesiones reales:**
+- El sandbox devuelve como `personal_number` el DNI que se ingresa en Didit; no es un DNI fijo. Por eso `DNI_MISMATCH` se puede probar de punta a punta.
+- `lookup_partial_match` existe y responde `partial_match`. No se había probado antes.
+- Con los datos de la verificación sin restringir (D-28), `fallback_from.reason` llega en los tres rechazos.
+- En el log solo aparecen `session_id` y `status`.
+
+**Mejora de usabilidad encontrada:** si se recarga la página, el retiro no muestra el resultado de su última sesión hasta que se inicia otra verificación, porque el estado vive en el componente. La API sí lo devuelve (`GET /api/didit/sesiones/[id]`). Conviene que la pantalla muestre el último resultado al abrir el retiro.
