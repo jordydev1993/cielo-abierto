@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AuthProvider, useAuth } from '@/context/AuthContext'
@@ -202,6 +202,16 @@ function BarraSuperior() {
   )
 }
 
+// Área de contenido con scroll propio (prompts/052). Next solo reinicia el scroll de la
+// ventana al navegar, así que acá se vuelve arriba en cada cambio de ruta: si no, la página
+// nueva se abría desplazada y con el encabezado (y sus botones) fuera de la vista.
+function Contenido({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const ref = useRef<HTMLElement>(null)
+  useEffect(() => { ref.current?.scrollTo({ top: 0 }) }, [pathname])
+  return <main ref={ref} className="relative flex-1 overflow-auto">{children}</main>
+}
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <QueryProvider>
@@ -214,7 +224,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <BarraSuperior />
               {/* `relative`: los textos sr-only (posición absoluta) quedan dentro del área con scroll
                   y no estiran la página (corte del marco al bajar, 22/10). */}
-              <main className="relative flex-1 overflow-auto">{children}</main>
+              <Contenido>{children}</Contenido>
             </div>
           </div>
         </div>
