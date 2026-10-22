@@ -908,3 +908,27 @@ El log del servidor solo registra el tipo de falla (`http_4xx (400)`), sin DNI n
 **Cambio en E-4:** E4H-9 (evento válido) ahora responde `500` cuando no hay base configurada. El `200` se prueba en el test con base. El helper `tests/support/next-server.ts` fija siempre las variables de Supabase, vacías o locales, y `DIDIT_API_KEY` vacía: antes las borraba, y Next las tomaba de `.env.local`, que apunta a producción.
 
 **Pendiente:** probarlo con una sesión real del sandbox. Hace falta `DIDIT_WORKFLOW_ID` y un túnel hacia el webhook local, o el webhook de preview. En la misma prueba se confirma dónde llega `personal_number` (Supuesto 1 del plan 048).
+
+---
+
+## Pantalla de retiros — prompts/049 (primera parte)
+
+**Fecha:** 21/10/2026 · **Entorno:** `next dev` contra Supabase local, en el navegador, con los usuarios de prueba Admin y Equipo Tecnico (`qa.direccion@` y `qa.educador@arguelloinfancias.test`, solo locales) · **Resultado:** ✅
+
+| Paso | Resultado |
+|---|---|
+| Admin, pestaña Autorizaciones: alta sin tutor / con tutor y restricción | "Seleccione el tutor." / autorización `vigente` con la restricción visible |
+| Registrar retiro sin elegir nada | Mensaje D (D-33) |
+| NNyA y tutor autorizado → "Iniciar retiro" | Retiro `en_curso` y pantalla de consentimiento |
+| Acepto → verificación | Selector de dispositivo y de escenario (solo sandbox) |
+| "Iniciar verificación" con un workflow inválido | Mensaje C; el caso aparece en "Casos en revisión" del Admin |
+| `Approved` con el DNI correcto (insertado como lo haría el webhook) | "Identidad verificada. Puede registrar el retiro." y el formulario de registro |
+| Registrar sin descripción / con descripción | Mensaje D / `resultado_autorizacion = 'autorizada'`, `metodo_verificacion = 'didit'` |
+| Cerrar sin hora de fin / con hora de fin | Mensaje E / `estado = 'realizada'`; todo en el audit log |
+| Otro retiro: "No acepto" | Mensaje de D-26; el caso aparece en "Casos en revisión" |
+| Admin: "Verificación manual" con motivo | `autorizada`, `manual`, `autorizado_por` = Admin, con el motivo |
+| Equipo Tecnico | Solo ve "Registrar retiro" y "Retiros en curso" |
+
+Sin errores en la consola del navegador. Una advertencia de hidratación (un `Badge` dentro de un `<p>`) se corrigió durante la prueba.
+
+**Pendiente:** el QR y el polling con una sesión real necesitan `DIDIT_WORKFLOW_ID`. La validación de referentes y el formulario de vínculos van en la segunda parte del plan 049.

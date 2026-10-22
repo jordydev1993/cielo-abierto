@@ -8,7 +8,7 @@ import { Toaster } from '@/components/ui/toaster'
 import {
   Users, User, FileText, Home, BookOpen, Shield, UserCheck,
   LogOut, AlertTriangle, CalendarClock, Siren, PartyPopper, Contact2,
-  ClipboardCheck, KanbanSquare, UserCog, HeartHandshake, ScrollText,
+  ClipboardCheck, KanbanSquare, UserCog, HeartHandshake, ScrollText, DoorOpen,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAlertasPendientesCount } from '@/hooks/alertas/useAlertasPendientesCount'
@@ -20,6 +20,7 @@ const NAV_ALL = [
   { href: '/legajos', label: 'Legajos', icon: BookOpen },
   { href: '/tutores', label: 'Tutores', icon: UserCheck },
   { href: '/referentes', label: 'Referentes', icon: Contact2 },
+  { href: '/retiros', label: 'Retiros', icon: DoorOpen },
 ]
 
 const NAV_ADMIN_TECNICO = [

@@ -108,6 +108,40 @@ export interface ValidacionRenaper
   respuesta_cruda: Record<string, unknown> | null
 }
 
+// Retiros con verificación Didit (prompts/028, 046 y 049).
+export interface AutorizacionRetiro extends Omit<Row<'autorizaciones_retiro'>, 'estado'> {
+  estado: 'vigente' | 'revocada'
+  nnya_tutores?: NnyaTutor
+}
+
+export interface Retiro
+  extends Omit<
+    Row<'retiros'>,
+    'estado' | 'resultado_autorizacion' | 'consentimiento_didit' | 'metodo_verificacion'
+  > {
+  estado: 'en_curso' | 'requiere_revision' | 'realizada' | 'rechazada'
+  resultado_autorizacion: 'pendiente' | 'autorizada' | 'rechazada'
+  consentimiento_didit: 'aceptado' | 'rechazado' | null
+  metodo_verificacion: 'didit' | 'manual' | null
+  nnya?: Pick<Nnya, 'id' | 'nombre' | 'apellido'>
+  tutores?: Pick<Tutor, 'id' | 'nombre' | 'apellido' | 'dni' | 'parentesco'>
+  sesiones_didit?: SesionDidit[]
+}
+
+export type EstadoRnf12 =
+  | 'Pendiente'
+  | 'Identidad verificada'
+  | 'Identidad no verificada'
+  | 'Requiere revisión'
+  | 'Error del proveedor'
+
+export interface SesionDidit
+  extends Omit<Row<'sesiones_didit'>, 'proposito' | 'estado_rnf12' | 'error_proveedor'> {
+  proposito: 'retiro' | 'validacion_referente'
+  estado_rnf12: EstadoRnf12
+  error_proveedor: 'provider_error' | 'didit_no_disponible' | null
+}
+
 export interface TransferenciaAuh extends Omit<Row<'transferencia_auh'>, 'estado'> {
   estado: 'pendiente' | 'en_gestion' | 'transferida' | 'rechazada' | 'no_corresponde'
 }
