@@ -184,6 +184,9 @@ Marco blanco con borde. Paneles sin tarjeta: título de sección, ayuda opcional
 ### Inputs / Fields
 Campo blanco de 36 px con borde gris y radio 8; foco con borde y anillo azul. El autocompletado del navegador no cambia el fondo.
 
+### Avisos (toasts)
+Tarjeta flotante blanca de radio 12 con borde gris y sombra suave, abajo a la derecha. Cinco variantes: neutra, éxito (tilde verde), información ("i" azul), advertencia (triángulo ámbar) y error (exclamación roja); el ícono acompaña siempre al color. Duran 4 segundos o quedan fijos con `duracion: null`; advertencias y errores se anuncian con prioridad (`role="alert"`).
+
 ### Navigation
 Barra lateral clara: marca, buscador ⌘K (solo diseño, deshabilitado), Favoritos (accesos fijos), Inicio y grupos plegables con chevron. Ítem activo con fondo gris y texto en negrita. Barra superior con la ruta (grupo / módulo), Ayuda (solo diseño) y la cuenta. Pestañas de texto con subrayado de 2 px en la activa.
 

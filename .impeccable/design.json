@@ -1,33 +1,98 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-22T21:00:00Z",
+  "generatedAt": "2026-10-22T20:13:31.096Z",
   "title": "Design System: Argüello Infancias",
   "extensions": {
     "colorMeta": {
-      "tinta": { "role": "primary", "displayName": "Tinta" },
-      "fondo-app": { "role": "neutral", "displayName": "Fondo de la app" },
-      "superficie": { "role": "neutral", "displayName": "Superficie", "tonalRamp": ["#111318", "#5b606b", "#6b717c", "#9aa0aa", "#e7e8ec", "#f1f2f4", "#f7f8fa", "#ffffff"] },
-      "serie-1": { "role": "series", "displayName": "Serie 1 (azul)" },
-      "serie-2": { "role": "series", "displayName": "Serie 2 (rosa)" },
-      "serie-3": { "role": "series", "displayName": "Serie 3 (verde)" },
-      "serie-contexto": { "role": "series", "displayName": "Contexto (gris)" },
-      "exito": { "role": "status", "displayName": "Éxito" },
-      "advertencia": { "role": "status", "displayName": "Advertencia" },
-      "error": { "role": "status", "displayName": "Crítico" }
+      "tinta": {
+        "role": "primary",
+        "displayName": "Tinta"
+      },
+      "fondo-app": {
+        "role": "neutral",
+        "displayName": "Fondo de la app"
+      },
+      "superficie": {
+        "role": "neutral",
+        "displayName": "Superficie",
+        "tonalRamp": [
+          "#111318",
+          "#5b606b",
+          "#6b717c",
+          "#9aa0aa",
+          "#e7e8ec",
+          "#f1f2f4",
+          "#f7f8fa",
+          "#ffffff"
+        ]
+      },
+      "serie-1": {
+        "role": "series",
+        "displayName": "Serie 1 (azul)"
+      },
+      "serie-2": {
+        "role": "series",
+        "displayName": "Serie 2 (rosa)"
+      },
+      "serie-3": {
+        "role": "series",
+        "displayName": "Serie 3 (verde)"
+      },
+      "serie-contexto": {
+        "role": "series",
+        "displayName": "Contexto (gris)"
+      },
+      "exito": {
+        "role": "status",
+        "displayName": "Éxito"
+      },
+      "advertencia": {
+        "role": "status",
+        "displayName": "Advertencia"
+      },
+      "error": {
+        "role": "status",
+        "displayName": "Crítico"
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Cifra", "purpose": "La cifra de cada indicador." },
-      "title": { "displayName": "Título de página", "purpose": "Encabezado de cada pantalla." },
-      "heading": { "displayName": "Título de sección", "purpose": "Paneles, secciones de formulario y tarjetas." },
-      "caption": { "displayName": "Etiqueta chica", "purpose": "Cabeceras de tabla, ejes e insignias." }
+      "display": {
+        "displayName": "Cifra",
+        "purpose": "La cifra de cada indicador."
+      },
+      "title": {
+        "displayName": "Título de página",
+        "purpose": "Encabezado de cada pantalla."
+      },
+      "heading": {
+        "displayName": "Título de sección",
+        "purpose": "Paneles, secciones de formulario y tarjetas."
+      },
+      "caption": {
+        "displayName": "Etiqueta chica",
+        "purpose": "Cabeceras de tabla, ejes e insignias."
+      }
     },
     "shadows": [
-      { "name": "flotante", "value": "0 10px 15px -3px rgb(17 19 24 / 0.1), 0 4px 6px -4px rgb(17 19 24 / 0.1)", "purpose": "Solo tooltip, menús, diálogos y toasts." }
+      {
+        "name": "flotante",
+        "value": "0 10px 15px -3px rgb(17 19 24 / 0.1), 0 4px 6px -4px rgb(17 19 24 / 0.1)",
+        "purpose": "Solo tooltip, menús, diálogos y toasts."
+      }
     ],
     "breakpoints": [
-      { "name": "md", "value": "768px" },
-      { "name": "lg", "value": "1024px" },
-      { "name": "xl", "value": "1280px" }
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
     ]
   },
   "components": [
@@ -78,6 +143,14 @@
       "description": "Cifras sin tarjetas, con unidad e insignia.",
       "html": "<dl class=\"ds-stats\"><div><dt>NNyA activos</dt><dd><b>18</b> <span>NNyA</span></dd></div><div><dt>Alertas pendientes</dt><dd><b>5</b> <em>1 crítica</em></dd></div></dl>",
       "css": ".ds-stats{display:flex;gap:48px;margin:0;font-family:Inter,system-ui,sans-serif}.ds-stats dt{font-size:13px;color:#5b606b}.ds-stats dd{margin:6px 0 0;display:flex;align-items:baseline;gap:6px}.ds-stats b{font-size:28px;font-weight:600;color:#111318}.ds-stats span{font-size:13px;color:#5b606b}.ds-stats em{font-style:normal;font-size:12px;font-weight:500;color:#fff;background:#111318;border-radius:6px;padding:2px 6px;align-self:center}"
+    },
+    {
+      "name": "Aviso",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Toast con ícono por variante: éxito, información, advertencia y error.",
+      "html": "<div class=\"ds-t\"><i style=\"background:#9a5b00\"></i><div><b>La autorización vence mañana</b><span>Revisala en Retiros.</span></div></div>",
+      "css": ".ds-t{display:flex;gap:12px;width:320px;padding:16px;border:1px solid #e7e8ec;border-radius:12px;background:#fff;box-shadow:0 10px 15px -3px rgb(17 19 24 / .1);font-family:Inter,system-ui,sans-serif}.ds-t i{width:16px;height:16px;border-radius:9999px;flex-shrink:0;margin-top:2px}.ds-t b{display:block;font-size:14px;color:#111318}.ds-t span{font-size:13px;color:#5b606b}"
     }
   ],
   "narrative": {
@@ -91,10 +164,26 @@
       "Inter en toda la interfaz."
     ],
     "rules": [
-      { "name": "The Series Rule", "body": "Los colores de serie solo identifican series en un gráfico; no se usan para decorar ni para estados.", "section": "colors" },
-      { "name": "The One Black Rule", "body": "Hay un solo negro con peso: el botón de la acción principal (y el avatar). Ninguna otra superficie es negra.", "section": "colors" },
-      { "name": "The Quiet Label Rule", "body": "Sin mayúsculas forzadas ni espaciado de letras: las etiquetas son texto chico en gris, no rótulos. Nunca un rótulo encima de un título.", "section": "typography" },
-      { "name": "The No Card Rule", "body": "Las cifras y los gráficos no van en tarjetas: se separan con aire y filetes. Las tarjetas quedan para bloques que se agrupan de verdad (por ejemplo, un formulario dentro de un listado).", "section": "elevation" }
+      {
+        "name": "The Series Rule",
+        "body": "Los colores de serie solo identifican series en un gráfico; no se usan para decorar ni para estados.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Black Rule",
+        "body": "Hay un solo negro con peso: el botón de la acción principal (y el avatar). Ninguna otra superficie es negra.",
+        "section": "colors"
+      },
+      {
+        "name": "The Quiet Label Rule",
+        "body": "Sin mayúsculas forzadas ni espaciado de letras: las etiquetas son texto chico en gris, no rótulos. Nunca un rótulo encima de un título.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Card Rule",
+        "body": "Las cifras y los gráficos no van en tarjetas: se separan con aire y filetes. Las tarjetas quedan para bloques que se agrupan de verdad (por ejemplo, un formulario dentro de un listado).",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do usar PageHeader, Toolbar, StatRow y Panel en cada pantalla nueva.",
