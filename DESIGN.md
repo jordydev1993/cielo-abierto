@@ -104,6 +104,8 @@ components:
 
 # Design System: Argüello Infancias
 
+> **En transición (22/10/2026):** este documento describe el sistema "Señalética" (prompts/051), que se está reemplazando por el sistema SaaS claro de prompts/052. Se reescribe al terminar la última tanda; mientras tanto, los tokens vigentes están en `app/globals.css`.
+
 ## Overview
 
 **Creative North Star: "La señalética del hospital público"**

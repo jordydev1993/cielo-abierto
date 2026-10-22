@@ -41,7 +41,7 @@ export function Toaster() {
         <div
           key={t.id}
           className={cn(
-            'flex items-start gap-3 rounded-lg border p-4 shadow-md bg-surface-container-lowest animate-in slide-in-from-bottom-2',
+            'flex items-start gap-3 rounded-xl border p-4 shadow-lg shadow-ink/10 bg-surface-container-lowest animate-in slide-in-from-bottom-2',
             t.variant === 'destructive' && 'border-error-container bg-error-container',
             t.variant === 'success' && 'border-primary-fixed bg-primary-container',
             t.variant === 'default' && 'border-outline-variant'
