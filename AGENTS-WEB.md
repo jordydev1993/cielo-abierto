@@ -178,7 +178,7 @@ Detectada por inspección directa del código. **No se corrige sin aprobación**
 | # | Gap | Tarjeta |
 |---|---|---|
 | tests | `playwright` instalado, 0 tests. | issue #30 |
-| design | Sistema SaaS claro aplicado en todas las pantallas (`prompts/052`, `DESIGN.md`). Falta: `Toaster` sin variantes warning/info; sin wrapper de alert-dialog no destructivo; barra lateral sin versión móvil; buscador ⌘K y Ayuda solo como diseño; Inicio con **datos de ejemplo** hasta conectar datos reales. | issue #31 |
+| design | Sistema SaaS claro aplicado en todas las pantallas (`prompts/052`, `DESIGN.md`). Falta: sin wrapper de alert-dialog no destructivo; barra lateral sin versión móvil; buscador ⌘K y Ayuda solo como diseño; Inicio con **datos de ejemplo** hasta conectar datos reales. | issue #31 |
 | proceso-1.4 | Recursos/fondos, stock y asistencia de personal: proceso real sin modelo de datos. Fuera de alcance hasta decisión. | — |
 
 ### Resuelto
