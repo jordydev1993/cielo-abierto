@@ -4,7 +4,7 @@
 **Innovación:** validación de identidad con RENAPER vía Didit, para dos usos: el **retiro** de un NNyA por su tutor autorizado y el **alta de referentes** en la revinculación familiar (proceso 1.5).
 **Decisiones vigentes:** D-1 a D-28 y D-33 en `DECISIONES-PENDIENTES-INNOVACIONES.md`. **Contrato:** `prompts/035-requisitos-contrato-didit.md`.
 
-> **Estado al 21/10:** la migración #18 (PR #29) y las pantallas de diseño (PR #42) están en `master`. **Lo que queda pasó a Jordy:** el #23 (webhook y endpoints, antes de Sofi), la integración de las pantallas (#26, antes de Cami) y la QA de los escenarios (#33, antes de Meli). Orden: Supabase local → migración de D-14 → endpoints → webhook → pantallas → QA (`prompts/045`). **Modelo de datos:** `prompts/028-modelo-datos-didit-retiros.md` (aprobado).
+> **Estado al 22/10: terminada.** Código en `master` (planes 046 a 050), migraciones aplicadas en producción, `DIDIT_WORKFLOW_ID` cargada en Vercel y QA cerrada (#33). **Decisiones del 22/10:** se usa solo la app **gratuita de sandbox** de Didit, para mostrar que la innovación funciona, sin consultar a RENAPER de verdad; y el entorno de preview de Vercel no se configura (no hay una segunda base de Supabase). **Modelo de datos:** `prompts/028-modelo-datos-didit-retiros.md`.
 
 > Cada tarea que toque código o schema sigue el ciclo de `AGENTS-WEB.md`: plan en `prompts/`, aprobación de Jordy, implementación y PR desde una rama propia.
 
@@ -66,7 +66,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] **#23, endpoints** (`prompts/047`): crear sesión con `sandbox_scenario`, consultar estado y fallback, en `app/api/didit/sesiones`. ✅ 21/10. Falta probar el `201` con el workflow real (`DIDIT_WORKFLOW_ID`).
 - [x] **#23, webhook** (`prompts/048`): busca la sesión, guarda el resultado (D-1, D-12, D-14), crea la validación RENAPER del referente (D-11), es idempotente y borra la sesión en Didit (RF-10). ✅ 21/10. Falta probarlo con una sesión real del sandbox (`DIDIT_WORKFLOW_ID` y un túnel hacia el webhook local).
 - [x] **#26** (`prompts/049`): `/retiros` (registro, en curso, casos en revisión y autorizaciones), validación de referentes con Didit y "Vigente" bloqueado sin validación (D-16). ✅ 21/10 (PR #54 y la parte 2). Falta probar el QR y el polling con una sesión real (`DIDIT_WORKFLOW_ID`).
-- [ ] **#33:** QA según `prompts/045`.
+- [x] **#33:** QA según `prompts/045`. ✅ 22/10: tests automáticos, recorrido en el navegador y 5 escenarios con sesiones reales del sandbox (PR #56 y #57).
 - [x] Invitaciones al repo: Meli y Cami ya trabajan en `cielo-abierto`.
 
 ---
@@ -147,12 +147,12 @@ Cami ── diseño con datos de ejemplo ─────────────
 
 ## Cómo saber que la innovación 1 está terminada
 
-- [ ] Un retiro completo funciona de punta a punta en sandbox: aprobado, rechazado, error del proveedor y fallback del Admin.
-- [ ] Una validación de referente con Didit habilita el vínculo `vigente`; sin validación, la base lo rechaza.
-- [ ] No se guardan selfies, fotos de RENAPER, nombre ni domicilio de Didit, ni en la base ni en los logs.
-- [ ] Todo queda en el audit log.
-- [ ] Hay tests verdes del webhook y de los escenarios A-D.
-- [ ] Los RF y RNF de la Práctica 3 coinciden con lo implementado.
+- [x] Un retiro completo funciona de punta a punta en sandbox: aprobado, rechazado, error del proveedor y fallback del Admin.
+- [x] Una validación de referente con Didit habilita el vínculo `vigente`; sin validación, la base lo rechaza.
+- [x] No se guardan selfies, fotos de RENAPER, nombre ni domicilio de Didit, ni en la base ni en los logs.
+- [x] Todo queda en el audit log.
+- [x] Hay tests verdes del webhook y de los escenarios A-D.
+- [ ] Los RF y RNF de la Práctica 3 coinciden con lo implementado. Pendiente de revisar contra el PDF; la consulta real a RENAPER queda fuera por la decisión del 22/10 (sandbox gratuito).
 
 ---
 
@@ -171,3 +171,5 @@ Cami ── diseño con datos de ejemplo ─────────────
 | 21/10 | Jordy | D-33 (PR #47). Mergeados el PR #42 de Cami y el PR #29 de Sofi. Plan de la QA (PR #48 y #49). El #23, el #26 y el #33 pasan a Jordy |
 | 21/10 | Cami | PR #42: correcciones de la revisión, rama al día con `master` y texto de vínculos propuestos ajustado |
 | 21/10 | Sofi | PR #29: seguridad 1 y 2 con pruebas, D-12, D-19, D-26, tope de referentes y migración renombrada a `20261021180000` |
+| 21/10 | Jordy | Supabase local (PR #50), D-14 en la base (PR #51), endpoints (PR #52), webhook (PR #53), pantallas de retiros y referentes (PR #54 y #55). Primera sesión real del sandbox (PR #56) |
+| 22/10 | Jordy | Cuatro escenarios con sesiones reales (PR #57), último resultado al abrir un retiro (PR #58). Migraciones aplicadas en producción, `DIDIT_WORKFLOW_ID` en Vercel y QA cerrada (#33) |
