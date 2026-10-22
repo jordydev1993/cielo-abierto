@@ -1,15 +1,9 @@
 import type { Metadata } from 'next'
-import { Manrope, Inter } from 'next/font/google'
+import { Overpass } from 'next/font/google'
 import './globals.css'
 
-const manrope = Manrope({
-  variable: '--font-heading',
-  subsets: ['latin'],
-  display: 'swap',
-})
-
-const inter = Inter({
-  variable: '--font-label',
+const overpass = Overpass({
+  variable: '--font-overpass',
   subsets: ['latin'],
   display: 'swap',
 })
@@ -21,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${manrope.variable} ${inter.variable} h-full antialiased`}>
+    <html lang="es" className={`${overpass.variable} h-full antialiased`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

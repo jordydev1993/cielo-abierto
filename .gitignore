@@ -52,3 +52,8 @@ supabase/.temp/
 !supabase/migrations/*.sql
 # Pruebas en SQL: solo datos ficticios y ROLLBACK (prompts/046)
 !tests/sql/*.sql
+
+# impeccable: bocetos y capturas de revisión locales (prompts/051); se versionan el brief y design.json
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/config.local.json

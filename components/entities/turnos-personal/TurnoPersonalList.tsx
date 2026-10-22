@@ -32,11 +32,11 @@ interface TurnoPersonalListProps {
 
 export function TurnoPersonalList({ turnos, miUsuarioId, onEdit, onEntregar, onRecibir }: TurnoPersonalListProps) {
   if (turnos.length === 0) {
-    return <p className="text-sm text-slate-400 py-8 text-center">No hay turnos de personal registrados</p>
+    return <p className="text-sm text-outline py-8 text-center">No hay turnos de personal registrados</p>
   }
 
   return (
-    <div className="divide-y divide-slate-100">
+    <div className="divide-y divide-outline-variant">
       {turnos.map((t) => {
         const titular = (t as any).titular
         const entregadoPorUsuario = (t as any).entregado_por_usuario
@@ -49,7 +49,7 @@ export function TurnoPersonalList({ turnos, miUsuarioId, onEdit, onEntregar, onR
           <div key={t.id} className="py-3 space-y-1.5">
             <div className="flex items-center justify-between gap-2 flex-wrap">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium text-slate-900">{formatFecha(t.fecha)}</span>
+                <span className="text-sm font-medium text-on-surface">{formatFecha(t.fecha)}</span>
                 <Badge variant="outline">{TURNO_LABEL[t.turno]}</Badge>
                 <Badge variant={ESTADO_VARIANT[t.estado]}>{t.estado}</Badge>
               </div>
@@ -71,14 +71,14 @@ export function TurnoPersonalList({ turnos, miUsuarioId, onEdit, onEntregar, onR
                 </AccessGuard>
               </div>
             </div>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-on-surface-variant">
               Titular: {titular ? `${titular.apellido}, ${titular.nombre}` : '—'}
             </p>
             {t.novedades_traspaso && (
-              <p className="text-xs text-slate-500 italic">Novedades: {t.novedades_traspaso}</p>
+              <p className="text-xs text-on-surface-variant italic">Novedades: {t.novedades_traspaso}</p>
             )}
             {(entregadoPorUsuario || recibidoPorUsuario) && (
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-outline">
                 {entregadoPorUsuario && `Entregado por ${entregadoPorUsuario.apellido}, ${entregadoPorUsuario.nombre}`}
                 {entregadoPorUsuario && recibidoPorUsuario && ' — '}
                 {recibidoPorUsuario && `Recibido por ${recibidoPorUsuario.apellido}, ${recibidoPorUsuario.nombre}`}

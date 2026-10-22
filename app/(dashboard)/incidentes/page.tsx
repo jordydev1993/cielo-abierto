@@ -92,8 +92,8 @@ export default function IncidentesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Incidentes</h1>
-          <p className="text-sm text-slate-500">Vista global de todos los incidentes registrados en el sistema.</p>
+          <h1 className="text-xl font-semibold text-on-surface">Incidentes</h1>
+          <p className="text-sm text-on-surface-variant">Vista global de todos los incidentes registrados en el sistema.</p>
         </div>
         <Button variant="outline" size="sm" onClick={() => exportCSV(filtrados)}>
           <Download className="h-4 w-4 mr-1.5" />Exportar CSV
@@ -108,9 +108,9 @@ export default function IncidentesPage() {
           { label: 'Graves', value: incidentes.filter((i) => i.gravedad === 'grave').length, color: 'orange' },
           { label: 'Abiertos', value: incidentes.filter((i) => i.estado === 'abierto').length, color: 'amber' },
         ].map(({ label, value, color }) => (
-          <div key={label} className="border border-slate-100 rounded-lg p-3 bg-white">
-            <p className="text-xs text-slate-500">{label}</p>
-            <p className={cn('text-2xl font-bold mt-0.5', color === 'red' && 'text-red-600', color === 'orange' && 'text-orange-500', color === 'amber' && 'text-amber-500', color === 'slate' && 'text-slate-900')}>{value}</p>
+          <div key={label} className="border border-outline-variant rounded-lg p-3 bg-surface-container-lowest">
+            <p className="text-xs text-on-surface-variant">{label}</p>
+            <p className={cn('text-2xl font-bold mt-0.5', color === 'red' && 'text-red-600', color === 'orange' && 'text-orange-500', color === 'amber' && 'text-amber-500', color === 'slate' && 'text-on-surface')}>{value}</p>
           </div>
         ))}
       </div>
@@ -118,8 +118,8 @@ export default function IncidentesPage() {
       {/* Gráficos */}
       {incidentes.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="border border-slate-100 rounded-lg p-4 bg-white">
-            <p className="text-xs font-semibold text-slate-700 mb-3">Por tipo</p>
+          <div className="border border-outline-variant rounded-lg p-4 bg-surface-container-lowest">
+            <p className="text-xs font-semibold text-on-surface-variant mb-3">Por tipo</p>
             <ResponsiveContainer width="100%" height={180}>
               <BarChart data={porTipo} layout="vertical">
                 <XAxis type="number" tick={{ fontSize: 11 }} />
@@ -129,8 +129,8 @@ export default function IncidentesPage() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <div className="border border-slate-100 rounded-lg p-4 bg-white">
-            <p className="text-xs font-semibold text-slate-700 mb-3">Por gravedad</p>
+          <div className="border border-outline-variant rounded-lg p-4 bg-surface-container-lowest">
+            <p className="text-xs font-semibold text-on-surface-variant mb-3">Por gravedad</p>
             <ResponsiveContainer width="100%" height={180}>
               <PieChart>
                 <Pie data={porGravedad} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`} labelLine={false}>
@@ -167,52 +167,52 @@ export default function IncidentesPage() {
           </SelectContent>
         </Select>
         <div className="relative flex-1 min-w-52">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
           <input
             type="text"
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar por NNyA, tipo o descripción..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-outline-variant rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
           />
         </div>
       </div>
 
       {/* Tabla */}
       {isLoading ? (
-        <p className="text-sm text-slate-400 py-8 text-center">Cargando incidentes...</p>
+        <p className="text-sm text-outline py-8 text-center">Cargando incidentes...</p>
       ) : filtrados.length === 0 ? (
         <div className="py-12 text-center">
-          <AlertTriangle className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-          <p className="text-sm text-slate-400">No hay incidentes que coincidan con los filtros</p>
+          <AlertTriangle className="h-8 w-8 text-outline mx-auto mb-2" />
+          <p className="text-sm text-outline">No hay incidentes que coincidan con los filtros</p>
         </div>
       ) : (
-        <div className="border border-slate-100 rounded-lg overflow-hidden">
+        <div className="border border-outline-variant rounded-lg overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-100">
+            <thead className="bg-surface-container-low border-b border-outline-variant">
               <tr>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Fecha</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">NNyA</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Tipo</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Gravedad</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Estado</th>
-                <th className="text-right px-4 py-2.5 text-xs font-medium text-slate-500">Acciones</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Fecha</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">NNyA</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Tipo</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Gravedad</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Estado</th>
+                <th className="text-right px-4 py-2.5 text-xs font-medium text-on-surface-variant">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-outline-variant">
               {filtrados.map((inc) => (
-                <tr key={inc.id} className="bg-white hover:bg-slate-50 transition-colors">
-                  <td className="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
+                <tr key={inc.id} className="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+                  <td className="px-4 py-3 text-xs text-on-surface-variant whitespace-nowrap">
                     {format(new Date(inc.fecha_hora), 'dd/MM/yyyy HH:mm', { locale: es })}
                   </td>
-                  <td className="px-4 py-3 text-sm font-medium text-slate-900">
+                  <td className="px-4 py-3 text-sm font-medium text-on-surface">
                     {inc.nnya ? `${inc.nnya.apellido}, ${inc.nnya.nombre}` : '—'}
-                    {inc.legajo && <span className="ml-1.5 text-xs text-slate-400">{inc.legajo.numero_legajo}</span>}
+                    {inc.legajo && <span className="ml-1.5 text-xs text-outline">{inc.legajo.numero_legajo}</span>}
                   </td>
-                  <td className="px-4 py-3 text-sm text-slate-700">{inc.tipo}</td>
+                  <td className="px-4 py-3 text-sm text-on-surface-variant">{inc.tipo}</td>
                   <td className="px-4 py-3"><GravedadBadge gravedad={inc.gravedad} /></td>
                   <td className="px-4 py-3">
-                    <span className="text-xs text-slate-500">{inc.estado.replace('_', ' ')}</span>
+                    <span className="text-xs text-on-surface-variant">{inc.estado.replace('_', ' ')}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
                     {inc.legajo_id && (
@@ -230,7 +230,7 @@ export default function IncidentesPage() {
               ))}
             </tbody>
           </table>
-          <div className="px-4 py-2.5 bg-slate-50 border-t border-slate-100 text-xs text-slate-400">
+          <div className="px-4 py-2.5 bg-surface-container-low border-t border-outline-variant text-xs text-outline">
             {filtrados.length} incidente{filtrados.length !== 1 ? 's' : ''} mostrado{filtrados.length !== 1 ? 's' : ''}
           </div>
         </div>

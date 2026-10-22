@@ -21,7 +21,7 @@ function formatBytes(bytes: number | null): string {
 function FileIcon({ mime }: { mime: string | null }) {
   if (mime?.startsWith('image/')) return <FileImage className="h-4 w-4 text-blue-400 shrink-0" />
   if (mime === 'application/pdf') return <FileText className="h-4 w-4 text-red-400 shrink-0" />
-  return <File className="h-4 w-4 text-slate-400 shrink-0" />
+  return <File className="h-4 w-4 text-outline shrink-0" />
 }
 
 interface DocumentoListProps {
@@ -68,20 +68,20 @@ export function DocumentoList({ documentos, legajoId, legajoActivo }: DocumentoL
   if (documentos.length === 0) {
     return (
       <div className="py-6 text-center">
-        <Paperclip className="h-7 w-7 text-slate-200 mx-auto mb-1.5" />
-        <p className="text-xs text-slate-400">Sin archivos adjuntos</p>
+        <Paperclip className="h-7 w-7 text-outline mx-auto mb-1.5" />
+        <p className="text-xs text-outline">Sin archivos adjuntos</p>
       </div>
     )
   }
 
   return (
-    <div className="divide-y divide-slate-50">
+    <div className="divide-y divide-outline-variant">
       {documentos.map((doc) => (
         <div key={doc.id} className="flex items-center gap-3 py-2.5 px-1 group">
           <FileIcon mime={doc.mime_type} />
           <div className="flex-1 min-w-0">
-            <p className="text-sm text-slate-800 truncate font-medium">{doc.nombre}</p>
-            <p className="text-xs text-slate-400">
+            <p className="text-sm text-on-surface truncate font-medium">{doc.nombre}</p>
+            <p className="text-xs text-outline">
               {doc.tipo}
               {doc.tamaño_bytes ? ` · ${formatBytes(doc.tamaño_bytes)}` : ''}
               {' · '}
@@ -105,7 +105,7 @@ export function DocumentoList({ documentos, legajoId, legajoActivo }: DocumentoL
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 w-7 p-0 text-slate-400 hover:text-red-500"
+                className="h-7 w-7 p-0 text-outline hover:text-red-500"
                 title="Eliminar"
                 onClick={() => setConfirmId(doc.id)}
               >

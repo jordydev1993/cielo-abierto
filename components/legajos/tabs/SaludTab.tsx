@@ -52,9 +52,9 @@ export function SaludTab({ legajoId, nnyaId, legajoActivo }: SaludTabProps) {
       {/* Diagnósticos */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-on-surface">
             Diagnósticos
-            {diagnosticos.length > 0 && <span className="ml-2 text-xs font-normal text-slate-400">({diagnosticos.length})</span>}
+            {diagnosticos.length > 0 && <span className="ml-2 text-xs font-normal text-outline">({diagnosticos.length})</span>}
           </h3>
           {legajoActivo && (
             <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
@@ -64,17 +64,17 @@ export function SaludTab({ legajoId, nnyaId, legajoActivo }: SaludTabProps) {
             </AccessGuard>
           )}
         </div>
-        {loadingDiag ? <p className="text-sm text-slate-400">Cargando...</p> : <DiagnosticoList diagnosticos={diagnosticos} legajoId={legajoId} legajoActivo={legajoActivo} />}
+        {loadingDiag ? <p className="text-sm text-outline">Cargando...</p> : <DiagnosticoList diagnosticos={diagnosticos} legajoId={legajoId} legajoActivo={legajoActivo} />}
       </div>
 
-      <hr className="border-slate-100" />
+      <hr className="border-outline-variant" />
 
       {/* Medicación */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-on-surface">
             Medicación
-            {medicamentos.length > 0 && <span className="ml-2 text-xs font-normal text-slate-400">({medicamentos.length})</span>}
+            {medicamentos.length > 0 && <span className="ml-2 text-xs font-normal text-outline">({medicamentos.length})</span>}
           </h3>
           {legajoActivo && (
             <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
@@ -84,7 +84,7 @@ export function SaludTab({ legajoId, nnyaId, legajoActivo }: SaludTabProps) {
             </AccessGuard>
           )}
         </div>
-        {loadingMed ? <p className="text-sm text-slate-400">Cargando...</p> : <MedicamentoList medicamentos={medicamentos} legajoId={legajoId} legajoActivo={legajoActivo} />}
+        {loadingMed ? <p className="text-sm text-outline">Cargando...</p> : <MedicamentoList medicamentos={medicamentos} legajoId={legajoId} legajoActivo={legajoActivo} />}
       </div>
 
       <Dialog open={openDiag} onOpenChange={setOpenDiag}>

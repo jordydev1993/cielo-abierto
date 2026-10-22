@@ -54,11 +54,11 @@ export function AsistentesList({ evaluacionId }: AsistentesListProps) {
       </AccessGuard>
 
       {isLoading ? (
-        <p className="text-sm text-slate-400">Cargando...</p>
+        <p className="text-sm text-outline">Cargando...</p>
       ) : asistentes.length === 0 ? (
-        <p className="text-sm text-slate-400 py-2">Sin asistentes convocados</p>
+        <p className="text-sm text-outline py-2">Sin asistentes convocados</p>
       ) : (
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-outline-variant">
           {asistentes.map((a) => {
             const u = (a as any).usuario
             return (

@@ -27,7 +27,7 @@ const buildColumns = (nnyaConIncidentePendiente?: Set<string>): Column<Legajo>[]
     header: 'NNyA',
     render: (r) => r.nnya
       ? <span>{(r.nnya as any).apellido}, {(r.nnya as any).nombre}</span>
-      : <span className="text-slate-400">—</span>,
+      : <span className="text-outline">—</span>,
   },
   {
     key: 'fecha_apertura',

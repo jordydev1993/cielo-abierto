@@ -62,7 +62,7 @@ function fechaArchivable(fechaCierre: string | null): Date | null {
 function TabBadge({ count }: { count: number }) {
   if (count === 0) return null
   return (
-    <span className="ml-1.5 bg-slate-200 text-slate-600 text-[10px] font-semibold px-1.5 py-0.5 rounded-full leading-none">
+    <span className="ml-1.5 bg-surface-container text-on-surface-variant text-[10px] font-semibold px-1.5 py-0.5 rounded-full leading-none">
       {count}
     </span>
   )
@@ -139,8 +139,8 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
     }
   }
 
-  if (isLoading) return <div className="p-8 text-slate-500">Cargando...</div>
-  if (!legajo) return <div className="p-8 text-slate-500">Legajo no encontrado</div>
+  if (isLoading) return <div className="p-8 text-on-surface-variant">Cargando...</div>
+  if (!legajo) return <div className="p-8 text-on-surface-variant">Legajo no encontrado</div>
 
   const nnya = legajo.nnya as any
   const legajoActivo = legajo.estado === 'activo'
@@ -155,7 +155,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
   return (
     <div className="flex flex-col h-full">
       {/* Header fijo */}
-      <div className="px-6 pt-6 pb-4 border-b border-slate-100 bg-white">
+      <div className="px-6 pt-6 pb-4 border-b border-outline-variant bg-surface-container-lowest">
         <Button variant="ghost" size="sm" onClick={() => router.push('/legajos')} className="-ml-2 mb-3">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver a legajos
         </Button>
@@ -163,21 +163,21 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-xl font-semibold text-slate-900">Legajo {legajo.numero_legajo}</h1>
+              <h1 className="text-xl font-semibold text-on-surface">Legajo {legajo.numero_legajo}</h1>
               {estadoBadge(legajo.estado)}
               {incidentePendiente && (
                 <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Incidente pendiente</Badge>
               )}
             </div>
             {nnya && (
-              <p className="text-sm text-slate-500 mt-0.5">
+              <p className="text-sm text-on-surface-variant mt-0.5">
                 {nnya.apellido}, {nnya.nombre} — DNI {nnya.dni}
               </p>
             )}
-            <div className="flex items-center gap-4 mt-2 text-xs text-slate-400">
-              <span>Apertura: <span className="text-slate-600">{formatFecha(legajo.fecha_apertura)}</span></span>
-              {legajo.fecha_cierre && <span>Cierre: <span className="text-slate-600">{formatFecha(legajo.fecha_cierre)}</span></span>}
-              {legajo.motivo_cierre && <span className="text-slate-500 italic truncate max-w-xs">"{legajo.motivo_cierre}"</span>}
+            <div className="flex items-center gap-4 mt-2 text-xs text-outline">
+              <span>Apertura: <span className="text-on-surface-variant">{formatFecha(legajo.fecha_apertura)}</span></span>
+              {legajo.fecha_cierre && <span>Cierre: <span className="text-on-surface-variant">{formatFecha(legajo.fecha_cierre)}</span></span>}
+              {legajo.motivo_cierre && <span className="text-on-surface-variant italic truncate max-w-xs">"{legajo.motivo_cierre}"</span>}
             </div>
           </div>
 
@@ -201,7 +201,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
                   <Archive className="h-4 w-4 mr-1.5" />{archivar.isPending ? 'Archivando...' : 'Archivar'}
                 </Button>
                 {!puedeArchivar && archivableDesde && (
-                  <span className="text-xs text-slate-400">
+                  <span className="text-xs text-outline">
                     Se puede archivar desde el {format(archivableDesde, 'dd/MM/yyyy', { locale: es })}
                   </span>
                 )}
@@ -214,33 +214,33 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
       {/* Tabs */}
       <div className="flex-1 overflow-auto">
         <Tabs value={activeTab} onValueChange={(v) => setTab(v as Tab)}>
-          <div className="sticky top-0 z-10 bg-white border-b border-slate-100 px-6">
+          <div className="sticky top-0 z-10 bg-surface-container-lowest border-b border-outline-variant px-6">
             <TabsList className="h-auto py-2 bg-transparent gap-1 flex-wrap">
-              <TabsTrigger value="resumen" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+              <TabsTrigger value="resumen" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
                 <LayoutDashboard className="h-3.5 w-3.5" />Resumen
               </TabsTrigger>
-              <TabsTrigger value="tutela" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+              <TabsTrigger value="tutela" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
                 <Shield className="h-3.5 w-3.5" />Tutela
               </TabsTrigger>
-              <TabsTrigger value="incidentes" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+              <TabsTrigger value="incidentes" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
                 <AlertTriangle className="h-3.5 w-3.5" />Incidentes<TabBadge count={incidentes.length} />
               </TabsTrigger>
-              <TabsTrigger value="intervenciones" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+              <TabsTrigger value="intervenciones" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
                 <Briefcase className="h-3.5 w-3.5" />Intervenciones<TabBadge count={intervenciones.length} />
               </TabsTrigger>
-              <TabsTrigger value="alertas" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+              <TabsTrigger value="alertas" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
                 <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />Alertas
                 {alertasPendientes > 0 && (
                   <span className="ml-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{alertasPendientes}</span>
                 )}
               </TabsTrigger>
-              <TabsTrigger value="turnos" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+              <TabsTrigger value="turnos" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
                 <CalendarClock className="h-3.5 w-3.5" />Turnos<TabBadge count={turnos.length} />
               </TabsTrigger>
-              <TabsTrigger value="salud" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+              <TabsTrigger value="salud" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
                 <Activity className="h-3.5 w-3.5" />Salud<TabBadge count={diagnosticos.length + medicamentos.length} />
               </TabsTrigger>
-              <TabsTrigger value="documentos" className="gap-1.5 text-xs data-[state=active]:bg-slate-100">
+              <TabsTrigger value="documentos" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
                 <FileText className="h-3.5 w-3.5" />Documentos<TabBadge count={informes.length + audiencias.length} />
               </TabsTrigger>
             </TabsList>
@@ -248,8 +248,8 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
 
           <div className="px-6 py-6 max-w-3xl">
             {!legajoActivo && (
-              <div className="mb-5 flex items-start gap-2.5 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-                <Archive className="h-4 w-4 mt-0.5 shrink-0 text-slate-400" />
+              <div className="mb-5 flex items-start gap-2.5 rounded-lg border border-outline-variant bg-surface-container-low px-4 py-3 text-sm text-on-surface-variant">
+                <Archive className="h-4 w-4 mt-0.5 shrink-0 text-outline" />
                 <span>
                   Este legajo se encuentra <strong>{legajo.estado}</strong>.
                   {legajo.estado === 'archivado'
@@ -320,7 +320,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
         <DialogContent className="sm:max-w-md">
           <DialogHeader><DialogTitle>Cerrar legajo {legajo.numero_legajo}</DialogTitle></DialogHeader>
           <form onSubmit={handleSubmit(onCerrar)} className="space-y-4 pt-2">
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-on-surface-variant">
               El legajo pasa a <strong>cerrado</strong> y queda de solo lectura. Se puede archivar 12 meses después del cierre.
             </p>
             <FormField label="Motivo de cierre" error={errors.motivo_cierre?.message} required>

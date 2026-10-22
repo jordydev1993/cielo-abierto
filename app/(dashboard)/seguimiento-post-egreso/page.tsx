@@ -38,18 +38,18 @@ export default function SeguimientoPostEgresoPage() {
   return (
     <AccessGuard
       roles={['Admin', 'Equipo Tecnico']}
-      fallback={<div className="p-8 text-slate-500">Sin acceso</div>}
+      fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}
     >
       <div className="p-6 space-y-5">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Seguimiento Post-Egreso</h1>
-          <p className="text-sm text-slate-500">{seguimientos.length} seguimientos (30/60 días)</p>
+          <h1 className="text-xl font-semibold text-on-surface">Seguimiento Post-Egreso</h1>
+          <p className="text-sm text-on-surface-variant">{seguimientos.length} seguimientos (30/60 días)</p>
         </div>
 
         <ReinsercionResumen seguimientos={seguimientos} />
 
         {isLoading ? (
-          <p className="text-sm text-slate-400 py-8 text-center">Cargando...</p>
+          <p className="text-sm text-outline py-8 text-center">Cargando...</p>
         ) : (
           <SeguimientoList seguimientos={seguimientos} onRegistrar={(s) => setRegistrando(s)} />
         )}

@@ -11,18 +11,18 @@ interface CasoListProps {
 
 export function CasoList({ casos, onEdit }: CasoListProps) {
   if (casos.length === 0) {
-    return <p className="text-sm text-slate-400 py-4 text-center">No hay casos tratados registrados</p>
+    return <p className="text-sm text-outline py-4 text-center">No hay casos tratados registrados</p>
   }
 
   return (
-    <div className="divide-y divide-slate-100">
+    <div className="divide-y divide-outline-variant">
       {casos.map((c) => {
         const nnya = (c as any).nnya
         return (
           <div key={c.id} className="py-3 space-y-1.5">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium text-slate-900">
+                <span className="text-sm font-medium text-on-surface">
                   {nnya ? `${nnya.apellido}, ${nnya.nombre}` : '—'}
                 </span>
                 {c.indicador_avance != null && (
@@ -36,9 +36,9 @@ export function CasoList({ casos, onEdit }: CasoListProps) {
                 </Button>
               )}
             </div>
-            <p className="text-sm text-slate-600">{c.resumen_situacion}</p>
+            <p className="text-sm text-on-surface-variant">{c.resumen_situacion}</p>
             {c.recomendaciones && (
-              <p className="text-xs text-slate-500 italic">Recomendaciones: {c.recomendaciones}</p>
+              <p className="text-xs text-on-surface-variant italic">Recomendaciones: {c.recomendaciones}</p>
             )}
           </div>
         )

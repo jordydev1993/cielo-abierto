@@ -77,13 +77,13 @@ export function TransferenciaAuhForm({ nnyaId, vinculoId }: TransferenciaAuhForm
     <AccessGuard
       roles={['Admin']}
       fallback={transferencia ? (
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-on-surface-variant">
           Transferencia AUH: <span className="font-medium">{transferencia.estado}</span>
         </p>
       ) : null}
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-lg border border-slate-200 p-4">
-        <h4 className="text-sm font-semibold text-slate-900">Transferencia AUH</h4>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded-lg border border-outline-variant p-4">
+        <h4 className="text-sm font-semibold text-on-surface">Transferencia AUH</h4>
         <FormGrid cols={2}>
           <FormField label="Estado" error={errors.estado?.message} required>
             <Controller name="estado" control={control} render={({ field }) => (

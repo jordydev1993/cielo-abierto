@@ -59,9 +59,9 @@ export function PropuestasKanban({ propuestas }: PropuestasKanbanProps) {
         const items = propuestas.filter((p) => p.estado === col.estado)
         return (
           <div key={col.estado} className="space-y-2">
-            <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-1.5">
+            <h3 className="text-sm font-semibold text-on-surface-variant flex items-center gap-1.5">
               {col.label}
-              <span className="text-xs font-normal text-slate-400">({items.length})</span>
+              <span className="text-xs font-normal text-outline">({items.length})</span>
             </h3>
             <div className="space-y-2 min-h-[4rem]">
               {items.map((p) => {
@@ -70,8 +70,8 @@ export function PropuestasKanban({ propuestas }: PropuestasKanbanProps) {
                 const responsable = (p as any).responsable
                 const vencida = !!p.fecha_vencimiento && p.fecha_vencimiento < new Date().toISOString().split('T')[0]
                 return (
-                  <div key={p.id} className="rounded-lg border border-slate-200 bg-white p-3 space-y-2 text-sm">
-                    <p className="text-slate-800">{p.descripcion}</p>
+                  <div key={p.id} className="rounded-lg border border-outline-variant bg-surface-container-lowest p-3 space-y-2 text-sm">
+                    <p className="text-on-surface">{p.descripcion}</p>
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <Badge variant="outline">{p.tipo === 'mejora' ? 'Mejora' : 'Capacitación'}</Badge>
                       {p.area && <Badge variant="secondary">{AREA_LABEL[p.area]}</Badge>}
@@ -82,7 +82,7 @@ export function PropuestasKanban({ propuestas }: PropuestasKanbanProps) {
                       )}
                     </div>
                     {responsable && (
-                      <p className="text-xs text-slate-500">Responsable: {responsable.apellido}, {responsable.nombre}</p>
+                      <p className="text-xs text-on-surface-variant">Responsable: {responsable.apellido}, {responsable.nombre}</p>
                     )}
                     <div className="flex items-center gap-1 pt-1">
                       {siguiente && (
@@ -113,7 +113,7 @@ export function PropuestasKanban({ propuestas }: PropuestasKanbanProps) {
                 )
               })}
               {items.length === 0 && (
-                <p className="text-xs text-slate-400 py-2">Sin propuestas</p>
+                <p className="text-xs text-outline py-2">Sin propuestas</p>
               )}
             </div>
           </div>

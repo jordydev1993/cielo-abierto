@@ -22,8 +22,8 @@ export default function LegajosPage() {
     <div className="p-6 space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Legajos</h1>
-          <p className="text-sm text-slate-500">{legajos.length} legajos</p>
+          <h1 className="text-xl font-semibold text-on-surface">Legajos</h1>
+          <p className="text-sm text-on-surface-variant">{legajos.length} legajos</p>
         </div>
         <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
           <Button onClick={() => router.push('/legajos/nuevo')}>

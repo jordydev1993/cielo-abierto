@@ -81,7 +81,7 @@ export function TurnoPersonalForm({ initialData, onSubmit, onCancel, loading }: 
                 </SelectContent>
               </Select>
             )} />
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-outline">
               &quot;Entregado&quot;/&quot;Cerrado&quot; solo se alcanzan desde el flujo de entrega/recepción.
             </p>
           </FormField>

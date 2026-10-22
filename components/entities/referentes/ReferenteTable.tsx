@@ -14,12 +14,12 @@ const TIPO_LABEL: Record<Referente['tipo'], string> = {
 
 function UltimaValidacionCell({ referenteId }: { referenteId: string }) {
   const { data } = useUltimaValidacionRenaper(referenteId)
-  if (!data) return <span className="text-slate-400">Sin validar</span>
+  if (!data) return <span className="text-outline">Sin validar</span>
   const label = format(new Date(data.consultado_at), 'dd/MM/yyyy', { locale: es })
   const variant = data.resultado === 'aprobado' ? 'success' : data.resultado === 'rechazado' ? 'destructive' : 'secondary'
   return (
     <div className="flex items-center gap-1.5">
-      <span className="text-slate-600">{label}</span>
+      <span className="text-on-surface-variant">{label}</span>
       <Badge variant={variant}>{data.resultado.replace('_', ' ')}</Badge>
     </div>
   )
@@ -33,7 +33,7 @@ const columns: Column<Referente>[] = [
   },
   { key: 'dni', header: 'DNI', className: 'w-32 font-mono', render: (r) => r.dni },
   { key: 'tipo', header: 'Tipo', className: 'w-28', render: (r) => TIPO_LABEL[r.tipo] },
-  { key: 'telefono', header: 'Teléfono', className: 'w-32', render: (r) => r.telefono || <span className="text-slate-400">—</span> },
+  { key: 'telefono', header: 'Teléfono', className: 'w-32', render: (r) => r.telefono || <span className="text-outline">—</span> },
   {
     key: 'activo',
     header: 'Estado',

@@ -63,7 +63,7 @@ export function DocumentoUpload({ legajoId, nnyaId }: DocumentoUploadProps) {
       <div
         className={cn(
           'border-2 border-dashed rounded-lg p-5 text-center cursor-pointer transition-colors',
-          dragging ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300',
+          dragging ? 'border-primary bg-primary/5' : 'border-outline-variant hover:border-outline-variant',
           file ? 'border-primary/50 bg-primary/5' : ''
         )}
         onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
@@ -79,10 +79,10 @@ export function DocumentoUpload({ legajoId, nnyaId }: DocumentoUploadProps) {
         />
         {file ? (
           <div className="flex items-center justify-center gap-2">
-            <span className="text-sm text-slate-700 font-medium truncate max-w-[200px]">{file.name}</span>
+            <span className="text-sm text-on-surface-variant font-medium truncate max-w-[200px]">{file.name}</span>
             <button
               type="button"
-              className="text-slate-400 hover:text-red-500 transition-colors"
+              className="text-outline hover:text-red-500 transition-colors"
               onClick={(e) => { e.stopPropagation(); setFile(null); if (inputRef.current) inputRef.current.value = '' }}
             >
               <X className="h-4 w-4" />
@@ -90,9 +90,9 @@ export function DocumentoUpload({ legajoId, nnyaId }: DocumentoUploadProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center gap-1">
-            <Upload className="h-6 w-6 text-slate-300" />
-            <p className="text-sm text-slate-500">Arrastrá un archivo o hacé click para seleccionar</p>
-            <p className="text-xs text-slate-400">Máximo 10 MB</p>
+            <Upload className="h-6 w-6 text-outline" />
+            <p className="text-sm text-on-surface-variant">Arrastrá un archivo o hacé click para seleccionar</p>
+            <p className="text-xs text-outline">Máximo 10 MB</p>
           </div>
         )}
       </div>

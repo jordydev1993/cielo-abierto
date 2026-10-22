@@ -75,13 +75,13 @@ export default function TurnosPersonalPage() {
   return (
     <AccessGuard
       roles={['Admin', 'Equipo Tecnico']}
-      fallback={<div className="p-8 text-slate-500">Sin acceso</div>}
+      fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}
     >
       <div className="p-6 space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-slate-900">Turnos de Personal</h1>
-            <p className="text-sm text-slate-500">{turnos.length} turnos registrados</p>
+            <h1 className="text-xl font-semibold text-on-surface">Turnos de Personal</h1>
+            <p className="text-sm text-on-surface-variant">{turnos.length} turnos registrados</p>
           </div>
           <AccessGuard roles={['Admin']}>
             <Button onClick={() => { setEditando(null); setOpenForm(true) }}>
@@ -94,7 +94,7 @@ export default function TurnosPersonalPage() {
         <CoberturaResumen turnos={turnos} />
 
         {isLoading ? (
-          <p className="text-sm text-slate-400 py-8 text-center">Cargando...</p>
+          <p className="text-sm text-outline py-8 text-center">Cargando...</p>
         ) : (
           <TurnoPersonalList
             turnos={turnos}

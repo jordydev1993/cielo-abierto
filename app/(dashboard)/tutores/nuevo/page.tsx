@@ -24,12 +24,12 @@ export default function NuevoTutorPage() {
   }
 
   return (
-    <AccessGuard roles={['Admin', 'Equipo Tecnico']} fallback={<div className="p-8 text-slate-500">Sin acceso</div>}>
+    <AccessGuard roles={['Admin', 'Equipo Tecnico']} fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}>
       <div className="p-6 max-w-2xl">
         <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2 mb-4">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver
         </Button>
-        <h1 className="text-xl font-semibold text-slate-900 mb-6">Registrar tutor / familiar</h1>
+        <h1 className="text-xl font-semibold text-on-surface mb-6">Registrar tutor / familiar</h1>
         <TutorForm onSubmit={handleSubmit} loading={mutation.isPending} />
       </div>
     </AccessGuard>

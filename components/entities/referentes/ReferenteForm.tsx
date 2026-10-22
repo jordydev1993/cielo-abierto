@@ -64,7 +64,7 @@ export function ReferenteForm({ initialData, onSubmit, onCancel, loading }: Refe
         >
           <Input {...register('dni')} placeholder="Ej: 30123456" disabled={isEditing && !puedeEditarDni} />
           {isEditing && !puedeEditarDni && (
-            <p className="text-xs text-slate-400">Solo Admin puede modificar el DNI.</p>
+            <p className="text-xs text-outline">Solo Admin puede modificar el DNI.</p>
           )}
         </FormField>
         <FormField label="Fecha de nacimiento" error={errors.fecha_nacimiento?.message}>

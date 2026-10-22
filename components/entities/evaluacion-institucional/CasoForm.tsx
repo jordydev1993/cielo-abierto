@@ -47,7 +47,7 @@ export function CasoForm({ initialData, onSubmit, onCancel, loading }: CasoFormP
               </SelectContent>
             </Select>
           )} />
-          {isEditing && <p className="text-xs text-slate-400">El NNyA del caso no se puede cambiar.</p>}
+          {isEditing && <p className="text-xs text-outline">El NNyA del caso no se puede cambiar.</p>}
         </FormField>
         <FormField label="Resumen de la situación" error={errors.resumen_situacion?.message} required className="sm:col-span-2">
           <Textarea {...register('resumen_situacion')} rows={4} />

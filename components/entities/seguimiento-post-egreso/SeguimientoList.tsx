@@ -19,13 +19,13 @@ interface SeguimientoListProps {
 
 export function SeguimientoList({ seguimientos, onRegistrar }: SeguimientoListProps) {
   if (seguimientos.length === 0) {
-    return <p className="text-sm text-slate-400 py-8 text-center">No hay seguimientos post-egreso registrados</p>
+    return <p className="text-sm text-outline py-8 text-center">No hay seguimientos post-egreso registrados</p>
   }
 
   const hoy = new Date().toISOString().split('T')[0]
 
   return (
-    <div className="divide-y divide-slate-100">
+    <div className="divide-y divide-outline-variant">
       {seguimientos.map((s) => {
         const nnya = (s as any).nnya
         const vencido = !s.contacto_realizado && s.fecha_programada <= hoy
@@ -33,7 +33,7 @@ export function SeguimientoList({ seguimientos, onRegistrar }: SeguimientoListPr
           <div key={s.id} className="py-3 space-y-1.5">
             <div className="flex items-center justify-between gap-2 flex-wrap">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium text-slate-900">
+                <span className="text-sm font-medium text-on-surface">
                   {nnya ? `${nnya.apellido}, ${nnya.nombre}` : '—'}
                 </span>
                 <Badge variant="outline">{s.dias_post_egreso} días</Badge>
@@ -50,11 +50,11 @@ export function SeguimientoList({ seguimientos, onRegistrar }: SeguimientoListPr
                 <Pencil className="h-3.5 w-3.5 mr-1" />Registrar contacto
               </Button>
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-on-surface-variant">
               Programado: {formatFecha(s.fecha_programada)}
               {s.fecha_contacto && ` — Contactado: ${formatFecha(s.fecha_contacto)}`}
             </p>
-            {s.observaciones && <p className="text-xs text-slate-500 italic">{s.observaciones}</p>}
+            {s.observaciones && <p className="text-xs text-on-surface-variant italic">{s.observaciones}</p>}
           </div>
         )
       })}

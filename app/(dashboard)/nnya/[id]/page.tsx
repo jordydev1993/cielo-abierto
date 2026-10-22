@@ -37,8 +37,8 @@ function formatFecha(fecha: string | null) {
 function Campo({ label, value }: { label: string; value: string | null | undefined }) {
   return (
     <div>
-      <p className="text-xs font-medium text-slate-500">{label}</p>
-      <p className="text-sm text-slate-900 mt-0.5">{value || '—'}</p>
+      <p className="text-xs font-medium text-on-surface-variant">{label}</p>
+      <p className="text-sm text-on-surface mt-0.5">{value || '—'}</p>
     </div>
   )
 }
@@ -51,8 +51,8 @@ export default function NnyaDetallePage({ params }: { params: Promise<{ id: stri
   const { data: nnyaTutores = [] } = useNnyaTutores(id)
   const { data: legajos = [] } = useLegajosByNnya(id)
 
-  if (isLoading) return <div className="p-8 text-slate-500">Cargando...</div>
-  if (!nnya) return <div className="p-8 text-slate-500">NNyA no encontrado</div>
+  if (isLoading) return <div className="p-8 text-on-surface-variant">Cargando...</div>
+  if (!nnya) return <div className="p-8 text-on-surface-variant">NNyA no encontrado</div>
 
   const legajo = legajos[0]
 
@@ -66,12 +66,12 @@ export default function NnyaDetallePage({ params }: { params: Promise<{ id: stri
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-xl font-semibold text-slate-900">
+              <h1 className="text-xl font-semibold text-on-surface">
                 {nnya.apellido}, {nnya.nombre}
               </h1>
               {estadoBadge(nnya.estado_actual)}
             </div>
-            <p className="text-sm text-slate-500 mt-0.5">DNI {nnya.dni}</p>
+            <p className="text-sm text-on-surface-variant mt-0.5">DNI {nnya.dni}</p>
           </div>
 
           <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
@@ -82,8 +82,8 @@ export default function NnyaDetallePage({ params }: { params: Promise<{ id: stri
         </div>
       </div>
 
-      <div className="border-t border-slate-200 pt-6">
-        <h2 className="text-base font-semibold text-slate-900 mb-4">Datos personales</h2>
+      <div className="border-t border-outline-variant pt-6">
+        <h2 className="text-base font-semibold text-on-surface mb-4">Datos personales</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Campo label="Fecha de nacimiento" value={formatFecha(nnya.fecha_nacimiento)} />
           <Campo label="Lugar de nacimiento" value={nnya.lugar_nacimiento} />
@@ -98,38 +98,38 @@ export default function NnyaDetallePage({ params }: { params: Promise<{ id: stri
         </div>
       </div>
 
-      <div className="border-t border-slate-200 pt-6">
-        <h2 className="text-base font-semibold text-slate-900 mb-4">Legajo</h2>
+      <div className="border-t border-outline-variant pt-6">
+        <h2 className="text-base font-semibold text-on-surface mb-4">Legajo</h2>
         {legajo ? (
           <button
             onClick={() => router.push(`/legajos/${legajo.id}`)}
-            className="w-full text-left flex items-center justify-between bg-slate-50 hover:bg-slate-100 rounded-md px-4 py-3 transition-colors"
+            className="w-full text-left flex items-center justify-between bg-surface-container-low hover:bg-surface-container rounded-md px-4 py-3 transition-colors"
           >
             <div>
-              <p className="text-sm font-medium text-slate-900">Legajo {legajo.numero_legajo}</p>
-              <p className="text-xs text-slate-500 mt-0.5">Apertura: {formatFecha(legajo.fecha_apertura)}</p>
+              <p className="text-sm font-medium text-on-surface">Legajo {legajo.numero_legajo}</p>
+              <p className="text-xs text-on-surface-variant mt-0.5">Apertura: {formatFecha(legajo.fecha_apertura)}</p>
             </div>
             {legajoEstadoBadge(legajo.estado)}
           </button>
         ) : (
-          <p className="text-sm text-slate-400">Sin legajo asociado</p>
+          <p className="text-sm text-outline">Sin legajo asociado</p>
         )}
       </div>
 
-      <div className="border-t border-slate-200 pt-6">
-        <h2 className="text-base font-semibold text-slate-900 mb-4">Tutores asociados</h2>
+      <div className="border-t border-outline-variant pt-6">
+        <h2 className="text-base font-semibold text-on-surface mb-4">Tutores asociados</h2>
         {nnyaTutores.length === 0 ? (
-          <p className="text-sm text-slate-400">Sin tutores asignados</p>
+          <p className="text-sm text-outline">Sin tutores asignados</p>
         ) : (
           <ul className="space-y-2">
             {nnyaTutores.map((nt) => {
               const tutor = nt.tutores
               return (
-                <li key={nt.id} className="flex items-center gap-2 bg-slate-50 rounded-md px-3 py-2 text-sm">
-                  <span className="font-medium text-slate-800">
+                <li key={nt.id} className="flex items-center gap-2 bg-surface-container-low rounded-md px-3 py-2 text-sm">
+                  <span className="font-medium text-on-surface">
                     {tutor?.apellido}, {tutor?.nombre}
                   </span>
-                  <span className="text-slate-500">— {tutor?.parentesco}</span>
+                  <span className="text-on-surface-variant">— {tutor?.parentesco}</span>
                   {nt.es_principal && <Badge variant="success" className="text-xs">Principal</Badge>}
                 </li>
               )

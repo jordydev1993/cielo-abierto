@@ -98,30 +98,30 @@ function ResolverModal({ alerta, onClose }: ResolverModalProps) {
         </DialogHeader>
         {alerta && (
           <div className="space-y-4 pt-1">
-            <div className="bg-slate-50 rounded-lg p-3 space-y-1 text-sm">
-              <p className="font-medium text-slate-900">{alerta.titulo}</p>
+            <div className="bg-surface-container-low rounded-lg p-3 space-y-1 text-sm">
+              <p className="font-medium text-on-surface">{alerta.titulo}</p>
               {alerta.nnya && (
-                <p className="text-slate-500">NNyA: {alerta.nnya.apellido}, {alerta.nnya.nombre}</p>
+                <p className="text-on-surface-variant">NNyA: {alerta.nnya.apellido}, {alerta.nnya.nombre}</p>
               )}
               <div className="flex items-center gap-2 pt-1">
                 <PrioridadBadge prioridad={alerta.prioridad} />
                 <EstadoBadge alerta={alerta} />
                 {alerta.fecha_vencimiento && (
-                  <span className="text-xs text-slate-400">
+                  <span className="text-xs text-outline">
                     Vence: {format(new Date(alerta.fecha_vencimiento + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                   </span>
                 )}
               </div>
               {alerta.descripcion && (
-                <p className="text-slate-600 mt-2 text-xs leading-relaxed">{alerta.descripcion}</p>
+                <p className="text-on-surface-variant mt-2 text-xs leading-relaxed">{alerta.descripcion}</p>
               )}
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700 mb-1.5 block">
+              <label className="text-sm font-medium text-on-surface-variant mb-1.5 block">
                 Observación de cierre{' '}
                 {requiereObservacion
                   ? <span className="text-red-500">*</span>
-                  : <span className="text-slate-400">(opcional)</span>}
+                  : <span className="text-outline">(opcional)</span>}
               </label>
               <Textarea
                 value={observacion}
@@ -218,7 +218,7 @@ export default function AlertasPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-1 flex-wrap">
-          <h1 className="text-xl font-semibold text-slate-900">Alertas</h1>
+          <h1 className="text-xl font-semibold text-on-surface">Alertas</h1>
           {pendientesCount > 0 && (
             <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
               {pendientesCount} pendiente{pendientesCount !== 1 ? 's' : ''}
@@ -235,14 +235,14 @@ export default function AlertasPage() {
             </span>
           )}
         </div>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-on-surface-variant">
           Seguimiento de alertas generadas automáticamente por incidentes graves o críticos.
         </p>
       </div>
 
       {/* Filtros */}
       <div className="space-y-3">
-        <div className="flex gap-1 bg-slate-100 p-1 rounded-lg w-fit flex-wrap">
+        <div className="flex gap-1 bg-surface-container p-1 rounded-lg w-fit flex-wrap">
           {ESTADO_TABS.map(({ value, label }) => (
             <button
               key={value}
@@ -250,8 +250,8 @@ export default function AlertasPage() {
               className={cn(
                 'px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
                 filtroEstado === value
-                  ? 'bg-white text-slate-900 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-700'
+                  ? 'bg-surface-container-lowest text-on-surface shadow-sm'
+                  : 'text-on-surface-variant hover:text-on-surface-variant'
               )}
             >
               {label}
@@ -273,13 +273,13 @@ export default function AlertasPage() {
             </SelectContent>
           </Select>
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
             <input
               type="text"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar por título, descripción o NNyA..."
-              className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              className="w-full pl-9 pr-3 py-2 text-sm border border-outline-variant rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
             />
           </div>
         </div>
@@ -287,14 +287,14 @@ export default function AlertasPage() {
 
       {/* Lista */}
       {isLoading ? (
-        <p className="text-sm text-slate-400 py-8 text-center">Cargando alertas...</p>
+        <p className="text-sm text-outline py-8 text-center">Cargando alertas...</p>
       ) : alertasFiltradas.length === 0 ? (
         <div className="py-12 text-center">
-          <AlertTriangle className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-          <p className="text-sm text-slate-400">No hay alertas que coincidan con los filtros</p>
+          <AlertTriangle className="h-8 w-8 text-outline mx-auto mb-2" />
+          <p className="text-sm text-outline">No hay alertas que coincidan con los filtros</p>
         </div>
       ) : (
-        <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
+        <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
           {alertasFiltradas.map((alerta) => {
             const proxima = isProxima(alerta)
             const vencida = isVencida(alerta)
@@ -305,7 +305,7 @@ export default function AlertasPage() {
               <div
                 key={alerta.id}
                 className={cn(
-                  'p-4 bg-white',
+                  'p-4 bg-surface-container-lowest',
                   proxima && 'bg-amber-50',
                   vencida && 'bg-red-50',
                   enProceso && 'bg-blue-50',
@@ -318,11 +318,11 @@ export default function AlertasPage() {
                       {(proxima || vencida) && (
                         <AlertTriangle className={cn('h-3.5 w-3.5 shrink-0', vencida ? 'text-red-500' : 'text-amber-500')} />
                       )}
-                      <span className="text-sm font-medium text-slate-900">{alerta.titulo}</span>
+                      <span className="text-sm font-medium text-on-surface">{alerta.titulo}</span>
                     </div>
 
                     {alerta.nnya && (
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-on-surface-variant">
                         NNyA: <span className="font-medium">{alerta.nnya.apellido}, {alerta.nnya.nombre}</span>
                       </p>
                     )}
@@ -331,7 +331,7 @@ export default function AlertasPage() {
                       <PrioridadBadge prioridad={alerta.prioridad} />
                       <EstadoBadge alerta={alerta} />
                       {alerta.fecha_vencimiento && (
-                        <span className={cn('text-xs', vencida ? 'text-red-600 font-medium' : 'text-slate-400')}>
+                        <span className={cn('text-xs', vencida ? 'text-red-600 font-medium' : 'text-outline')}>
                           Vence: {format(new Date(alerta.fecha_vencimiento + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                           {proxima && ' — vence hoy'}
                           {vencida && ' — VENCIDA'}
@@ -340,11 +340,11 @@ export default function AlertasPage() {
                     </div>
 
                     {alerta.descripcion && (
-                      <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{alerta.descripcion}</p>
+                      <p className="text-xs text-on-surface-variant leading-relaxed line-clamp-2">{alerta.descripcion}</p>
                     )}
 
                     {alerta.observacion_cierre && (
-                      <p className="text-xs text-slate-500 italic">Cierre: {alerta.observacion_cierre}</p>
+                      <p className="text-xs text-on-surface-variant italic">Cierre: {alerta.observacion_cierre}</p>
                     )}
                   </div>
 
@@ -376,7 +376,7 @@ export default function AlertasPage() {
                   )}
                 </div>
 
-                <p className="text-xs text-slate-300 mt-2">
+                <p className="text-xs text-outline mt-2">
                   Creada: {format(new Date(alerta.created_at), 'dd/MM/yyyy HH:mm', { locale: es })}
                 </p>
               </div>

@@ -28,15 +28,15 @@ export default function EditarTutorPage({ params }: { params: Promise<{ id: stri
     }
   }
 
-  if (!tutor) return <div className="p-8 text-slate-500">Cargando...</div>
+  if (!tutor) return <div className="p-8 text-on-surface-variant">Cargando...</div>
 
   return (
-    <AccessGuard roles={['Admin', 'Equipo Tecnico']} fallback={<div className="p-8 text-slate-500">Sin acceso</div>}>
+    <AccessGuard roles={['Admin', 'Equipo Tecnico']} fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}>
       <div className="p-6 max-w-2xl">
         <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2 mb-4">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver
         </Button>
-        <h1 className="text-xl font-semibold text-slate-900 mb-6">
+        <h1 className="text-xl font-semibold text-on-surface mb-6">
           Editar — {tutor.apellido}, {tutor.nombre}
         </h1>
         <TutorForm initialData={tutor} onSubmit={handleSubmit} loading={mutation.isPending} />

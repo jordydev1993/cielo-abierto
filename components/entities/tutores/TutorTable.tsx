@@ -17,13 +17,13 @@ const columns: Column<Tutor>[] = [
     render: (r) => (
       <div>
         <p className="font-medium">{r.apellido}, {r.nombre}</p>
-        <p className="text-xs text-slate-500">DNI: {r.dni}</p>
+        <p className="text-xs text-on-surface-variant">DNI: {r.dni}</p>
       </div>
     ),
   },
   { key: 'parentesco', header: 'Parentesco', className: 'w-36', render: (r) => r.parentesco },
-  { key: 'telefono', header: 'Teléfono', className: 'w-36', render: (r) => r.telefono ?? <span className="text-slate-400">—</span> },
-  { key: 'email', header: 'Email', render: (r) => r.email ?? <span className="text-slate-400">—</span> },
+  { key: 'telefono', header: 'Teléfono', className: 'w-36', render: (r) => r.telefono ?? <span className="text-outline">—</span> },
+  { key: 'email', header: 'Email', render: (r) => r.email ?? <span className="text-outline">—</span> },
   {
     key: 'activo',
     header: 'Estado',

@@ -49,8 +49,8 @@ export default function EvaluacionInstitucionalDetailPage({ params }: { params: 
   const [openCaso, setOpenCaso] = useState(false)
   const [openPropuesta, setOpenPropuesta] = useState(false)
 
-  if (isLoading) return <div className="p-8 text-slate-500">Cargando...</div>
-  if (!evaluacion) return <div className="p-8 text-slate-500">Evaluación no encontrada</div>
+  if (isLoading) return <div className="p-8 text-on-surface-variant">Cargando...</div>
+  if (!evaluacion) return <div className="p-8 text-on-surface-variant">Evaluación no encontrada</div>
 
   const onEditar = async (values: EvaluacionInstitucionalFormValues) => {
     try {
@@ -97,16 +97,16 @@ export default function EvaluacionInstitucionalDetailPage({ params }: { params: 
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-semibold text-slate-900">
+              <h1 className="text-xl font-semibold text-on-surface">
                 Evaluación {evaluacion.periodo_mes}/{evaluacion.periodo_anio}
               </h1>
               <Badge variant={ESTADO_VARIANT[evaluacion.estado]}>{evaluacion.estado}</Badge>
             </div>
-            <p className="text-sm text-slate-500 mt-0.5">
+            <p className="text-sm text-on-surface-variant mt-0.5">
               Reunión: {format(new Date(evaluacion.fecha_reunion), 'dd/MM/yyyy HH:mm', { locale: es })}
             </p>
             {evaluacion.observaciones && (
-              <p className="text-sm text-slate-500 italic mt-1">{evaluacion.observaciones}</p>
+              <p className="text-sm text-on-surface-variant italic mt-1">{evaluacion.observaciones}</p>
             )}
           </div>
           <AccessGuard roles={['Admin']}>
@@ -118,13 +118,13 @@ export default function EvaluacionInstitucionalDetailPage({ params }: { params: 
       </div>
 
       <section className="space-y-3">
-        <h2 className="text-sm font-semibold text-slate-900 border-b border-slate-100 pb-2">Asistentes</h2>
+        <h2 className="text-sm font-semibold text-on-surface border-b border-outline-variant pb-2">Asistentes</h2>
         <AsistentesList evaluacionId={id} />
       </section>
 
       <section className="space-y-3">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-          <h2 className="text-sm font-semibold text-slate-900">Casos tratados</h2>
+        <div className="flex items-center justify-between border-b border-outline-variant pb-2">
+          <h2 className="text-sm font-semibold text-on-surface">Casos tratados</h2>
           <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
             <Button size="sm" variant="outline" onClick={() => { setCasoEditando(null); setOpenCaso(true) }}>
               <Plus className="h-4 w-4 mr-1" />Agregar caso
@@ -135,8 +135,8 @@ export default function EvaluacionInstitucionalDetailPage({ params }: { params: 
       </section>
 
       <section className="space-y-3">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-          <h2 className="text-sm font-semibold text-slate-900">Propuestas de mejora</h2>
+        <div className="flex items-center justify-between border-b border-outline-variant pb-2">
+          <h2 className="text-sm font-semibold text-on-surface">Propuestas de mejora</h2>
           <AccessGuard roles={['Admin']}>
             <Button size="sm" variant="outline" onClick={() => setOpenPropuesta(true)}>
               <Plus className="h-4 w-4 mr-1" />Nueva propuesta

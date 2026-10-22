@@ -12,7 +12,7 @@ interface RolTableProps {
 
 const columns: Column<Rol>[] = [
   { key: 'nombre', header: 'Nombre', render: (r) => <span className="font-medium">{r.nombre}</span> },
-  { key: 'descripcion', header: 'Descripción', render: (r) => r.descripcion ?? <span className="text-slate-400">—</span> },
+  { key: 'descripcion', header: 'Descripción', render: (r) => r.descripcion ?? <span className="text-outline">—</span> },
   { key: 'activo', header: 'Estado', className: 'w-24', render: (r) => (
     <Badge variant={r.activo ? 'success' : 'secondary'}>{r.activo ? 'Activo' : 'Inactivo'}</Badge>
   )},
