@@ -79,9 +79,9 @@ export default function EditarNnyaPage({ params }: { params: Promise<{ id: strin
 
   return (
     <AccessGuard roles={['Admin', 'Equipo Tecnico']} fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}>
-      <div className="p-6 max-w-3xl space-y-8">
+      <div className="max-w-3xl space-y-8 px-8 py-6">
         <div>
-          <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2 mb-4">
+          <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2.5 mb-3 text-on-surface-variant">
             <ChevronLeft className="h-4 w-4 mr-1" />Volver
           </Button>
           <h1 className="text-title font-semibold text-on-surface mb-6">

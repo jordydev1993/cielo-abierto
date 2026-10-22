@@ -89,7 +89,7 @@ export default function EvaluacionInstitucionalDetailPage({ params }: { params: 
   }
 
   return (
-    <div className="p-6 max-w-3xl space-y-8">
+    <div className="max-w-3xl space-y-8 px-8 py-6">
       <div>
         <Button variant="ghost" size="sm" onClick={() => router.push('/evaluacion-institucional')} className="-ml-2 mb-3">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver a evaluaciones

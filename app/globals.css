@@ -120,3 +120,12 @@ td,
 th {
   font-variant-numeric: tabular-nums;
 }
+
+/* Autocompletado del navegador: sin el celeste por defecto (prompts/052). */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-on-surface);
+  box-shadow: 0 0 0 1000px var(--color-surface-container-lowest) inset;
+  transition: background-color 9999s ease-out 0s;
+}
