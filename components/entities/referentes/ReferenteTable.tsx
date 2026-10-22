@@ -2,7 +2,7 @@
 import { DataTable, type Column } from '@/components/shared/DataTable'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ShieldCheck } from 'lucide-react'
+import { ScanFace, ShieldCheck } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { useUltimaValidacionRenaper } from '@/hooks/referentes/useUltimaValidacionRenaper'
@@ -53,9 +53,11 @@ interface ReferenteTableProps {
   loading?: boolean
   onEdit?: (row: Referente) => void
   onValidarIdentidad?: (row: Referente) => void
+  /** Validación de identidad con Didit (prompts/049). */
+  onValidarDidit?: (row: Referente) => void
 }
 
-export function ReferenteTable({ data, loading, onEdit, onValidarIdentidad }: ReferenteTableProps) {
+export function ReferenteTable({ data, loading, onEdit, onValidarIdentidad, onValidarDidit }: ReferenteTableProps) {
   return (
     <DataTable
       columns={columns}
@@ -64,6 +66,17 @@ export function ReferenteTable({ data, loading, onEdit, onValidarIdentidad }: Re
       onEdit={onEdit}
       extraActions={(row) => (
         <>
+          {onValidarDidit && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onValidarDidit(row)}
+              title="Validar identidad con Didit"
+              aria-label={`Validar identidad con Didit de ${row.apellido}, ${row.nombre}`}
+            >
+              <ScanFace className="h-4 w-4" />
+            </Button>
+          )}
           {onValidarIdentidad && (
             <Button
               variant="ghost"

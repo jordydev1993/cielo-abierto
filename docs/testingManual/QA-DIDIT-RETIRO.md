@@ -932,3 +932,16 @@ El log del servidor solo registra el tipo de falla (`http_4xx (400)`), sin DNI n
 Sin errores en la consola del navegador. Una advertencia de hidratación (un `Badge` dentro de un `<p>`) se corrigió durante la prueba.
 
 **Pendiente:** el QR y el polling con una sesión real necesitan `DIDIT_WORKFLOW_ID`. La validación de referentes y el formulario de vínculos van en la segunda parte del plan 049.
+
+## Referentes y vínculos — prompts/049 (segunda parte)
+
+**Fecha:** 21/10/2026 · **Entorno:** `next dev` contra Supabase local, en el navegador · **Resultado:** ✅
+
+| Paso | Resultado |
+|---|---|
+| `/referentes`: acción "Validar identidad con Didit" | Diálogo con el consentimiento (D-25) → verificación con `proposito: 'validacion_referente'` → mensaje C (Didit rechazó el workflow de prueba) |
+| Vínculo `propuesto` sin validación aprobada: editar estado | "Vigente" deshabilitado, con la explicación de D-16 |
+| Validación `aprobado` (insertada como lo haría el webhook) | "Vigente" habilitado; un Admin lo guarda y el vínculo queda `vigente` (el trigger de D-16 lo permite) |
+| La validación manual de `/referentes` | Sigue disponible, sin cambios (decisión 4) |
+
+**Hallazgo, que ya existía antes:** la pestaña Tutela le muestra el lápiz de edición a Equipo Tecnico, pero `vinculos_tutela_update_admin` solo deja actualizar a Admin. El guardado falla con un error. No se corrigió acá, porque no es parte del plan 049.
