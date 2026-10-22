@@ -7,22 +7,22 @@ related_targets: []
 
 # Inicio (/dashboard)
 
-Scope: primera superficie del rediseño del sistema web; fija el mundo que heredan los demás módulos. Modo: operate. Build: code-led.
+Scope: primera superficie del rediseño SaaS claro (prompts/052); fija el lenguaje que heredan todas las pantallas. Modo: operate. Build: code-led. Dirección fijada por el usuario con una imagen de referencia (panel de gestión SaaS claro); reemplaza la Señalética de prompts/051.
 
-Audience and job: Dirección y Equipo Técnico en PC de oficina, al empezar el día y entre tareas: ver qué pasa hoy (agenda), qué está pendiente (alertas) y el estado general de la residencia, y saltar al módulo que corresponde.
+Audience and job: Dirección y Equipo Técnico en PC de oficina, al empezar el día: ver el estado de la residencia, cómo se mueve la población y qué hay hoy, y saltar al módulo.
 
-Constraints: no infantil (decisión del usuario, 22/10/2026). Datos de NNyA nunca reales en maquetas. Mismas funciones y textos; navegación y controles estándar (shadcn/Radix).
+Constraints: datos de ejemplo con aviso visible (decisión del usuario). Sin modo oscuro. Buscador ⌘K y Ayuda solo como diseño (deshabilitados, "Próximamente"); favoritos como accesos fijos. Sin eje doble.
 
 ## Direction contract
 
-THESIS: Cada área de la residencia tiene su color de señal y cada pantalla empieza diciendo dónde estás, como la señalética de un hospital pediátrico público. Rechaza el panel SaaS de tarjetas blancas con sombra y un acento azul.
+THESIS: Un panel claro donde el dato manda: cifras sin tarjetas y gráficos protagonistas dentro de un marco blanco sobre fondo gris. Rechaza el panel de tarjetas con sombra y la decoración.
 
-OWN-WORLD: Barra lateral en tinta verde oscura (#14201E) como directorio del hall, con grupos por área marcados por un cuadrado de color; fondo #F4F6F5, superficies blancas separadas por filetes de 1 px, sin sombras. Seis colores de área de un solo uso (núcleo azul, tutela violeta, seguimiento ocre, salud verde, institucional petróleo, rojo solo crítico). Overpass para carteles, títulos y cifras; Atkinson Hyperlegible Next para texto y datos. Raises: agenda en columnas fijas ordenada por hora (split-flap); alerta nueva resaltada hasta verla (gate board); filetes en vez de tarjetas (design annual); grilla de 12 columnas estricta (Crouwel); un tratamiento único por estado (acetate manual).
+OWN-WORLD: Fondo #F4F5F7, marco blanco de radio 12 con borde #E7E8EC, barra lateral #F7F8FA con grupos plegables e ítem activo gris, botón principal negro #111318, Inter en todo, series azul #3B6FE0, rosa #E65C9F, verde #0F7A47 y gris de contexto, insignias como pastillas con punto de color, filetes #EEEFF2.
 
-STORY: El usuario entiende en un vistazo dónde está, qué hay hoy y qué quedó pendiente, y entra al módulo correcto sin buscar.
+STORY: El usuario ve en un vistazo cómo está la residencia y qué pasa hoy, entiende la tendencia de la población y entra al módulo que necesita.
 
-FIRST VIEWPORT: Barra lateral 248 px a la izquierda. Arriba, el cartel del área a todo el ancho en su color, con pictograma en cuadrado blanco, "Núcleo · Usted está en", título "Inicio" y usuario/fecha a la derecha. Debajo, una fila de cuatro paneles de área separados por filetes con cifra grande en Overpass. Debajo, agenda de hoy (7 de 12 columnas) y alertas (5 de 12). Acción principal: tocar una fila para ir al registro.
+FIRST VIEWPORT: Barra lateral de 240 px (marca, buscador, favoritos, grupos). Barra superior con la ruta, Ayuda y la cuenta. Título "Inicio", aviso de datos de ejemplo, fila de 6 cifras con unidad e insignia, y debajo el gráfico de población con selector de período a la derecha del título.
 
-FORM: Señalética de hospital público, candidato 5 de 7 de la lista propia (asignado por el sorteo). seed:e102a49f66699151
+FORM: Panel SaaS claro de la referencia del usuario (dirección fijada; no hubo sorteo). seed: none (pinned)
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

@@ -62,7 +62,7 @@ function fechaArchivable(fechaCierre: string | null): Date | null {
 function TabBadge({ count }: { count: number }) {
   if (count === 0) return null
   return (
-    <span className="ml-1.5 bg-surface-container text-on-surface-variant text-[10px] font-semibold px-1.5 py-0.5 rounded-full leading-none">
+    <span className="ml-1.5 bg-surface-container text-on-surface-variant text-caption font-semibold px-1.5 py-0.5 rounded-full leading-none">
       {count}
     </span>
   )
@@ -155,7 +155,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
   return (
     <div className="flex flex-col h-full">
       {/* Header fijo */}
-      <div className="px-6 pt-6 pb-4 border-b border-outline-variant bg-surface-container-lowest">
+      <div className="bg-surface-container-lowest px-8 pb-4 pt-6">
         <Button variant="ghost" size="sm" onClick={() => router.push('/legajos')} className="-ml-2 mb-3">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver a legajos
         </Button>
@@ -214,39 +214,39 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
       {/* Tabs */}
       <div className="flex-1 overflow-auto">
         <Tabs value={activeTab} onValueChange={(v) => setTab(v as Tab)}>
-          <div className="sticky top-0 z-10 bg-surface-container-lowest border-b border-outline-variant px-6">
-            <TabsList className="h-auto py-2 bg-transparent gap-1 flex-wrap">
-              <TabsTrigger value="resumen" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
+          <div className="sticky top-0 z-10 border-b border-filete bg-surface-container-lowest px-8 pt-2">
+            <TabsList className="h-auto flex-wrap gap-x-5 gap-y-1 border-b-0">
+              <TabsTrigger value="resumen" className="gap-1.5">
                 <LayoutDashboard className="h-3.5 w-3.5" />Resumen
               </TabsTrigger>
-              <TabsTrigger value="tutela" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
+              <TabsTrigger value="tutela" className="gap-1.5">
                 <Shield className="h-3.5 w-3.5" />Tutela
               </TabsTrigger>
-              <TabsTrigger value="incidentes" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
+              <TabsTrigger value="incidentes" className="gap-1.5">
                 <AlertTriangle className="h-3.5 w-3.5" />Incidentes<TabBadge count={incidentes.length} />
               </TabsTrigger>
-              <TabsTrigger value="intervenciones" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
+              <TabsTrigger value="intervenciones" className="gap-1.5">
                 <Briefcase className="h-3.5 w-3.5" />Intervenciones<TabBadge count={intervenciones.length} />
               </TabsTrigger>
-              <TabsTrigger value="alertas" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
-                <AlertTriangle className="h-3.5 w-3.5 text-tertiary" />Alertas
+              <TabsTrigger value="alertas" className="gap-1.5">
+                <AlertTriangle className="h-3.5 w-3.5" />Alertas
                 {alertasPendientes > 0 && (
-                  <span className="ml-1 bg-error text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{alertasPendientes}</span>
+                  <span className="ml-1 bg-error text-white text-caption font-bold px-1.5 py-0.5 rounded-full leading-none">{alertasPendientes}</span>
                 )}
               </TabsTrigger>
-              <TabsTrigger value="turnos" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
+              <TabsTrigger value="turnos" className="gap-1.5">
                 <CalendarClock className="h-3.5 w-3.5" />Turnos<TabBadge count={turnos.length} />
               </TabsTrigger>
-              <TabsTrigger value="salud" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
+              <TabsTrigger value="salud" className="gap-1.5">
                 <Activity className="h-3.5 w-3.5" />Salud<TabBadge count={diagnosticos.length + medicamentos.length} />
               </TabsTrigger>
-              <TabsTrigger value="documentos" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
+              <TabsTrigger value="documentos" className="gap-1.5">
                 <FileText className="h-3.5 w-3.5" />Documentos<TabBadge count={informes.length + audiencias.length} />
               </TabsTrigger>
             </TabsList>
           </div>
 
-          <div className="px-6 py-6 max-w-3xl">
+          <div className="max-w-4xl px-8 py-6">
             {!legajoActivo && (
               <div className="mb-5 flex items-start gap-2.5 rounded-lg border border-outline-variant bg-surface-container-low px-4 py-3 text-sm text-on-surface-variant">
                 <Archive className="h-4 w-4 mt-0.5 shrink-0 text-outline" />

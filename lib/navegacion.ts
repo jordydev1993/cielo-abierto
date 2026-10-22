@@ -135,5 +135,7 @@ export function ubicacion(pathname: string): { grupo: Grupo | null; item: ItemNa
     const item = grupo.items.find((i) => esRutaActiva(pathname, i.href))
     if (item) return { grupo, item }
   }
+  // Las demostraciones no están en el menú: la ruta dice qué son en lugar de mostrar Inicio.
+  if (pathname.endsWith('-demo')) return { grupo: null, item: { ...INICIO, href: pathname, label: 'Demostración' } }
   return { grupo: null, item: INICIO }
 }
