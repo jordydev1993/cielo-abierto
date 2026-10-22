@@ -152,7 +152,27 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] No se guardan selfies, fotos de RENAPER, nombre ni domicilio de Didit, ni en la base ni en los logs.
 - [x] Todo queda en el audit log.
 - [x] Hay tests verdes del webhook y de los escenarios A-D.
-- [ ] Los RF y RNF de la Práctica 3 coinciden con lo implementado. Pendiente de revisar contra el PDF; la consulta real a RENAPER queda fuera por la decisión del 22/10 (sandbox gratuito).
+- [x] Los RF y RNF de la Práctica 3 coinciden con lo implementado. Revisado el 22/10 contra el PDF, con tres desvíos aceptados (ver "Revisión de RF y RNF" más abajo). La consulta real a RENAPER queda fuera por la decisión del 22/10 (sandbox gratuito).
+
+---
+
+## Revisión de RF y RNF contra la Práctica 3 (22/10)
+
+Fuente: `practicas 3 - 02_09.pdf`. El documento 1 (retiro) tiene RF01 a RF22 y RN-01 a RN-05; el documento 2 (revinculación) tiene RF-01 a RF-10 y RNF-01 a RNF-13.
+
+**Se cumplen:**
+- **Documento 1:** RF01 a RF05, RF08 a RF15, RF17 a RF19, RF22, y RN-01, RN-03, RN-04 y RN-05. RF21 se cumple desde "Retiros en curso" → "Abrir", en lugar de una opción "Editar".
+- **Documento 2:** RF-01 a RF-04 y RF-07 a RF-10, y los 13 RNF.
+- **Parciales por diseño:** RF-05 y RF-06 del documento 2. Para los referentes, el vínculo se controla al activarlo (D-16), no durante la verificación. Las restricciones existen solo en las autorizaciones de retiro.
+- **Fuera de alcance:** los requisitos previos para producción (1 a 8), mientras se use el sandbox gratuito.
+
+**Desvíos aceptados por Jordy (22/10):**
+
+| Requisito | Qué dice la Práctica 3 | Qué hace el sistema | Decisión |
+|---|---|---|---|
+| RF20 | La descripción del retiro es opcional | Es obligatoria, junto con la hora de inicio (mensaje D; `prompts/049`, decisión 2) | Se mantiene obligatoria |
+| RF16 | Rechazar el retiro si la persona no está autorizada | Sin autorización vigente no se puede iniciar el retiro (RN-01). Si la autorización se revoca o vence **después** de iniciado, la base no la vuelve a controlar al autorizar | Se deja como está: es poco probable, porque el retiro se inicia y se autoriza en el mismo momento |
+| RF06, RF07 y RN-02 | Capturar el frente y el dorso del DNI | Se usa `id_lookup`: el DNI se tipea en Didit y se consulta a RENAPER, sin fotografiar el documento (Plan 035 §2) | Se deja como está; no se cambia el texto de la Práctica 3 |
 
 ---
 
