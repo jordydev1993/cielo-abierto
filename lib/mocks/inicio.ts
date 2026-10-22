@@ -1,5 +1,13 @@
-// Datos de ejemplo de la pantalla Inicio (prompts/051 y 052, solo diseño). Todo es ficticio:
+// Datos de ejemplo de la pantalla Inicio (prompts/051, 052 y 054, solo diseño). Todo es ficticio:
 // ningún nombre ni cifra sale de la base. Conectar datos reales es un plan aparte.
+
+// Cambio contra el período anterior (prompts/054). `sentido` dice si subir es bueno, malo o
+// ninguna de las dos cosas: decide el color (verde, rojo o gris).
+export interface Variacion {
+  valor: number
+  vs: string
+  sentido: 'subir-bueno' | 'subir-malo' | 'neutral'
+}
 
 export interface Cifra {
   id: string
@@ -7,6 +15,7 @@ export interface Cifra {
   valor: number
   unidad?: string
   insignia?: string
+  variacion?: Variacion
   href: string
 }
 
@@ -17,22 +26,29 @@ export interface PuntoPoblacion {
   egresos: number
 }
 
-export interface EventoAgenda {
-  hora: string
+export type EstadoEvento = 'pendiente' | 'cumplido' | 'cancelado'
+
+export interface EventoProximo {
+  id: string
+  // Fecha ISO (AAAA-MM-DD). Los datos de ejemplo arrancan el jueves 22/10/2026.
+  fecha: string
+  esHoy: boolean
+  desde: string
+  hasta: string
   que: string
   nnya: string
   tipo: string
-  cumplido: boolean
+  estado: EstadoEvento
   href: string
 }
 
 export const cifras: Cifra[] = [
-  { id: 'nnya', label: 'NNyA activos', valor: 18, unidad: 'NNyA', insignia: '+1 este mes', href: '/nnya' },
-  { id: 'legajos', label: 'Legajos activos', valor: 18, unidad: 'legajos', href: '/legajos' },
-  { id: 'alertas', label: 'Alertas pendientes', valor: 5, insignia: '1 crítica', href: '/alertas' },
-  { id: 'retiros', label: 'Retiros en curso', valor: 1, insignia: '1 en revisión', href: '/retiros' },
-  { id: 'audiencias', label: 'Audiencias', valor: 2, unidad: 'esta semana', href: '/legajos' },
-  { id: 'postegreso', label: 'Post-egreso por vencer', valor: 3, unidad: 'contactos', href: '/seguimiento-post-egreso' },
+  { id: 'nnya', label: 'NNyA activos', valor: 18, unidad: 'NNyA', href: '/nnya', variacion: { valor: 1, vs: 'septiembre', sentido: 'neutral' } },
+  { id: 'legajos', label: 'Legajos activos', valor: 18, unidad: 'legajos', href: '/legajos', variacion: { valor: 1, vs: 'septiembre', sentido: 'neutral' } },
+  { id: 'alertas', label: 'Alertas pendientes', valor: 5, insignia: '1 crítica', href: '/alertas', variacion: { valor: -2, vs: 'septiembre', sentido: 'subir-malo' } },
+  { id: 'retiros', label: 'Retiros en curso', valor: 1, insignia: '1 en revisión', href: '/retiros', variacion: { valor: 0, vs: 'septiembre', sentido: 'subir-malo' } },
+  { id: 'audiencias', label: 'Audiencias', valor: 2, unidad: 'esta semana', href: '/legajos', variacion: { valor: 1, vs: 'sem. pasada', sentido: 'neutral' } },
+  { id: 'postegreso', label: 'Post-egreso por vencer', valor: 3, unidad: 'contactos', href: '/seguimiento-post-egreso', variacion: { valor: 1, vs: 'septiembre', sentido: 'subir-malo' } },
 ]
 
 // 24 meses, de noviembre de 2024 a octubre de 2026. Activos = activos del mes anterior
@@ -76,10 +92,13 @@ export const intervencionesPorArea: { area: string; cantidad: number }[] = [
   { area: 'Legal', cantidad: 9 },
 ]
 
-export const agendaDeHoy: EventoAgenda[] = [
-  { hora: '09:00', que: 'Turno de pediatría', nnya: 'Lucía P. (DEMO)', tipo: 'Salud', cumplido: true, href: '/turnos' },
-  { hora: '11:30', que: 'Audiencia judicial · Juzgado de Niñez 2', nnya: 'Tomás R. (DEMO)', tipo: 'Tutela', cumplido: false, href: '/legajos' },
-  { hora: '14:00', que: 'Retiro autorizado de fin de semana', nnya: 'Lucía P. (DEMO)', tipo: 'Retiro', cumplido: false, href: '/retiros' },
-  { hora: '16:30', que: 'Contacto de 30 días post-egreso', nnya: 'Camila S. (DEMO)', tipo: 'Post-egreso', cumplido: false, href: '/seguimiento-post-egreso' },
-  { hora: '18:00', que: 'Traspaso de guardia', nnya: '—', tipo: 'Turno', cumplido: false, href: '/turnos-personal' },
+export const eventosProximos: EventoProximo[] = [
+  { id: 'e1', fecha: '2026-10-22', esHoy: true, desde: '09:00', hasta: '10:00', que: 'Turno de pediatría', nnya: 'Lucía P. (DEMO)', tipo: 'Salud', estado: 'cumplido', href: '/turnos' },
+  { id: 'e2', fecha: '2026-10-22', esHoy: true, desde: '11:30', hasta: '12:30', que: 'Audiencia judicial · Juzgado de Niñez 2', nnya: 'Tomás R. (DEMO)', tipo: 'Tutela', estado: 'pendiente', href: '/legajos' },
+  { id: 'e3', fecha: '2026-10-22', esHoy: true, desde: '14:00', hasta: '14:30', que: 'Retiro autorizado de fin de semana', nnya: 'Lucía P. (DEMO)', tipo: 'Retiro', estado: 'pendiente', href: '/retiros' },
+  { id: 'e4', fecha: '2026-10-23', esHoy: false, desde: '10:00', hasta: '10:45', que: 'Contacto de 30 días post-egreso', nnya: 'Camila S. (DEMO)', tipo: 'Post-egreso', estado: 'pendiente', href: '/seguimiento-post-egreso' },
+  { id: 'e5', fecha: '2026-10-23', esHoy: false, desde: '16:00', hasta: '17:00', que: 'Turno de odontología', nnya: 'Tomás R. (DEMO)', tipo: 'Salud', estado: 'cancelado', href: '/turnos' },
+  { id: 'e6', fecha: '2026-10-26', esHoy: false, desde: '09:30', hasta: '10:30', que: 'Reunión de evaluación institucional', nnya: '—', tipo: 'Institucional', estado: 'pendiente', href: '/evaluacion-institucional' },
+  { id: 'e7', fecha: '2026-10-27', esHoy: false, desde: '11:00', hasta: '12:00', que: 'Audiencia de control de medida', nnya: 'Camila S. (DEMO)', tipo: 'Tutela', estado: 'pendiente', href: '/legajos' },
+  { id: 'e8', fecha: '2026-10-20', esHoy: false, desde: '15:00', hasta: '15:30', que: 'Retiro con referente', nnya: 'Tomás R. (DEMO)', tipo: 'Retiro', estado: 'cumplido', href: '/retiros' },
 ]

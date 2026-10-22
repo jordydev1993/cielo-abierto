@@ -184,11 +184,17 @@ Marco blanco con borde. Paneles sin tarjeta: título de sección, ayuda opcional
 ### Inputs / Fields
 Campo blanco de 36 px con borde gris y radio 8; foco con borde y anillo azul. El autocompletado del navegador no cambia el fondo.
 
+### Variación de una cifra
+Debajo de la cifra: flecha, diferencia absoluta con signo y "vs." el período anterior, en 12 px. Verde si el cambio es bueno, rojo si es malo y gris si no es ninguna de las dos cosas o no hubo cambio; el texto completo queda para lectores de pantalla. Sin porcentajes sobre bases chicas.
+
+### Agenda en tarjetas
+Cada evento es una tarjeta de borde suave y radio 10: bloque de fecha a la izquierda (día de la semana en 12 px y número en 20 px), filete vertical, título, horario y tipo, e insignia de estado. Pestañas Pendientes, Cumplidos y Cancelados con su conteo. El evento de hoy lleva borde más oscuro y la palabra "Hoy".
+
 ### Avisos (toasts)
 Tarjeta flotante blanca de radio 12 con borde gris y sombra suave, abajo a la derecha. Cinco variantes: neutra, éxito (tilde verde), información ("i" azul), advertencia (triángulo ámbar) y error (exclamación roja); el ícono acompaña siempre al color. Duran 4 segundos o quedan fijos con `duracion: null`; advertencias y errores se anuncian con prioridad (`role="alert"`).
 
 ### Navigation
-Barra lateral clara: marca, buscador ⌘K (solo diseño, deshabilitado), Favoritos (accesos fijos), Inicio y grupos plegables con chevron. Ítem activo con fondo gris y texto en negrita. Barra superior con la ruta (grupo / módulo), Ayuda (solo diseño) y la cuenta. Pestañas de texto con subrayado de 2 px en la activa.
+Barra lateral clara: marca, buscador ⌘K (solo diseño, deshabilitado), Favoritos (accesos fijos), Inicio y grupos plegables con chevron. Ítem activo con fondo gris y texto en negrita. La cuenta va al pie de la barra lateral (avatar, email y rol) con un menú que tiene "Cerrar sesión". Barra superior con la ruta (grupo / módulo) y Ayuda (solo diseño). Pestañas de texto con subrayado de 2 px en la activa.
 
 ### Gráficos
 Leyenda arriba (solo con 2 series o más), ejes y grilla recesivos, línea de 2 px en tramos rectos, último punto marcado, tooltip con guía vertical, barras de hasta 24 px con el valor en la punta, barras de progreso con porcentaje y una tabla oculta para lectores de pantalla. Nunca eje doble, tortas, 3D ni degradés.
