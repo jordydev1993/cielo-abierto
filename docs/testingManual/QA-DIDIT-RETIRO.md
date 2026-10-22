@@ -945,3 +945,27 @@ Sin errores en la consola del navegador. Una advertencia de hidratación (un `Ba
 | La validación manual de `/referentes` | Sigue disponible, sin cambios (decisión 4) |
 
 **Hallazgo, que ya existía antes:** la pestaña Tutela le muestra el lápiz de edición a Equipo Tecnico, pero `vinculos_tutela_update_admin` solo deja actualizar a Admin. El guardado falla con un error. No se corrigió acá, porque no es parte del plan 049.
+
+---
+
+## Primera sesión real del sandbox de Didit — 21/10/2026
+
+**Entorno:** `next dev` contra Supabase local; app de sandbox de Didit con el workflow `71a46d11-07f9-480c-89f3-3bb86cee7175` ("Retiro NNyA - Validación de identidad"). Jordy completó el flujo de Didit en su celular, con el DNI de prueba `99000011` · **Resultado:** ✅
+
+| Paso | Resultado |
+|---|---|
+| `POST /api/didit/sesiones` con `sandbox_scenario: 'approve'` | `201 SESSION_CREATED`; la fila local queda "Pendiente" con su `session_id` |
+| Sesión en Didit | `vendor_data` = nuestro `id` y `sandbox_scenario: approve` registrado. Queda en `Not Started`: **el escenario no completa la sesión solo**, alguien tiene que recorrer el flujo |
+| `/retiros` → "Iniciar verificación" con la sesión abierta | Muestra el QR real y "0 de 3 intentos usados"; **retoma la sesión** (decisión 3 del Plan 047), sin crear otra |
+| Flujo de Didit en la computadora | Didit pide escanear su QR y seguir en el celular: en el escritorio no se puede completar |
+| Flujo completado en el celular | Didit: `Approved` con `verification_method = id_lookup` |
+| Dónde llega el DNI | En `decision.id_verifications[0].personal_number` (Supuesto 1 del Plan 048, confirmado). Devolvió `99000011`, el DNI esperado del tutor |
+| Webhook local con el aviso real, firmado con el secreto | `200`; sesión `Approved`, "Identidad verificada", `dni_coincide = true` y `finalizada_at` |
+| Borrado en Didit (RF-10) | La sesión ya no existe en Didit (`404`) |
+| Log del servidor | Solo `session_id` y `status`. La decisión real trae nombre, fecha de nacimiento, domicilio e imágenes; nada de eso llegó al log ni a la base (D-28) |
+| `/retiros` | "Identidad verificada. Puede registrar el retiro." y el formulario de registro |
+
+**Pendiente:**
+- Ver qué devuelve `approve` si en Didit se ingresa un DNI distinto del esperado (`DNI_MISMATCH`, caso T6 del plan 045).
+- Los escenarios `lookup_no_match`, `lookup_partial_match` y `lookup_provider_error` con sesiones reales. Igual que `approve`, cada uno necesita completar el flujo en un celular.
+- El aviso real de Didit fue al webhook de producción. Hasta que se apliquen ahí las migraciones del #29 y del #51, ese webhook no puede guardar resultados.

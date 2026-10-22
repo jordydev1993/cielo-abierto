@@ -93,7 +93,7 @@ Después de la firma, el envelope y `webhook_type` (sin cambios):
 
 ## Supuestos a verificar
 
-1. `personal_number` llega en `decision.id_verifications[i]` para `verification_method = 'id_lookup'` en un `Approved`. Así se vio en el sandbox el 07/10 (D-11), pero la documentación de webhooks no lo nombra. Se confirma con una sesión real del sandbox, que necesita `DIDIT_WORKFLOW_ID`.
+1. ✅ **Confirmado el 21/10 con una sesión real:** `personal_number` llega en `decision.id_verifications[i]` para `verification_method = 'id_lookup'` en un `Approved`. Así se vio en el sandbox el 07/10 (D-11), pero la documentación de webhooks no lo nombra. Se confirma con una sesión real del sandbox, que necesita `DIDIT_WORKFLOW_ID`.
 2. En sandbox, `approve` devuelve como `personal_number` el DNI enviado en `expected_details` (Etapa 0 del plan 045). Si devuelve uno fijo, todos los `approve` de prueba van a dar `DNI_MISMATCH`, y para la QA se usan los fixtures firmados.
 3. La API key de sandbox tiene el privilegio `delete:sessions`. Si no, el borrado da `403` y se loguea.
 

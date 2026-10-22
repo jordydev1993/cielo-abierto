@@ -112,7 +112,7 @@ T2 es el que más importa: es justo el caso que un `Approved` mal interpretado d
 
 **Cómo se elige el escenario:** al crear la sesión, con `sandbox_scenario` (así se crearon las sesiones del 07/10; detalle en `QA-DIDIT-RETIRO.md` §9, Etapa E-5). Desde la pantalla, a través de nuestro endpoint (Supuesto 5).
 
-**A confirmar en la Etapa 0:**
+**A confirmar en la Etapa 0** (21/10: el escenario se registra en la sesión pero no la completa sola, hay que recorrer el flujo en un celular; `approve` devolvió como `personal_number` el DNI esperado; ver `QA-DIDIT-RETIRO.md`, "Primera sesión real"):
 - Qué `personal_number` devuelve `approve`: el DNI enviado en `expected_details` o uno fijo. Si es uno fijo, todos los `approve` darían `DNI_MISMATCH` (D-14).
 - Si existe `lookup_partial_match`.
 - Que cada `no_match` consuma un solo intento (`max_attempts: 1`, D-12).
