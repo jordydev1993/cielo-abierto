@@ -82,7 +82,7 @@ export function DocumentoUpload({ legajoId, nnyaId }: DocumentoUploadProps) {
             <span className="text-sm text-on-surface-variant font-medium truncate max-w-[200px]">{file.name}</span>
             <button
               type="button"
-              className="text-outline hover:text-red-500 transition-colors"
+              className="text-outline hover:text-error transition-colors"
               onClick={(e) => { e.stopPropagation(); setFile(null); if (inputRef.current) inputRef.current.value = '' }}
             >
               <X className="h-4 w-4" />

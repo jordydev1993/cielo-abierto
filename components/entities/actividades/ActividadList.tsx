@@ -72,10 +72,10 @@ export function ActividadList({ actividades, nnyas, onCambiarEstado, loadingId }
                       <PlayCircle className="h-3 w-3 mr-1" />En curso
                     </Button>
                   )}
-                  <Button size="sm" variant="outline" className="h-7 text-xs border-green-300 text-green-700 hover:bg-green-50" disabled={pending} onClick={() => onCambiarEstado(act, 'realizada')}>
+                  <Button size="sm" variant="outline" className="h-7 text-xs border-exito/30 text-exito hover:bg-exito-container" disabled={pending} onClick={() => onCambiarEstado(act, 'realizada')}>
                     <CheckCircle2 className="h-3 w-3 mr-1" />Realizada
                   </Button>
-                  <Button size="sm" variant="outline" className="h-7 text-xs border-red-200 text-red-600 hover:bg-red-50" disabled={pending} onClick={() => onCambiarEstado(act, 'cancelada')}>
+                  <Button size="sm" variant="outline" className="h-7 text-xs border-error/30 text-error hover:bg-error-container" disabled={pending} onClick={() => onCambiarEstado(act, 'cancelada')}>
                     <XCircle className="h-3 w-3 mr-1" />Cancelar
                   </Button>
                 </div>

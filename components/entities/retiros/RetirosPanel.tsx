@@ -14,9 +14,9 @@ export function RetirosPanel({ sandbox }: { sandbox: boolean }) {
   const esAdmin = role === 'Admin'
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 p-4 sm:p-6">
+    <div className="space-y-6 px-8 py-6">
       <header className="space-y-1">
-        <h1 className="font-heading text-xl font-semibold text-on-surface">Retiros</h1>
+        <h1 className="font-heading text-title font-semibold text-on-surface">Retiros</h1>
         <p className="text-sm text-on-surface-variant">
           Retiro de un NNyA por un tutor autorizado, con verificación de identidad (Didit y RENAPER).
         </p>

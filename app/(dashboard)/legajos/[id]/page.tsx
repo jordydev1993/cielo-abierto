@@ -163,10 +163,10 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-xl font-semibold text-on-surface">Legajo {legajo.numero_legajo}</h1>
+              <h1 className="text-title font-semibold text-on-surface">Legajo {legajo.numero_legajo}</h1>
               {estadoBadge(legajo.estado)}
               {incidentePendiente && (
-                <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Incidente pendiente</Badge>
+                <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Incidente pendiente</Badge>
               )}
             </div>
             {nnya && (
@@ -229,9 +229,9 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
                 <Briefcase className="h-3.5 w-3.5" />Intervenciones<TabBadge count={intervenciones.length} />
               </TabsTrigger>
               <TabsTrigger value="alertas" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">
-                <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />Alertas
+                <AlertTriangle className="h-3.5 w-3.5 text-tertiary" />Alertas
                 {alertasPendientes > 0 && (
-                  <span className="ml-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{alertasPendientes}</span>
+                  <span className="ml-1 bg-error text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">{alertasPendientes}</span>
                 )}
               </TabsTrigger>
               <TabsTrigger value="turnos" className="gap-1.5 text-xs data-[state=active]:bg-surface-container">

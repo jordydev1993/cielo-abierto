@@ -81,7 +81,7 @@ export function AsistentesList({ evaluacionId }: AsistentesListProps) {
                     onClick={() => removeAsistente.mutate({ id: a.id, evaluacionId })}
                     title="Quitar"
                   >
-                    <Trash2 className="h-4 w-4 text-red-500" />
+                    <Trash2 className="h-4 w-4 text-error" />
                   </Button>
                 </AccessGuard>
               </div>

@@ -49,7 +49,7 @@ const buildColumns = (nnyaConIncidentePendiente?: Set<string>): Column<Legajo>[]
       <div className="flex items-center gap-1.5 flex-wrap">
         {estadoBadge(r.estado)}
         {nnyaConIncidentePendiente?.has(r.nnya_id) && (
-          <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Incidente pendiente</Badge>
+          <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Incidente pendiente</Badge>
         )}
       </div>
     ),

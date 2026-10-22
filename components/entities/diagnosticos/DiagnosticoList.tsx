@@ -15,7 +15,7 @@ import type { Diagnostico } from '@/types/database.types'
 
 function EstadoBadge({ estado }: { estado: Diagnostico['estado'] }) {
   if (estado === 'resuelto') return <Badge variant="success">Resuelto</Badge>
-  if (estado === 'en_seguimiento') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">En seguimiento</Badge>
+  if (estado === 'en_seguimiento') return <Badge className="bg-primary-container text-on-primary-container border border-serie-1/30">En seguimiento</Badge>
   return <Badge variant="outline">Activo</Badge>
 }
 
@@ -63,7 +63,7 @@ function ConfirmarModal({ diagnostico, nuevoEstado, legajoId, onClose }: Confirm
               </p>
             </div>
             {esResolucion && (
-              <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+              <p className="text-sm text-on-tertiary-fixed bg-tertiary-fixed border border-tertiary/30 rounded-lg px-3 py-2">
                 El profesional determina el cese de la condición. Este cambio no puede revertirse — si hay una recaída, se debe crear un nuevo diagnóstico.
               </p>
             )}
@@ -155,7 +155,7 @@ export function DiagnosticoList({ diagnosticos, legajoId, legajoActivo }: Diagno
                             <Button
                               size="sm"
                               variant="outline"
-                              className="h-7 text-xs border-blue-300 text-blue-700 hover:bg-blue-50"
+                              className="h-7 text-xs border-serie-1/30 text-on-primary-container hover:bg-primary-container"
                               onClick={() => setAccion({ diagnostico: diag, estado: 'en_seguimiento' })}
                             >
                               <Activity className="h-3 w-3 mr-1" />
@@ -165,7 +165,7 @@ export function DiagnosticoList({ diagnosticos, legajoId, legajoActivo }: Diagno
                           <Button
                             size="sm"
                             variant="outline"
-                            className="h-7 text-xs border-green-300 text-green-700 hover:bg-green-50"
+                            className="h-7 text-xs border-exito/30 text-exito hover:bg-exito-container"
                             onClick={() => setAccion({ diagnostico: diag, estado: 'resuelto' })}
                           >
                             <CheckCircle2 className="h-3 w-3 mr-1" />

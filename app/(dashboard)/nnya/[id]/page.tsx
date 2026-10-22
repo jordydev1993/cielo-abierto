@@ -66,7 +66,7 @@ export default function NnyaDetallePage({ params }: { params: Promise<{ id: stri
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-xl font-semibold text-on-surface">
+              <h1 className="text-title font-semibold text-on-surface">
                 {nnya.apellido}, {nnya.nombre}
               </h1>
               {estadoBadge(nnya.estado_actual)}

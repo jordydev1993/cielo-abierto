@@ -27,10 +27,10 @@ export default function NnyaPage() {
     : nnyas
 
   return (
-    <div className="p-6 space-y-5">
+    <div className="px-8 py-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-on-surface">NNyA</h1>
+          <h1 className="text-title font-semibold text-on-surface">NNyA</h1>
           <p className="text-sm text-on-surface-variant">{nnyas.length} registros</p>
         </div>
         <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
@@ -52,7 +52,7 @@ export default function NnyaPage() {
       </div>
 
       {isError && (
-        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="rounded-md border border-error/30 bg-error-container px-4 py-3 text-sm text-error">
           Error al cargar NNyA:{' '}
           {error instanceof Error ? error.message : String(error)}
         </div>

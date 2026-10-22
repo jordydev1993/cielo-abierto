@@ -32,10 +32,10 @@ export default function RolesPage() {
 
   return (
     <AccessGuard roles={['Admin']} fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}>
-      <div className="p-6 space-y-5">
+      <div className="px-8 py-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-on-surface">Roles</h1>
+            <h1 className="text-title font-semibold text-on-surface">Roles</h1>
             <p className="text-sm text-on-surface-variant">{roles.length} roles registrados</p>
           </div>
           <Button onClick={() => router.push('/roles/nuevo')}>

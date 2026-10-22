@@ -137,7 +137,7 @@ export function IncidenteForm({ legajoId, nnyaId, onSubmit, onCancel, loading }:
         {(cargandoPrediccion || prediccion) && (
           <div className={cn(
             'sm:col-span-2 rounded-lg px-3 py-2.5 flex items-center justify-between gap-3 border transition-colors',
-            sugerenciaAceptada ? 'bg-green-50 border-green-200' : 'bg-violet-50 border-violet-200',
+            sugerenciaAceptada ? 'bg-exito-container border-exito/30' : 'bg-violet-50 border-violet-200',
           )}>
             {cargandoPrediccion ? (
               <div className="flex items-center gap-2 text-sm text-outline">
@@ -148,15 +148,15 @@ export function IncidenteForm({ legajoId, nnyaId, onSubmit, onCancel, loading }:
               <>
                 <div className="flex items-center gap-2 text-sm min-w-0">
                   {sugerenciaAceptada
-                    ? <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                    ? <CheckCircle2 className="h-4 w-4 text-exito shrink-0" />
                     : <Sparkles className="h-4 w-4 text-violet-500 shrink-0" />
                   }
-                  <span className={sugerenciaAceptada ? 'text-green-700' : 'text-violet-700'}>
+                  <span className={sugerenciaAceptada ? 'text-exito' : 'text-violet-700'}>
                     <span className="font-medium">
                       {sugerenciaAceptada ? 'Sugerencia aceptada: ' : 'Gravedad sugerida: '}
                       {GRAVEDAD_LABEL[prediccion.sugerencia]}
                     </span>
-                    <span className={cn('ml-1.5 text-xs', sugerenciaAceptada ? 'text-green-400' : 'text-violet-400')}>
+                    <span className={cn('ml-1.5 text-xs', sugerenciaAceptada ? 'text-exito' : 'text-violet-400')}>
                       ({Math.round(prediccion.confianza * 100)}% confianza
                       {prediccion.origen === 'historico' && ` · basado en ${prediccion.muestras} registros`}
                       {prediccion.origen === 'regla' && ' · regla del dominio'})
@@ -192,7 +192,7 @@ export function IncidenteForm({ legajoId, nnyaId, onSubmit, onCancel, loading }:
               }}
               value={field.value}
             >
-              <SelectTrigger className={cn(sugerenciaAceptada && 'border-green-400 ring-1 ring-green-200')}>
+              <SelectTrigger className={cn(sugerenciaAceptada && 'border-exito/30 ring-1 ring-exito/30')}>
                 <SelectValue placeholder="Seleccionar..." />
               </SelectTrigger>
               <SelectContent>

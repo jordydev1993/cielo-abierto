@@ -61,7 +61,7 @@ export function DiagnosticoForm({ legajoId, nnyaId, onSubmit, onCancel, loading 
         <FormField label="Fecha del diagnóstico" error={errors.fecha_diagnostico?.message} required>
           <Input {...register('fecha_diagnostico')} type="date" max={today} />
           {errors.fecha_diagnostico && (
-            <p className="text-xs text-amber-600 mt-1">La fecha no puede ser futura.</p>
+            <p className="text-xs text-tertiary mt-1">La fecha no puede ser futura.</p>
           )}
         </FormField>
 

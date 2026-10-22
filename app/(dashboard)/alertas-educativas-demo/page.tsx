@@ -5,7 +5,7 @@ export default function AlertasEducativasDemoPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-6 p-4 sm:p-6">
       <header className="space-y-2">
-        <h1 className="font-heading text-xl font-semibold text-on-surface">
+        <h1 className="font-heading text-title font-semibold text-on-surface">
           Demostración de alertas educativas
         </h1>
         <p className="text-sm text-on-surface-variant">

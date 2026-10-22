@@ -18,7 +18,7 @@ function EstadoBadge({ estado }: { estado: Turno['estado'] }) {
   if (estado === 'realizado') return <Badge variant="success">Realizado</Badge>
   if (estado === 'cancelado') return <Badge variant="secondary">Cancelado</Badge>
   if (estado === 'ausente') return <Badge variant="destructive">Ausente</Badge>
-  if (estado === 'confirmado') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">Confirmado</Badge>
+  if (estado === 'confirmado') return <Badge className="bg-primary-container text-on-primary-container border border-serie-1/30">Confirmado</Badge>
   return <Badge variant="outline">Programado</Badge>
 }
 
@@ -212,7 +212,7 @@ function TurnoRow({ turno, legajoActivo, onRealizado, onCancelar, isPending }: T
           <p className="text-xs text-outline">
             {format(new Date(turno.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
             {futuro && turno.estado === 'programado' && (
-              <span className="ml-1 text-blue-500 font-medium">(próximo)</span>
+              <span className="ml-1 text-serie-1 font-medium">(próximo)</span>
             )}
           </p>
           {turno.profesional && (
@@ -240,7 +240,7 @@ function TurnoRow({ turno, legajoActivo, onRealizado, onCancelar, isPending }: T
                 'h-7 text-xs',
                 futuro
                   ? 'opacity-40 cursor-not-allowed'
-                  : 'border-green-300 text-green-700 hover:bg-green-50'
+                  : 'border-exito/30 text-exito hover:bg-exito-container'
               )}
               onClick={() => onRealizado(turno)}
               disabled={isPending}
@@ -252,7 +252,7 @@ function TurnoRow({ turno, legajoActivo, onRealizado, onCancelar, isPending }: T
             <Button
               size="sm"
               variant="outline"
-              className="h-7 text-xs border-red-200 text-red-600 hover:bg-red-50"
+              className="h-7 text-xs border-error/30 text-error hover:bg-error-container"
               onClick={() => onCancelar(turno)}
               disabled={isPending}
             >

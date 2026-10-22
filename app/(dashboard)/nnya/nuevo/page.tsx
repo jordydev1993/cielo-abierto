@@ -29,7 +29,7 @@ export default function NuevoNnyaPage() {
         <Button variant="ghost" size="sm" onClick={() => router.back()} className="-ml-2 mb-4">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver
         </Button>
-        <h1 className="text-xl font-semibold text-on-surface mb-6">Registrar NNyA</h1>
+        <h1 className="text-title font-semibold text-on-surface mb-6">Registrar NNyA</h1>
         <NnyaForm onSubmit={handleSubmit} loading={mutation.isPending} />
       </div>
     </AccessGuard>

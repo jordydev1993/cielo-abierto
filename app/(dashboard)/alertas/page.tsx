@@ -39,7 +39,7 @@ function isProxima(alerta: Alerta): boolean {
 
 function PrioridadBadge({ prioridad }: { prioridad: Alerta['prioridad'] }) {
   if (prioridad === 'critica') return <Badge variant="destructive">Crítica</Badge>
-  if (prioridad === 'alta') return <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Alta</Badge>
+  if (prioridad === 'alta') return <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Alta</Badge>
   if (prioridad === 'media') return <Badge variant="outline">Media</Badge>
   return <Badge variant="secondary">Baja</Badge>
 }
@@ -48,7 +48,7 @@ function EstadoBadge({ alerta }: { alerta: Alerta }) {
   const vencida = isVencida(alerta)
   if (alerta.estado === 'completada') return <Badge variant="success">Completada</Badge>
   if (vencida || alerta.estado === 'vencida') return <Badge variant="destructive">Vencida</Badge>
-  if (alerta.estado === 'en_proceso') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">En proceso</Badge>
+  if (alerta.estado === 'en_proceso') return <Badge className="bg-primary-container text-on-primary-container border border-serie-1/30">En proceso</Badge>
   return <Badge variant="secondary">Pendiente</Badge>
 }
 
@@ -120,7 +120,7 @@ function ResolverModal({ alerta, onClose }: ResolverModalProps) {
               <label className="text-sm font-medium text-on-surface-variant mb-1.5 block">
                 Observación de cierre{' '}
                 {requiereObservacion
-                  ? <span className="text-red-500">*</span>
+                  ? <span className="text-error">*</span>
                   : <span className="text-outline">(opcional)</span>}
               </label>
               <Textarea
@@ -134,7 +134,7 @@ function ResolverModal({ alerta, onClose }: ResolverModalProps) {
                 }
               />
               {requiereObservacion && (
-                <p className="text-xs text-amber-600 mt-1">
+                <p className="text-xs text-tertiary mt-1">
                   Las alertas de prioridad alta o crítica requieren documentar las acciones tomadas.
                 </p>
               )}
@@ -214,23 +214,23 @@ export default function AlertasPage() {
   const vencidasCount = alertas.filter((a) => isVencida(a) || a.estado === 'vencida').length
 
   return (
-    <div className="p-6 max-w-3xl space-y-6">
+    <div className="px-8 py-6 space-y-6">
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-1 flex-wrap">
-          <h1 className="text-xl font-semibold text-on-surface">Alertas</h1>
+          <h1 className="text-title font-semibold text-on-surface">Alertas</h1>
           {pendientesCount > 0 && (
-            <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-error-container text-error text-xs font-semibold px-2 py-0.5 rounded-full">
               {pendientesCount} pendiente{pendientesCount !== 1 ? 's' : ''}
             </span>
           )}
           {enProcesoCount > 0 && (
-            <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-primary-container text-on-primary-container text-xs font-semibold px-2 py-0.5 rounded-full">
               {enProcesoCount} en proceso
             </span>
           )}
           {vencidasCount > 0 && (
-            <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-error text-white text-xs font-semibold px-2 py-0.5 rounded-full">
               {vencidasCount} vencida{vencidasCount !== 1 ? 's' : ''}
             </span>
           )}
@@ -242,16 +242,18 @@ export default function AlertasPage() {
 
       {/* Filtros */}
       <div className="space-y-3">
-        <div className="flex gap-1 bg-surface-container p-1 rounded-lg w-fit flex-wrap">
+        <div role="tablist" aria-label="Estado" className="flex flex-wrap gap-5 border-b border-filete">
           {ESTADO_TABS.map(({ value, label }) => (
             <button
               key={value}
+              role="tab"
+              aria-selected={filtroEstado === value}
               onClick={() => setFiltroEstado(value)}
               className={cn(
-                'px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
+                '-mb-px border-b-2 pb-2.5 pt-1 text-body font-medium transition-colors focus-visible:outline-2',
                 filtroEstado === value
-                  ? 'bg-surface-container-lowest text-on-surface shadow-sm'
-                  : 'text-on-surface-variant hover:text-on-surface-variant'
+                  ? 'border-ink text-on-surface'
+                  : 'border-transparent text-outline hover:text-on-surface'
               )}
             >
               {label}
@@ -306,9 +308,9 @@ export default function AlertasPage() {
                 key={alerta.id}
                 className={cn(
                   'p-4 bg-surface-container-lowest',
-                  proxima && 'bg-amber-50',
-                  vencida && 'bg-red-50',
-                  enProceso && 'bg-blue-50',
+                  proxima && 'bg-tertiary-fixed',
+                  vencida && 'bg-error-container',
+                  enProceso && 'bg-primary-container',
                   resuelta && 'opacity-60',
                 )}
               >
@@ -316,7 +318,7 @@ export default function AlertasPage() {
                   <div className="flex-1 min-w-0 space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
                       {(proxima || vencida) && (
-                        <AlertTriangle className={cn('h-3.5 w-3.5 shrink-0', vencida ? 'text-red-500' : 'text-amber-500')} />
+                        <AlertTriangle className={cn('h-3.5 w-3.5 shrink-0', vencida ? 'text-error' : 'text-tertiary')} />
                       )}
                       <span className="text-sm font-medium text-on-surface">{alerta.titulo}</span>
                     </div>
@@ -331,7 +333,7 @@ export default function AlertasPage() {
                       <PrioridadBadge prioridad={alerta.prioridad} />
                       <EstadoBadge alerta={alerta} />
                       {alerta.fecha_vencimiento && (
-                        <span className={cn('text-xs', vencida ? 'text-red-600 font-medium' : 'text-outline')}>
+                        <span className={cn('text-xs', vencida ? 'text-error font-medium' : 'text-outline')}>
                           Vence: {format(new Date(alerta.fecha_vencimiento + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                           {proxima && ' — vence hoy'}
                           {vencida && ' — VENCIDA'}
@@ -355,7 +357,7 @@ export default function AlertasPage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          className="border-blue-300 text-blue-700 hover:bg-blue-50 h-7 text-xs"
+                          className="border-serie-1/30 text-on-primary-container hover:bg-primary-container h-7 text-xs"
                           onClick={() => handleProcesar(alerta)}
                           disabled={procesar.isPending}
                         >
@@ -366,7 +368,7 @@ export default function AlertasPage() {
                       <Button
                         size="sm"
                         variant={enProceso ? 'default' : 'outline'}
-                        className={cn('h-7 text-xs', enProceso && 'bg-green-600 hover:bg-green-700')}
+                        className={cn('h-7 text-xs', enProceso && 'bg-exito hover:bg-exito')}
                         onClick={() => setAlertaAResolver(alerta)}
                       >
                         <CheckCircle2 className="h-3 w-3 mr-1" />

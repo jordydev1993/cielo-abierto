@@ -8,11 +8,11 @@ interface CoberturaResumenProps {
 
 function Tile({ icon: Icon, label, count, color }: { icon: React.ElementType; label: string; count: number; color: string }) {
   return (
-    <div className="border border-outline-variant rounded-lg p-4 flex items-center gap-3">
-      <Icon className={`h-5 w-5 ${color}`} />
+    <div className="flex items-start gap-3">
+      <span className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-surface-container"><Icon className={`h-4 w-4 ${color}`} aria-hidden="true" /></span>
       <div>
-        <p className="text-xl font-semibold text-on-surface">{count}</p>
-        <p className="text-xs text-on-surface-variant">{label}</p>
+        <p className="text-display font-semibold text-on-surface">{count}</p>
+        <p className="text-small text-on-surface-variant">{label}</p>
       </div>
     </div>
   )
@@ -33,10 +33,10 @@ export function CoberturaResumen({ turnos }: CoberturaResumenProps) {
   const cerradosHoy = turnos.filter((t) => t.fecha === hoy && t.estado === 'cerrado').length
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-      <Tile icon={CalendarX} label="No cubiertos (próx. 7 días)" count={noCubiertosProximos} color="text-red-500" />
-      <Tile icon={Clock} label="Pendientes hoy" count={pendientesHoy} color="text-amber-500" />
-      <Tile icon={CheckCircle2} label="Cerrados hoy" count={cerradosHoy} color="text-green-500" />
+    <div className="grid grid-cols-1 gap-6 border-b border-filete pb-6 sm:grid-cols-3">
+      <Tile icon={CalendarX} label="No cubiertos (próx. 7 días)" count={noCubiertosProximos} color="text-error" />
+      <Tile icon={Clock} label="Pendientes hoy" count={pendientesHoy} color="text-tertiary" />
+      <Tile icon={CheckCircle2} label="Cerrados hoy" count={cerradosHoy} color="text-exito" />
     </div>
   )
 }

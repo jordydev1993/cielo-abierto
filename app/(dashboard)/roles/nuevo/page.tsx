@@ -29,7 +29,7 @@ export default function NuevoRolPage() {
         <Button variant="ghost" size="sm" onClick={() => router.back()} className="mb-4 -ml-2">
           <ChevronLeft className="h-4 w-4 mr-1" />Volver
         </Button>
-        <h1 className="text-xl font-semibold text-on-surface mb-6">Nuevo rol</h1>
+        <h1 className="text-title font-semibold text-on-surface mb-6">Nuevo rol</h1>
         <RolForm onSubmit={handleSubmit} loading={mutation.isPending} />
       </div>
     </AccessGuard>

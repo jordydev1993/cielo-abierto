@@ -15,7 +15,7 @@ import type { Medicamento } from '@/types/database.types'
 
 function EstadoBadge({ estado }: { estado: Medicamento['estado'] }) {
   if (estado === 'finalizado') return <Badge variant="secondary">Finalizado</Badge>
-  return <Badge className="bg-green-100 text-green-700 border border-green-200">En curso</Badge>
+  return <Badge className="bg-exito-container text-exito border border-exito/30">En curso</Badge>
 }
 
 interface FinalizarModalProps {
@@ -51,7 +51,7 @@ function FinalizarModal({ medicamento, legajoId, onClose }: FinalizarModalProps)
                 <p className="text-outline text-xs">Prescriptor: {medicamento.prescriptor}</p>
               )}
             </div>
-            <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+            <p className="text-sm text-on-tertiary-fixed bg-tertiary-fixed border border-tertiary/30 rounded-lg px-3 py-2">
               Se registrará la fecha de hoy como fecha de fin. El tratamiento no se podrá reactivar — si se reinicia, debe registrarse como un nuevo tratamiento. (M-EX-06)
             </p>
           </div>
@@ -128,7 +128,7 @@ export function MedicamentoList({ medicamentos, legajoId, legajoActivo }: Medica
                       <Button
                         size="sm"
                         variant="outline"
-                        className="h-7 text-xs border-red-200 text-red-600 hover:bg-red-50 shrink-0"
+                        className="h-7 text-xs border-error/30 text-error hover:bg-error-container shrink-0"
                         onClick={() => setAFinalizar(med)}
                       >
                         <StopCircle className="h-3 w-3 mr-1" />
