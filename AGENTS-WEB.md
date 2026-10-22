@@ -108,6 +108,7 @@ Route handlers en `app/api/`:
 - `incidentes/prediccion` — predicción de severidad de incidente (usada desde el form de Incidentes). Son reglas fijas más la moda del historial: **no es IA**.
 - `usuarios` (POST) — creación de usuario admin, usa `SUPABASE_SERVICE_ROLE_KEY` server-side. Exige sesión + rol `Admin` (`prompts/002`).
 - `didit/webhook` (POST) — resultado de la validación RENAPER, firma HMAC con `DIDIT_WEBHOOK_SECRET` (`prompts/016`).
+- `didit/sesiones` (POST), `didit/sesiones/[id]` (GET) y `didit/sesiones/[id]/fallback` (POST) — crear una sesión de verificación de identidad en Didit (DNI tomado de la base, D-14), consultar su estado y aplicar el fallback manual (solo `Admin`). Escriben con la sesión del usuario: RLS y los triggers deciden y el audit log registra al autor. Respuestas `{ ok, code, message, data }` con los códigos del Plan 035 §7.4 y los textos de D-33 (`lib/didit/mensajes.ts`). Exigen sesión + rol `Admin` o `Equipo Tecnico` (`prompts/047`).
 - `reportes/senaf` (POST `{ mes, anio }`) — genera una versión nueva del informe SENAF: agregados por `fn_agregados_senaf`, borrador con IA si hay `ANTHROPIC_API_KEY` (si no, o si falla, con plantilla), control de cifras y guardado en `reportes_senaf`. Exige sesión + rol `Admin` (`prompts/027`).
 - `reportes/senaf/[id]/pdf` (GET) — PDF del informe, solo si está aprobado. Exige sesión + rol `Admin`.
 

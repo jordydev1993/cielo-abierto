@@ -53,6 +53,9 @@ levantar el entorno local.
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Cliente y servidor | Clave anónima de Supabase. Pública, protegida por RLS. |
 | `SUPABASE_SERVICE_ROLE_KEY` | `app/api/usuarios/route.ts` (server-only) | **Nunca** exponer al cliente. Se usa solo para crear usuarios como Admin. |
 | `DIDIT_WEBHOOK_SECRET` | `app/api/didit/webhook/route.ts` (server-only) | Verifica la firma HMAC del webhook de Didit (validación RENAPER). |
+| `DIDIT_API_KEY` | `app/api/didit/sesiones` (server-only) | API key de la app de Didit (hoy, la de sandbox). Crea y consulta sesiones de verificación. |
+| `DIDIT_WORKFLOW_ID` | `app/api/didit/sesiones` (server-only) | Workflow de Didit (`id_lookup` contra RENAPER, D-23). |
+| `DIDIT_SANDBOX_SCENARIOS` | `app/api/didit/sesiones` (server-only) | **Solo local y preview, con la app de sandbox.** En `true`, deja elegir el resultado de Didit con `sandbox_scenario` para la QA (`prompts/045`). Nunca en producción. |
 | `ANTHROPIC_API_KEY` | `lib/ia/redactarInformeSenaf.ts` (server-only) | **Opcional.** Si está, el borrador del informe SENAF se redacta con Claude; si no, con la plantilla. Cuenta de la Console de Anthropic (pago por uso, aparte de cualquier suscripción). **Nunca** con prefijo `NEXT_PUBLIC_`. |
 
 ## Scripts

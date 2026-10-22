@@ -63,7 +63,8 @@ Cami ── diseño con datos de ejemplo ─────────────
 **Implementación (pasó a Jordy el 21/10)**
 - [x] **Supabase local:** `supabase/config.toml` versionado y `supabase db reset` funcionando desde una base vacía. ✅ PR #50, 21/10
 - [x] **Migración de D-14 y `error_proveedor`** (`prompts/046`): columna `dni_coincide`, estado RNF-12 y trigger de Seguridad 2 sobre `estado_rnf12`, `CHECK` cerrado de `error_proveedor`, pruebas en `tests/sql/didit-seguridad.sql` (`npm run test:sql`, 12/12) y tipos regenerados. ✅ 21/10
-- [ ] **#23:** endpoints (crear sesión con `sandbox_scenario`, consultar estado, fallback) y lógica del webhook (ver la sección de Meli).
+- [x] **#23, endpoints** (`prompts/047`): crear sesión con `sandbox_scenario`, consultar estado y fallback, en `app/api/didit/sesiones`. ✅ 21/10. Falta probar el `201` con el workflow real (`DIDIT_WORKFLOW_ID`).
+- [ ] **#23, webhook:** lógica del webhook (ver la sección de Meli).
 - [ ] **#26:** conectar las pantallas, los mensajes de D-33 y el selector de escenario de sandbox.
 - [ ] **#33:** QA según `prompts/045`.
 - [x] Invitaciones al repo: Meli y Cami ya trabajan en `cielo-abierto`.
