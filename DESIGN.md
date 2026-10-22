@@ -1,215 +1,205 @@
 ---
 name: Argüello Infancias
-description: Sistema de gestión de una residencia de NNyA bajo protección judicial. Señalética de hospital público.
+description: Sistema de gestión de una residencia de NNyA bajo protección judicial. Panel SaaS claro y minimalista.
 colors:
-  tinta: "#14201e"
-  fondo: "#f4f6f5"
+  tinta: "#111318"
+  fondo-app: "#f4f5f7"
   superficie: "#ffffff"
-  superficie-baja: "#eef1f0"
-  superficie-media: "#e6eae9"
-  texto-secundario: "#56625f"
-  contorno: "#5f6a67"
-  filete: "#d3d9d7"
-  primary: "#1f4e8c"
-  primary-container: "#dce6f3"
-  secondary: "#3d4448"
-  secondary-container: "#e3e8e7"
-  tertiary: "#9a6212"
-  tertiary-fixed: "#f6e7cc"
-  error: "#c62828"
-  error-container: "#fbe3e1"
-  exito-container: "#e2f0e9"
-  area-nucleo: "#1f4e8c"
-  area-tutela: "#5b4b9a"
-  area-seguimiento: "#9a6212"
-  area-salud: "#2e7d5b"
-  area-institucional: "#24646b"
-  area-administracion: "#3d4448"
-  prioridad-baja: "#d19a55"
-  prioridad-media: "#a15f1c"
-  prioridad-alta: "#874a13"
-  prioridad-critica: "#5c2c06"
+  superficie-baja: "#f7f8fa"
+  superficie-media: "#f1f2f4"
+  superficie-alta: "#e7e8ec"
+  texto-secundario: "#5b606b"
+  contorno: "#6b717c"
+  borde: "#e7e8ec"
+  filete: "#eeeff2"
+  primary: "#111318"
+  info-container: "#eef2fd"
+  exito: "#0f7a47"
+  exito-container: "#e7f6ee"
+  advertencia: "#9a5b00"
+  advertencia-container: "#fff4e0"
+  error: "#d1293d"
+  error-container: "#fdecee"
+  serie-1: "#3b6fe0"
+  serie-2: "#e65c9f"
+  serie-3: "#0f7a47"
+  serie-contexto: "#9aa0aa"
 typography:
   display:
-    fontFamily: "Overpass, ui-sans-serif, system-ui"
-    fontSize: "2.75rem"
-    fontWeight: 800
-    lineHeight: 1
-  title:
-    fontFamily: "Overpass, ui-sans-serif, system-ui"
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "1.75rem"
-    fontWeight: 800
-    lineHeight: 1.1
+    fontWeight: 600
+    lineHeight: 1.15
+  title:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.25rem"
+    fontWeight: 600
+    lineHeight: 1.3
   heading:
-    fontFamily: "Overpass, ui-sans-serif, system-ui"
-    fontSize: "0.8125rem"
-    fontWeight: 700
-    lineHeight: 1.2
-    letterSpacing: "0.12em"
-  body:
-    fontFamily: "Atkinson Hyperlegible Next, ui-sans-serif, system-ui"
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.9375rem"
+    fontWeight: 600
+    lineHeight: 1.4
+  body:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.875rem"
     fontWeight: 400
     lineHeight: 1.5
   small:
-    fontFamily: "Atkinson Hyperlegible Next, ui-sans-serif, system-ui"
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
     fontSize: "0.8125rem"
     fontWeight: 400
-    lineHeight: 1.4
+    lineHeight: 1.45
+  caption:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.75rem"
+    fontWeight: 500
+    lineHeight: 1.35
 rounded:
-  sm: "2px"
-  md: "2px"
-  lg: "3px"
-  xl: "4px"
+  sm: "6px"
+  md: "8px"
+  lg: "10px"
+  xl: "12px"
+  full: "9999px"
 spacing:
-  gutter: "24px"
   page-x: "32px"
-  section: "32px"
+  page-y: "24px"
+  gutter: "24px"
+  marco: "12px"
 components:
   button-primary:
-    backgroundColor: "{colors.primary}"
+    backgroundColor: "{colors.tinta}"
     textColor: "{colors.superficie}"
     rounded: "{rounded.md}"
     height: "36px"
-    padding: "8px 16px"
+    padding: "0 16px"
   button-outline:
     backgroundColor: "{colors.superficie}"
     textColor: "{colors.tinta}"
     rounded: "{rounded.md}"
     height: "36px"
-  badge-vigente:
-    backgroundColor: "{colors.exito-container}"
-    textColor: "#1b4d37"
-    typography: "{typography.heading}"
-    rounded: "{rounded.sm}"
-  badge-pendiente:
-    backgroundColor: "{colors.tertiary-fixed}"
-    textColor: "#5f3c0b"
-    typography: "{typography.heading}"
-    rounded: "{rounded.sm}"
+  badge:
+    backgroundColor: "{colors.superficie}"
+    textColor: "{colors.tinta}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.full}"
   input:
-    backgroundColor: "{colors.superficie-baja}"
+    backgroundColor: "{colors.superficie}"
     textColor: "{colors.tinta}"
     rounded: "{rounded.md}"
     height: "36px"
   sidebar:
-    backgroundColor: "{colors.tinta}"
-    textColor: "#e9eeec"
-    width: "248px"
-  cartel-area:
-    backgroundColor: "{colors.area-nucleo}"
-    textColor: "{colors.superficie}"
-    padding: "12px 32px"
+    backgroundColor: "{colors.superficie-baja}"
+    textColor: "{colors.texto-secundario}"
+    width: "240px"
+  nav-item-active:
+    backgroundColor: "{colors.superficie-media}"
+    textColor: "{colors.tinta}"
+    rounded: "{rounded.md}"
 ---
 
 # Design System: Argüello Infancias
 
-> **En transición (22/10/2026):** este documento describe el sistema "Señalética" (prompts/051), que se está reemplazando por el sistema SaaS claro de prompts/052. Se reescribe al terminar la última tanda; mientras tanto, los tokens vigentes están en `app/globals.css`.
-
 ## Overview
 
-**Creative North Star: "La señalética del hospital público"**
+**Creative North Star: "El panel claro"**
 
-El sistema se apoya en la señalética de un hospital pediátrico público. Cada área de la residencia tiene un color de señal, y cada pantalla empieza diciendo dónde estás, como el cartel sobre una puerta. Es una herramienta de trabajo: se usa ocho horas en una PC de oficina, así que la expresión vive en tres detalles precisos (el color de área, la tipografía de ruta y los filetes) y nunca en adorno.
-
-Rechaza el panel SaaS de tarjetas blancas con sombra y un acento azul, y todo lo que se vea infantil: es una institución bajo control judicial, no una app para chicos.
+Un panel de gestión SaaS claro y minimalista, tomado de una referencia que eligió Jordy (prompts/052). La app vive en un marco blanco redondeado sobre un fondo gris; el contenido respira, los números y los gráficos son los protagonistas y la interfaz se corre del medio. Es una herramienta de trabajo para la PC de oficina: lo que se ve primero es el dato, no la decoración.
 
 **Key Characteristics:**
-- Barra lateral oscura como directorio del hall, agrupada por área.
-- Cartel de área a todo el ancho al tope de cada pantalla.
-- Superficies blancas separadas por filetes de 1 px, sin sombras de tarjeta.
-- Overpass para carteles, títulos y cifras; Atkinson Hyperlegible Next para leer.
+- Marco blanco de radio 12 px sobre fondo gris, con barra lateral clara y barra superior con la ruta.
+- Cifras sin tarjetas, separadas por aire y filetes muy suaves.
+- Gráficos protagonistas en azul, rosa y verde, siempre con una sola medida por eje.
+- Un solo negro para la acción principal; todo lo demás en grises neutros.
+- Inter en toda la interfaz.
 
 ## Colors
 
-Estrategia **restringida con color de área**: fondo y tinta neutros levemente verdes, más seis colores de área que hacen un solo trabajo cada uno.
+Estrategia **restringida**: grises neutros más tres colores de serie que hacen un solo trabajo, identificar series en los gráficos.
 
 ### Primary
-- **Azul de Núcleo** (`#1f4e8c`): acción principal (botones, enlaces) y color del área Núcleo.
+- **Tinta** (`#111318`): texto principal y botón principal (negro con texto blanco).
 
 ### Neutral
-- **Tinta** (`#14201e`): texto principal, barra lateral y filete grueso bajo las cabeceras de tabla.
-- **Fondo** (`#f4f6f5`) y **Superficie** (`#ffffff`): el plano de la página y las superficies de contenido.
-- **Filete** (`#d3d9d7`): toda separación.
-- **Texto secundario** (`#56625f`) y **Contorno** (`#5f6a67`): texto de apoyo, íconos y placeholders.
+- **Fondo de la app** (`#f4f5f7`): fuera del marco.
+- **Superficie** (`#ffffff`): el marco y todo el contenido de trabajo.
+- **Superficie baja / media / alta** (`#f7f8fa` / `#f1f2f4` / `#e7e8ec`): barra lateral, hover e ítem activo, rieles.
+- **Texto secundario** (`#5b606b`) y **contorno** (`#6b717c`): texto de apoyo, ejes, íconos y placeholders (AA sobre blanco).
+- **Borde** (`#e7e8ec`) y **filete** (`#eeeff2`): bordes de controles y divisiones de la grilla.
 
-### Áreas
-Núcleo `#1f4e8c` · Tutela y retiros `#5b4b9a` · Seguimiento `#9a6212` · Salud `#2e7d5b` · Institucional `#24646b` · Administración `#3d4448`. El texto blanco pasa AA sobre los seis (el más justo es Salud, 5.0:1).
+### Series de gráficos
+Azul `#3b6fe0`, rosa `#e65c9f` y verde `#0f7a47`, en ese orden fijo, más gris de contexto `#9aa0aa` para una serie de referencia. Validada con el script de la skill dataviz: banda de luminosidad, croma, separación para daltonismo en todos los pares y contraste de 3:1 sobre blanco.
 
-### Estados y prioridad
-- **Crítico** (`#c62828`): solo errores y lo crítico.
-- **Prioridad de alertas**: rampa ordinal de un solo tono, de baja (`#d19a55`) a crítica (`#5c2c06`), validada con la skill dataviz (tono único, luminosidad monótona y saltos visibles).
+### Estados
+Éxito (verde), advertencia (ámbar), crítico (rojo) e info (azul claro), cada uno con su fondo claro. En las insignias el estado lo dice el texto y lo refuerza un punto de color.
 
 ### Named Rules
-**The One Job Rule.** Cada color de área marca solo su área (cartel, ítem activo, cuadrado de identidad). Nunca se reutiliza como "serie 4" ni como decoración.
+**The Series Rule.** Los colores de serie solo identifican series en un gráfico; no se usan para decorar ni para estados.
 
-**The Ink Text Rule.** El texto va en tinta o texto secundario; el color de la serie o del área va en la marca de al lado, nunca en las letras (salvo texto blanco sobre un bloque de color).
+**The One Black Rule.** Hay un solo negro con peso: el botón de la acción principal (y el avatar). Ninguna otra superficie es negra.
 
 ## Typography
 
-**Display:** Overpass, la tipografía de ruta derivada de Highway Gothic, para carteles, títulos de sección y cifras.
-**Body:** Atkinson Hyperlegible Next, elegida por legibilidad para nombres, DNI y texto legal.
+**Inter** para todo, con cifras tabulares en las tablas y proporcionales en las cifras grandes.
 
 ### Hierarchy
-- **Display** (800, 44 px, 1): la cifra de cada panel de área. Cifras proporcionales.
-- **Title** (800, 28 px): títulos de página grandes.
-- **Heading** (700, 13 px, mayúsculas, 0.12em): rótulos de sección, cabeceras de tabla, insignias de estado.
-- **Body** (400, 15 px, 1.5): texto de trabajo.
-- **Small** (400, 13 px): datos de apoyo y fechas.
+- **Display** (600, 28 px): la cifra de cada indicador.
+- **Title** (600, 20 px): título de página.
+- **Heading** (600, 15 px): título de sección o de panel.
+- **Body** (400, 14 px): texto de trabajo, tablas y controles.
+- **Small** (400, 13 px): etiquetas de campo, datos de apoyo.
+- **Caption** (500, 12 px): cabeceras de tabla, ejes, insignias.
+
+Los nombres de la escala están registrados en `cn()` (`lib/utils.ts`) para que `tailwind-merge` no los confunda con colores.
 
 ### Named Rules
-**The Sign Voice Rule.** Lo que orienta (cartel, rótulo, estado) habla en Overpass mayúsculas espaciadas; lo que se lee, en Atkinson. Nunca un rótulo encima de un título (kicker).
+**The Quiet Label Rule.** Sin mayúsculas forzadas ni espaciado de letras: las etiquetas son texto chico en gris, no rótulos. Nunca un rótulo encima de un título.
 
 ## Layout
 
-Grilla de 12 columnas con gutter de 24 px y margen lateral de 32 px. En Inicio, la agenda ocupa 7 columnas y las alertas 5. La barra lateral mide 248 px y es fija. El diseño está pensado para PC de oficina (1280 px o más); en anchos de celular la barra lateral no se colapsa todavía.
+Marco de 12 px de margen alrededor de la app. Barra lateral de 240 px y contenido con margen de 32 px a los lados y 24 px arriba y abajo, en una grilla de 12 columnas con gutter de 24 px. Los formularios y los detalles se limitan a un ancho de lectura (`max-w-3xl` / `max-w-4xl`); los listados usan todo el ancho. Pensado para PC de oficina; sin versión móvil por ahora.
 
 ## Elevation & Depth
 
-Plano por defecto: la profundidad la dan los filetes y el contraste de superficie, no las sombras. Solo los elementos flotantes (diálogos, menús de select, toasts) llevan una sombra suave con desplazamiento; el overlay de los diálogos es tinta al 45 %.
+Plano: la profundidad la dan el borde del marco y los filetes. Solo los elementos flotantes (tooltip, menú de select, diálogo, toast) llevan sombra suave y amplia. El overlay de los diálogos es tinta al 30 %, sin desenfoque.
 
 ### Named Rules
-**The Rule Line Rule.** Se separa con filetes de 1 px. Una tarjeta con sombra para agrupar contenido es un error.
+**The No Card Rule.** Las cifras y los gráficos no van en tarjetas: se separan con aire y filetes. Las tarjetas quedan para bloques que se agrupan de verdad (por ejemplo, un formulario dentro de un listado).
 
 ## Shapes
 
-Esquinas casi rectas, como una chapa de señalética: 2 px en controles e insignias, 3 a 4 px como máximo. Los cuadrados de identidad de área son cuadrados exactos.
+Radio de 8 px en controles (botones, campos, menús), 12 px en contenedores (marco, diálogos, toasts) y pastillas completas en insignias y avatares.
 
 ## Components
 
 ### Buttons
-Rectos (2 px), 36 px de alto, peso semibold. Primario en azul de Núcleo; contorno con borde y superficie blanca; destructivo en crítico. Foco con anillo del color primario.
+36 px de alto (32 px en `sm`), radio 8, peso medio. Primario negro con texto blanco; contorno con borde gris y fondo blanco; secundario gris claro; destructivo rojo. Foco con anillo azul.
 
 ### Chips (insignias de estado)
-Rótulo recto en Overpass mayúsculas 11 px: vigente en verde claro, pendiente en ocre claro, en revisión en azul claro, rechazado en rojo claro. Un tratamiento por estado en todo el sistema.
+Pastilla blanca con borde gris, texto de 12 px y un punto de color por estado: éxito, advertencia, crítico, info o neutro.
 
 ### Cards / Containers
-Superficie blanca con filete. Los paneles de área van en fila, divididos por filetes verticales, con cuadrado de color, rótulo, cifra y, si responde una pregunta, un gráfico.
+Marco blanco con borde. Paneles sin tarjeta: título de sección, ayuda opcional con ícono de información y control a la derecha (por ejemplo, el selector de período).
 
 ### Inputs / Fields
-Fondo de superficie baja, filete y 2 px de radio. Foco con borde primario.
+Campo blanco de 36 px con borde gris y radio 8; foco con borde y anillo azul. El autocompletado del navegador no cambia el fondo.
 
 ### Navigation
-Barra lateral en tinta: grupos por área con su cuadrado de color y rótulo en Overpass; ítems de 40 px de alto. El ítem activo se rellena con el color de su área. Las pestañas son subrayadas (3 px en tinta en la activa).
-
-### Cartel de área
-Franja a todo el ancho en el color del área: pictograma en cuadrado blanco, nombre del módulo, filete y nombre del área en la misma línea; a la derecha, usuario, rol y fecha.
+Barra lateral clara: marca, buscador ⌘K (solo diseño, deshabilitado), Favoritos (accesos fijos), Inicio y grupos plegables con chevron. Ítem activo con fondo gris y texto en negrita. Barra superior con la ruta (grupo / módulo), Ayuda (solo diseño) y la cuenta. Pestañas de texto con subrayado de 2 px en la activa.
 
 ### Gráficos
-Solo cuando responden una pregunta (ver `prompts/051`): tendencia como línea de 2 px con el último punto marcado; partes de un total ordenado como barra única apilada con 2 px de separación y leyenda. Nunca tortas, 3D ni degradés.
+Leyenda arriba (solo con 2 series o más), ejes y grilla recesivos, línea de 2 px en tramos rectos, último punto marcado, tooltip con guía vertical, barras de hasta 24 px con el valor en la punta, barras de progreso con porcentaje y una tabla oculta para lectores de pantalla. Nunca eje doble, tortas, 3D ni degradés.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** abrir cada pantalla con el cartel de su área.
-- **Do** separar con filetes de 1 px.
-- **Do** usar cada color de área solo para su área.
+- **Do** usar `PageHeader`, `Toolbar`, `StatRow` y `Panel` en cada pantalla nueva.
 - **Do** validar con dataviz cualquier paleta nueva de gráficos.
-- **Do** marcar como "(DEMO)" y con la franja de aviso todo dato de ejemplo.
+- **Do** usar una sola medida por eje: si dos series tienen escalas distintas, van en gráficos separados.
+- **Do** marcar como datos de ejemplo, con el aviso, todo dato ficticio.
 
 ### Don't:
-- **Don't** usar tarjetas con sombra para agrupar contenido.
-- **Don't** poner un rótulo encima de un título (kicker).
-- **Don't** usar colores de jardín, ilustraciones tiernas ni nada que se vea infantil.
-- **Don't** pintar texto con el color de un área o de una serie.
-- **Don't** agregar un gráfico que no responda una pregunta.
+- **Don't** usar tarjetas con sombra para cifras o gráficos.
+- **Don't** usar los colores de serie para decorar o para estados.
+- **Don't** usar ejes dobles, tortas ni degradés.
+- **Don't** mostrar funciones que no existen como si funcionaran: lo que es solo diseño va deshabilitado con "Próximamente".

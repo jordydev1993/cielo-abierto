@@ -1,31 +1,32 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-22T19:30:00Z",
+  "generatedAt": "2026-10-22T21:00:00Z",
   "title": "Design System: Argüello Infancias",
   "extensions": {
     "colorMeta": {
-      "tinta": { "role": "neutral", "displayName": "Tinta" },
-      "fondo": { "role": "neutral", "displayName": "Fondo" },
-      "primary": { "role": "primary", "displayName": "Azul de Núcleo" },
-      "error": { "role": "status", "displayName": "Crítico" },
-      "area-nucleo": { "role": "area", "displayName": "Núcleo" },
-      "area-tutela": { "role": "area", "displayName": "Tutela y retiros" },
-      "area-seguimiento": { "role": "area", "displayName": "Seguimiento" },
-      "area-salud": { "role": "area", "displayName": "Salud" },
-      "area-institucional": { "role": "area", "displayName": "Institucional" },
-      "area-administracion": { "role": "area", "displayName": "Administración" },
-      "prioridad-baja": { "role": "ordinal", "displayName": "Prioridad baja", "tonalRamp": ["#d19a55", "#a15f1c", "#874a13", "#5c2c06"] }
+      "tinta": { "role": "primary", "displayName": "Tinta" },
+      "fondo-app": { "role": "neutral", "displayName": "Fondo de la app" },
+      "superficie": { "role": "neutral", "displayName": "Superficie", "tonalRamp": ["#111318", "#5b606b", "#6b717c", "#9aa0aa", "#e7e8ec", "#f1f2f4", "#f7f8fa", "#ffffff"] },
+      "serie-1": { "role": "series", "displayName": "Serie 1 (azul)" },
+      "serie-2": { "role": "series", "displayName": "Serie 2 (rosa)" },
+      "serie-3": { "role": "series", "displayName": "Serie 3 (verde)" },
+      "serie-contexto": { "role": "series", "displayName": "Contexto (gris)" },
+      "exito": { "role": "status", "displayName": "Éxito" },
+      "advertencia": { "role": "status", "displayName": "Advertencia" },
+      "error": { "role": "status", "displayName": "Crítico" }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Cifra de cada panel de área." },
-      "heading": { "displayName": "Rótulo", "purpose": "Rótulos de sección, cabeceras de tabla e insignias de estado." },
-      "body": { "displayName": "Texto", "purpose": "Texto de trabajo, nombres, DNI y texto legal." }
+      "display": { "displayName": "Cifra", "purpose": "La cifra de cada indicador." },
+      "title": { "displayName": "Título de página", "purpose": "Encabezado de cada pantalla." },
+      "heading": { "displayName": "Título de sección", "purpose": "Paneles, secciones de formulario y tarjetas." },
+      "caption": { "displayName": "Etiqueta chica", "purpose": "Cabeceras de tabla, ejes e insignias." }
     },
     "shadows": [
-      { "name": "flotante", "value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)", "purpose": "Solo diálogos, menús y toasts." }
+      { "name": "flotante", "value": "0 10px 15px -3px rgb(17 19 24 / 0.1), 0 4px 6px -4px rgb(17 19 24 / 0.1)", "purpose": "Solo tooltip, menús, diálogos y toasts." }
     ],
     "breakpoints": [
       { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
       { "name": "xl", "value": "1280px" }
     ]
   },
@@ -36,77 +37,76 @@
       "refersTo": "button-primary",
       "description": "Acción principal de una pantalla.",
       "html": "<button class=\"ds-btn\">Registrar NNyA</button>",
-      "css": ".ds-btn{background:#1f4e8c;color:#fff;height:36px;padding:0 16px;border:0;border-radius:2px;font:600 14px 'Atkinson Hyperlegible Next',sans-serif;cursor:pointer;transition:background .15s}.ds-btn:hover{background:#1a4377}.ds-btn:focus-visible{outline:2px solid #1f4e8c;outline-offset:2px}"
+      "css": ".ds-btn{height:36px;padding:0 16px;border:0;border-radius:8px;background:#111318;color:#fff;font:500 14px Inter,system-ui,sans-serif;cursor:pointer;transition:background .15s}.ds-btn:hover{background:rgb(17 19 24 / .85)}.ds-btn:focus-visible{outline:none;box-shadow:0 0 0 3px rgb(59 111 224 / .4)}"
+    },
+    {
+      "name": "Botón contorno",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Acción secundaria.",
+      "html": "<button class=\"ds-btn-o\">Exportar CSV</button>",
+      "css": ".ds-btn-o{height:36px;padding:0 16px;border:1px solid #e7e8ec;border-radius:8px;background:#fff;color:#111318;font:500 14px Inter,system-ui,sans-serif;cursor:pointer}.ds-btn-o:hover{background:#f7f8fa}"
     },
     {
       "name": "Insignia de estado",
       "kind": "chip",
-      "refersTo": "badge-vigente",
-      "description": "Un tratamiento por estado: vigente, pendiente, en revisión, rechazado.",
-      "html": "<span class=\"ds-badge ds-ok\">Vigente</span> <span class=\"ds-badge ds-pend\">Pendiente</span> <span class=\"ds-badge ds-rev\">En revisión</span> <span class=\"ds-badge ds-no\">Rechazado</span>",
-      "css": ".ds-badge{display:inline-flex;padding:2px 8px;border-radius:2px;font:700 11px/16px Overpass,sans-serif;letter-spacing:.06em;text-transform:uppercase}.ds-ok{background:#e2f0e9;color:#1b4d37}.ds-pend{background:#f6e7cc;color:#5f3c0b}.ds-rev{background:#dce6f3;color:#0e2a50}.ds-no{background:#fbe3e1;color:#5c0f0f}"
+      "refersTo": "badge",
+      "description": "Pastilla neutra con un punto de color por estado.",
+      "html": "<span class=\"ds-b\"><i style=\"background:#0f7a47\"></i>Activo</span> <span class=\"ds-b\"><i style=\"background:#9a5b00\"></i>Pendiente</span> <span class=\"ds-b\"><i style=\"background:#d1293d\"></i>Rechazado</span>",
+      "css": ".ds-b{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border:1px solid #e7e8ec;border-radius:9999px;background:#fff;color:#111318;font:500 12px Inter,system-ui,sans-serif}.ds-b i{width:6px;height:6px;border-radius:9999px;display:inline-block}"
     },
     {
       "name": "Campo de texto",
       "kind": "input",
       "refersTo": "input",
       "description": "Campo de formulario.",
-      "html": "<input class=\"ds-input\" placeholder=\"Buscar por nombre o DNI…\">",
-      "css": ".ds-input{height:36px;width:280px;padding:0 12px;background:#eef1f0;border:1px solid #d3d9d7;border-radius:2px;color:#14201e;font:14px 'Atkinson Hyperlegible Next',sans-serif}.ds-input::placeholder{color:#5f6a67}.ds-input:focus-visible{outline:2px solid #dce6f3;border-color:#1f4e8c}"
+      "html": "<input class=\"ds-in\" placeholder=\"Buscar por nombre o DNI…\">",
+      "css": ".ds-in{height:36px;width:280px;padding:0 12px;border:1px solid #e7e8ec;border-radius:8px;background:#fff;color:#111318;font:14px Inter,system-ui,sans-serif}.ds-in::placeholder{color:#6b717c}.ds-in:focus-visible{outline:none;border-color:#3b6fe0;box-shadow:0 0 0 3px rgb(59 111 224 / .2)}"
     },
     {
       "name": "Barra lateral",
       "kind": "nav",
       "refersTo": "sidebar",
-      "description": "Directorio por áreas; el ítem activo se rellena con el color de su área.",
-      "html": "<nav class=\"ds-nav\"><p class=\"ds-grp\"><i style=\"background:#1f4e8c\"></i>Núcleo</p><a class=\"ds-on\">Inicio</a><a>NNyA</a><p class=\"ds-grp\"><i style=\"background:#5b4b9a\"></i>Tutela y retiros</p><a>Retiros</a></nav>",
-      "css": ".ds-nav{width:248px;background:#14201e;color:#e9eeec;padding:12px;font:14px 'Atkinson Hyperlegible Next',sans-serif}.ds-grp{display:flex;gap:8px;align-items:center;margin:12px 8px 4px;font:700 11px Overpass,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#9fb0ac}.ds-grp i{width:10px;height:10px;display:inline-block}.ds-nav a{display:flex;align-items:center;min-height:40px;padding:0 8px;cursor:pointer}.ds-nav a:hover{background:rgb(255 255 255 / .08)}.ds-nav a.ds-on{background:#1f4e8c;color:#fff;font-weight:600}"
+      "description": "Grupos plegables; ítem activo con fondo gris.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-on\">Inicio</a><a>Legajos y NNyA ›</a><a class=\"ds-sub\">NNyA</a><a class=\"ds-sub\">Legajos</a></nav>",
+      "css": ".ds-nav{width:240px;padding:12px;background:#f7f8fa;color:#5b606b;font:14px Inter,system-ui,sans-serif}.ds-nav a{display:flex;align-items:center;min-height:36px;padding:0 10px;border-radius:8px;cursor:pointer}.ds-nav a:hover{background:#f1f2f4;color:#111318}.ds-nav a.ds-on{background:#f1f2f4;color:#111318;font-weight:600}.ds-nav a.ds-sub{padding-left:34px;font-size:13px;min-height:32px}"
     },
     {
-      "name": "Cartel de área",
+      "name": "Fila de cifras",
       "kind": "custom",
-      "refersTo": "cartel-area",
-      "description": "Abre cada pantalla con el módulo y el área, en el color del área.",
-      "html": "<div class=\"ds-cartel\"><span class=\"ds-pic\"></span><b>Retiros</b><span class=\"ds-sep\"></span><span class=\"ds-area\">Tutela y retiros</span></div>",
-      "css": ".ds-cartel{display:flex;align-items:center;gap:16px;padding:12px 32px;background:#5b4b9a;color:#fff;font-family:Overpass,sans-serif}.ds-pic{width:40px;height:40px;background:#fff}.ds-cartel b{font-size:20px;font-weight:800}.ds-sep{width:1px;height:16px;background:rgb(255 255 255 / .5)}.ds-area{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}"
-    },
-    {
-      "name": "Panel de área",
-      "kind": "card",
       "refersTo": "",
-      "description": "Cifra de un área en una fila de paneles separados por filetes.",
-      "html": "<a class=\"ds-panel\"><p><i></i>NNyA activos</p><b>18</b><small>+3 desde mayo</small></a>",
-      "css": ".ds-panel{display:flex;flex-direction:column;gap:12px;width:240px;padding:16px 20px;background:#fff;border:1px solid #d3d9d7;color:#14201e;text-decoration:none}.ds-panel:hover{background:#eef1f0}.ds-panel p{display:flex;align-items:center;gap:8px;margin:0;font:700 13px Overpass,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#56625f}.ds-panel i{width:12px;height:12px;background:#1f4e8c}.ds-panel b{font:800 44px/1 Overpass,sans-serif}.ds-panel small{font-size:13px;color:#56625f}"
+      "description": "Cifras sin tarjetas, con unidad e insignia.",
+      "html": "<dl class=\"ds-stats\"><div><dt>NNyA activos</dt><dd><b>18</b> <span>NNyA</span></dd></div><div><dt>Alertas pendientes</dt><dd><b>5</b> <em>1 crítica</em></dd></div></dl>",
+      "css": ".ds-stats{display:flex;gap:48px;margin:0;font-family:Inter,system-ui,sans-serif}.ds-stats dt{font-size:13px;color:#5b606b}.ds-stats dd{margin:6px 0 0;display:flex;align-items:baseline;gap:6px}.ds-stats b{font-size:28px;font-weight:600;color:#111318}.ds-stats span{font-size:13px;color:#5b606b}.ds-stats em{font-style:normal;font-size:12px;font-weight:500;color:#fff;background:#111318;border-radius:6px;padding:2px 6px;align-self:center}"
     }
   ],
   "narrative": {
-    "northStar": "La señalética del hospital público",
-    "overview": "El sistema se apoya en la señalética de un hospital pediátrico público. Cada área de la residencia tiene un color de señal, y cada pantalla empieza diciendo dónde estás, como el cartel sobre una puerta. Es una herramienta de trabajo: se usa ocho horas en una PC de oficina, así que la expresión vive en tres detalles precisos (el color de área, la tipografía de ruta y los filetes) y nunca en adorno.",
+    "northStar": "El panel claro",
+    "overview": "Un panel de gestión SaaS claro y minimalista, tomado de una referencia que eligió Jordy (prompts/052). La app vive en un marco blanco redondeado sobre un fondo gris; el contenido respira, los números y los gráficos son los protagonistas y la interfaz se corre del medio. Es una herramienta de trabajo para la PC de oficina: lo que se ve primero es el dato, no la decoración.",
     "keyCharacteristics": [
-      "Barra lateral oscura como directorio del hall, agrupada por área.",
-      "Cartel de área a todo el ancho al tope de cada pantalla.",
-      "Superficies blancas separadas por filetes de 1 px, sin sombras de tarjeta.",
-      "Overpass para carteles, títulos y cifras; Atkinson Hyperlegible Next para leer."
+      "Marco blanco de radio 12 px sobre fondo gris, con barra lateral clara y barra superior con la ruta.",
+      "Cifras sin tarjetas, separadas por aire y filetes muy suaves.",
+      "Gráficos protagonistas en azul, rosa y verde, siempre con una sola medida por eje.",
+      "Un solo negro para la acción principal; todo lo demás en grises neutros.",
+      "Inter en toda la interfaz."
     ],
     "rules": [
-      { "name": "The One Job Rule", "body": "Cada color de área marca solo su área (cartel, ítem activo, cuadrado de identidad). Nunca se reutiliza como \"serie 4\" ni como decoración.", "section": "colors" },
-      { "name": "The Ink Text Rule", "body": "El texto va en tinta o texto secundario; el color de la serie o del área va en la marca de al lado, nunca en las letras (salvo texto blanco sobre un bloque de color).", "section": "colors" },
-      { "name": "The Sign Voice Rule", "body": "Lo que orienta (cartel, rótulo, estado) habla en Overpass mayúsculas espaciadas; lo que se lee, en Atkinson. Nunca un rótulo encima de un título (kicker).", "section": "typography" },
-      { "name": "The Rule Line Rule", "body": "Se separa con filetes de 1 px. Una tarjeta con sombra para agrupar contenido es un error.", "section": "elevation" }
+      { "name": "The Series Rule", "body": "Los colores de serie solo identifican series en un gráfico; no se usan para decorar ni para estados.", "section": "colors" },
+      { "name": "The One Black Rule", "body": "Hay un solo negro con peso: el botón de la acción principal (y el avatar). Ninguna otra superficie es negra.", "section": "colors" },
+      { "name": "The Quiet Label Rule", "body": "Sin mayúsculas forzadas ni espaciado de letras: las etiquetas son texto chico en gris, no rótulos. Nunca un rótulo encima de un título.", "section": "typography" },
+      { "name": "The No Card Rule", "body": "Las cifras y los gráficos no van en tarjetas: se separan con aire y filetes. Las tarjetas quedan para bloques que se agrupan de verdad (por ejemplo, un formulario dentro de un listado).", "section": "elevation" }
     ],
     "dos": [
-      "Do abrir cada pantalla con el cartel de su área.",
-      "Do separar con filetes de 1 px.",
-      "Do usar cada color de área solo para su área.",
+      "Do usar PageHeader, Toolbar, StatRow y Panel en cada pantalla nueva.",
       "Do validar con dataviz cualquier paleta nueva de gráficos.",
-      "Do marcar como \"(DEMO)\" y con la franja de aviso todo dato de ejemplo."
+      "Do usar una sola medida por eje: si dos series tienen escalas distintas, van en gráficos separados.",
+      "Do marcar como datos de ejemplo, con el aviso, todo dato ficticio."
     ],
     "donts": [
-      "Don't usar tarjetas con sombra para agrupar contenido.",
-      "Don't poner un rótulo encima de un título (kicker).",
-      "Don't usar colores de jardín, ilustraciones tiernas ni nada que se vea infantil.",
-      "Don't pintar texto con el color de un área o de una serie.",
-      "Don't agregar un gráfico que no responda una pregunta."
+      "Don't usar tarjetas con sombra para cifras o gráficos.",
+      "Don't usar los colores de serie para decorar o para estados.",
+      "Don't usar ejes dobles, tortas ni degradés.",
+      "Don't mostrar funciones que no existen como si funcionaran: lo que es solo diseño va deshabilitado con \"Próximamente\"."
     ]
   }
 }

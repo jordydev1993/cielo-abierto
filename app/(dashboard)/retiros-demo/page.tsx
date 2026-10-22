@@ -15,7 +15,7 @@ import {
 
 export default function RetirosDemoPage() {
   return (
-    <div className="mx-auto max-w-4xl space-y-6 p-4 sm:p-6">
+    <div className="max-w-4xl space-y-6 px-8 py-6">
       <header className="space-y-2">
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="font-heading text-title font-semibold text-on-surface">

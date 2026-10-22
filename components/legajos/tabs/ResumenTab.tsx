@@ -78,7 +78,7 @@ export function ResumenTab({ incidentes, alertas, turnos, informes, diagnosticos
               <div key={inc.id} className="flex items-center justify-between text-xs">
                 <span className="text-on-surface-variant truncate max-w-[160px]">{inc.tipo}</span>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <Badge variant={inc.gravedad === 'critico' ? 'destructive' : inc.gravedad === 'grave' ? 'outline' : 'secondary'} className="text-[10px] py-0">
+                  <Badge variant={inc.gravedad === 'critico' ? 'destructive' : inc.gravedad === 'grave' ? 'outline' : 'secondary'} className="text-caption py-0">
                     {inc.gravedad}
                   </Badge>
                   <span className="text-outline">{format(new Date(inc.fecha_hora), 'dd/MM', { locale: es })}</span>
@@ -98,7 +98,7 @@ export function ResumenTab({ incidentes, alertas, turnos, informes, diagnosticos
             {alertasPendientes.slice(0, 3).map((a) => (
               <div key={a.id} className="flex items-center justify-between text-xs">
                 <span className="text-on-surface-variant truncate max-w-[160px]">{a.titulo}</span>
-                <Badge variant={a.prioridad === 'critica' ? 'destructive' : 'outline'} className="text-[10px] py-0 shrink-0">
+                <Badge variant={a.prioridad === 'critica' ? 'destructive' : 'outline'} className="text-caption py-0 shrink-0">
                   {a.prioridad}
                 </Badge>
               </div>
@@ -133,7 +133,7 @@ export function ResumenTab({ incidentes, alertas, turnos, informes, diagnosticos
               <div key={d.id} className="flex items-center gap-1.5 text-xs">
                 <Activity className="h-3 w-3 text-exito shrink-0" />
                 <span className="text-on-surface-variant truncate">{d.tipo}</span>
-                <Badge className="text-[10px] py-0 bg-exito-container text-exito border-exito/30 shrink-0">{d.estado.replace('_', ' ')}</Badge>
+                <Badge className="text-caption py-0 bg-exito-container text-exito border-exito/30 shrink-0">{d.estado.replace('_', ' ')}</Badge>
               </div>
             ))}
             {medicamentosEnCurso.slice(0, 2).map((m) => (
@@ -156,7 +156,7 @@ export function ResumenTab({ incidentes, alertas, turnos, informes, diagnosticos
             {informes.slice(0, 2).map((i) => (
               <div key={i.id} className="flex items-center justify-between text-xs">
                 <span className="text-on-surface-variant truncate max-w-[160px]">{i.titulo}</span>
-                <Badge variant={i.estado === 'finalizado' ? 'success' : 'outline'} className="text-[10px] py-0 shrink-0">
+                <Badge variant={i.estado === 'finalizado' ? 'success' : 'outline'} className="text-caption py-0 shrink-0">
                   {i.estado === 'finalizado' ? 'Enviado' : 'Borrador'}
                 </Badge>
               </div>

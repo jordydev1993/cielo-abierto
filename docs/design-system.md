@@ -1,6 +1,6 @@
 # Sistema de diseño — Argüello Infancias
 
-> **Reemplazado (22/10/2026):** el sistema vigente es "Señalética", documentado en [`DESIGN.md`](../DESIGN.md) (`prompts/051`). Este archivo queda como registro histórico del sistema anterior ("Serene Teal").
+> **Reemplazado (22/10/2026):** el sistema vigente es el panel SaaS claro, documentado en [`DESIGN.md`](../DESIGN.md) (`prompts/052`, que a su vez reemplazó a la Señalética de `prompts/051`). Este archivo queda como registro histórico del sistema original ("Serene Teal").
 >
 > Catálogo del sistema de diseño **tal como estaba implementado antes de `prompts/051`**, auditado según `prompts/001-design-system.md`. No es una propuesta de rediseño: documenta lo que ya renderiza en producción, para que las próximas pantallas lo reutilicen en vez de crear estilos ad hoc.
 
