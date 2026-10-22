@@ -2,7 +2,7 @@
 // Correr con: npm run test:unit. Sin red: `fetch` se inyecta. La API key es FICTICIA.
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { crearSesionDidit, obtenerSesionDidit, DIDIT_API_BASE } from '../../lib/didit/client.ts'
+import { borrarSesionDidit, crearSesionDidit, obtenerSesionDidit, DIDIT_API_BASE } from '../../lib/didit/client.ts'
 
 const API_KEY = 'test-api-key-not-a-real-credential'
 const PARAMS = {
@@ -115,4 +115,25 @@ test('obtenerSesionDidit devuelve el estado y la session_url', async () => {
   assert.deepEqual(res, { ok: true, status: 'Not Started', url: 'https://verify.didit.me/es/session/abc' })
   assert.equal(llamadas[0].url, `${DIDIT_API_BASE}/v3/session/sess-1/decision/`)
   assert.equal(llamadas[0].init.method, 'GET')
+})
+
+test('borrarSesionDidit: 200 y 404 cuentan como borrada; un 503 se reintenta (RF-10)', async () => {
+  const ok = fetchFalso([() => Response.json({ session_id: 'sess-1', face_retention_outcome: 'deleted' })])
+  assert.deepEqual(await borrarSesionDidit({ apiKey: API_KEY, sessionId: 'sess-1' }, { fetch: ok.fn }), { ok: true })
+  assert.equal(ok.llamadas[0].url, `${DIDIT_API_BASE}/v3/session/sess-1/delete/`)
+  assert.equal(ok.llamadas[0].init.method, 'DELETE')
+
+  const yaNoExiste = fetchFalso([error(404)])
+  assert.deepEqual(await borrarSesionDidit({ apiKey: API_KEY, sessionId: 'sess-1' }, { fetch: yaNoExiste.fn }), { ok: true })
+
+  const reintento = fetchFalso([error(503), () => Response.json({ session_id: 'sess-1' })])
+  assert.deepEqual(await borrarSesionDidit({ apiKey: API_KEY, sessionId: 'sess-1' }, { fetch: reintento.fn }), { ok: true })
+  assert.equal(reintento.llamadas.length, 2)
+
+  const sinPermiso = fetchFalso([error(403)])
+  assert.deepEqual(await borrarSesionDidit({ apiKey: API_KEY, sessionId: 'sess-1' }, { fetch: sinPermiso.fn }), {
+    ok: false,
+    falla: 'http_4xx',
+    status: 403,
+  })
 })
