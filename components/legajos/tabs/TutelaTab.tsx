@@ -12,6 +12,7 @@ import { useVinculosTutelaByNnya } from '@/hooks/vinculos-tutela/useVinculosTute
 import { useCreateVinculoTutela } from '@/hooks/vinculos-tutela/useCreateVinculoTutela'
 import { useUpdateVinculoTutela } from '@/hooks/vinculos-tutela/useUpdateVinculoTutela'
 import { toast } from '@/components/ui/toaster'
+import { mensajeError } from '@/components/entities/retiros/mensajeError'
 import type { VinculoTutela } from '@/types/database.types'
 import type { VinculoTutelaFormValues } from '@/lib/validations/vinculos-tutela.schema'
 
@@ -40,8 +41,10 @@ export function TutelaTab({ nnyaId, legajoActivo }: TutelaTabProps) {
       }
       setOpen(false)
       setEditando(null)
-    } catch (e: any) {
-      toast({ title: 'Error al guardar', description: e.message, variant: 'destructive' })
+    } catch (e: unknown) {
+      // El trigger de D-16 ya responde en español ("No se puede activar el vínculo: el
+      // referente no tiene una validación RENAPER aprobada"): se muestra tal cual.
+      toast({ title: 'Error al guardar', description: mensajeError(e), variant: 'destructive' })
     }
   }
 

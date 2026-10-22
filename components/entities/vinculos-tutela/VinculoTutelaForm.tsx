@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useUsuarios } from '@/hooks/usuarios/useUsuarios'
 import { useReferentes } from '@/hooks/referentes/useReferentes'
+import { useUltimaValidacionRenaper } from '@/hooks/referentes/useUltimaValidacionRenaper'
 import type { VinculoTutela } from '@/types/database.types'
 
 interface VinculoTutelaFormProps {
@@ -46,6 +47,13 @@ export function VinculoTutelaForm({ initialData, onSubmit, onCancel, loading }: 
 
   const tipo = useWatch({ control, name: 'tipo' })
   const requiereUsuario = tipo === 'tutela_residencia'
+
+  // D-16: un vínculo con referente no pasa a vigente sin una validación de identidad
+  // aprobada. La base lo impide (fn_validar_renaper_vinculo); acá se explica antes.
+  const referenteId = useWatch({ control, name: 'referente_id' })
+  const { data: ultimaValidacion } = useUltimaValidacionRenaper(requiereUsuario ? '' : (referenteId ?? ''))
+  const vigenteBloqueado =
+    !requiereUsuario && initialData?.estado !== 'vigente' && ultimaValidacion?.resultado !== 'aprobado'
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -104,12 +112,18 @@ export function VinculoTutelaForm({ initialData, onSubmit, onCancel, loading }: 
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="propuesto">Propuesto</SelectItem>
-                <SelectItem value="vigente">Vigente</SelectItem>
+                <SelectItem value="vigente" disabled={vigenteBloqueado}>Vigente</SelectItem>
                 <SelectItem value="finalizado">Finalizado</SelectItem>
                 <SelectItem value="revocado">Revocado</SelectItem>
               </SelectContent>
             </Select>
           )} />
+          {vigenteBloqueado && (
+            <p className="text-xs text-on-surface-variant">
+              Para pasar a Vigente, el referente necesita una validación de identidad aprobada (con Didit o
+              manual, desde Referentes).
+            </p>
+          )}
         </FormField>
 
         <FormField label="Resolución de respaldo" error={errors.resolucion_respaldo?.message} className="sm:col-span-2">

@@ -65,7 +65,7 @@ Cami ── diseño con datos de ejemplo ─────────────
 - [x] **Migración de D-14 y `error_proveedor`** (`prompts/046`): columna `dni_coincide`, estado RNF-12 y trigger de Seguridad 2 sobre `estado_rnf12`, `CHECK` cerrado de `error_proveedor`, pruebas en `tests/sql/didit-seguridad.sql` (`npm run test:sql`, 12/12) y tipos regenerados. ✅ 21/10
 - [x] **#23, endpoints** (`prompts/047`): crear sesión con `sandbox_scenario`, consultar estado y fallback, en `app/api/didit/sesiones`. ✅ 21/10. Falta probar el `201` con el workflow real (`DIDIT_WORKFLOW_ID`).
 - [x] **#23, webhook** (`prompts/048`): busca la sesión, guarda el resultado (D-1, D-12, D-14), crea la validación RENAPER del referente (D-11), es idempotente y borra la sesión en Didit (RF-10). ✅ 21/10. Falta probarlo con una sesión real del sandbox (`DIDIT_WORKFLOW_ID` y un túnel hacia el webhook local).
-- [ ] **#26:** conectar las pantallas, los mensajes de D-33 y el selector de escenario de sandbox.
+- [x] **#26** (`prompts/049`): `/retiros` (registro, en curso, casos en revisión y autorizaciones), validación de referentes con Didit y "Vigente" bloqueado sin validación (D-16). ✅ 21/10 (PR #54 y la parte 2). Falta probar el QR y el polling con una sesión real (`DIDIT_WORKFLOW_ID`).
 - [ ] **#33:** QA según `prompts/045`.
 - [x] Invitaciones al repo: Meli y Cami ya trabajan en `cielo-abierto`.
 
