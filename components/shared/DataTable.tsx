@@ -41,7 +41,7 @@ export function DataTable<T>({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-16 text-outline text-sm">
+      <div className="flex items-center justify-center py-16 text-body text-outline">
         Cargando...
       </div>
     )
@@ -96,7 +96,7 @@ export function DataTable<T>({
                           size="icon"
                           onClick={() => onDelete(row)}
                           title="Eliminar"
-                          className="text-red-500 hover:text-red-600 hover:bg-red-50"
+                          className="text-error hover:bg-error-container hover:text-error"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -112,7 +112,7 @@ export function DataTable<T>({
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between px-1">
-          <p className="text-xs text-on-surface-variant">
+          <p className="text-small text-on-surface-variant">
             {(page - 1) * pageSize + 1}–{Math.min(page * pageSize, data.length)} de {data.length}
           </p>
           <div className="flex gap-1">

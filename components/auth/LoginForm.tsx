@@ -72,7 +72,7 @@ export function LoginForm() {
           {...register('email')}
         />
         {errors.email && (
-          <p className="text-xs text-red-500">{errors.email.message}</p>
+          <p className="text-small text-error">{errors.email.message}</p>
         )}
       </div>
 
@@ -85,12 +85,12 @@ export function LoginForm() {
           {...register('password')}
         />
         {errors.password && (
-          <p className="text-xs text-red-500">{errors.password.message}</p>
+          <p className="text-small text-error">{errors.password.message}</p>
         )}
       </div>
 
       {serverError && (
-        <p className="text-sm text-red-500 bg-red-50 border border-red-200 rounded-md px-3 py-2">
+        <p className="rounded-md border border-error/20 bg-error-container px-3 py-2 text-small text-on-error-container">
           {serverError}
         </p>
       )}

@@ -4,20 +4,20 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-body font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-serie-1/40 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-on-primary hover:bg-primary/90',
+        default: 'bg-ink text-white hover:bg-ink/85',
         destructive: 'bg-error text-on-error hover:bg-error/90',
-        outline: 'border border-outline bg-surface-container-lowest hover:bg-surface-container text-on-surface',
-        secondary: 'bg-secondary-container text-on-secondary-container hover:bg-secondary-container/80',
-        ghost: 'hover:bg-surface-container text-on-surface-variant',
-        link: 'text-primary underline-offset-4 hover:underline',
+        outline: 'border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-low',
+        secondary: 'bg-surface-container text-on-surface hover:bg-surface-container-high',
+        ghost: 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface',
+        link: 'text-on-surface underline underline-offset-4 decoration-outline-variant hover:decoration-on-surface',
       },
       size: {
         default: 'h-9 px-4 py-2',
-        sm: 'h-8 rounded-md px-3 text-xs',
+        sm: 'h-8 rounded-md px-3 text-small',
         lg: 'h-10 rounded-md px-8',
         icon: 'h-9 w-9',
       },

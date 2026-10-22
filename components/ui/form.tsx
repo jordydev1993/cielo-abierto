@@ -14,7 +14,7 @@ function FormField({ label, error, required, className, children }: FormFieldPro
   return (
     <div className={cn('space-y-1.5', className)}>
       <LabelPrimitive.Root className={cn(
-        'text-sm font-medium text-on-surface-variant',
+        'text-small font-medium text-on-surface',
         error && 'text-error'
       )}>
         {label}
@@ -35,7 +35,7 @@ interface FormSectionProps {
 function FormSection({ title, className, children }: FormSectionProps) {
   return (
     <div className={cn('space-y-4', className)}>
-      {title && <h3 className="font-heading text-heading font-bold uppercase tracking-[0.1em] text-on-surface border-b border-outline-variant pb-2">{title}</h3>}
+      {title && <h3 className="text-heading font-semibold text-on-surface border-b border-filete pb-2">{title}</h3>}
       {children}
     </div>
   )

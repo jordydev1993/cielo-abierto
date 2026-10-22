@@ -1,96 +1,93 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
-/* Sistema de diseño "Señalética" (prompts/051). Los nombres de token se mantienen
-   del sistema anterior para no tocar cada pantalla; los valores son los nuevos. */
+/* Sistema SaaS claro y minimalista (prompts/052). Los nombres de token se mantienen
+   de los sistemas anteriores para no tocar cada pantalla; los valores son los nuevos. */
 @theme {
-  /* Acción principal: azul de Núcleo */
-  --color-primary: #1f4e8c;
+  /* Acción principal: negro */
+  --color-primary: #111318;
   --color-on-primary: #ffffff;
-  --color-primary-container: #dce6f3;
-  --color-on-primary-container: #0e2a50;
-  --color-primary-fixed: #dce6f3;
-  --color-primary-fixed-dim: #9db7db;
+  --color-primary-container: #eef2fd;
+  --color-on-primary-container: #1d3f8f;
+  --color-primary-fixed: #eef2fd;
+  --color-primary-fixed-dim: #c9d6f7;
 
-  /* Secundario: grafito */
-  --color-secondary: #3d4448;
+  /* Secundario: grises neutros */
+  --color-secondary: #5b606b;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #e3e8e7;
-  --color-on-secondary-container: #14201e;
-  --color-secondary-fixed: #e3e8e7;
+  --color-secondary-container: #f1f2f4;
+  --color-on-secondary-container: #111318;
+  --color-secondary-fixed: #f1f2f4;
 
-  /* Terciario: ocre de Seguimiento */
-  --color-tertiary: #9a6212;
+  /* Advertencia */
+  --color-tertiary: #9a5b00;
   --color-on-tertiary: #ffffff;
-  --color-tertiary-fixed: #f6e7cc;
-  --color-on-tertiary-fixed: #5f3c0b;
+  --color-tertiary-fixed: #fff4e0;
+  --color-on-tertiary-fixed: #7a4600;
 
-  /* Éxito / vigente: verde de Salud */
-  --color-exito-container: #e2f0e9;
-  --color-on-exito-container: #1b4d37;
+  /* Éxito */
+  --color-exito: #0f7a47;
+  --color-exito-container: #e7f6ee;
+  --color-on-exito-container: #0f6b3e;
 
-  /* Crítico: solo errores y lo crítico */
-  --color-error: #c62828;
+  /* Crítico */
+  --color-error: #d1293d;
   --color-on-error: #ffffff;
-  --color-error-container: #fbe3e1;
-  --color-on-error-container: #5c0f0f;
+  --color-error-container: #fdecee;
+  --color-on-error-container: #8a1525;
 
-  /* Superficies */
-  --color-surface: #f4f6f5;
+  /* Superficies: fondo gris fuera del marco, trabajo en blanco */
+  --color-surface: #f4f5f7;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #eef1f0;
-  --color-surface-container: #e6eae9;
-  --color-surface-container-high: #dde2e0;
+  --color-surface-container-low: #f7f8fa;
+  --color-surface-container: #f1f2f4;
+  --color-surface-container-high: #e7e8ec;
 
-  /* Tinta y filetes */
-  --color-ink: #14201e;
-  --color-on-surface: #14201e;
-  --color-on-surface-variant: #56625f;
-  --color-outline: #5f6a67;
-  --color-outline-variant: #d3d9d7;
+  /* Tinta, textos y bordes */
+  --color-ink: #111318;
+  --color-on-surface: #111318;
+  --color-on-surface-variant: #5b606b;
+  --color-outline: #6b717c;
+  --color-outline-variant: #e7e8ec;
+  --color-filete: #eeeff2;
 
-  /* Colores de área (un uso por color; texto blanco encima pasa AA) */
-  --color-area-nucleo: #1f4e8c;
-  --color-area-tutela: #5b4b9a;
-  --color-area-seguimiento: #9a6212;
-  --color-area-salud: #2e7d5b;
-  --color-area-institucional: #24646b;
-  --color-area-administracion: #3d4448;
+  /* Series de gráficos: orden fijo, validado con dataviz (CVD y contraste) */
+  --color-serie-1: #3b6fe0;
+  --color-serie-2: #e65c9f;
+  --color-serie-3: #0f7a47;
+  --color-serie-contexto: #9aa0aa;
 
-  /* Prioridad de alertas: rampa ordinal de un solo tono (validada con dataviz) */
-  --color-prioridad-baja: #d19a55;
-  --color-prioridad-media: #a15f1c;
-  --color-prioridad-alta: #874a13;
-  --color-prioridad-critica: #5c2c06;
-
-  /* Tipografía: Overpass para carteles, títulos y cifras; Atkinson para texto y datos */
-  --font-sans: 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui;
-  --font-heading: var(--font-overpass), ui-sans-serif, system-ui;
-  --font-display: var(--font-overpass), ui-sans-serif, system-ui;
-  --font-label: 'Atkinson Hyperlegible Next', ui-sans-serif, system-ui;
+  /* Tipografía: Inter para todo */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-label: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   /* Escala con nombre */
-  --text-display: 2.75rem;
-  --text-display--line-height: 1;
-  --text-title: 1.75rem;
-  --text-title--line-height: 1.1;
-  --text-heading: 0.8125rem;
-  --text-heading--line-height: 1.2;
-  --text-body: 0.9375rem;
+  --text-display: 1.75rem;
+  --text-display--line-height: 1.15;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.3;
+  --text-heading: 0.9375rem;
+  --text-heading--line-height: 1.4;
+  --text-body: 0.875rem;
   --text-body--line-height: 1.5;
   --text-small: 0.8125rem;
-  --text-small--line-height: 1.4;
+  --text-small--line-height: 1.45;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.35;
 
-  /* Forma: esquinas casi rectas, como una chapa de señalética */
-  --radius-sm: 2px;
-  --radius-md: 2px;
-  --radius-lg: 3px;
-  --radius-xl: 4px;
+  /* Forma */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
 }
 
 body {
   background-color: var(--color-surface);
   color: var(--color-on-surface);
+  font-feature-settings: "cv11", "ss01";
 }
 
 * {
@@ -98,21 +95,21 @@ body {
 }
 
 ::selection {
-  background-color: var(--color-primary-container);
-  color: var(--color-on-primary-container);
+  background-color: var(--color-primary-fixed-dim);
+  color: var(--color-ink);
 }
 
 input,
 textarea {
-  caret-color: var(--color-primary);
+  caret-color: var(--color-ink);
 }
 
 :focus-visible {
-  outline-color: var(--color-primary);
+  outline-color: var(--color-serie-1);
 }
 
 * {
-  scrollbar-color: var(--color-outline-variant) transparent;
+  scrollbar-color: var(--color-surface-container-high) transparent;
 }
 
 a {

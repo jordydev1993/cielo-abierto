@@ -3,18 +3,19 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const badgeVariants = cva(
-  // Un tratamiento por estado (prompts/051): rótulo recto en mayúsculas, como una chapa.
-  'inline-flex items-center rounded-sm border px-2 py-0.5 font-heading text-[11px] font-bold uppercase leading-4 tracking-[0.06em] whitespace-nowrap transition-colors',
+  // Pastilla neutra con un punto de color por estado (prompts/052): el texto dice el
+  // estado y el punto lo refuerza; el color nunca es el único canal.
+  'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-outline-variant bg-surface-container-lowest px-2 py-0.5 text-caption font-medium text-on-surface transition-colors before:h-1.5 before:w-1.5 before:shrink-0 before:rounded-full before:content-[""]',
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-primary text-on-primary',
-        secondary: 'border-transparent bg-secondary-container text-on-secondary-container',
-        destructive: 'border-transparent bg-error-container text-on-error-container',
-        outline: 'border-outline-variant text-on-surface-variant',
-        success: 'border-transparent bg-exito-container text-on-exito-container',
-        warning: 'border-transparent bg-tertiary-fixed text-on-tertiary-fixed',
-        info: 'border-transparent bg-primary-container text-on-primary-container',
+        default: 'before:bg-ink',
+        secondary: 'before:bg-serie-contexto',
+        destructive: 'before:bg-error',
+        outline: 'text-on-surface-variant before:hidden',
+        success: 'before:bg-exito',
+        warning: 'before:bg-tertiary',
+        info: 'before:bg-serie-1',
       },
     },
     defaultVariants: {
