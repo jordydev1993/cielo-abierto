@@ -860,3 +860,26 @@ Corre todo en una transacción con `ROLLBACK`, con datos ficticios (DNI `99…`)
 
 **Control de la prueba:** con la regla de D-14 rota a propósito en la base local (`Approved` como verificado sin mirar el DNI), el script corta en `FALLO S5/S6`.
 
+
+---
+
+## Endpoints de sesiones Didit — prompts/047
+
+**Fecha:** 21/10/2026 · **Entorno:** Supabase local + `next dev` apuntando a la base local, con la app de **sandbox** de Didit · **Resultado:** 18/18 ✅ de punta a punta, y 14 tests unitarios nuevos (`tests/unit/didit-client.test.ts`, `tests/unit/didit-estado.test.ts`).
+
+| Caso | Resultado |
+|---|---|
+| Sin sesión | `401` |
+| Cuerpo con un `dni` mandado por el cliente | `400 INVALID_REQUEST` (el DNI sale de la base, D-14) |
+| Retiro sin consentimiento | `409 CONSENT_REQUIRED` |
+| Retiro con 3 intentos fallidos | `409 REQUIRES_REVIEW`, sin llamar a Didit ni crear una 4.ª sesión |
+| Referente con 3 intentos | `409 MAX_ATTEMPTS_REACHED` |
+| Referente sin `consentimiento: true` | `400` |
+| Didit rechaza el pedido (workflow inválido) | `502 PROVIDER_ERROR` con el mensaje C; fila `didit_no_disponible`, sin intento consumido; `creada_por` = el educador; en el audit log |
+| `GET` de esa sesión | `PROVIDER_ERROR`; `fallback_habilitado` solo para Admin |
+| Fallback: Equipo Tecnico / sin motivo / Admin | `403` / `400` / `200` (retiro `manual`, `autorizada`, `autorizado_por` = Admin) |
+| Fallback con 1 solo intento fallido | `409` con el mensaje del trigger |
+
+El log del servidor solo registra el tipo de falla (`http_4xx (400)`), sin DNI ni respuesta de Didit.
+
+**Pendiente:** el `201` con una sesión real del sandbox necesita `DIDIT_WORKFLOW_ID` (workflow v9, D-23). El estado de la sesión no avanza hasta que esté la lógica del webhook (paso 4).
