@@ -30,13 +30,13 @@ export default function PropuestasMejoraPage() {
   return (
     <AccessGuard
       roles={['Admin', 'Equipo Tecnico']}
-      fallback={<div className="p-8 text-slate-500">Sin acceso</div>}
+      fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}
     >
       <div className="p-6 space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-slate-900">Propuestas de Mejora</h1>
-            <p className="text-sm text-slate-500">{propuestas.length} propuestas</p>
+            <h1 className="text-xl font-semibold text-on-surface">Propuestas de Mejora</h1>
+            <p className="text-sm text-on-surface-variant">{propuestas.length} propuestas</p>
           </div>
           <AccessGuard roles={['Admin']}>
             <Button onClick={() => setOpen(true)}>
@@ -47,7 +47,7 @@ export default function PropuestasMejoraPage() {
         </div>
 
         {isLoading ? (
-          <p className="text-sm text-slate-400 py-4 text-center">Cargando...</p>
+          <p className="text-sm text-outline py-4 text-center">Cargando...</p>
         ) : (
           <PropuestasKanban propuestas={propuestas} />
         )}

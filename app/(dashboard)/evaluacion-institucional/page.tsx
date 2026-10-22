@@ -14,13 +14,13 @@ export default function EvaluacionInstitucionalPage() {
   return (
     <AccessGuard
       roles={['Admin', 'Equipo Tecnico']}
-      fallback={<div className="p-8 text-slate-500">Sin acceso</div>}
+      fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}
     >
       <div className="p-6 space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-slate-900">Evaluación Institucional</h1>
-            <p className="text-sm text-slate-500">{evaluaciones.length} evaluaciones</p>
+            <h1 className="text-xl font-semibold text-on-surface">Evaluación Institucional</h1>
+            <p className="text-sm text-on-surface-variant">{evaluaciones.length} evaluaciones</p>
           </div>
           <AccessGuard roles={['Admin']}>
             <Button onClick={() => router.push('/evaluacion-institucional/nueva')}>

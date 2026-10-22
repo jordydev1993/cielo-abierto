@@ -1,34 +1,33 @@
 import * as React from 'react'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 interface KPICardProps {
   label: string
   value: number | string
-  icon?: React.ReactNode
-  variant?: 'default' | 'primary' | 'error' | 'secondary'
+  // Clase de fondo del área del dato (por ejemplo `bg-area-nucleo`).
+  area: string
+  href: string
   description?: string
+  // Gráfico opcional, solo cuando responde una pregunta (ver prompts/051, Gráficos).
+  children?: React.ReactNode
 }
 
-const iconBg: Record<NonNullable<KPICardProps['variant']>, string> = {
-  default: 'bg-surface-container',
-  primary: 'bg-primary-fixed',
-  error: 'bg-error-container',
-  secondary: 'bg-secondary-container',
-}
-
-export function KPICard({ label, value, icon, variant = 'default', description }: KPICardProps) {
+// Panel de área (prompts/051): se usa en fila, separado de sus vecinos por filetes de 1 px.
+// La cifra va en Overpass con cifras proporcionales; el cuadrado de color dice de qué área es.
+export function KPICard({ label, value, area, href, description, children }: KPICardProps) {
   return (
-    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col gap-3">
-      {icon && (
-        <div className={cn('w-10 h-10 rounded-full flex items-center justify-center', iconBg[variant])}>
-          {icon}
-        </div>
-      )}
-      <div>
-        <p className="font-heading text-3xl font-bold text-on-surface">{value}</p>
-        <p className="text-sm text-on-surface-variant mt-0.5">{label}</p>
-        {description && <p className="text-xs text-outline mt-1">{description}</p>}
-      </div>
-    </div>
+    <Link
+      href={href}
+      className="group flex flex-col gap-3 px-5 py-4 transition-colors hover:bg-surface-container-low focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
+    >
+      <p className="flex items-center gap-2 font-heading text-heading font-bold uppercase tracking-[0.1em] text-on-surface-variant">
+        <span className={cn('h-3 w-3 shrink-0', area)} aria-hidden="true" />
+        {label}
+      </p>
+      <p className="font-heading text-display font-extrabold text-on-surface">{value}</p>
+      {children}
+      {description && <p className="text-small text-on-surface-variant">{description}</p>}
+    </Link>
   )
 }

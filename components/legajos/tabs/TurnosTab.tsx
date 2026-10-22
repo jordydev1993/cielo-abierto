@@ -40,7 +40,7 @@ export function TurnosTab({ legajoId, nnyaId, legajoActivo }: TurnosTabProps) {
           </AccessGuard>
         </div>
       )}
-      {isLoading ? <p className="text-sm text-slate-400 py-4 text-center">Cargando...</p> : <TurnoList turnos={turnos} legajoId={legajoId} legajoActivo={legajoActivo} />}
+      {isLoading ? <p className="text-sm text-outline py-4 text-center">Cargando...</p> : <TurnoList turnos={turnos} legajoId={legajoId} legajoActivo={legajoActivo} />}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader><DialogTitle>Agendar turno</DialogTitle></DialogHeader>

@@ -19,7 +19,7 @@ const columns: Column<Usuario>[] = [
     render: (r) => (
       <div>
         <p className="font-medium">{r.apellido}, {r.nombre}</p>
-        <p className="text-xs text-slate-500">{r.email}</p>
+        <p className="text-xs text-on-surface-variant">{r.email}</p>
       </div>
     ),
   },
@@ -33,7 +33,7 @@ const columns: Column<Usuario>[] = [
     key: 'telefono',
     header: 'Teléfono',
     className: 'w-36',
-    render: (r) => r.telefono ?? <span className="text-slate-400">—</span>,
+    render: (r) => r.telefono ?? <span className="text-outline">—</span>,
   },
   {
     key: 'activo',
@@ -59,8 +59,8 @@ export function UsuarioTable({ data, loading, onEdit, onToggleActivo }: UsuarioT
           onClick={() => onToggleActivo(row)}
           title={row.activo ? 'Desactivar' : 'Activar'}
           className={row.activo
-            ? 'text-slate-500 hover:text-red-600 hover:bg-red-50'
-            : 'text-slate-400 hover:text-green-600 hover:bg-green-50'
+            ? 'text-on-surface-variant hover:text-red-600 hover:bg-red-50'
+            : 'text-outline hover:text-green-600 hover:bg-green-50'
           }
         >
           {row.activo ? <UserX className="h-4 w-4" /> : <UserCheck className="h-4 w-4" />}

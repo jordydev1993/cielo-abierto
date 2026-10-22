@@ -27,8 +27,8 @@ export default function ReporteSenafDetailPage({ params }: { params: Promise<{ i
   const aprobar = useAprobarReporteSenaf()
   const [confirmar, setConfirmar] = useState(false)
 
-  if (isLoading) return <p className="p-6 text-sm text-slate-400">Cargando...</p>
-  if (!reporte) return <p className="p-6 text-sm text-slate-500">Informe no encontrado.</p>
+  if (isLoading) return <p className="p-6 text-sm text-outline">Cargando...</p>
+  if (!reporte) return <p className="p-6 text-sm text-on-surface-variant">Informe no encontrado.</p>
 
   const aprobado = reporte.estado === 'aprobado'
   const datos = agregadosSenafSchema.safeParse(reporte.datos)
@@ -54,7 +54,7 @@ export default function ReporteSenafDetailPage({ params }: { params: Promise<{ i
   }
 
   return (
-    <AccessGuard roles={['Admin']} fallback={<div className="p-8 text-slate-500">Sin acceso</div>}>
+    <AccessGuard roles={['Admin']} fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}>
       <div className="p-6 space-y-5">
         <Button variant="ghost" size="sm" onClick={() => router.push('/reportes-senaf')}>
           <ChevronLeft className="h-4 w-4 mr-1" />
@@ -63,15 +63,15 @@ export default function ReporteSenafDetailPage({ params }: { params: Promise<{ i
 
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-xl font-semibold text-slate-900">
+            <h1 className="text-xl font-semibold text-on-surface">
               Informe SENAF · {periodo}
             </h1>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-on-surface-variant">
               Versión {reporte.version} · {reporte.origen_borrador === 'ia' ? `Borrador con IA (${reporte.modelo})` : 'Borrador con plantilla'}
               {reporte.generador && ` · Generado por ${reporte.generador.nombre} ${reporte.generador.apellido}`}
             </p>
             {aprobado && reporte.aprobado_at && (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-on-surface-variant">
                 Aprobado por {reporte.aprobador ? `${reporte.aprobador.nombre} ${reporte.aprobador.apellido}` : 'Dirección'} el{' '}
                 {format(new Date(reporte.aprobado_at), "dd/MM/yyyy 'a las' HH:mm", { locale: es })}
               </p>
@@ -111,13 +111,13 @@ export default function ReporteSenafDetailPage({ params }: { params: Promise<{ i
           <Card className="h-fit">
             <CardHeader>
               <CardTitle className="text-base">Datos del período</CardTitle>
-              <p className="text-xs text-slate-500">Calculados por el sistema. Cada cifra del texto tiene que coincidir con estos números.</p>
+              <p className="text-xs text-on-surface-variant">Calculados por el sistema. Cada cifra del texto tiene que coincidir con estos números.</p>
             </CardHeader>
             <CardContent>
               {datos.success ? (
                 <DatosReferencia datos={datos.data} />
               ) : (
-                <p className="text-sm text-slate-500">No se pudieron leer los datos guardados.</p>
+                <p className="text-sm text-on-surface-variant">No se pudieron leer los datos guardados.</p>
               )}
             </CardContent>
           </Card>

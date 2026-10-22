@@ -31,12 +31,12 @@ interface AlertaListProps {
 export function AlertaList({ alertas }: AlertaListProps) {
   if (alertas.length === 0) {
     return (
-      <p className="text-sm text-slate-400 py-4 text-center">No hay alertas registradas</p>
+      <p className="text-sm text-outline py-4 text-center">No hay alertas registradas</p>
     )
   }
 
   return (
-    <div className="divide-y divide-slate-100">
+    <div className="divide-y divide-outline-variant">
       {alertas.map((alerta) => {
         const proximo = isVencimientoProximo(alerta.fecha_vencimiento)
         const vencida = alerta.estado !== 'completada' && isVencida(alerta.fecha_vencimiento)
@@ -55,7 +55,7 @@ export function AlertaList({ alertas }: AlertaListProps) {
                 {(proximo || vencida) && (
                   <AlertTriangle className={cn('h-3.5 w-3.5 shrink-0', vencida ? 'text-red-500' : 'text-amber-500')} />
                 )}
-                <span className="text-sm font-medium text-slate-900 truncate">{alerta.titulo}</span>
+                <span className="text-sm font-medium text-on-surface truncate">{alerta.titulo}</span>
                 <PrioridadBadge prioridad={alerta.prioridad} />
               </div>
               <Badge
@@ -66,7 +66,7 @@ export function AlertaList({ alertas }: AlertaListProps) {
               </Badge>
             </div>
             {alerta.fecha_vencimiento && (
-              <p className={cn('text-xs', vencida ? 'text-red-600 font-medium' : 'text-slate-400')}>
+              <p className={cn('text-xs', vencida ? 'text-red-600 font-medium' : 'text-outline')}>
                 Vence: {format(new Date(alerta.fecha_vencimiento + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                 {proximo && ' — vence hoy'}
                 {vencida && ' — VENCIDA'}

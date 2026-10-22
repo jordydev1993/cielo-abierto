@@ -8,11 +8,11 @@ interface ReinsercionResumenProps {
 
 function Tile({ icon: Icon, label, value, color }: { icon: React.ElementType; label: string; value: string; color: string }) {
   return (
-    <div className="border border-slate-100 rounded-lg p-4 flex items-center gap-3">
+    <div className="border border-outline-variant rounded-lg p-4 flex items-center gap-3">
       <Icon className={`h-5 w-5 ${color}`} />
       <div>
-        <p className="text-xl font-semibold text-slate-900">{value}</p>
-        <p className="text-xs text-slate-500">{label}</p>
+        <p className="text-xl font-semibold text-on-surface">{value}</p>
+        <p className="text-xs text-on-surface-variant">{label}</p>
       </div>
     </div>
   )

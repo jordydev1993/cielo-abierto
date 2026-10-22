@@ -140,7 +140,7 @@ export function IncidenteForm({ legajoId, nnyaId, onSubmit, onCancel, loading }:
             sugerenciaAceptada ? 'bg-green-50 border-green-200' : 'bg-violet-50 border-violet-200',
           )}>
             {cargandoPrediccion ? (
-              <div className="flex items-center gap-2 text-sm text-slate-400">
+              <div className="flex items-center gap-2 text-sm text-outline">
                 <Loader2 className="h-4 w-4 animate-spin shrink-0" />
                 Calculando sugerencia de gravedad...
               </div>

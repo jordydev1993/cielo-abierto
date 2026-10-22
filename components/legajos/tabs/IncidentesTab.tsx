@@ -77,7 +77,7 @@ export function IncidentesTab({ legajoId, nnyaId, legajoActivo }: IncidentesTabP
         </div>
       )}
       {isLoading
-        ? <p className="text-sm text-slate-400 py-4 text-center">Cargando...</p>
+        ? <p className="text-sm text-outline py-4 text-center">Cargando...</p>
         : <IncidenteList incidentes={incidentes} onAvanzarEstado={legajoActivo ? onAvanzarEstado : undefined} />}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">
@@ -89,7 +89,7 @@ export function IncidentesTab({ legajoId, nnyaId, legajoActivo }: IncidentesTabP
         <DialogContent className="sm:max-w-md">
           <DialogHeader><DialogTitle>Cerrar incidente</DialogTitle></DialogHeader>
           <div className="space-y-2 pt-2">
-            <label htmlFor="acciones-cierre" className="text-sm font-medium text-slate-700">Acciones tomadas</label>
+            <label htmlFor="acciones-cierre" className="text-sm font-medium text-on-surface-variant">Acciones tomadas</label>
             <Textarea
               id="acciones-cierre"
               value={acciones}

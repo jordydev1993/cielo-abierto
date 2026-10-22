@@ -72,15 +72,15 @@ function CancelarModal({ turno, legajoId, onClose }: CancelarModalProps) {
         </DialogHeader>
         {turno && (
           <div className="space-y-3 pt-1">
-            <div className="bg-slate-50 rounded-lg p-3 text-sm">
-              <p className="font-medium text-slate-900">{turno.tipo}</p>
-              <p className="text-slate-500 text-xs mt-0.5">
+            <div className="bg-surface-container-low rounded-lg p-3 text-sm">
+              <p className="font-medium text-on-surface">{turno.tipo}</p>
+              <p className="text-on-surface-variant text-xs mt-0.5">
                 {format(new Date(turno.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700 mb-1.5 block">
-                Motivo de cancelación <span className="text-slate-400">(opcional)</span>
+              <label className="text-sm font-medium text-on-surface-variant mb-1.5 block">
+                Motivo de cancelación <span className="text-outline">(opcional)</span>
               </label>
               <Textarea
                 value={observaciones}
@@ -132,8 +132,8 @@ export function TurnoList({ turnos, legajoId, legajoActivo }: TurnoListProps) {
   if (turnos.length === 0) {
     return (
       <div className="py-6 text-center">
-        <CalendarClock className="h-6 w-6 text-slate-300 mx-auto mb-1.5" />
-        <p className="text-sm text-slate-400">No hay turnos agendados</p>
+        <CalendarClock className="h-6 w-6 text-outline mx-auto mb-1.5" />
+        <p className="text-sm text-outline">No hay turnos agendados</p>
       </div>
     )
   }
@@ -146,8 +146,8 @@ export function TurnoList({ turnos, legajoId, legajoActivo }: TurnoListProps) {
       <div className="space-y-4">
         {proximos.length > 0 && (
           <div>
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">Próximos</p>
-            <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
+            <p className="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-2">Próximos</p>
+            <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
               {proximos.map((turno) => (
                 <TurnoRow
                   key={turno.id}
@@ -163,8 +163,8 @@ export function TurnoList({ turnos, legajoId, legajoActivo }: TurnoListProps) {
         )}
         {pasados.length > 0 && (
           <div>
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">Historial</p>
-            <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
+            <p className="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-2">Historial</p>
+            <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
               {pasados.map((turno) => (
                 <TurnoRow
                   key={turno.id}
@@ -202,30 +202,30 @@ function TurnoRow({ turno, legajoActivo, onRealizado, onCancelar, isPending }: T
   const puedeAccionar = legajoActivo && (turno.estado === 'programado' || turno.estado === 'confirmado')
 
   return (
-    <div className={cn('p-3 bg-white space-y-1.5', !legajoActivo && 'opacity-70')}>
+    <div className={cn('p-3 bg-surface-container-lowest space-y-1.5', !legajoActivo && 'opacity-70')}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 space-y-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-medium text-slate-900">{turno.tipo}</span>
+            <span className="text-sm font-medium text-on-surface">{turno.tipo}</span>
             <EstadoBadge estado={turno.estado} />
           </div>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-outline">
             {format(new Date(turno.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
             {futuro && turno.estado === 'programado' && (
               <span className="ml-1 text-blue-500 font-medium">(próximo)</span>
             )}
           </p>
           {turno.profesional && (
-            <p className="text-xs text-slate-500">Profesional: <span className="font-medium">{turno.profesional}</span></p>
+            <p className="text-xs text-on-surface-variant">Profesional: <span className="font-medium">{turno.profesional}</span></p>
           )}
           {turno.lugar && (
-            <p className="text-xs text-slate-500">Lugar: {turno.lugar}</p>
+            <p className="text-xs text-on-surface-variant">Lugar: {turno.lugar}</p>
           )}
           {turno.motivo && (
-            <p className="text-xs text-slate-500 italic">{turno.motivo}</p>
+            <p className="text-xs text-on-surface-variant italic">{turno.motivo}</p>
           )}
           {turno.observaciones && (
-            <p className="text-xs text-slate-500 italic">Obs: {turno.observaciones}</p>
+            <p className="text-xs text-on-surface-variant italic">Obs: {turno.observaciones}</p>
           )}
         </div>
 

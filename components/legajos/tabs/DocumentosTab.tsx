@@ -56,9 +56,9 @@ export function DocumentosTab({ legajoId, nnyaId, legajoActivo }: DocumentosTabP
       {/* Informes */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-on-surface">
             Informes
-            {informes.length > 0 && <span className="ml-2 text-xs font-normal text-slate-400">({informes.length})</span>}
+            {informes.length > 0 && <span className="ml-2 text-xs font-normal text-outline">({informes.length})</span>}
           </h3>
           {legajoActivo && (
             <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
@@ -68,17 +68,17 @@ export function DocumentosTab({ legajoId, nnyaId, legajoActivo }: DocumentosTabP
             </AccessGuard>
           )}
         </div>
-        {loadingInf ? <p className="text-sm text-slate-400">Cargando...</p> : <InformeList informes={informes} legajoId={legajoId} legajoActivo={legajoActivo} />}
+        {loadingInf ? <p className="text-sm text-outline">Cargando...</p> : <InformeList informes={informes} legajoId={legajoId} legajoActivo={legajoActivo} />}
       </div>
 
-      <hr className="border-slate-100" />
+      <hr className="border-outline-variant" />
 
       {/* Audiencias judiciales */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-on-surface">
             Audiencias judiciales
-            {audiencias.length > 0 && <span className="ml-2 text-xs font-normal text-slate-400">({audiencias.length})</span>}
+            {audiencias.length > 0 && <span className="ml-2 text-xs font-normal text-outline">({audiencias.length})</span>}
           </h3>
           {legajoActivo && (
             <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
@@ -88,17 +88,17 @@ export function DocumentosTab({ legajoId, nnyaId, legajoActivo }: DocumentosTabP
             </AccessGuard>
           )}
         </div>
-        {loadingAud ? <p className="text-sm text-slate-400">Cargando...</p> : <AudienciaList audiencias={audiencias} legajoId={legajoId} legajoActivo={legajoActivo} />}
+        {loadingAud ? <p className="text-sm text-outline">Cargando...</p> : <AudienciaList audiencias={audiencias} legajoId={legajoId} legajoActivo={legajoActivo} />}
       </div>
 
-      <hr className="border-slate-100" />
+      <hr className="border-outline-variant" />
 
       {/* Archivos adjuntos */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-on-surface">
             Archivos adjuntos
-            {documentos.length > 0 && <span className="ml-2 text-xs font-normal text-slate-400">({documentos.length})</span>}
+            {documentos.length > 0 && <span className="ml-2 text-xs font-normal text-outline">({documentos.length})</span>}
           </h3>
         </div>
         {legajoActivo && (
@@ -109,7 +109,7 @@ export function DocumentosTab({ legajoId, nnyaId, legajoActivo }: DocumentosTabP
           </AccessGuard>
         )}
         {loadingDocs ? (
-          <p className="text-sm text-slate-400">Cargando...</p>
+          <p className="text-sm text-outline">Cargando...</p>
         ) : (
           <DocumentoList documentos={documentos} legajoId={legajoId} legajoActivo={legajoActivo} />
         )}

@@ -31,7 +31,7 @@ const columns: Column<Nnya>[] = [
     render: (r) => (
       <div>
         <p className="font-medium">{r.apellido}, {r.nombre}</p>
-        <p className="text-xs text-slate-500">DNI: {r.dni}</p>
+        <p className="text-xs text-on-surface-variant">DNI: {r.dni}</p>
       </div>
     ),
   },

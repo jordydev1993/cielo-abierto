@@ -68,10 +68,10 @@ function ResolverModal({ audiencia, legajoId, onClose }: ResolverModalProps) {
         <DialogHeader><DialogTitle>Registrar resultado de audiencia</DialogTitle></DialogHeader>
         {audiencia && (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-1">
-            <div className="bg-slate-50 rounded-lg p-3 text-sm space-y-1">
-              <p className="font-medium text-slate-900">{audiencia.tipo}</p>
-              <p className="text-slate-500 text-xs">{audiencia.tribunal}</p>
-              <p className="text-slate-400 text-xs">
+            <div className="bg-surface-container-low rounded-lg p-3 text-sm space-y-1">
+              <p className="font-medium text-on-surface">{audiencia.tipo}</p>
+              <p className="text-on-surface-variant text-xs">{audiencia.tribunal}</p>
+              <p className="text-outline text-xs">
                 {format(new Date(audiencia.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
               </p>
             </div>
@@ -130,15 +130,15 @@ function SuspenderModal({ audiencia, legajoId, onClose }: SuspenderModalProps) {
         <DialogHeader><DialogTitle>Suspender audiencia</DialogTitle></DialogHeader>
         {audiencia && (
           <div className="space-y-3 pt-1">
-            <div className="bg-slate-50 rounded-lg p-3 text-sm">
-              <p className="font-medium text-slate-900">{audiencia.tipo}</p>
-              <p className="text-slate-400 text-xs mt-0.5">
+            <div className="bg-surface-container-low rounded-lg p-3 text-sm">
+              <p className="font-medium text-on-surface">{audiencia.tipo}</p>
+              <p className="text-outline text-xs mt-0.5">
                 {format(new Date(audiencia.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700 mb-1.5 block">
-                Motivo <span className="text-slate-400">(opcional)</span>
+              <label className="text-sm font-medium text-on-surface-variant mb-1.5 block">
+                Motivo <span className="text-outline">(opcional)</span>
               </label>
               <Textarea
                 value={observaciones}
@@ -174,36 +174,36 @@ export function AudienciaList({ audiencias, legajoId, legajoActivo }: AudienciaL
   if (audiencias.length === 0) {
     return (
       <div className="py-6 text-center">
-        <Gavel className="h-6 w-6 text-slate-300 mx-auto mb-1.5" />
-        <p className="text-sm text-slate-400">No hay audiencias registradas</p>
+        <Gavel className="h-6 w-6 text-outline mx-auto mb-1.5" />
+        <p className="text-sm text-outline">No hay audiencias registradas</p>
       </div>
     )
   }
 
   return (
     <>
-      <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
+      <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
         {audiencias.map((audiencia) => {
           const futuro = esFuturo(audiencia.fecha_hora)
           const puedeAccionar = legajoActivo && audiencia.estado === 'programada'
           const exp = expandida === audiencia.id
 
           return (
-            <div key={audiencia.id} className={cn('bg-white', audiencia.estado === 'suspendida' && 'bg-amber-50/40')}>
+            <div key={audiencia.id} className={cn('bg-surface-container-lowest', audiencia.estado === 'suspendida' && 'bg-amber-50/40')}>
               <div className="p-3 flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0 space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-medium text-slate-900">{audiencia.tipo}</span>
+                    <span className="text-sm font-medium text-on-surface">{audiencia.tipo}</span>
                     <EstadoBadge estado={audiencia.estado} />
                   </div>
-                  <p className="text-xs text-slate-500">{audiencia.tribunal}{audiencia.juzgado ? ` · ${audiencia.juzgado}` : ''}</p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-on-surface-variant">{audiencia.tribunal}{audiencia.juzgado ? ` · ${audiencia.juzgado}` : ''}</p>
+                  <p className="text-xs text-outline">
                     {format(new Date(audiencia.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
                     {futuro && audiencia.estado === 'programada' && <span className="ml-1 text-blue-500 font-medium">(próxima)</span>}
                   </p>
-                  {audiencia.caratula && <p className="text-xs text-slate-500 italic">{audiencia.caratula}</p>}
+                  {audiencia.caratula && <p className="text-xs text-on-surface-variant italic">{audiencia.caratula}</p>}
                   {audiencia.resultado && (
-                    <p className="text-xs text-slate-600">
+                    <p className="text-xs text-on-surface-variant">
                       <span className="font-medium">Resolución:</span> {audiencia.resultado}
                     </p>
                   )}
@@ -248,7 +248,7 @@ export function AudienciaList({ audiencias, legajoId, legajoActivo }: AudienciaL
               </div>
 
               {exp && (
-                <div className="px-3 pb-3 space-y-1 text-xs text-slate-500">
+                <div className="px-3 pb-3 space-y-1 text-xs text-on-surface-variant">
                   {audiencia.numero_expediente && <p>Expediente: <span className="font-medium">{audiencia.numero_expediente}</span></p>}
                   {audiencia.observaciones && <p className="italic">{audiencia.observaciones}</p>}
                 </div>

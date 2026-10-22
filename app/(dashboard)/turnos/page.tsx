@@ -79,18 +79,18 @@ function CancelarModal({ turno, onClose }: CancelarModalProps) {
         <DialogHeader><DialogTitle>Cancelar turno</DialogTitle></DialogHeader>
         {turno && (
           <div className="space-y-3 pt-1">
-            <div className="bg-slate-50 rounded-lg p-3 text-sm">
-              <p className="font-medium text-slate-900">{turno.tipo}</p>
+            <div className="bg-surface-container-low rounded-lg p-3 text-sm">
+              <p className="font-medium text-on-surface">{turno.tipo}</p>
               {turno.nnya && (
-                <p className="text-slate-500 text-xs mt-0.5">NNyA: {turno.nnya.apellido}, {turno.nnya.nombre}</p>
+                <p className="text-on-surface-variant text-xs mt-0.5">NNyA: {turno.nnya.apellido}, {turno.nnya.nombre}</p>
               )}
-              <p className="text-slate-400 text-xs mt-0.5">
+              <p className="text-outline text-xs mt-0.5">
                 {format(new Date(turno.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-slate-700 mb-1.5 block">
-                Motivo <span className="text-slate-400">(opcional)</span>
+              <label className="text-sm font-medium text-on-surface-variant mb-1.5 block">
+                Motivo <span className="text-outline">(opcional)</span>
               </label>
               <Textarea
                 value={observaciones}
@@ -175,7 +175,7 @@ export default function TurnosPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-1 flex-wrap">
-          <h1 className="text-xl font-semibold text-slate-900">Turnos</h1>
+          <h1 className="text-xl font-semibold text-on-surface">Turnos</h1>
           {proximosCount > 0 && (
             <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">
               {proximosCount} próximo{proximosCount !== 1 ? 's' : ''}
@@ -187,12 +187,12 @@ export default function TurnosPage() {
             </span>
           )}
         </div>
-        <p className="text-sm text-slate-500">Vista global de todos los turnos agendados en el sistema.</p>
+        <p className="text-sm text-on-surface-variant">Vista global de todos los turnos agendados en el sistema.</p>
       </div>
 
       {/* Filtros */}
       <div className="space-y-3">
-        <div className="flex gap-1 bg-slate-100 p-1 rounded-lg w-fit">
+        <div className="flex gap-1 bg-surface-container p-1 rounded-lg w-fit">
           {ESTADO_TABS.map(({ value, label }) => (
             <button
               key={value}
@@ -200,8 +200,8 @@ export default function TurnosPage() {
               className={cn(
                 'px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
                 filtroEstado === value
-                  ? 'bg-white text-slate-900 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-700'
+                  ? 'bg-surface-container-lowest text-on-surface shadow-sm'
+                  : 'text-on-surface-variant hover:text-on-surface-variant'
               )}
             >
               {label}
@@ -222,13 +222,13 @@ export default function TurnosPage() {
             </SelectContent>
           </Select>
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
             <input
               type="text"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar por NNyA, profesional o tipo..."
-              className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              className="w-full pl-9 pr-3 py-2 text-sm border border-outline-variant rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
             />
           </div>
         </div>
@@ -236,44 +236,44 @@ export default function TurnosPage() {
 
       {/* Lista */}
       {isLoading ? (
-        <p className="text-sm text-slate-400 py-8 text-center">Cargando turnos...</p>
+        <p className="text-sm text-outline py-8 text-center">Cargando turnos...</p>
       ) : turnosFiltrados.length === 0 ? (
         <div className="py-12 text-center">
-          <CalendarClock className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-          <p className="text-sm text-slate-400">No hay turnos que coincidan con los filtros</p>
+          <CalendarClock className="h-8 w-8 text-outline mx-auto mb-2" />
+          <p className="text-sm text-outline">No hay turnos que coincidan con los filtros</p>
         </div>
       ) : (
-        <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
+        <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
           {turnosFiltrados.map((turno) => {
             const futuro = esFuturo(turno.fecha_hora)
             const puedeAccionar = turno.estado === 'programado' || turno.estado === 'confirmado'
 
             return (
-              <div key={turno.id} className="p-4 bg-white">
+              <div key={turno.id} className="p-4 bg-surface-container-lowest">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0 space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-medium text-slate-900">{turno.tipo}</span>
+                      <span className="text-sm font-medium text-on-surface">{turno.tipo}</span>
                       <EstadoBadge turno={turno} />
                     </div>
 
                     {turno.nnya && (
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-on-surface-variant">
                         NNyA: <span className="font-medium">{turno.nnya.apellido}, {turno.nnya.nombre}</span>
                       </p>
                     )}
 
-                    <div className="flex items-center gap-3 flex-wrap text-xs text-slate-400">
+                    <div className="flex items-center gap-3 flex-wrap text-xs text-outline">
                       <span>{format(new Date(turno.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}</span>
                       {turno.profesional && <span>· {turno.profesional}</span>}
                       {turno.lugar && <span>· {turno.lugar}</span>}
                     </div>
 
                     {turno.motivo && (
-                      <p className="text-xs text-slate-500 italic">{turno.motivo}</p>
+                      <p className="text-xs text-on-surface-variant italic">{turno.motivo}</p>
                     )}
                     {turno.observaciones && (
-                      <p className="text-xs text-slate-500 italic">Obs: {turno.observaciones}</p>
+                      <p className="text-xs text-on-surface-variant italic">Obs: {turno.observaciones}</p>
                     )}
                   </div>
 

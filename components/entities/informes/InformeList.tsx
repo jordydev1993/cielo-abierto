@@ -45,9 +45,9 @@ function ConfirmarEnvioModal({ informe, legajoId, onClose }: ConfirmarEnvioModal
         </DialogHeader>
         {informe && (
           <div className="space-y-3 pt-1">
-            <div className="bg-slate-50 rounded-lg p-3 text-sm space-y-1">
-              <p className="font-medium text-slate-900">{informe.titulo}</p>
-              <p className="text-slate-500 text-xs">{informe.tipo}{informe.destinatario ? ` · para ${informe.destinatario}` : ''} · {format(new Date(informe.fecha_informe + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}</p>
+            <div className="bg-surface-container-low rounded-lg p-3 text-sm space-y-1">
+              <p className="font-medium text-on-surface">{informe.titulo}</p>
+              <p className="text-on-surface-variant text-xs">{informe.tipo}{informe.destinatario ? ` · para ${informe.destinatario}` : ''} · {format(new Date(informe.fecha_informe + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}</p>
             </div>
             <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
               Una vez enviado, el informe no podrá ser modificado. Esta acción es irreversible. (INF-EX-05)
@@ -79,28 +79,28 @@ export function InformeList({ informes, legajoId, legajoActivo }: InformeListPro
   if (informes.length === 0) {
     return (
       <div className="py-6 text-center">
-        <FileText className="h-6 w-6 text-slate-300 mx-auto mb-1.5" />
-        <p className="text-sm text-slate-400">No hay informes registrados</p>
+        <FileText className="h-6 w-6 text-outline mx-auto mb-1.5" />
+        <p className="text-sm text-outline">No hay informes registrados</p>
       </div>
     )
   }
 
   return (
     <>
-      <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
+      <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
         {informes.map((informe) => {
           const enviado = informe.estado === 'finalizado'
           const expandido = informeExpandido === informe.id
 
           return (
-            <div key={informe.id} className="bg-white">
+            <div key={informe.id} className="bg-surface-container-lowest">
               <div className="p-3 flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0 space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-medium text-slate-900">{informe.titulo}</span>
+                    <span className="text-sm font-medium text-on-surface">{informe.titulo}</span>
                     <EstadoBadge estado={informe.estado} />
                   </div>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-on-surface-variant">
                     {informe.tipo}{informe.destinatario ? ` · para ${informe.destinatario}` : ''} · {format(new Date(informe.fecha_informe + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                   </p>
                   <button
@@ -126,7 +126,7 @@ export function InformeList({ informes, legajoId, legajoActivo }: InformeListPro
 
               {expandido && (
                 <div className="px-3 pb-3">
-                  <div className="bg-slate-50 rounded-lg p-3 text-sm text-slate-700 whitespace-pre-wrap leading-relaxed max-h-64 overflow-y-auto">
+                  <div className="bg-surface-container-low rounded-lg p-3 text-sm text-on-surface-variant whitespace-pre-wrap leading-relaxed max-h-64 overflow-y-auto">
                     {informe.contenido}
                   </div>
                 </div>

@@ -63,7 +63,7 @@ export function TutelaTab({ nnyaId, legajoActivo }: TutelaTabProps) {
       )}
 
       {isLoading ? (
-        <p className="text-sm text-slate-400 py-4 text-center">Cargando...</p>
+        <p className="text-sm text-outline py-4 text-center">Cargando...</p>
       ) : (
         <VinculoTutelaList
           vinculos={vinculos}

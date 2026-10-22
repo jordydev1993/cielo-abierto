@@ -178,7 +178,7 @@ Detectada por inspección directa del código. **No se corrige sin aprobación**
 | # | Gap | Tarjeta |
 |---|---|---|
 | tests | `playwright` instalado, 0 tests. | issue #30 |
-| design | `docs/design-system.md` §5: sin escala tipográfica nombrada; `Toaster` sin variantes warning/info; sin wrapper de alert-dialog no destructivo; colores hardcodeados en `NnyaTable.tsx`. | issue #31 |
+| design | Sistema "Señalética" aplicado (`prompts/051`, `DESIGN.md`): escala tipográfica con nombre y sin grises sueltos. Falta: `Toaster` sin variantes warning/info; sin wrapper de alert-dialog no destructivo; barra lateral sin versión móvil; Inicio con **datos de ejemplo** hasta conectar datos reales. | issue #31 |
 | proceso-1.4 | Recursos/fondos, stock y asistencia de personal: proceso real sin modelo de datos. Fuera de alcance hasta decisión. | — |
 
 ### Resuelto

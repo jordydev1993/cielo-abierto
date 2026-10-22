@@ -37,11 +37,11 @@ interface VinculoTutelaListProps {
 
 export function VinculoTutelaList({ vinculos, onEdit }: VinculoTutelaListProps) {
   if (vinculos.length === 0) {
-    return <p className="text-sm text-slate-400 py-4 text-center">No hay vínculos de tutela registrados</p>
+    return <p className="text-sm text-outline py-4 text-center">No hay vínculos de tutela registrados</p>
   }
 
   return (
-    <div className="divide-y divide-slate-100">
+    <div className="divide-y divide-outline-variant">
       {vinculos.map((v) => {
         const persona = v.referente
           ? `${v.referente.apellido}, ${v.referente.nombre} (referente)`
@@ -52,7 +52,7 @@ export function VinculoTutelaList({ vinculos, onEdit }: VinculoTutelaListProps) 
           <div key={v.id} className="py-3 space-y-1.5">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium text-slate-900">{TIPO_LABEL[v.tipo]}</span>
+                <span className="text-sm font-medium text-on-surface">{TIPO_LABEL[v.tipo]}</span>
                 <Badge variant={ESTADO_VARIANT[v.estado]}>{v.estado}</Badge>
               </div>
               {onEdit && (
@@ -61,17 +61,17 @@ export function VinculoTutelaList({ vinculos, onEdit }: VinculoTutelaListProps) 
                 </Button>
               )}
             </div>
-            <p className="text-sm text-slate-600">{persona}</p>
+            <p className="text-sm text-on-surface-variant">{persona}</p>
             {v.estado === 'propuesto' && (
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-on-surface-variant">
                 Pendiente de validación de identidad
               </p>
             )}
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-outline">
               Vigente {formatFecha(v.vigente_desde)} — {formatFecha(v.vigente_hasta)}
             </p>
             {v.motivo_finalizacion && (
-              <p className="text-xs text-slate-500 italic">Motivo: {v.motivo_finalizacion}</p>
+              <p className="text-xs text-on-surface-variant italic">Motivo: {v.motivo_finalizacion}</p>
             )}
           </div>
         )

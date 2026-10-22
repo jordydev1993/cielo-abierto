@@ -33,27 +33,27 @@ interface IncidenteListProps {
 export function IncidenteList({ incidentes, onAvanzarEstado }: IncidenteListProps) {
   if (incidentes.length === 0) {
     return (
-      <p className="text-sm text-slate-400 py-4 text-center">No hay incidentes registrados</p>
+      <p className="text-sm text-outline py-4 text-center">No hay incidentes registrados</p>
     )
   }
 
   return (
-    <div className="divide-y divide-slate-100">
+    <div className="divide-y divide-outline-variant">
       {incidentes.map((inc) => (
         <div key={inc.id} className="py-3 space-y-1">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-medium text-slate-900">{inc.tipo}</span>
+              <span className="text-sm font-medium text-on-surface">{inc.tipo}</span>
               <GravedadBadge gravedad={inc.gravedad} />
               <EstadoBadge estado={inc.estado} />
             </div>
-            <span className="text-xs text-slate-400 shrink-0">
+            <span className="text-xs text-outline shrink-0">
               {format(new Date(inc.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
             </span>
           </div>
-          <p className="text-sm text-slate-600">{inc.descripcion}</p>
+          <p className="text-sm text-on-surface-variant">{inc.descripcion}</p>
           {inc.acciones_tomadas && (
-            <p className="text-xs text-slate-500 italic">Acciones: {inc.acciones_tomadas}</p>
+            <p className="text-xs text-on-surface-variant italic">Acciones: {inc.acciones_tomadas}</p>
           )}
           {onAvanzarEstado && inc.estado !== 'cerrado' && (
             <div className="pt-1">

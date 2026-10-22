@@ -38,7 +38,7 @@ export function QrSesionDidit({ url }: { url: string }) {
           width={240}
           height={240}
           alt="Código QR para abrir la verificación de identidad de Didit en el celular del adulto"
-          className="rounded-md border border-outline-variant bg-white p-2"
+          className="rounded-md border border-outline-variant bg-surface-container-lowest p-2"
         />
       ) : (
         <div className="h-60 w-60 animate-pulse rounded-md bg-surface-container-low" aria-hidden="true" />
