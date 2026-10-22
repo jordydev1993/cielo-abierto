@@ -106,6 +106,25 @@ export async function crearSesionDidit(
   return { ok: true, sessionId: parsed.data.session_id, url: parsed.data.url }
 }
 
+/**
+ * Borra la sesión en Didit, con sus imágenes y la selfie (RF-10, prompts/048).
+ * Un 404 cuenta como éxito: la sesión ya no existe. Un 503 se reintenta una vez.
+ */
+export async function borrarSesionDidit(
+  params: { apiKey: string; sessionId: string },
+  deps: DiditDeps = {}
+): Promise<ResultadoDidit<Record<never, never>>> {
+  const res = await llamar(
+    `${DIDIT_API_BASE}/v3/session/${encodeURIComponent(params.sessionId)}/delete/`,
+    { method: 'DELETE', headers: { 'x-api-key': params.apiKey } },
+    deps
+  )
+  if (res.ok || (res.falla === 'http_4xx' && res.status === 404)) return { ok: true }
+  // Didit responde 200 con cuerpo JSON; si viniera vacío, el borrado igual se hizo.
+  if (res.falla === 'respuesta_invalida' && res.status !== undefined && res.status < 300) return { ok: true }
+  return res
+}
+
 /** URL y estado de una sesión existente, para retomarla sin crear otra (decisión 3). */
 export async function obtenerSesionDidit(
   params: { apiKey: string; sessionId: string },

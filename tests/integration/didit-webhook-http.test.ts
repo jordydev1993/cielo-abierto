@@ -5,8 +5,9 @@ import { startNextServer } from '../support/next-server.ts'
 
 // E-4 (nivel endpoint): contrato HTTP real del webhook de Didit.
 // Levanta `next dev` local en 127.0.0.1 y hace POST reales.
-// Secreto EXCLUSIVAMENTE ficticio. No se configuran variables de Supabase:
-// el webhook debe funcionar sin ellas gracias al bypass de `proxy.ts` (Plan 032).
+// Secreto EXCLUSIVAMENTE ficticio. Las variables de Supabase van vacías: este test
+// fija el contrato sin base (firma, envelope, tipo de evento). La lógica que usa la
+// base está en didit-webhook-db.test.ts, contra Supabase local (prompts/048).
 
 const SECRET = 'test-secret-not-a-real-credential'
 const OTHER_SECRET = 'otro-secreto-ficticio'
@@ -143,11 +144,13 @@ test('E4H-2..9 · contrato HTTP con secreto ficticio', { timeout: 240_000 }, asy
       assert.deepEqual(await res.json(), { received: true })
     })
 
-    await t.test('E4H-9 · status.updated válido → 200 + log acotado', async () => {
+    // Desde prompts/048 el evento válido necesita la base: sin Supabase configurado
+    // responde 500 (Didit reintenta). El 200 se prueba en didit-webhook-db.test.ts.
+    await t.test('E4H-9 · status.updated válido sin base configurada → 500 + log acotado', async () => {
       const body = validBody()
       const res = await post(server.baseUrl, body, signedHeaders(body, SECRET))
-      assert.equal(res.status, 200)
-      assert.deepEqual(await res.json(), { received: true })
+      assert.equal(res.status, 500)
+      assert.deepEqual(await res.json(), { error: 'Webhook no configurado.' })
 
       await new Promise((resolve) => setTimeout(resolve, 500))
       const out = server.output()

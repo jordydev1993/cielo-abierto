@@ -883,3 +883,28 @@ Corre todo en una transacción con `ROLLBACK`, con datos ficticios (DNI `99…`)
 El log del servidor solo registra el tipo de falla (`http_4xx (400)`), sin DNI ni respuesta de Didit.
 
 **Pendiente:** el `201` con una sesión real del sandbox necesita `DIDIT_WORKFLOW_ID` (workflow v9, D-23). El estado de la sesión no avanza hasta que esté la lógica del webhook (paso 4).
+
+---
+
+## Lógica del webhook — prompts/048
+
+**Fecha:** 21/10/2026 · **Entorno:** Supabase local + `next dev` levantado por el test · **Resultado:** 20/20 ✅ en `npm run test:integration` (9 con base y 11 del contrato HTTP) y 8 tests unitarios nuevos (`tests/unit/didit-webhook-logica.test.ts` y el borrado en `didit-client.test.ts`).
+
+`tests/integration/didit-webhook-db.test.ts` corre contra Supabase local y se salta si no está levantado. Manda webhooks firmados con un secreto ficticio y un payload completo, que incluye un nombre y el link a una selfie de prueba.
+
+| Caso | Resultado |
+|---|---|
+| Sesión desconocida (L-01, D-4) | `200` sin escribir |
+| `vendor_data` distinto de nuestro id | `200` sin escribir |
+| `Approved` con el DNI del tutor | "Identidad verificada", `dni_coincide = true` |
+| El mismo evento otra vez / `In Progress` después (M-01) | Sin cambios |
+| `Approved` con otro DNI (D-14) | "Identidad no verificada", `dni_coincide = false` |
+| `Declined` por `provider_error` (D-12) | "Error del proveedor" |
+| 3 `no_match` (F-01, D-19) | Retiro en `requiere_revision` |
+| Referente aprobado (D-11, D-16) | `validaciones_renaper` `aprobado` / `vigente`, `alta_referente`, sin `respuesta_cruda`; el vínculo pasa a `vigente`; la reentrega no la duplica |
+| Referente con otro DNI | Sin validación RENAPER |
+| Minimización (D-28, M-02) | Ni el nombre ni la selfie en `sesiones_didit`, `validaciones_renaper`, `audit_log` ni en el log; tampoco el DNI ni `decision` en el log |
+
+**Cambio en E-4:** E4H-9 (evento válido) ahora responde `500` cuando no hay base configurada. El `200` se prueba en el test con base. El helper `tests/support/next-server.ts` fija siempre las variables de Supabase, vacías o locales, y `DIDIT_API_KEY` vacía: antes las borraba, y Next las tomaba de `.env.local`, que apunta a producción.
+
+**Pendiente:** probarlo con una sesión real del sandbox. Hace falta `DIDIT_WORKFLOW_ID` y un túnel hacia el webhook local, o el webhook de preview. En la misma prueba se confirma dónde llega `personal_number` (Supuesto 1 del plan 048).

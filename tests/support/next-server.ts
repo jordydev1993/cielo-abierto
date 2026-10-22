@@ -17,6 +17,12 @@ type StartOptions = {
    * determinista aunque exista un `.env.local` con un secreto.
    */
   secret?: string
+  /**
+   * Supabase LOCAL para los tests que usan la base (prompts/048). Sin esto, las
+   * variables de Supabase se fuerzan a cadena vacía: si solo se borraran, Next
+   * tomaría las de `.env.local`, que apuntan a producción.
+   */
+  supabase?: { url: string; anonKey: string; serviceRoleKey: string }
   readyTimeoutMs?: number
 }
 
@@ -44,18 +50,22 @@ function killTree(child: ChildProcess): void {
 
 /**
  * Levanta `next dev` en 127.0.0.1 con un entorno controlado y espera hasta que
- * la ruta del webhook responda. No configura `NEXT_PUBLIC_SUPABASE_*`: el
- * webhook queda exceptuado del middleware (`proxy.ts`, Plan 032), así que debe
- * funcionar sin Supabase.
+ * la ruta del webhook responda. El webhook queda exceptuado del middleware
+ * (`proxy.ts`, Plan 032). Las variables de Supabase y `DIDIT_API_KEY` siempre se
+ * fijan acá (vacías, o las de Supabase local): nunca se usan las de `.env.local`.
  */
 export async function startNextServer(options: StartOptions): Promise<StartedNextServer> {
-  const { port, secret, readyTimeoutMs = 120_000 } = options
+  const { port, secret, supabase, readyTimeoutMs = 120_000 } = options
   const cwd = process.cwd()
   const nextBin = path.join(cwd, 'node_modules', 'next', 'dist', 'bin', 'next')
 
   const env: NodeJS.ProcessEnv = { ...process.env }
-  delete env.NEXT_PUBLIC_SUPABASE_URL
-  delete env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  // Cadena vacía (no delete): así `@next/env` no las completa desde `.env.local`.
+  env.NEXT_PUBLIC_SUPABASE_URL = supabase?.url ?? ''
+  env.NEXT_PUBLIC_SUPABASE_ANON_KEY = supabase?.anonKey ?? ''
+  env.SUPABASE_SERVICE_ROLE_KEY = supabase?.serviceRoleKey ?? ''
+  // Sin API key, el webhook no llama a Didit para borrar sesiones de prueba.
+  env.DIDIT_API_KEY = ''
   if (secret === undefined) {
     env.DIDIT_WEBHOOK_SECRET = ''
   } else {

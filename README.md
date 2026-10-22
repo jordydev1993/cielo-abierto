@@ -51,7 +51,7 @@ levantar el entorno local.
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Cliente y servidor | URL del proyecto Supabase. Pública. |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Cliente y servidor | Clave anónima de Supabase. Pública, protegida por RLS. |
-| `SUPABASE_SERVICE_ROLE_KEY` | `app/api/usuarios/route.ts` (server-only) | **Nunca** exponer al cliente. Se usa solo para crear usuarios como Admin. |
+| `SUPABASE_SERVICE_ROLE_KEY` | `app/api/usuarios/route.ts` y `app/api/didit/webhook/route.ts` (server-only, vía `lib/supabase/admin.ts` en el webhook) | **Nunca** exponer al cliente. Crea usuarios como Admin y deja que el webhook de Didit, que no tiene sesión de usuario, guarde el resultado. |
 | `DIDIT_WEBHOOK_SECRET` | `app/api/didit/webhook/route.ts` (server-only) | Verifica la firma HMAC del webhook de Didit (validación RENAPER). |
 | `DIDIT_API_KEY` | `app/api/didit/sesiones` (server-only) | API key de la app de Didit (hoy, la de sandbox). Crea y consulta sesiones de verificación. |
 | `DIDIT_WORKFLOW_ID` | `app/api/didit/sesiones` (server-only) | Workflow de Didit (`id_lookup` contra RENAPER, D-23). |
