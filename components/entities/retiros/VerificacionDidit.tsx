@@ -22,6 +22,11 @@ interface VerificacionDiditProps {
   sandbox: boolean
   /** Se llama cuando la verificación llega a un resultado, para refrescar la pantalla. */
   onResultado?: (code: CodigoDidit) => void
+  /**
+   * Última sesión del retiro o del referente: al montar se consulta su estado para
+   * mostrar el resultado sin crear otra sesión (prompts/050).
+   */
+  sesionInicialId?: string
 }
 
 const REINTENTABLES: CodigoDidit[] = ['IDENTITY_NOT_VERIFIED', 'DNI_MISMATCH', 'PROVIDER_ERROR']
@@ -29,10 +34,14 @@ const REINTENTABLES: CodigoDidit[] = ['IDENTITY_NOT_VERIFIED', 'DNI_MISMATCH', '
 // Verificación de identidad con Didit (Plan 035 §8, prompts/049): crea la sesión, muestra
 // el QR o el botón para la tablet (D-24), consulta el estado (N-6) y muestra el mensaje
 // de D-33 que devuelve la API. El resultado lo guarda el webhook; acá solo se consulta.
-export function VerificacionDidit({ objetivo, sandbox, onResultado }: VerificacionDiditProps) {
+export function VerificacionDidit({ objetivo, sandbox, onResultado, sesionInicialId }: VerificacionDiditProps) {
   const [dispositivo, setDispositivo] = useState<'celular' | 'tablet'>('celular')
   const [escenario, setEscenario] = useState<SandboxScenario | ''>('')
-  const [sesion, setSesion] = useState<{ id: string; url: string } | null>(null)
+  // La URL de Didit solo se conoce al crear o retomar la sesión: la sesión inicial
+  // empieza sin URL y se retoma con "Continuar verificación".
+  const [sesion, setSesion] = useState<{ id: string; url: string | null } | null>(
+    sesionInicialId ? { id: sesionInicialId, url: null } : null
+  )
   const [aviso, setAviso] = useState<string | null>(null)
   const [inicioEspera, setInicioEspera] = useState(0)
   const [extendida, setExtendida] = useState(false)
@@ -45,13 +54,14 @@ export function VerificacionDidit({ objetivo, sandbox, onResultado }: Verificaci
   const respuesta = estado.data
   const code = respuesta?.code
   const pendiente = !!sesion && (!code || code === 'IDENTITY_PENDING')
+  const esperando = pendiente && !!sesion?.url
 
   // "Seguimos esperando" a los 90 s sin resultado (N-6).
   useEffect(() => {
-    if (!pendiente) return
+    if (!esperando) return
     const timer = setTimeout(() => setExtendida(true), Math.max(0, inicioEspera + POLLING_TOPE_MS - Date.now()))
     return () => clearTimeout(timer)
-  }, [pendiente, inicioEspera])
+  }, [esperando, inicioEspera])
 
   useEffect(() => {
     if (code && code !== 'IDENTITY_PENDING') onResultado?.(code)
@@ -173,7 +183,16 @@ export function VerificacionDidit({ objetivo, sandbox, onResultado }: Verificaci
             )}
           </div>
 
-          {pendiente && (
+          {pendiente && !sesion.url && (
+            <div className="space-y-2">
+              <p className="text-sm text-on-surface">Hay una verificación en curso.</p>
+              <Button type="button" onClick={iniciar} disabled={crear.isPending}>
+                {crear.isPending ? 'Retomando…' : 'Continuar verificación'}
+              </Button>
+            </div>
+          )}
+
+          {esperando && sesion.url && (
             <>
               {dispositivo === 'celular' ? (
                 <QrSesionDidit url={sesion.url} />

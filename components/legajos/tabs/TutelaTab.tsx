@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { AccessGuard } from '@/components/shared/AccessGuard'
+import { useAuth } from '@/context/AuthContext'
 import { VinculoTutelaList } from '@/components/entities/vinculos-tutela/VinculoTutelaList'
 import { VinculoTutelaForm } from '@/components/entities/vinculos-tutela/VinculoTutelaForm'
 import { TransferenciaAuhForm } from '@/components/entities/transferencia-auh/TransferenciaAuhForm'
@@ -22,6 +23,7 @@ interface TutelaTabProps {
 }
 
 export function TutelaTab({ nnyaId, legajoActivo }: TutelaTabProps) {
+  const { role } = useAuth()
   const { data: vinculos = [], isLoading } = useVinculosTutelaByNnya(nnyaId)
   const crear = useCreateVinculoTutela()
   const actualizar = useUpdateVinculoTutela()
@@ -65,7 +67,8 @@ export function TutelaTab({ nnyaId, legajoActivo }: TutelaTabProps) {
       ) : (
         <VinculoTutelaList
           vinculos={vinculos}
-          onEdit={legajoActivo ? (v) => { setEditando(v); setOpen(true) } : undefined}
+          // Solo Admin: vinculos_tutela_update_admin rechaza el guardado de otros roles (prompts/050).
+          onEdit={legajoActivo && role === 'Admin' ? (v) => { setEditando(v); setOpen(true) } : undefined}
         />
       )}
 

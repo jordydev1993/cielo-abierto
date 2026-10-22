@@ -52,6 +52,8 @@ export function RetiroEnCurso({ retiro, sandbox }: { retiro: Retiro; sandbox: bo
   const consentimiento = useUpdateRetiroConsentimiento()
   const sesiones = retiro.sesiones_didit ?? []
   const verificada = tieneIdentidadVerificada(sesiones) || retiro.metodo_verificacion === 'manual'
+  // prompts/050: al abrir el retiro se muestra el resultado de su última sesión.
+  const ultimaSesionId = [...sesiones].sort((a, b) => b.created_at.localeCompare(a.created_at))[0]?.id
 
   const refrescar = useCallback(() => {
     void qc.invalidateQueries({ queryKey: queryKeys.retiros.all })
@@ -133,6 +135,7 @@ export function RetiroEnCurso({ retiro, sandbox }: { retiro: Retiro; sandbox: bo
                   objetivo={{ proposito: 'retiro', retiroId: retiro.id }}
                   sandbox={sandbox}
                   onResultado={refrescar}
+                  sesionInicialId={ultimaSesionId}
                 />
               ))}
           </>
