@@ -88,6 +88,14 @@ export function RetiroEnCurso({ retiro, sandbox }: { retiro: Retiro; sandbox: bo
           <p className="text-sm text-on-surface">Retiro rechazado. Motivo: {retiro.motivo_rechazo ?? '—'}</p>
         )}
 
+        {retiro.metodo_verificacion === 'manual' && (
+          <dl className="grid grid-cols-1 gap-3 rounded-lg border border-outline-variant p-3 text-sm sm:grid-cols-2">
+            <div><dt className="text-on-surface-variant">Verificación de identidad</dt><dd>Manual</dd></div>
+            <div><dt className="text-on-surface-variant">Autorizada</dt><dd>{fechaHora(retiro.autorizado_at)}</dd></div>
+            <div className="sm:col-span-2"><dt className="text-on-surface-variant">Motivo</dt><dd>{retiro.motivo_fallback ?? '—'}</dd></div>
+          </dl>
+        )}
+
         {retiro.estado === 'realizada' && (
           <dl className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
             <div><dt className="text-on-surface-variant">Inicio</dt><dd>{fechaHora(retiro.fecha_inicio)}</dd></div>
